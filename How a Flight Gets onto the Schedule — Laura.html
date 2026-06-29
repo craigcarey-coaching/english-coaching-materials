@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How a Flight Gets onto the Schedule — Laura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4ede0; --paper-deep:#ebe1cf; --ink:#1d2438; --ink-soft:#5a607a;
+    --trap:#a83232; --truth:#2d6a4f; --rule:#c9b896; --shadow:rgba(29,36,56,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);font-family:'Lora',Georgia,serif;
+    font-size:16px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse at 85% 12%,rgba(45,106,79,0.045) 0%,transparent 50%),
+      radial-gradient(ellipse at 10% 90%,rgba(168,50,50,0.035) 0%,transparent 52%);
+  }
+  .container{max-width:820px;margin:0 auto;padding:64px 32px 80px}
+  header{border-bottom:1px solid var(--rule);padding-bottom:32px;margin-bottom:34px}
+  .eyebrow{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-style:italic;
+    font-size:clamp(40px,7vw,72px);line-height:0.98;letter-spacing:-0.025em;
+    font-variation-settings:"SOFT" 80,"WONK" 1}
+  .subtitle{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(15px,2vw,18px);
+    color:var(--ink-soft);margin-top:16px;max-width:600px}
+
+  .toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+  .toggle{display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+    background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;
+    padding:9px 15px;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-soft)}
+  .toggle .sw{width:30px;height:16px;border-radius:9px;background:var(--rule);position:relative;transition:background .2s}
+  .toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--paper);transition:transform .2s}
+  .toggle.on{color:var(--truth)}
+  .toggle.on .sw{background:var(--truth)}
+  .toggle.on .sw::after{transform:translateX(14px)}
+
+  .section-eyebrow{font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .section-eyebrow .n{font-family:'Fraunces',serif;font-style:italic;color:var(--truth);margin-right:10px}
+  h2{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(24px,4vw,34px);
+    letter-spacing:-0.02em;margin-bottom:16px;font-variation-settings:"SOFT" 70}
+  section{margin-top:58px}
+
+  .article p{margin-bottom:18px;font-size:16.5px}
+  .article p:first-of-type::first-letter{
+    font-family:'Fraunces',serif;font-style:italic;font-size:62px;line-height:0.8;
+    float:left;margin:6px 12px 0 0;color:var(--trap)}
+
+  .g{position:relative;border-bottom:1px dotted var(--ink-soft);cursor:pointer;font-weight:600}
+  .g .gl{display:none;font-weight:400;font-style:italic;color:var(--truth);font-size:0.86em}
+  .g .gl::before{content:" — "}
+  .g.on{border-bottom-color:var(--truth)}
+  .g.on .gl{display:inline}
+
+  /* comprehension */
+  .q{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:20px 24px;margin-bottom:14px}
+  .q .qn{font-family:'Fraunces',serif;font-style:italic;color:var(--truth);font-size:13px;margin-bottom:5px}
+  .q p{font-size:15.5px}
+  details.key{margin-top:14px;border-top:1px solid rgba(201,184,150,0.55);padding-top:12px}
+  details.key summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;
+    font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:var(--trap);font-weight:600}
+  details.key summary::-webkit-details-marker{display:none}
+  details.key summary::before{content:"▸";font-size:11px}
+  details.key[open] summary::before{content:"▾"}
+  details.key .warn{font-style:italic;text-transform:none;letter-spacing:0;color:var(--ink-soft);font-weight:400;font-size:12px}
+  details.key .model{margin-top:11px;padding:12px 15px;background:rgba(45,106,79,0.07);
+    border-left:3px solid var(--truth);font-style:italic;font-size:14.5px;line-height:1.55}
+
+  /* vocab depth */
+  .depth{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px}
+  .dcard{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:22px 24px}
+  .dword{font-family:'Fraunces',serif;font-style:italic;font-size:25px;color:var(--truth);margin-bottom:2px}
+  .dctx{font-style:italic;font-size:13.5px;color:var(--ink-soft);margin-bottom:14px}
+  .drow{display:flex;gap:10px;margin-bottom:7px;font-size:14px;line-height:1.45}
+  .drow .lab{flex:0 0 88px;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-soft);padding-top:3px}
+  .drow .val{flex:1}
+  .dreuse{margin-top:12px;padding-top:11px;border-top:1px solid rgba(201,184,150,0.55);
+    font-style:italic;font-size:13.5px;color:var(--ink-soft)}
+  .dreuse b{font-style:normal;color:var(--ink)}
+
+  /* false friends */
+  .ff{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .ffcard{background:var(--paper);border:1px solid var(--rule);border-left:3px solid var(--trap);border-radius:2px;padding:14px 16px}
+  .ffcard .fr{font-style:italic;color:var(--trap);font-size:16px}
+  .ffcard .fr .x{text-decoration:line-through;text-decoration-color:rgba(168,50,50,0.4)}
+  .ffcard .en{font-size:14px;margin-top:3px}
+  .ffcard .en b{color:var(--truth)}
+
+  .prompt{background:var(--paper-deep);border:1px solid var(--rule);border-left:3px solid var(--truth);
+    border-radius:2px;padding:24px 26px}
+  .prompt h4{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:21px;margin-bottom:10px}
+  .prompt p{font-size:15.5px}
+  .prompt .frame{margin-top:12px;font-size:13.5px;color:var(--ink-soft);padding:11px 14px;
+    background:var(--paper);border:1px dashed var(--rule);border-radius:2px}
+  .prompt .frame b{color:var(--ink)}
+
+  footer{margin-top:80px;padding-top:26px;border-top:1px solid var(--rule);text-align:center;
+    font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-soft)}
+  footer .ornament{color:var(--rule);margin:0 10px}
+  @media(max-width:600px){.container{padding:44px 18px 60px}.drow .lab{flex-basis:74px}}
+  @media print{body{background:#fff}.g .gl{display:inline}details.key .model{display:block!important}.toolbar{display:none}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">Reading · Technical English · Aviation · Laura</div>
+    <h1>How a flight gets<br>onto the schedule</h1>
+    <div class="subtitle">The industry whose consequences a pilot lives with every day — slots, turnarounds, banks, recovery — and the English to talk about it.</div>
+  </header>
+
+  <div class="toolbar">
+    <div class="toggle" id="glossToggle" role="button" tabindex="0" aria-pressed="false">
+      <span class="sw"></span> B1 support · glosses
+    </div>
+    <span style="font-style:italic;color:var(--ink-soft);font-size:13.5px">Tap any underlined word for its plain-English meaning.</span>
+  </div>
+
+  <!-- ARTICLE -->
+  <section class="article" id="article" style="margin-top:0">
+    <p>Every flight you have ever taken began as a line in a spreadsheet, months before departure. Long before a single passenger books a seat, a team of network planners decides where the airline will fly, how often, and with which aircraft. Their job is to fill the schedule in a way that is both useful to passengers and <span class="g">profitable<span class="gl">making money rather than losing it</span></span> for the airline — and those two goals do not always agree.</p>
+
+    <p>The first big decision is the shape of the <span class="g">network<span class="gl">all the routes an airline flies, seen together</span></span>. Some airlines build around a <span class="g">hub<span class="gl">one central airport most flights pass through</span></span> — one or two large airports through which most flights pass. A passenger flying from a small city to another small city does not fly directly; instead they connect through the hub. This <span class="g">hub-and-spoke<span class="gl">routes arranged like a wheel, meeting at a central hub</span></span> model lets an airline serve hundreds of city pairs with relatively few routes, because every spoke connects to every other spoke through the centre. Low-cost carriers often prefer the opposite approach, <span class="g">point-to-point<span class="gl">flying straight between two cities, with no central hub</span></span>, flying directly between cities and skipping the hub altogether. It is simpler, but it only works on routes with enough demand to fill an aircraft on their own.</p>
+
+    <p>Wherever an airline flies, it has to find a <span class="g">slot<span class="gl">a booked time to take off or land at an airport</span></span> — permission to take off or land at a given airport at a given time. At busy airports, slots are strictly limited and fiercely guarded; an airline may hold a valuable early-morning slot for decades and treat it as one of its most precious assets. No slot, no flight, however much demand there is.</p>
+
+    <p>Then there is the aircraft itself. An aircraft only earns money when it is in the air, so airlines plan each one's <span class="g">rotation<span class="gl">the chain of flights one aircraft flies across a day</span></span> to keep it flying as much as possible. The enemy of high <span class="g">utilisation<span class="gl">how many hours a day the aircraft is actually flying</span></span> is time spent on the ground, which is why the <span class="g">turnaround<span class="gl">the short ground time between two flights</span></span> matters so much: the minutes between an aircraft arriving at the gate and pushing back for its next flight. Cleaners, caterers, baggage handlers, refuellers and the incoming crew all work at once, often in well under an hour. A delayed turnaround does not just affect one flight; it ripples down the whole rotation.</p>
+
+    <p>At a hub, flights are deliberately grouped into <span class="g">connecting banks<span class="gl">waves of flights timed so passengers can change planes</span></span> — waves of arrivals landing close together, followed by a wave of departures, so that connecting passengers have time to change aircraft without waiting for hours. Designing these banks is a puzzle: too tight and people miss their connections, too loose and aircraft sit idle.</p>
+
+    <p>The people are scheduled too. Crews cannot simply be assigned to aircraft; their <span class="g">pairings<span class="gl">the set of flights one crew works before returning to base</span></span> — the sequences of flights a crew works before returning to base — must respect strict limits on flying hours and rest. A schedule that looks perfect on paper can collapse if there is no legal crew available to operate it.</p>
+
+    <p>Finally, planners build in the expectation that things will go wrong. Weather, technical faults and air-traffic restrictions cause <span class="g">disruption<span class="gl">when the normal schedule is broken by problems</span></span>, and when an airline's carefully balanced schedule unravels, recovery teams work to get aircraft, crews and passengers back into position with the least possible delay. The best schedule is not the one that works in perfect conditions — it is the one that bends without breaking when conditions are not.</p>
+  </section>
+
+  <!-- COMPREHENSION -->
+  <section>
+    <div class="section-eyebrow"><span class="n">i</span>Check understanding</div>
+    <h2>Did it land?</h2>
+
+    <div class="q">
+      <div class="qn">Question 1</div>
+      <p>Why does a hub-and-spoke network let an airline serve so many city pairs with relatively few routes?</p>
+      <details class="key"><summary>Model answer <span class="warn">— teacher only</span></summary>
+        <div class="model">Because every "spoke" city connects to every other one <em>through</em> the central hub, rather than needing a direct route of its own. A handful of routes into the hub creates a very large number of possible journeys.</div></details>
+    </div>
+    <div class="q">
+      <div class="qn">Question 2</div>
+      <p>The text says an early-morning slot can be one of an airline's "most precious assets." Why is a slot so valuable?</p>
+      <details class="key"><summary>Model answer <span class="warn">— teacher only</span></summary>
+        <div class="model">At busy airports the number of slots is strictly limited, so they are scarce. Without one you simply cannot operate the flight, no matter how many people want to travel — so a good slot is effectively the right to do business at that time.</div></details>
+    </div>
+    <div class="q">
+      <div class="qn">Question 3</div>
+      <p>Why does a single delayed turnaround affect more than just one flight?</p>
+      <details class="key"><summary>Model answer <span class="warn">— teacher only</span></summary>
+        <div class="model">Because the same aircraft flies a chain of flights (its rotation) across the day. A late turnaround pushes the next departure back, which delays the one after that — the delay "ripples down" the rotation.</div></details>
+    </div>
+    <div class="q">
+      <div class="qn">Question 4 · inference</div>
+      <p>What is the trade-off a planner faces when designing connecting banks?</p>
+      <details class="key"><summary>Model answer <span class="warn">— teacher only</span></summary>
+        <div class="model">If the bank is too tight, passengers don't have enough time and miss connections. If it is too loose, the timing is safe but aircraft sit idle on the ground, lowering utilisation. The planner has to balance reliable connections against efficient use of aircraft.</div></details>
+    </div>
+    <div class="q">
+      <div class="qn">Question 5 · in your own words</div>
+      <p>The final line says the best schedule "bends without breaking." What does that mean for how airlines plan?</p>
+      <details class="key"><summary>Sample answer <span class="warn">— teacher only</span></summary>
+        <div class="model">It means they don't plan only for the ideal day. They build in margin and recovery plans so that when weather or faults disrupt things, the schedule can absorb the shock and recover, rather than collapsing entirely.</div></details>
+    </div>
+  </section>
+
+  <!-- VOCAB DEPTH -->
+  <section>
+    <div class="section-eyebrow"><span class="n">ii</span>Six words, properly</div>
+    <h2>Depth, not a word list</h2>
+    <div class="depth">
+      <div class="dcard">
+        <div class="dword">hub</div>
+        <div class="dctx">"one or two large airports through which most flights pass"</div>
+        <div class="drow"><span class="lab">Meaning</span><span class="val">a central point that many things pass through or connect to.</span></div>
+        <div class="drow"><span class="lab">Family</span><span class="val">a hub airport · the hub of (an industry) · a transport hub</span></div>
+        <div class="drow"><span class="lab">Register</span><span class="val">neutral; used well beyond aviation ("a hub for start-ups").</span></div>
+        <div class="dreuse"><b>Reuse:</b> Name a city that is a hub — and say what it is a hub <em>for</em>.</div>
+      </div>
+      <div class="dcard">
+        <div class="dword">slot</div>
+        <div class="dctx">"permission to take off or land… at a given time"</div>
+        <div class="drow"><span class="lab">Meaning</span><span class="val">a reserved place in a timetable or sequence.</span></div>
+        <div class="drow"><span class="lab">Collocates</span><span class="val">hold / lose / be allocated a slot · a take-off slot · a time slot</span></div>
+        <div class="drow"><span class="lab">Register</span><span class="val">everyday too: "a slot in my diary", "a parking slot".</span></div>
+        <div class="dreuse"><b>Reuse:</b> Ask me for a slot for something — be specific about the time.</div>
+      </div>
+      <div class="dcard">
+        <div class="dword">turnaround</div>
+        <div class="dctx">"the minutes between an aircraft arriving… and pushing back"</div>
+        <div class="drow"><span class="lab">Meaning</span><span class="val">the short time (and work) needed to get something ready to go again.</span></div>
+        <div class="drow"><span class="lab">Family</span><span class="val">to turn an aircraft around · a tight / quick turnaround · turnaround time</span></div>
+        <div class="drow"><span class="lab">Register</span><span class="val">business-wide: "a fast turnaround on the report."</span></div>
+        <div class="dreuse"><b>Reuse:</b> Describe what has to happen during a 30-minute turnaround.</div>
+      </div>
+      <div class="dcard">
+        <div class="dword">rotation</div>
+        <div class="dctx">"the chain of flights it operates across a day"</div>
+        <div class="drow"><span class="lab">Meaning</span><span class="val">a recurring cycle or sequence that an aircraft (or person) works through.</span></div>
+        <div class="drow"><span class="lab">Collocates</span><span class="val">an aircraft / crew rotation · come back into rotation · on rotation</span></div>
+        <div class="drow"><span class="lab">Watch</span><span class="val">in French <em>la rotation</em> also = a single round trip — don't over-map.</span></div>
+        <div class="dreuse"><b>Reuse:</b> Sketch one aircraft's rotation: where does it start, and where does it end the day?</div>
+      </div>
+      <div class="dcard">
+        <div class="dword">utilisation</div>
+        <div class="dctx">"the enemy of high utilisation is time spent on the ground"</div>
+        <div class="drow"><span class="lab">Meaning</span><span class="val">how fully and productively something is used.</span></div>
+        <div class="drow"><span class="lab">Family</span><span class="val">high / low utilisation · to utilise · aircraft utilisation (hours/day)</span></div>
+        <div class="drow"><span class="lab">Register</span><span class="val">formal/technical; in speech, "keeping the aircraft busy" is the plain version.</span></div>
+        <div class="dreuse"><b>Reuse:</b> Why is a low-cost airline so focused on high utilisation?</div>
+      </div>
+      <div class="dcard">
+        <div class="dword">disruption</div>
+        <div class="dctx">"weather, technical faults… cause disruption"</div>
+        <div class="drow"><span class="lab">Meaning</span><span class="val">a serious interruption to the normal running of things.</span></div>
+        <div class="drow"><span class="lab">Family</span><span class="val">to disrupt · disrupted flights · major / widespread disruption</span></div>
+        <div class="drow"><span class="lab">Opposite</span><span class="val">smooth running · normal operations</span></div>
+        <div class="dreuse"><b>Reuse:</b> Describe a time travel disruption affected you — what was the cause?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FALSE FRIENDS -->
+  <section>
+    <div class="section-eyebrow"><span class="n">iii</span>Watch these</div>
+    <h2>False friends in the air</h2>
+    <p style="max-width:640px;color:var(--ink-soft);margin-bottom:22px;font-size:15.5px">The scheduling world is full of words that look French but mean something else in English. These six are worth flagging now and folding into her own glossary.</p>
+    <div class="ff">
+      <div class="ffcard"><div class="fr"><span class="x">correspondence</span></div><div class="en">FR <em>correspondance</em> → a <b>connection</b> (connecting flight)</div></div>
+      <div class="ffcard"><div class="fr"><span class="x">scale</span></div><div class="en">FR <em>escale</em> → a <b>stopover</b> · a <b>layover</b></div></div>
+      <div class="ffcard"><div class="fr"><span class="x">exploit a line</span></div><div class="en">FR <em>exploiter une ligne</em> → to <b>operate</b> a route</div></div>
+      <div class="ffcard"><div class="fr"><span class="x">rentable</span></div><div class="en">FR <em>rentable</em> → <b>profitable</b> · worth running</div></div>
+      <div class="ffcard"><div class="fr"><span class="x">report a flight</span></div><div class="en">FR <em>reporter un vol</em> → to <b>postpone</b> a flight</div></div>
+      <div class="ffcard"><div class="fr"><span class="x">delay</span></div><div class="en">FR <em>un délai</em> → a <b>time-frame / deadline</b> (a delay = <em>un retard</em>)</div></div>
+    </div>
+  </section>
+
+  <!-- PRODUCTION -->
+  <section>
+    <div class="section-eyebrow"><span class="n">iv</span>Now she plans</div>
+    <h2>The route decision</h2>
+    <div class="prompt">
+      <h4>Should we add this route?</h4>
+      <p>Your airline is thinking about adding one new route from Paris. Talk me through how you would decide whether it is worth it — what would you need to know, and what could go wrong?</p>
+      <div class="frame"><b>Land at least five of:</b> network · hub · point-to-point · slot · demand · turnaround · utilisation · profitable · disruption. Position her as the decision-maker, not the student.</div>
+      <details class="key"><summary>Prompts to feed if she stalls <span class="warn">— teacher only</span></summary>
+        <div class="model">Is there enough demand to fill the aircraft? Can we get a slot at both airports, and at a useful time? Does it fit our network — does it feed the hub or stand alone point-to-point? Which aircraft flies it, and does that fit its rotation without hurting utilisation? Is the route likely to be profitable, and how exposed is it to disruption (weather, seasonality)?</div></details>
+    </div>
+  </section>
+
+  <footer>Reading · Hour 2 <span class="ornament">·</span> Built one lesson at a time.</footer>
+</div>
+
+<script>
+  // individual gloss toggle
+  document.querySelectorAll('.g').forEach(g=>{
+    g.addEventListener('click',()=>g.classList.toggle('on'));
+  });
+  // global B1 support toggle
+  const t=document.getElementById('glossToggle');
+  function setAll(on){
+    t.classList.toggle('on',on);
+    t.setAttribute('aria-pressed',on);
+    document.querySelectorAll('.g').forEach(g=>g.classList.toggle('on',on));
+  }
+  t.addEventListener('click',()=>setAll(!t.classList.contains('on')));
+  t.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();setAll(!t.classList.contains('on'));}});
+</script>
+</body>
+</html>

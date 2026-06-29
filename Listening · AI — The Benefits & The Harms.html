@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening · AI — The Benefits & The Harms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F2EAD9; --card:#FBF5EA; --card-2:#FFFDF6;
+    --ink:#2E2A23; --muted:#7B7264; --line:#E4D9C5;
+    --sage:#84977A; --sage-deep:#5C6E52;
+    --clay:#BC6B4C; --clay-deep:#9E5639;
+    --teal:#235A66; --teal-deep:#173F49;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'IBM Plex Sans',sans-serif;color:var(--ink);background-color:var(--paper);
+    background-image:radial-gradient(circle at 14% 10%,rgba(132,151,122,.08),transparent 40%),radial-gradient(circle at 90% 6%,rgba(35,90,102,.06),transparent 36%);
+    line-height:1.55;padding:32px 18px 80px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:840px;margin:0 auto}
+  .eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--clay-deep);font-weight:600;margin-bottom:8px}
+  h1{font-family:'Fraunces',serif;font-weight:500;font-size:2.4rem;line-height:1.06;color:var(--teal-deep);letter-spacing:-.01em}
+  .sub{color:var(--muted);margin-top:10px;max-width:600px;font-size:1.02rem}
+  .meta{margin-top:14px;font-size:.85rem;color:var(--sage-deep);font-weight:500}
+  nav{display:flex;gap:6px;margin:26px 0 22px;flex-wrap:wrap}
+  .tab{font-size:.9rem;font-weight:500;border:1px solid var(--line);background:var(--card-2);color:var(--muted);padding:9px 16px;border-radius:30px;cursor:pointer;transition:.18s}
+  .tab:hover{color:var(--ink);transform:translateY(-1px)}
+  .tab.active{background:var(--teal);color:#fdf7ec;border-color:var(--teal)}
+  .screen{display:none;animation:fade .4s ease}
+  .screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin-bottom:18px}
+  h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.5rem;color:var(--teal-deep);margin-bottom:6px}
+  h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.1rem;color:var(--ink);margin:16px 0 6px}
+  p.lead{color:var(--muted);margin-bottom:12px}
+  .callout{background:#F6EFE0;border-left:3px solid var(--sage);border-radius:0 10px 10px 0;padding:13px 17px;margin:14px 0;font-size:.95rem}
+  .callout strong{color:var(--sage-deep)}
+
+  /* vocab */
+  .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:620px){.vgrid{grid-template-columns:1fr}}
+  .vcard{border:1px solid var(--line);border-radius:12px;padding:15px 17px;background:var(--card-2);cursor:pointer;transition:.16s}
+  .vcard:hover{border-color:var(--sage);transform:translateY(-1px)}
+  .vcard .w{font-family:'Fraunces',serif;font-size:1.12rem;color:var(--clay-deep)}
+  .vcard .pos{font-size:.74rem;color:var(--muted);font-style:italic;margin-left:6px}
+  .vcard .prompt{font-size:.86rem;color:var(--muted);margin-top:6px}
+  .vcard .rev{display:none;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+  .vcard.open .rev{display:block;animation:fade .25s}
+  .vcard.open .prompt{display:none}
+  .vcard .def{font-size:.92rem}
+  .vcard .ex{font-style:italic;color:var(--teal-deep);font-size:.88rem;margin-top:6px}
+
+  .player{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:8px 0 14px;background:#1a1a1a}
+  .pass{display:flex;gap:12px;margin:10px 0}
+  .pass .n{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--clay);line-height:1;min-width:30px}
+  .pass .t b{color:var(--teal-deep)}
+  .pass .t{font-size:.95rem}
+  .stamp{display:inline-block;background:var(--teal);color:#fdf7ec;font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:20px}
+
+  .qitem{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:13px;background:var(--card-2)}
+  .qitem .qt{font-size:1.02rem;margin-bottom:10px}
+  .opts{display:flex;flex-direction:column;gap:7px}
+  .opt{border:1px solid var(--line);background:var(--card);padding:9px 14px;border-radius:9px;cursor:pointer;font-size:.93rem;transition:.14s}
+  .opt:hover{border-color:var(--sage)}
+  .opt.correct{background:var(--sage);color:#fff;border-color:var(--sage)}
+  .opt.wrong{background:#E8C9BD;border-color:var(--clay);color:var(--clay-deep)}
+  .reveal-link{font-size:.85rem;color:var(--clay-deep);cursor:pointer;font-weight:600;margin-top:4px;display:inline-block}
+  .reveal-link:hover{text-decoration:underline}
+  .model{display:none;margin-top:9px;padding:11px 14px;background:#EEF1E8;border:1px solid #D7DECB;border-radius:9px;font-size:.92rem}
+  .model.show{display:block;animation:fade .25s}
+  .model b{color:var(--sage-deep)}
+
+  ul.disc{list-style:none}
+  ul.disc li{padding:10px 0 10px 26px;position:relative;border-top:1px dashed var(--line)}
+  ul.disc li:first-child{border-top:none}
+  ul.disc li::before{content:"›";position:absolute;left:6px;color:var(--clay);font-weight:700;font-size:1.1rem;top:8px}
+  footer{text-align:center;color:var(--muted);font-size:.8rem;margin-top:30px}
+  a.ext{color:var(--teal);font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Listening · Discussion</div>
+    <h1>AI: The Benefits &amp; The Harms</h1>
+    <p class="sub">A short listening built around one idea: why the dangers of AI show up fast, while the good it could do — like curing disease — takes years to arrive.</p>
+    <div class="meta">Source · <i>The Oprah Podcast</i> with Dario &amp; Daniela Amodei, founders of Anthropic (May 2026)</div>
+  </header>
+
+  <nav>
+    <button class="tab active" data-s="before">1 · Before you listen</button>
+    <button class="tab" data-s="listen">2 · Listen</button>
+    <button class="tab" data-s="check">3 · Check</button>
+    <button class="tab" data-s="talk">4 · React &amp; discuss</button>
+  </nav>
+
+  <!-- BEFORE -->
+  <section class="screen active" id="before">
+    <div class="card">
+      <h2>Warm-up</h2>
+      <p class="lead">Before any English — just talk.</p>
+      <ul class="disc">
+        <li>How do you use AI in everyday life, if at all? Has it changed in the last year?</li>
+        <li>When you hear about AI in the news, is the story usually <b>positive</b> or <b>negative</b>? Why do you think that is?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Six words to carry in</h2>
+      <p class="lead">Look at each word and the situation. Say what you think it means — then tap to check.</p>
+      <div class="vgrid" id="vocab"></div>
+      <div class="callout"><strong>Stretch words</strong> if they come up easily: a <i>trade-off</i> (a balance where you gain one thing but lose another), a <i>dynamic</i> (the way forces interact in a situation).</div>
+    </div>
+  </section>
+
+  <!-- LISTEN -->
+  <section class="screen" id="listen">
+    <div class="card">
+      <h2>The clip</h2>
+      <p class="lead">Listen to roughly <span class="stamp">14:00 – 18:50</span> — scrub the player to that point. (Free Spotify may play a preview only; the full episode link is below.)</p>
+      <div class="player">
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/2DP5wflaVFFUbySTvwcqpk?utm_source=generator" width="100%" height="232" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted)">Full episode · <a class="ext" href="https://open.spotify.com/episode/2DP5wflaVFFUbySTvwcqpk" target="_blank" rel="noopener">open on Spotify ↗</a></p>
+
+      <h3>Listen twice</h3>
+      <div class="pass"><span class="n">1</span><div class="t"><b>For the big idea.</b> Don't worry about every word. Just answer: is the speaker more hopeful or more worried? What is his one main point?</div></div>
+      <div class="pass"><span class="n">2</span><div class="t"><b>For detail.</b> Listen again. This time catch: <i>why</i> the harms come faster, and the example of a future benefit he gives.</div></div>
+      <div class="callout"><strong>One word to listen out for:</strong> <i>narrative</i> — he uses it to mean the general "story" people believe about AI right now.</div>
+    </div>
+  </section>
+
+  <!-- CHECK -->
+  <section class="screen" id="check">
+    <div class="card">
+      <h2>The big idea</h2>
+      <div class="qitem">
+        <div class="qt">Which sentence best captures Dario's main point?</div>
+        <div class="opts" id="gistOpts"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>The detail</h2>
+      <p class="lead">Try to answer out loud first. Then reveal a model answer.</p>
+      <div id="detailQs"></div>
+    </div>
+  </section>
+
+  <!-- TALK -->
+  <section class="screen" id="talk">
+    <div class="card">
+      <h2>React</h2>
+      <ul class="disc">
+        <li>Dario says the harms of AI are <b>more visible</b> than the benefits because benefits take longer to arrive. Do you agree? Can you think of an example?</li>
+        <li>He says, in effect, <i>"who cares about the narrative — we want to actually help people."</i> Is the public too negative about AI, or right to be careful?</li>
+        <li>Daniela imagines a world where some diseases are simply gone. Does that sound realistic to you, or too optimistic?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Bring it to your world</h2>
+      <p class="lead">The richest language usually lives here.</p>
+      <ul class="disc">
+        <li>Where is AI <b>already</b> used in your field or industry today?</li>
+        <li>What could it realistically do in your field in <b>five years</b> — and what would you genuinely welcome?</li>
+        <li>What is one risk in your field you'd want <b>controlled</b> or regulated, and how?</li>
+        <li>If you had to give one piece of advice to people leading AI companies, on behalf of your profession — what would it be?</li>
+      </ul>
+      <div class="callout"><strong>Target language to reach for:</strong> a <i>trade-off</i>, to <i>deliver the benefits</i>, a <i>breakthrough</i>, to <i>speed up</i>, <i>transformative</i>, the <i>narrative</i>.</div>
+    </div>
+  </section>
+
+  <footer>Listening · reusable B1–B2 resource · adaptable to any learner's field</footer>
+</div>
+
+<script>
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.s).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* vocab — elicit then reveal */
+const vocab=[
+  {w:'to deliver the benefits',pos:'phrase',
+    prompt:'"The industry hasn\'t yet fully ___ the benefits of AI." What does it mean to deliver them?',
+    def:'To actually produce the good results you promised — not just talk about them.',
+    ex:'A new tool only matters once it delivers the benefits people were promised.'},
+  {w:'a breakthrough',pos:'noun',
+    prompt:'"You have to develop a ___ in biology first." A sudden important discovery is a…?',
+    def:'A major, sudden advance that makes new things possible.',
+    ex:'The treatment was only possible after a scientific breakthrough.'},
+  {w:'clinical trials',pos:'noun (pl.)',
+    prompt:'Before a new medicine can be sold, it must pass these careful tests on people. They are…?',
+    def:'The official, staged tests that check whether a new drug is safe and works.',
+    ex:'A drug can spend years in clinical trials before approval.'},
+  {w:'to speed (something) up',pos:'phrasal verb',
+    prompt:'"We are working on how to ___ ___ drug discovery." To make a slow process faster is to…?',
+    def:'To make something happen more quickly than before.',
+    ex:'They bought a company to speed the research up.'},
+  {w:'transformative',pos:'adjective',
+    prompt:'Something that completely changes a situation is described as…?',
+    def:'Causing a complete, deep change.',
+    ex:'AI could be as transformative as the internet was.'},
+  {w:'the narrative',pos:'noun',
+    prompt:'"A negative ___ is dominant in our culture right now." The general story people believe is the…?',
+    def:'The overall story or version of events that people accept and repeat.',
+    ex:'They want to change the narrative around their industry.'},
+];
+const vw=document.getElementById('vocab');
+vocab.forEach(v=>{
+  const c=document.createElement('div');c.className='vcard';
+  c.innerHTML=`<div class="w">${v.w}<span class="pos">${v.pos}</span></div>
+    <div class="prompt">${v.prompt}</div>
+    <div class="rev"><div class="def">${v.def}</div><div class="ex">${v.ex}</div></div>`;
+  c.onclick=()=>c.classList.toggle('open');
+  vw.appendChild(c);
+});
+
+/* gist MCQ */
+const gist=[
+  {t:'AI is dangerous and its benefits are exaggerated.',ok:false},
+  {t:'The harms of AI appear quickly, but the big benefits take years — so right now the harms are more visible.',ok:true},
+  {t:'AI has already cured most major diseases.',ok:false},
+  {t:'The benefits and harms of AI both arrive at exactly the same speed.',ok:false},
+];
+const go=document.getElementById('gistOpts');
+gist.forEach(o=>{
+  const el=document.createElement('div');el.className='opt';el.textContent=o.t;
+  el.onclick=()=>{
+    go.querySelectorAll('.opt').forEach(x=>x.style.pointerEvents='none');
+    el.classList.add(o.ok?'correct':'wrong');
+    if(!o.ok)go.querySelectorAll('.opt').forEach(x=>{if(gist[[...go.children].indexOf(x)].ok)x.classList.add('correct');});
+  };
+  go.appendChild(el);
+});
+
+/* detail — reveal models */
+const details=[
+  {q:'Why does Dario say the harms appear faster than the benefits?',
+   m:'Because things going wrong can happen <b>quickly</b>, while a benefit like curing cancer takes <b>years</b> — you need a breakthrough, then a drug candidate, then clinical trials.'},
+  {q:'What did Anthropic recently buy, and why?',
+   m:'A small <b>biotech company</b> that uses AI for drug design and selection — to help <b>speed up</b> the discovery of new medicines.'},
+  {q:'What future does Daniela imagine for her children?',
+   m:'A world where some diseases — including kinds of <b>cancer</b> — are simply gone or cured, so people live healthier, longer lives.'},
+];
+const dw=document.getElementById('detailQs');
+details.forEach((d,i)=>{
+  const el=document.createElement('div');el.className='qitem';
+  el.innerHTML=`<div class="qt">${d.q}</div>
+    <span class="reveal-link">Reveal a model answer ↓</span>
+    <div class="model">${d.m}</div>`;
+  el.querySelector('.reveal-link').onclick=function(){el.querySelector('.model').classList.add('show');this.style.display='none';};
+  dw.appendChild(el);
+});
+</script>
+</body>
+</html>

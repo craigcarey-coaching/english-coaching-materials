@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Twelve Tenses — Corinne's Drill Set</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 25%, rgba(168, 50, 50, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 75%, rgba(45, 106, 79, 0.04) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1120px; margin: 0 auto; padding: 64px 32px 80px; }
+
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 36px; margin-bottom: 32px; }
+
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-style: italic;
+    font-size: clamp(48px, 9vw, 92px); line-height: 0.95; letter-spacing: -0.025em;
+    color: var(--ink); font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  h1 .accent { color: var(--trap); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: clamp(16px, 2vw, 19px); color: var(--ink-soft);
+    margin-top: 18px; max-width: 640px;
+  }
+
+  /* coverage legend */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 7px; margin: 26px 0 30px;
+  }
+  .legend .chip {
+    font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 5px 11px; border: 1px solid var(--rule); border-radius: 2px;
+    color: var(--ink-soft); background: var(--paper-deep);
+  }
+
+  /* warning banner */
+  .warn {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(168, 50, 50, 0.06); border: 1px solid rgba(168, 50, 50, 0.3);
+    border-radius: 2px; padding: 13px 18px; margin-bottom: 28px;
+    font-size: 13.5px; color: var(--trap);
+  }
+  .warn strong { font-weight: 600; }
+
+  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 34px; }
+  .controls .toggle {
+    padding: 12px 22px; background: var(--paper-deep); border: 1px solid var(--rule);
+    border-radius: 2px; font-family: 'Lora', serif; font-size: 12px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .controls .toggle:hover { border-color: var(--ink); color: var(--ink); }
+  .controls .counter {
+    font-family: 'Fraunces', serif; font-style: italic; color: var(--ink-soft);
+    font-size: 14px; margin-left: auto;
+  }
+  .controls .counter strong { color: var(--ink); font-weight: 500; font-size: 17px; font-style: normal; }
+
+  .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  @media (min-width: 760px) { .grid { grid-template-columns: 1fr 1fr; gap: 20px; } }
+
+  .card {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 26px 28px 24px; position: relative; animation: fadeIn 0.4s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+  .card-number {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 13px;
+    color: var(--ink-soft); letter-spacing: 0.05em; white-space: nowrap;
+  }
+  .tense-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+  .tense-tag {
+    font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 2px; background: rgba(45, 106, 79, 0.1);
+    color: var(--truth); border: 1px solid rgba(45, 106, 79, 0.25);
+  }
+
+  .prompt { font-size: 17px; line-height: 1.65; color: var(--ink); }
+  .prompt .blank {
+    display: inline-block; min-width: 54px; border-bottom: 1.5px solid var(--trap);
+    margin: 0 2px;
+  }
+  .prompt .cue {
+    font-style: italic; color: var(--ink-soft); font-size: 14.5px;
+    white-space: nowrap;
+  }
+
+  .reveal-btn {
+    margin-top: 18px; width: 100%; padding: 9px; background: transparent;
+    border: 1px dashed var(--rule); border-radius: 2px; cursor: pointer;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 13px;
+    color: var(--ink-soft); transition: all 0.2s;
+  }
+  .reveal-btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  .answer {
+    max-height: 0; overflow: hidden; opacity: 0;
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.25s ease;
+  }
+  .card.open .answer { max-height: 600px; opacity: 1; margin-top: 16px; }
+  .card.open .reveal-btn { display: none; }
+
+  .answer-inner {
+    padding: 14px 16px; background: rgba(45, 106, 79, 0.07);
+    border-left: 3px solid var(--truth);
+  }
+  .answer-label {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--truth); font-weight: 600; margin-bottom: 5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .answer-label .ss {
+    font-size: 8.5px; letter-spacing: 0.1em; color: var(--trap);
+    border: 1px solid rgba(168,50,50,0.4); border-radius: 2px;
+    padding: 1px 5px; font-weight: 600;
+  }
+  .answer-key {
+    font-family: 'Fraunces', serif; font-weight: 500; font-size: 18px;
+    color: var(--ink); line-height: 1.35; margin-bottom: 10px;
+  }
+  .answer-why { font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+  .answer-why .fr {
+    display: block; margin-top: 8px; padding-top: 8px;
+    border-top: 1px solid rgba(201,184,150,0.55); color: var(--trap);
+    font-style: italic; font-size: 13px;
+  }
+
+  footer {
+    margin-top: 64px; padding-top: 28px; border-top: 1px solid var(--rule);
+    text-align: center; font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 13px; color: var(--ink-soft);
+  }
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 44px 20px 60px; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .controls .counter { margin-left: 0; text-align: center; }
+  }
+  @media print {
+    body { background: white; }
+    .controls, .warn, footer { display: none; }
+    .card { break-inside: avoid; }
+    .answer { max-height: none !important; opacity: 1 !important; margin-top: 16px !important; }
+    .reveal-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">A drill set · Corinne · C1 stretch</div>
+    <h1>The twelve <span class="accent">tenses</span></h1>
+    <div class="subtitle">Twenty-five contrastive drills across the whole English tense system — built around the choices a francophone CFO actually has to make under pressure.</div>
+  </header>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="warn">
+    <span>Answers are hidden by default and tagged <strong>SCREEN-SHARE-UNSAFE</strong>. Reveal one at a time — don't open all keys while sharing your screen with Corinne.</span>
+  </div>
+
+  <div class="controls">
+    <button class="toggle" id="reveal-all" type="button">Reveal all keys</button>
+    <button class="toggle" id="hide-all" type="button">Hide all keys</button>
+    <div class="counter"><strong id="count">25</strong> drills</div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    Built one lesson at a time. <span class="ornament">·</span> 25 drills · all 12 tenses <span class="ornament">·</span> Last updated 23 June 2026
+  </footer>
+</div>
+
+<script>
+const TENSES = [
+  "Present Simple", "Present Continuous", "Present Perfect", "Present Perfect Continuous",
+  "Past Simple", "Past Continuous", "Past Perfect", "Past Perfect Continuous",
+  "Future Simple", "Future Continuous", "Future Perfect", "Future Perfect Continuous"
+];
+
+// Each prompt: use ___ for a blank and (cue) for a bracketed verb cue.
+const drills = [
+  {
+    tags: ["Present Simple", "Present Continuous"],
+    prompt: "Our firm ___ (advise) mid-cap clients on restructuring, but right now we ___ (handle) an unusually large cross-border deal.",
+    answer: "advises / are handling",
+    why: "Permanent core activity takes the simple; a temporary current focus takes the continuous.",
+  },
+  {
+    tags: ["Present Perfect", "Past Simple"],
+    prompt: "The CFO ___ (step down) last March, and the board ___ (not appoint) a permanent replacement yet.",
+    answer: "stepped down / has not appointed",
+    why: "“Last March” is finished time → past simple. “Yet” signals unfinished relevance → present perfect.",
+    fr: "Le passé composé tempts you to use the same form for both — English splits them."
+  },
+  {
+    tags: ["Present Perfect Continuous", "Present Perfect"],
+    prompt: "We ___ (review) the contracts all morning, and we ___ (finish) only three so far.",
+    answer: "have been reviewing / have finished",
+    why: "Ongoing activity stressing duration → perfect continuous. A completed, countable result → perfect simple.",
+  },
+  {
+    tags: ["Present Perfect"],
+    prompt: "I ___ (lead) this audit team for eighteen months.",
+    answer: "have led  (or  have been leading)",
+    why: "“For + period” running up to now requires the present perfect; the continuous adds an ‘ongoing effort’ feel.",
+    fr: "“Depuis” ≠ present simple. Not “I lead this team for eighteen months.”"
+  },
+  {
+    tags: ["Past Perfect"],
+    prompt: "By the time the regulator requested the data, we ___ (already / archive) it offsite.",
+    answer: "had already archived",
+    why: "An action completed before another past event takes the past perfect.",
+  },
+  {
+    tags: ["Past Continuous", "Past Simple"],
+    prompt: "While the committee ___ (debate) the dividend, the markets ___ (move) against us.",
+    answer: "was debating / moved",
+    why: "A longer background action (continuous) is interrupted by a shorter completed one (simple).",
+  },
+  {
+    tags: ["Past Perfect Continuous"],
+    prompt: "Her eyes were red — she ___ (stare) at spreadsheets since dawn.",
+    answer: "had been staring",
+    why: "An activity continuing up to a point in the past, with a visible result at that point.",
+  },
+  {
+    tags: ["Future Simple"],
+    prompt: "If the central bank holds rates, equities ___ (probably / rally).",
+    answer: "will probably rally",
+    why: "A prediction in the result clause of a first conditional → will.",
+  },
+  {
+    tags: ["Future Continuous"],
+    prompt: "There's no point phoning me at nine — I ___ (chair) the close meeting then.",
+    answer: "will be chairing",
+    why: "An action that will already be in progress at a specific future time.",
+  },
+  {
+    tags: ["Future Perfect"],
+    prompt: "By the end of Q3, the team ___ (deliver) the full valuation model.",
+    answer: "will have delivered",
+    why: "Completion before a future deadline — signalled by “by + time”.",
+  },
+  {
+    tags: ["Future Perfect Continuous"],
+    prompt: "In September, I ___ (consult) for this group for exactly ten years.",
+    answer: "will have been consulting",
+    why: "Duration of an activity measured up to a future point.",
+  },
+  {
+    tags: ["Present Simple"],
+    prompt: "I'll circulate the minutes as soon as the chair ___ (approve) them.",
+    answer: "approves",
+    why: "After as soon as / when / once / before / until, use the present simple for future meaning — never “will”.",
+    fr: "“Quand j'aurai / dès qu'il approuvera” → present simple in English. A classic francophone slip."
+  },
+  {
+    tags: ["Present Simple"],
+    prompt: "The shareholders' meeting ___ (start) at 10:00 sharp tomorrow.",
+    answer: "starts",
+    why: "A fixed timetable or schedule takes the present simple, even for future events.",
+  },
+  {
+    tags: ["Present Continuous"],
+    prompt: "He ___ (constantly / question) the numbers without ever reading the footnotes.",
+    answer: "is constantly questioning",
+    why: "Present continuous + always/constantly expresses a repeated, irritating habit.",
+  },
+  {
+    tags: ["Present Perfect"],
+    prompt: "Sterling ___ (fall) sharply overnight, so our hedging costs ___ (rise).",
+    answer: "has fallen / have risen",
+    why: "A past action with a result that matters now, and no specific finished time given.",
+  },
+  {
+    tags: ["Present Perfect Continuous"],
+    prompt: "How long ___ (you / wait) for the board's decision?",
+    answer: "have you been waiting",
+    why: "Questioning the duration of an activity that is still in progress.",
+  },
+  {
+    tags: ["Past Simple"],
+    prompt: "We ___ (close) that fund three years ago.",
+    answer: "closed",
+    why: "“Ago” fixes a finished past time → past simple, full stop.",
+    fr: "“Il y a trois ans” pairs with the simple past, not the present perfect."
+  },
+  {
+    tags: ["Past Continuous"],
+    prompt: "While I ___ (prepare) the board pack, my analyst ___ (rebuild) the model.",
+    answer: "was preparing / was rebuilding",
+    why: "Two actions in progress simultaneously in the past — both continuous.",
+  },
+  {
+    tags: ["Past Perfect"],
+    prompt: "The auditor confirmed that the provision ___ (be) understated in the prior year.",
+    answer: "had been",
+    why: "An earlier past situation, viewed from a later past reporting point → past perfect.",
+  },
+  {
+    tags: ["Past Perfect Continuous"],
+    prompt: "The system was overloaded because too many users ___ (run) reports all afternoon.",
+    answer: "had been running",
+    why: "An extended past activity that explains a later past result.",
+  },
+  {
+    tags: ["Future Simple"],
+    prompt: "“The figures don't reconcile.” — “Leave it with me; I ___ (look) into it now.”",
+    answer: "'ll look  (will look)",
+    why: "A decision made at the moment of speaking → will (not “going to”, not present continuous).",
+  },
+  {
+    tags: ["Future Continuous"],
+    prompt: "___ (you / use) the data room this afternoon, or can my team have it?",
+    answer: "Will you be using",
+    why: "Future continuous makes the enquiry neutral and non-imposing — asking about plans, not requesting.",
+  },
+  {
+    tags: ["Future Perfect"],
+    prompt: "Don't worry about the backlog — we ___ (clear) every open item before the audit begins.",
+    answer: "will have cleared",
+    why: "Completion guaranteed before a future point.",
+  },
+  {
+    tags: ["Future Perfect Continuous"],
+    prompt: "When we finally sign, the two sides ___ (negotiate) for nearly a year.",
+    answer: "will have been negotiating",
+    why: "Stresses the length of an ongoing process measured up to a future moment.",
+  },
+  {
+    tags: ["Present Simple", "Future Perfect", "Future Simple"],
+    prompt: "By the time you ___ (read) this note, I ___ (already / leave) for the airport, but I ___ (call) you the moment I ___ (land).",
+    answer: "read / will have already left / 'll call / land",
+    why: "Four moves in one sentence: present simple in the time clause (read, land), future perfect for the completed departure (will have left), future simple for the decision (will call).",
+    fr: "Both “read” and “land” sit in time clauses — present simple, not future."
+  }
+];
+
+const grid = document.getElementById('grid');
+const legend = document.getElementById('legend');
+
+// build coverage legend
+TENSES.forEach(t => {
+  const chip = document.createElement('span');
+  chip.className = 'chip';
+  chip.textContent = t;
+  legend.appendChild(chip);
+});
+
+function renderPrompt(text) {
+  // ___ -> blank span ; (cue) -> styled cue
+  let html = text
+    .replace(/___/g, '<span class="blank"></span>')
+    .replace(/\(([^)]+)\)/g, '<span class="cue">($1)</span>');
+  return html;
+}
+
+drills.forEach((d, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.animationDelay = (i * 22) + 'ms';
+  const tags = d.tags.map(t => `<span class="tense-tag">${t}</span>`).join('');
+  card.innerHTML = `
+    <div class="card-head">
+      <div class="card-number">N°&nbsp;${String(i + 1).padStart(2, '0')}</div>
+      <div class="tense-tags">${tags}</div>
+    </div>
+    <div class="prompt">${renderPrompt(d.prompt)}</div>
+    <button class="reveal-btn" type="button">Reveal key</button>
+    <div class="answer">
+      <div class="answer-inner">
+        <div class="answer-label">Key <span class="ss">SCREEN-SHARE-UNSAFE</span></div>
+        <div class="answer-key">${d.answer}</div>
+        <div class="answer-why">${d.why}${d.fr ? `<span class="fr">${d.fr}</span>` : ''}</div>
+      </div>
+    </div>
+  `;
+  card.querySelector('.reveal-btn').addEventListener('click', () => card.classList.add('open'));
+  grid.appendChild(card);
+});
+
+document.getElementById('reveal-all').addEventListener('click', () => {
+  document.querySelectorAll('.card').forEach(c => c.classList.add('open'));
+});
+document.getElementById('hide-all').addEventListener('click', () => {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
+});
+</script>
+</body>
+</html>

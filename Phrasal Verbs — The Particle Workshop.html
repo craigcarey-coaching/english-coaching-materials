@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phrasal Verbs — The Particle Workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f3ede1;
+    --paper-2:#ebe3d3;
+    --card:#fbf8f1;
+    --ink:#23271f;
+    --ink-soft:#5a5d50;
+    --line:#d8cfba;
+    --particle:#c2521f;       /* the particle accent */
+    --particle-soft:#f2dcc9;
+    --teal:#1d5b56;
+    --teal-soft:#d6e3df;
+    --good:#3f7a3a;
+    --good-soft:#dde9d6;
+    --bad:#b03a2e;
+    --bad-soft:#f0d8d4;
+    --shadow:0 1px 0 rgba(0,0,0,.04), 0 8px 24px -12px rgba(35,39,31,.22);
+    --serif:'Fraunces',Georgia,serif;
+    --sans:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--sans);
+    background:var(--paper);
+    background-image:radial-gradient(rgba(35,39,31,.025) 1px, transparent 1px);
+    background-size:4px 4px;
+    color:var(--ink);
+    line-height:1.55;
+    padding:clamp(16px,3vw,40px);
+  }
+  .wrap{max-width:840px;margin:0 auto}
+
+  /* ---------- header ---------- */
+  header.masthead{
+    border-bottom:2px solid var(--ink);
+    padding-bottom:18px;margin-bottom:4px;
+  }
+  .kicker{
+    font:600 12px/1 var(--sans);
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--particle);
+    display:flex;align-items:center;gap:10px;margin-bottom:14px;
+  }
+  .kicker::after{content:"";flex:1;height:1px;background:var(--line)}
+  h1.title{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(34px,7vw,56px);
+    line-height:.98;letter-spacing:-.015em;
+  }
+  h1.title em{font-style:italic;color:var(--particle)}
+  .standfirst{
+    font-size:16px;color:var(--ink-soft);max-width:60ch;margin-top:12px;
+    font-style:italic;font-family:var(--serif);font-weight:400;
+  }
+
+  /* ---------- nav ---------- */
+  nav.tabs{
+    display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 8px;
+    position:sticky;top:0;z-index:30;
+    background:var(--paper);padding:10px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .tab{
+    font:600 13px/1 var(--sans);
+    border:1px solid var(--line);background:var(--card);
+    color:var(--ink-soft);
+    padding:9px 14px;border-radius:999px;cursor:pointer;
+    transition:.15s;display:flex;align-items:center;gap:7px;
+  }
+  .tab .n{
+    font-family:var(--serif);font-weight:600;font-size:12px;
+    width:18px;height:18px;border-radius:50%;
+    display:grid;place-items:center;
+    background:var(--paper-2);color:var(--ink-soft);
+  }
+  .tab:hover{border-color:var(--ink-soft);color:var(--ink)}
+  .tab[aria-selected="true"]{
+    background:var(--ink);color:var(--paper);border-color:var(--ink);
+  }
+  .tab[aria-selected="true"] .n{background:var(--particle);color:#fff}
+
+  /* ---------- panels ---------- */
+  .panel{display:none;animation:rise .4s ease both;padding-top:26px}
+  .panel.active{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  h2.sec{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(24px,4vw,32px);line-height:1.05;letter-spacing:-.01em;
+    margin-bottom:6px;
+  }
+  .sec-sub{color:var(--ink-soft);margin-bottom:22px;max-width:62ch}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:20px 22px;margin-bottom:16px;
+    box-shadow:var(--shadow);
+  }
+
+  /* verb + particle device */
+  .pv{font-weight:600;white-space:nowrap}
+  .v{color:var(--ink)}
+  .p{color:var(--particle)}
+  .pv-big{font-family:var(--serif);font-size:26px;font-weight:600}
+
+  /* concept: meaning shifter */
+  .shifter{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 4px}
+  .chip{
+    border:1px solid var(--line);background:var(--paper);
+    border-radius:10px;padding:10px 14px;font-size:15px;
+    display:flex;flex-direction:column;gap:3px;min-width:150px;flex:1;
+  }
+  .chip .combo{font-family:var(--serif);font-size:19px;font-weight:600}
+  .chip .gloss{font-size:13px;color:var(--ink-soft)}
+
+  /* spectrum bar */
+  .spectrum{margin:18px 0 6px}
+  .spectrum .bar{
+    height:10px;border-radius:6px;
+    background:linear-gradient(90deg,var(--teal),#9aa05a,var(--particle));
+    margin:8px 0;
+  }
+  .spectrum .ends{display:flex;justify-content:space-between;font-size:12px;
+    text-transform:uppercase;letter-spacing:.08em;font-weight:600;color:var(--ink-soft)}
+  .spectrum .row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .lvl{flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;
+    padding:12px 14px;background:var(--paper)}
+  .lvl b{display:block;font-family:var(--serif);font-size:16px;margin-bottom:4px}
+  .lvl small{color:var(--ink-soft);font-size:13px}
+
+  .callout{
+    border-left:3px solid var(--particle);
+    background:var(--particle-soft);
+    padding:14px 18px;border-radius:0 12px 12px 0;margin:18px 0;
+    font-size:15px;
+  }
+  .callout b{font-family:var(--serif)}
+
+  /* rules */
+  .rule{display:flex;gap:16px;align-items:flex-start}
+  .rule .num{
+    font-family:var(--serif);font-weight:700;font-size:28px;
+    color:var(--particle);line-height:1;min-width:34px;
+  }
+  .rule h3{font-family:var(--serif);font-size:19px;font-weight:600;margin-bottom:4px}
+  .rule p{font-size:15px;color:var(--ink-soft)}
+  .ex-line{margin-top:8px;font-size:15px}
+  .ok::before{content:"✓ ";color:var(--good);font-weight:700}
+  .no::before{content:"✗ ";color:var(--bad);font-weight:700}
+  .no{color:var(--bad)}
+  .tag{
+    display:inline-block;font:600 11px/1 var(--sans);letter-spacing:.06em;
+    text-transform:uppercase;padding:4px 8px;border-radius:6px;margin-left:6px;
+    vertical-align:middle;
+  }
+  .tag.sep{background:var(--teal-soft);color:var(--teal)}
+  .tag.insep{background:var(--paper-2);color:var(--ink-soft)}
+
+  /* examples table */
+  .ex{display:grid;grid-template-columns:auto 1fr;gap:2px 0;
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+  .ex .head{background:var(--ink);color:var(--paper);font-weight:600;font-size:12px;
+    letter-spacing:.08em;text-transform:uppercase;padding:10px 16px}
+  .ex .cell{padding:13px 16px;border-top:1px solid var(--line);font-size:15px}
+  .ex .cell.left{font-weight:600}
+  .ex .meaning{color:var(--ink-soft)}
+  .ex .sent{margin-top:4px;font-style:italic;font-family:var(--serif)}
+
+  /* ---------- drills ---------- */
+  .stepper{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+  .stepbtn{
+    flex:1;min-width:120px;border:1px solid var(--line);background:var(--card);
+    border-radius:10px;padding:10px 12px;cursor:pointer;text-align:left;transition:.15s}
+  .stepbtn b{display:block;font-family:var(--serif);font-size:15px}
+  .stepbtn small{font-size:12px;color:var(--ink-soft)}
+  .stepbtn[aria-current="true"]{border-color:var(--particle);background:var(--particle-soft)}
+  .stepbtn.done b::after{content:" ✓";color:var(--good)}
+
+  .progress{height:8px;background:var(--paper-2);border-radius:6px;overflow:hidden;margin:14px 0 22px;border:1px solid var(--line)}
+  .progress > i{display:block;height:100%;background:var(--teal);width:0;transition:width .4s}
+
+  .q{margin-bottom:14px}
+  .q .stem{font-size:17px;margin-bottom:12px;font-family:var(--serif)}
+  .q .stem .blank{
+    display:inline-block;min-width:54px;border-bottom:2px solid var(--particle);
+    text-align:center;color:var(--particle);font-weight:600}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{
+    font:500 15px/1.2 var(--sans);
+    border:1px solid var(--line);background:var(--paper);
+    padding:11px 16px;border-radius:10px;cursor:pointer;transition:.12s}
+  .opt:hover:not(:disabled){border-color:var(--ink);transform:translateY(-1px)}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:var(--good-soft);border-color:var(--good);color:var(--good);font-weight:600}
+  .opt.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+  .fb{margin-top:10px;font-size:14px;padding:10px 14px;border-radius:8px;display:none}
+  .fb.show{display:block}
+  .fb.right{background:var(--good-soft);color:var(--good)}
+  .fb.wrong{background:var(--bad-soft);color:var(--bad)}
+  .fb b{font-weight:600}
+
+  /* drag pronoun */
+  .slotline{font-family:var(--serif);font-size:20px;display:flex;align-items:center;
+    flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+  .slot{min-width:48px;height:38px;border:2px dashed var(--line);border-radius:8px;
+    display:inline-grid;place-items:center;padding:0 8px;color:var(--ink-soft);
+    transition:.15s;font-size:16px}
+  .slot.over{border-color:var(--particle);background:var(--particle-soft)}
+  .slot.filled{border-style:solid;border-color:var(--teal);color:var(--teal);font-weight:600}
+  .chiptray{display:flex;gap:8px;margin-bottom:10px}
+  .drag{cursor:grab;border:1px solid var(--teal);background:var(--teal-soft);
+    color:var(--teal);font-weight:600;padding:8px 16px;border-radius:8px;font-size:16px;
+    font-family:var(--serif);user-select:none}
+  .drag:active{cursor:grabbing}
+  .drag.used{opacity:.3;pointer-events:none}
+
+  /* recall input */
+  .recall-input{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px}
+  .recall-input input{
+    font:500 16px var(--sans);padding:10px 14px;border:1px solid var(--line);
+    border-radius:9px;background:var(--paper);min-width:200px;flex:1}
+  .recall-input input:focus{outline:none;border-color:var(--particle)}
+  .btn{font:600 14px var(--sans);border:1px solid var(--ink);background:var(--ink);
+    color:var(--paper);padding:10px 18px;border-radius:9px;cursor:pointer;transition:.15s}
+  .btn:hover{background:var(--teal);border-color:var(--teal)}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border-color:var(--line)}
+  .btn.ghost:hover{color:var(--ink);background:var(--card)}
+  .hint{font-size:13px;color:var(--ink-soft);margin-top:6px;font-style:italic}
+
+  .scorebar{display:flex;align-items:center;justify-content:space-between;gap:12px;
+    margin-top:24px;padding-top:18px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .scorebar .s{font-family:var(--serif);font-size:15px}
+  .scorebar .s b{color:var(--particle);font-size:18px}
+
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);
+    font-size:13px;color:var(--ink-soft);display:flex;justify-content:space-between;
+    flex-wrap:wrap;gap:10px}
+  footer a{color:var(--teal);cursor:pointer;text-decoration:none;border-bottom:1px solid var(--teal-soft)}
+
+  @media(max-width:560px){
+    .rule{gap:10px}.ex{grid-template-columns:1fr}
+    .ex .cell.left{padding-bottom:0}
+    nav.tabs{font-size:12px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="kicker">English Workshop · B2</div>
+    <h1 class="title">Phrasal <em>Verbs</em></h1>
+    <p class="standfirst">A verb plus a small word that quietly changes everything. Learn to see the particle — and to use it without thinking.</p>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-go="concept"><span class="n">1</span>The Concept</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="rules"><span class="n">2</span>The Rules</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="action"><span class="n">3</span>In Action</button>
+    <button class="tab" role="tab" aria-selected="false" data-go="drills"><span class="n">4</span>Drills</button>
+  </nav>
+
+  <!-- ================= CONCEPT ================= -->
+  <section class="panel active" id="concept" role="tabpanel">
+    <h2 class="sec">One verb. Many meanings.</h2>
+    <p class="sec-sub">A phrasal verb is a verb plus a <span class="p" style="font-weight:600">particle</span> — a small word like <em>up, out, into, off</em>. The particle is not pointing anywhere. It is part of the meaning. Change the particle and you change the whole word.</p>
+
+    <div class="card">
+      <p style="margin-bottom:12px">Watch one verb shift as the particle changes:</p>
+      <div class="shifter">
+        <div class="chip"><span class="combo"><span class="v">look</span> <span class="p">up</span></span><span class="gloss">find information</span></div>
+        <div class="chip"><span class="combo"><span class="v">look</span> <span class="p">into</span></span><span class="gloss">investigate</span></div>
+        <div class="chip"><span class="combo"><span class="v">look</span> <span class="p">after</span></span><span class="gloss">take care of</span></div>
+        <div class="chip"><span class="combo"><span class="v">look</span> <span class="p">forward to</span></span><span class="gloss">feel excited about</span></div>
+      </div>
+      <p style="margin-top:14px;color:var(--ink-soft);font-size:15px">Same verb. Four unrelated meanings. The work is done by the <span class="p" style="font-weight:600">particle</span>.</p>
+    </div>
+
+    <div class="callout">
+      <b>Don't translate the particle.</b> The meaning lives in the <em>combination</em>, not in the separate words. <span class="pv"><span class="v">give</span> <span class="p">up</span></span> has nothing to do with "give" or "up". Learn the pair as a single new word — and absorb it from examples, not from a dictionary of parts.
+    </div>
+
+    <div class="card spectrum">
+      <h3 style="font-family:var(--serif);font-size:18px;margin-bottom:2px">How transparent is it?</h3>
+      <p style="color:var(--ink-soft);font-size:14px">Some you can guess. Some you simply have to know.</p>
+      <div class="bar"></div>
+      <div class="ends"><span>Transparent</span><span>Opaque</span></div>
+      <div class="row">
+        <div class="lvl"><b><span class="v">stand</span> <span class="p">up</span></b><small>The particle keeps its literal meaning. Easy to guess.</small></div>
+        <div class="lvl"><b><span class="v">write</span> <span class="p">down</span></b><small>Half-literal. You can usually work it out.</small></div>
+        <div class="lvl"><b><span class="v">carry</span> <span class="p">out</span></b><small>Idiomatic. Means "perform/do". Must be learned.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RULES ================= -->
+  <section class="panel" id="rules" role="tabpanel">
+    <h2 class="sec">Four things to keep in your head</h2>
+    <p class="sec-sub">Not grammar to recite — habits to build. The fourth one is where most mistakes happen.</p>
+
+    <div class="card"><div class="rule"><div class="num">1</div><div>
+      <h3>The particle carries the meaning</h3>
+      <p>Treat verb + particle as one unit. Don't read the words separately. <span class="pv"><span class="v">put</span> <span class="p">off</span></span> = postpone; <span class="pv"><span class="v">put</span> <span class="p">up with</span></span> = tolerate. Different particle, different word.</p>
+    </div></div></div>
+
+    <div class="card"><div class="rule"><div class="num">2</div><div>
+      <h3>Separable vs inseparable <span class="tag sep">separable</span> <span class="tag insep">inseparable</span></h3>
+      <p>Some phrasal verbs let the object sit in the middle; some don't.</p>
+      <div class="ex-line ok">I turned <u>off the light</u> &nbsp;/&nbsp; I turned <u>the light</u> off &nbsp;<span class="tag sep">separable</span></div>
+      <div class="ex-line ok">She looks <u>after the children</u> &nbsp;<span class="tag insep">inseparable</span></div>
+      <div class="ex-line no">She looks the children after</div>
+    </div></div></div>
+
+    <div class="card" style="border-color:var(--particle)"><div class="rule"><div class="num">3</div><div>
+      <h3>The pronoun rule <span class="tag" style="background:var(--particle-soft);color:var(--particle)">high-value</span></h3>
+      <p>With a separable phrasal verb, a pronoun object (<em>it, them, him, her</em>) <b>must</b> go in the middle. This is the error to watch for.</p>
+      <div class="ex-line ok">Turn <b>it</b> off &nbsp;·&nbsp; I'll bring <b>it</b> up &nbsp;·&nbsp; Switch <b>them</b> on</div>
+      <div class="ex-line no">Turn off it &nbsp;·&nbsp; I'll bring up it &nbsp;·&nbsp; Switch on them</div>
+    </div></div></div>
+
+    <div class="card"><div class="rule"><div class="num">4</div><div>
+      <h3>Three-part verbs stay together</h3>
+      <p>Verbs with two particles (<span class="pv"><span class="v">come</span> <span class="p">up with</span></span>, <span class="pv"><span class="v">get</span> <span class="p">on with</span></span>, <span class="pv"><span class="v">look</span> <span class="p">forward to</span></span>) are always inseparable. The object comes after the whole chunk.</p>
+      <div class="ex-line ok">She came up with <u>a plan</u> &nbsp;·&nbsp; She came up with <b>it</b></div>
+      <div class="ex-line no">She came a plan up with</div>
+    </div></div></div>
+  </section>
+
+  <!-- ================= IN ACTION ================= -->
+  <section class="panel" id="action" role="tabpanel">
+    <h2 class="sec">Twelve worth knowing</h2>
+    <p class="sec-sub">High-frequency B2 phrasal verbs in real sentences. The particle is marked so you start to <em>see</em> it.</p>
+    <div class="ex" id="exTable">
+      <div class="head">Phrasal verb</div><div class="head">Meaning &amp; example</div>
+    </div>
+  </section>
+
+  <!-- ================= DRILLS ================= -->
+  <section class="panel" id="drills" role="tabpanel">
+    <h2 class="sec">Drills</h2>
+    <p class="sec-sub">Four steps, getting harder. Build confidence first; finish by producing them yourself.</p>
+
+    <div class="stepper" id="stepper"></div>
+    <div class="progress"><i id="progBar"></i></div>
+
+    <div id="drillBody"></div>
+
+    <div class="scorebar">
+      <div class="s">This step: <b id="stepScore">0 / 0</b></div>
+      <div style="display:flex;gap:8px">
+        <button class="btn ghost" id="resetBtn">Reset all</button>
+        <button class="btn" id="nextBtn">Next step →</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>The Particle Workshop · B2 English</span>
+    <a id="resetFoot">Clear saved progress</a>
+  </footer>
+</div>
+
+<script>
+"use strict";
+/* ---------- safe storage ---------- */
+const KEY="phrasal_verbs_v1";
+const store={
+  read(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return {}}},
+  write(o){try{localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+};
+let state=Object.assign({step:0,done:[false,false,false,false],answered:{}},store.read());
+function save(){store.write(state)}
+
+/* ---------- tab nav ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+const panels={concept:document.getElementById('concept'),rules:document.getElementById('rules'),
+  action:document.getElementById('action'),drills:document.getElementById('drills')};
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.setAttribute('aria-selected','false'));
+  t.setAttribute('aria-selected','true');
+  Object.values(panels).forEach(p=>p.classList.remove('active'));
+  panels[t.dataset.go].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}));
+
+/* ---------- examples table ---------- */
+const EXAMPLES=[
+  {pv:[["carry","out"]],sep:"sep",mean:"to perform or complete (a task, plan)",sent:"The team will carry out the survey next week."},
+  {pv:[["set","up"]],sep:"sep",mean:"to arrange or establish",sent:"We set up a meeting for Monday."},
+  {pv:[["put","off"]],sep:"sep",mean:"to postpone",sent:"They put off the decision until June."},
+  {pv:[["look","into"]],sep:"insep",mean:"to investigate",sent:"I'll look into the complaint today."},
+  {pv:[["bring","up"]],sep:"sep",mean:"to mention or raise (a topic)",sent:"She brought up an interesting point."},
+  {pv:[["turn","down"]],sep:"sep",mean:"to reject or refuse",sent:"He turned down the offer politely."},
+  {pv:[["come","up with"]],sep:"insep",mean:"to think of (an idea, solution)",sent:"They came up with a clever solution."},
+  {pv:[["deal","with"]],sep:"insep",mean:"to handle or manage",sent:"We need to deal with this issue now."},
+  {pv:[["point","out"]],sep:"sep",mean:"to draw attention to",sent:"He pointed out a mistake in the report."},
+  {pv:[["get","on with"]],sep:"insep",mean:"to have a good relationship with",sent:"I get on with my colleagues well."},
+  {pv:[["figure","out"]],sep:"sep",mean:"to understand or solve",sent:"She figured out the problem quickly."},
+  {pv:[["take","on"]],sep:"sep",mean:"to accept (work, responsibility)",sent:"We can't take on more projects right now."}
+];
+function pvHTML(parts){return parts.map(([v,p])=>`<span class="pv"><span class="v">${v}</span> <span class="p">${p}</span></span>`).join(" / ")}
+(function buildEx(){
+  const t=document.getElementById('exTable');
+  EXAMPLES.forEach(e=>{
+    const tag=e.sep==='sep'?'<span class="tag sep">separable</span>':'<span class="tag insep">inseparable</span>';
+    t.insertAdjacentHTML('beforeend',
+      `<div class="cell left">${pvHTML(e.pv)}<br>${tag}</div>
+       <div class="cell"><span class="meaning">${e.mean}</span><div class="sent">${e.sent}</div></div>`);
+  });
+})();
+
+/* ---------- drill data ---------- */
+// type 'mc'   : choose particle/answer
+// type 'drag' : pronoun placement
+// type 'recall': type the phrasal verb
+const STEPS=[
+  { title:"Step 1 — Build confidence", note:"transparent, high-frequency",
+    items:[
+      {type:'mc',stem:'Please write ___ the new password so you don’t forget it.',blank:true,opts:['down','up','off','in'],a:'down',why:'<b>write down</b> = record on paper.'},
+      {type:'mc',stem:'Could you fill ___ this form before the interview?',blank:true,opts:['in','up','on','out'],a:'in',why:'<b>fill in</b> (or <b>fill out</b>) a form = complete it.'},
+      {type:'mc',stem:'I need to pick ___ a parcel from reception.',blank:true,opts:['up','in','over','off'],a:'up',why:'<b>pick up</b> = collect.'},
+      {type:'mc',stem:'Turn ___ the lights when you leave the office.',blank:true,opts:['off','down','in','away'],a:'off',why:'<b>turn off</b> = stop a device working.'},
+      {type:'mc',stem:'We set ___ the new system last month.',blank:true,opts:['up','on','out','in'],a:'up',why:'<b>set up</b> = establish / install.'},
+      {type:'mc',stem:'The plane will take ___ in ten minutes.',blank:true,opts:['off','up','out','over'],a:'off',why:'<b>take off</b> = leave the ground.'}
+    ]},
+  { title:"Step 2 — Going deeper", note:"semi-opaque + word order",
+    items:[
+      {type:'mc',stem:'They had to call ___ the launch because of the storm.',blank:true,opts:['off','out','down','up'],a:'off',why:'<b>call off</b> = cancel.'},
+      {type:'mc',stem:'Can you look ___ this complaint and report back?',blank:true,opts:['into','after','up','out'],a:'into',why:'<b>look into</b> = investigate. (inseparable)'},
+      {type:'mc',stem:'She came ___ a brilliant idea overnight.',blank:true,opts:['up with','out of','on to','over to'],a:'up with',why:'<b>come up with</b> = think of. Three-part, inseparable.'},
+      {type:'mc',stem:'He brought ___ a good point in the meeting.',blank:true,opts:['up','out','in','over'],a:'up',why:'<b>bring up</b> = raise a topic.'},
+      {type:'mc',stem:'Which sentence is correct?',opts:['I turned down the offer.','I turned the offer.','I down turned the offer.'],a:'I turned down the offer.',why:'<b>turn down</b> is separable, so with a noun the particle can go either side: "turned down the offer" or "turned the offer down".'},
+      {type:'mc',stem:'Which sentence is correct?',opts:['She figured the problem out.','She figured out the problem.','Both are correct.'],a:'Both are correct.',why:'Separable verb + a noun object → the particle can sit on either side.'}
+    ]},
+  { title:"Step 3 — Tricks & traps", note:"vigilance: pronouns & multiple meanings",
+    items:[
+      {type:'drag'}, // pronoun placement (special)
+      {type:'mc',stem:'Sales really took off after the campaign. Here, "took off" means:',opts:['removed something','left the ground','became successful quickly'],a:'became successful quickly',why:'<b>take off</b> has several meanings. In business it often = grow fast / succeed.'},
+      {type:'mc',stem:'I picked up some Spanish while living in Madrid. Here, "picked up" means:',opts:['collected','learned informally','lifted'],a:'learned informally',why:'<b>pick up</b> = acquire a skill or language casually.'},
+      {type:'mc',stem:'Which is correct?',opts:['Can you bring up it at the meeting?','Can you bring it up at the meeting?'],a:'Can you bring it up at the meeting?',why:'The pronoun "it" must sit in the middle: <b>bring it up</b>.'},
+      {type:'mc',stem:'They made up after the argument. Here, "made up" means:',opts:['invented a story','became friends again','applied cosmetics'],a:'became friends again',why:'<b>make up</b> = reconcile. (It can also mean "invent" — context decides.)'},
+      {type:'mc',stem:'Which is correct?',opts:['Switch off it.','Switch it off.'],a:'Switch it off.',why:'Pronoun in the middle: <b>switch it off</b>.'}
+    ]},
+  { title:"Step 4 — Seal it", note:"recall and produce",
+    items:[
+      {type:'recall',mean:'to cancel an event',verb:'call',a:['call off'],why:'<b>call off</b> the match / the deal.'},
+      {type:'recall',mean:'to investigate something',verb:'look',a:['look into'],why:'<b>look into</b> the issue.'},
+      {type:'recall',mean:'to think of a new idea (three parts)',verb:'come',a:['come up with'],why:'<b>come up with</b> a solution.'},
+      {type:'recall',mean:'to tolerate something annoying (three parts)',verb:'put',a:['put up with'],why:'<b>put up with</b> the noise.'},
+      {type:'recall',mean:'to establish or arrange something',verb:'set',a:['set up'],why:'<b>set up</b> a company / a meeting.'},
+      {type:'recall',mean:'to handle or manage a problem',verb:'deal',a:['deal with'],why:'<b>deal with</b> the complaint.'}
+    ]}
+];
+
+/* ---------- drill rendering ---------- */
+const stepperEl=document.getElementById('stepper');
+const bodyEl=document.getElementById('drillBody');
+const progBar=document.getElementById('progBar');
+const stepScoreEl=document.getElementById('stepScore');
+const nextBtn=document.getElementById('nextBtn');
+
+function qid(s,i){return 's'+s+'q'+i}
+function norm(x){return x.toLowerCase().replace(/\s+/g,' ').trim()}
+
+function buildStepper(){
+  stepperEl.innerHTML='';
+  STEPS.forEach((s,i)=>{
+    const b=document.createElement('button');
+    b.className='stepbtn'+(state.done[i]?' done':'');
+    if(i===state.step)b.setAttribute('aria-current','true');
+    b.innerHTML=`<b>${s.title.split('—')[0].trim()}</b><small>${s.note}</small>`;
+    b.addEventListener('click',()=>{state.step=i;save();renderStep()});
+    stepperEl.appendChild(b);
+  });
+}
+
+function renderStep(){
+  buildStepper();
+  const s=STEPS[state.step];
+  bodyEl.innerHTML=`<h3 style="font-family:var(--serif);font-size:20px;margin-bottom:16px">${s.title}</h3>`;
+  s.items.forEach((it,i)=>{
+    if(it.type==='mc')renderMC(s,it,i);
+    else if(it.type==='drag')renderDrag(s,it,i);
+    else if(it.type==='recall')renderRecall(s,it,i);
+  });
+  updateScore();
+  nextBtn.textContent = state.step<3 ? 'Next step →' : 'Finish ✓';
+}
+
+function answeredVal(s,i){return state.answered[qid(s,i)]}
+
+function renderMC(s,it,i){
+  const id=qid(state.step,i);
+  const prev=answeredVal(state.step,i);
+  const wrap=document.createElement('div');wrap.className='card q';
+  wrap.innerHTML=`<div class="stem">${it.blank?stemWithBlank(it.stem):it.stem}</div><div class="opts"></div><div class="fb"></div>`;
+  const optsEl=wrap.querySelector('.opts');
+  const fb=wrap.querySelector('.fb');
+  it.opts.forEach(o=>{
+    const btn=document.createElement('button');btn.className='opt';btn.textContent=o;
+    btn.addEventListener('click',()=>{
+      if(answeredVal(state.step,i))return;
+      const correct=o===it.a;
+      [...optsEl.children].forEach(c=>c.disabled=true);
+      btn.classList.add(correct?'correct':'wrong');
+      if(!correct)[...optsEl.children].find(c=>c.textContent===it.a)?.classList.add('correct');
+      fb.className='fb show '+(correct?'right':'wrong');
+      fb.innerHTML=(correct?'Correct. ':'Not quite. ')+it.why;
+      state.answered[id]={ok:correct};save();updateScore();
+    });
+    if(prev){btn.disabled=true;
+      if(o===it.a)btn.classList.add('correct');}
+    optsEl.appendChild(btn);
+  });
+  if(prev){fb.className='fb show '+(prev.ok?'right':'wrong');
+    fb.innerHTML=(prev.ok?'Correct. ':'Not quite. ')+it.why;}
+  bodyEl.appendChild(wrap);
+}
+
+function stemWithBlank(text){
+  return text.replace('___', '<span class="blank">?</span>');
+}
+
+/* drag pronoun placement (fixed item) */
+function renderDrag(s,it,i){
+  const id=qid(state.step,i);
+  const prev=answeredVal(state.step,i);
+  const wrap=document.createElement('div');wrap.className='card q';
+  wrap.innerHTML=`
+    <div class="stem">Place the pronoun. The offer was bad, so I…</div>
+    <div class="chiptray"><span class="drag" draggable="true" id="dragIt">it</span></div>
+    <div class="slotline">
+      <span class="v" style="font-weight:600">turned</span>
+      <span class="slot" data-slot="A">▢</span>
+      <span class="p">down</span>
+      <span class="slot" data-slot="B">▢</span>
+      <span style="color:var(--ink-soft)">.</span>
+    </div>
+    <div class="fb"></div>
+    <div class="hint">Drag <b>it</b> into the right gap (slot A is between the verb and the particle).</div>`;
+  bodyEl.appendChild(wrap);
+  const chip=wrap.querySelector('#dragIt');
+  const slots=[...wrap.querySelectorAll('.slot')];
+  const fb=wrap.querySelector('.fb');
+
+  function settle(slotName){
+    const correct=slotName==='A'; // pronoun goes in the middle
+    slots.forEach(sl=>{
+      sl.classList.remove('over');
+      if(sl.dataset.slot===slotName){sl.textContent='it';sl.classList.add('filled')}
+      else sl.textContent='▢';
+    });
+    chip.classList.add('used');
+    fb.className='fb show '+(correct?'right':'wrong');
+    fb.innerHTML=correct
+      ? 'Correct. <b>turned it down</b> — a pronoun object always sits in the middle.'
+      : 'Not quite. "turned down it" is wrong — the pronoun <b>it</b> must go in the middle: <b>turned it down</b>.';
+    state.answered[id]={ok:correct};save();updateScore();
+  }
+
+  chip.addEventListener('dragstart',e=>{e.dataTransfer.setData('text','it')});
+  slots.forEach(sl=>{
+    sl.addEventListener('dragover',e=>{e.preventDefault();sl.classList.add('over')});
+    sl.addEventListener('dragleave',()=>sl.classList.remove('over'));
+    sl.addEventListener('drop',e=>{e.preventDefault();if(answeredVal(state.step,i))return;settle(sl.dataset.slot)});
+    // click fallback
+    sl.addEventListener('click',()=>{if(answeredVal(state.step,i))return;settle(sl.dataset.slot)});
+  });
+  if(prev){settle(prev.ok?'A':'B');}
+}
+
+/* recall typing */
+function renderRecall(s,it,i){
+  const id=qid(state.step,i);
+  const prev=answeredVal(state.step,i);
+  const wrap=document.createElement('div');wrap.className='card q';
+  wrap.innerHTML=`
+    <div class="stem">${it.mean} &nbsp;—&nbsp; <span style="color:var(--ink-soft);font-size:15px">starts with “<span class="v" style="font-weight:600">${it.verb}</span>…”</span></div>
+    <div class="recall-input">
+      <input type="text" placeholder="type the full phrasal verb" autocomplete="off" spellcheck="false">
+      <button class="btn check">Check</button>
+      <button class="btn ghost reveal">Show</button>
+    </div>
+    <div class="fb"></div>`;
+  bodyEl.appendChild(wrap);
+  const inp=wrap.querySelector('input');
+  const fb=wrap.querySelector('.fb');
+  function judge(){
+    if(answeredVal(state.step,i))return;
+    const correct=it.a.map(norm).includes(norm(inp.value));
+    inp.disabled=true;wrap.querySelector('.check').disabled=true;
+    fb.className='fb show '+(correct?'right':'wrong');
+    fb.innerHTML=(correct?'Correct. ':`Answer: <b>${it.a[0]}</b>. `)+it.why;
+    state.answered[id]={ok:correct};save();updateScore();
+  }
+  wrap.querySelector('.check').addEventListener('click',judge);
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter')judge()});
+  wrap.querySelector('.reveal').addEventListener('click',()=>{
+    if(answeredVal(state.step,i))return;
+    inp.value=it.a[0];judge();
+  });
+  if(prev){inp.value=prev.ok?it.a[0]:inp.value;inp.disabled=true;
+    wrap.querySelector('.check').disabled=true;
+    fb.className='fb show '+(prev.ok?'right':'wrong');
+    fb.innerHTML=(prev.ok?'Correct. ':`Answer: <b>${it.a[0]}</b>. `)+it.why;}
+}
+
+/* ---------- scoring / progress ---------- */
+function updateScore(){
+  const s=STEPS[state.step];
+  let done=0,ok=0;
+  s.items.forEach((it,i)=>{const a=answeredVal(state.step,i);if(a){done++;if(a.ok)ok++}});
+  stepScoreEl.textContent=ok+' / '+s.items.length;
+  if(done===s.items.length){state.done[state.step]=true;save();buildStepper();}
+  // overall progress across all answered
+  let total=0,ans=0;
+  STEPS.forEach((st,si)=>st.items.forEach((it,ii)=>{total++;if(state.answered[qid(si,ii)])ans++}));
+  progBar.style.width=(ans/total*100)+'%';
+}
+
+nextBtn.addEventListener('click',()=>{
+  if(state.step<3){state.step++;save();renderStep();
+    document.getElementById('drills').scrollIntoView({behavior:'smooth'});}
+  else{
+    // celebrate finish
+    nextBtn.textContent='Well done ✓';
+  }
+});
+
+function resetAll(){
+  state={step:0,done:[false,false,false,false],answered:{}};save();renderStep();
+}
+document.getElementById('resetBtn').addEventListener('click',resetAll);
+document.getElementById('resetFoot').addEventListener('click',resetAll);
+
+renderStep();
+</script>
+</body>
+</html>

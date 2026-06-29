@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Recall — Future Tenses & Probability</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F4EE;
+    --cream-dark: #EDE9DF;
+    --ink: #1C1A16;
+    --ink-light: #5A564E;
+    --ink-faint: #9A9690;
+    --sage: #4A6B5A;
+    --sage-light: #D4E3DA;
+    --clay: #A8412A;
+    --clay-light: #F2E0DA;
+    --teal: #1A5568;
+    --teal-light: #D4E8EF;
+    --teal-mid: #2A7A9A;
+    --border: rgba(28,26,22,0.12);
+    --border-strong: rgba(28,26,22,0.22);
+    --correct-bg: #EAF2E8;
+    --correct-border: #4A8A3A;
+    --correct-text: #2A5A1A;
+    --wrong-bg: #F5E8E6;
+    --wrong-border: #A84030;
+    --wrong-text: #6A1A10;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  .page-wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* Header */
+  .page-header {
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.5px solid var(--border-strong);
+  }
+  .page-eyebrow {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.6rem;
+  }
+  .page-title {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+  }
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--ink-light);
+    font-weight: 300;
+  }
+
+  /* Progress */
+  .progress-section { margin-bottom: 2rem; }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+  }
+  .progress-count {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--ink);
+  }
+  .progress-track {
+    width: 100%;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+  }
+  .progress-fill {
+    height: 2px;
+    border-radius: 1px;
+    background: var(--teal);
+    transition: width 0.5s ease;
+  }
+
+  /* Question card */
+  .q-card {
+    background: #FDFCF9;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .q-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  .topic-pill {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 0.5px solid var(--border-strong);
+    color: var(--ink-light);
+    background: var(--cream);
+  }
+  .difficulty-dots {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border-strong);
+  }
+  .dot.active { background: var(--teal); }
+
+  .q-text {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .q-text em {
+    font-style: italic;
+    color: var(--ink-light);
+  }
+
+  /* Source sentence for transform */
+  .source-sentence {
+    font-size: 14px;
+    color: var(--ink-light);
+    font-style: italic;
+    border-left: 2px solid var(--border-strong);
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    background: var(--cream);
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* MC Options */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt-btn {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--cream);
+    border: 0.5px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    width: 100%;
+    line-height: 1.5;
+  }
+  .opt-btn:hover:not(:disabled) {
+    background: var(--cream-dark);
+    border-color: var(--border-strong);
+  }
+  .opt-btn:disabled { cursor: default; }
+  .opt-btn.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-border);
+    color: var(--correct-text);
+  }
+  .opt-btn.wrong {
+    background: var(--wrong-bg);
+    border-color: var(--wrong-border);
+    color: var(--wrong-text);
+  }
+  .opt-btn.dimmed { opacity: 0.4; }
+  .opt-letter {
+    font-size: 11px;
+    font-weight: 500;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 0.5px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-faint);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .opt-btn.correct .opt-letter { border-color: var(--correct-border); color: var(--correct-text); }
+  .opt-btn.wrong .opt-letter { border-color: var(--wrong-border); color: var(--wrong-text); }
+
+  /* Text inputs */
+  .fillin-input,
+  .transform-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 8px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--ink);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+  .fillin-input:focus,
+  .transform-input:focus { border-color: var(--teal-mid); }
+  .fillin-input.correct,
+  .transform-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-border);
+    color: var(--correct-text);
+  }
+  .fillin-input.wrong,
+  .transform-input.wrong {
+    background: var(--wrong-bg);
+    border-color: var(--wrong-border);
+    color: var(--wrong-text);
+  }
+
+  /* Action row */
+  .action-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .btn {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 0.5rem 1.1rem;
+    border-radius: 6px;
+    border: 0.5px solid var(--border-strong);
+    background: var(--cream);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s;
+    letter-spacing: 0.01em;
+  }
+  .btn:hover { background: var(--cream-dark); }
+  .btn:disabled { opacity: 0.35; cursor: default; }
+  .btn-check {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+  .btn-check:hover { background: #3A3730; }
+  .btn-explain { color: var(--ink-light); }
+
+  .result-tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    display: none;
+  }
+  .result-tag.show-correct {
+    display: inline-block;
+    background: var(--correct-bg);
+    color: var(--correct-text);
+    border: 0.5px solid var(--correct-border);
+  }
+  .result-tag.show-wrong {
+    display: inline-block;
+    background: var(--wrong-bg);
+    color: var(--wrong-text);
+    border: 0.5px solid var(--wrong-border);
+  }
+
+  /* Explanation */
+  .explanation {
+    display: none;
+    margin-top: 1rem;
+    background: var(--teal-light);
+    border-left: 2px solid var(--teal);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.1rem;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .explanation.visible { display: block; }
+  .explanation strong { font-weight: 500; }
+
+  /* Nav */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  .btn-nav {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    border: 0.5px solid var(--border-strong);
+    background: var(--cream);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-nav:hover { background: var(--cream-dark); }
+  .btn-nav:disabled { opacity: 0.3; cursor: default; }
+  .btn-nav.primary {
+    background: var(--teal);
+    color: #fff;
+    border-color: var(--teal);
+  }
+  .btn-nav.primary:hover { background: var(--teal-mid); border-color: var(--teal-mid); }
+
+  /* Score screen */
+  .score-screen { display: none; }
+  .score-screen.visible { display: block; }
+
+  .score-hero {
+    text-align: center;
+    padding: 3rem 0 2rem;
+    border-bottom: 0.5px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .score-fraction {
+    font-family: 'Fraunces', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .score-pct {
+    font-size: 14px;
+    color: var(--ink-light);
+    margin-bottom: 0.35rem;
+  }
+  .score-verdict {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink-light);
+  }
+
+  .breakdown-title {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.75rem;
+  }
+  .breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    margin-bottom: 2.5rem;
+  }
+  .breakdown-card {
+    background: #FDFCF9;
+    border: 0.5px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+  }
+  .bd-topic {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+  .bd-score {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--ink);
+  }
+
+  .score-actions { text-align: center; }
+
+  /* Separator */
+  .sep {
+    border: none;
+    border-top: 0.5px solid var(--border);
+    margin: 1.25rem 0;
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="page-header">
+    <div class="page-eyebrow">Grammar Recall</div>
+    <h1 class="page-title">Future Tenses &amp; Probability</h1>
+    <p class="page-subtitle">20 questions — Future Continuous · Future Perfect · Probability · Question Formation</p>
+  </header>
+
+  <div id="quiz-main">
+    <div class="progress-section">
+      <div class="progress-meta">
+        <span class="progress-label" id="progress-label">Question 1 of 20</span>
+        <span class="progress-count" id="progress-count">0 / 20</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-meta">
+        <span class="topic-pill" id="topic-pill"></span>
+        <div class="difficulty-dots" id="diff-dots"></div>
+      </div>
+      <div class="q-text" id="q-text"></div>
+      <div id="options-area"></div>
+      <div class="action-row">
+        <button class="btn btn-check" id="btn-check" onclick="checkAnswer()">Check</button>
+        <button class="btn btn-explain" id="btn-explain" onclick="toggleExplanation()">Show explanation</button>
+        <span class="result-tag" id="result-tag"></span>
+      </div>
+      <div class="explanation" id="explanation-box"></div>
+    </div>
+
+    <hr class="sep">
+
+    <div class="nav-row">
+      <button class="btn-nav" id="btn-prev" onclick="goTo(currentIndex - 1)">← Back</button>
+      <button class="btn-nav primary" id="btn-next" onclick="advanceQuestion()">Next →</button>
+    </div>
+  </div>
+
+  <div class="score-screen" id="score-screen">
+    <div class="score-hero">
+      <div class="score-fraction" id="score-fraction"></div>
+      <div class="score-pct" id="score-pct"></div>
+      <div class="score-verdict" id="score-verdict"></div>
+    </div>
+    <p class="breakdown-title">By topic</p>
+    <div class="breakdown-grid" id="breakdown-grid"></div>
+    <div class="score-actions">
+      <button class="btn-nav" onclick="restart()">Start again</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    topic: "Future Continuous",
+    difficulty: 1,
+    type: "mc",
+    text: "Which sentence uses the Future Continuous correctly?",
+    options: [
+      "At 9pm tonight, I will watch a film.",
+      "At 9pm tonight, I will be watching a film.",
+      "At 9pm tonight, I am watching a film.",
+      "At 9pm tonight, I will have watched a film."
+    ],
+    correct: 1,
+    explanation: "<strong>Will be watching</strong> is Future Continuous. It describes an action that will be in progress at a specific moment in the future — here, 9pm tonight. Option A (will watch) is simple future — a plan or decision. Option D (will have watched) is Future Perfect — the action will be finished by that point."
+  },
+  {
+    topic: "Future Perfect",
+    difficulty: 1,
+    type: "mc",
+    text: "Which sentence uses the Future Perfect correctly?",
+    options: [
+      "By Friday, she will finish the report.",
+      "By Friday, she will be finishing the report.",
+      "By Friday, she will have finished the report.",
+      "By Friday, she finishes the report."
+    ],
+    correct: 2,
+    explanation: "<strong>Will have finished</strong> is Future Perfect. The key word is <em>by</em> — it signals a deadline, and Future Perfect describes an action completed before that future point. Structure: <em>will have</em> + past participle."
+  },
+  {
+    topic: "Probability",
+    difficulty: 1,
+    type: "mc",
+    text: "Which word expresses the strongest certainty about a future event?",
+    options: ["might", "probably", "may", "definitely"],
+    correct: 3,
+    explanation: "<strong>Definitely</strong> expresses near-total certainty. The scale from weakest to strongest is: <em>might / may</em> → <em>probably</em> → <em>definitely</em>. 'Might' and 'may' are roughly equal — both suggest possibility without much confidence."
+  },
+  {
+    topic: "Question Formation",
+    difficulty: 1,
+    type: "mc",
+    text: "Which question is formed correctly?",
+    options: [
+      "Where you will go next week?",
+      "Where will you go next week?",
+      "Where you go will next week?",
+      "Will you where go next week?"
+    ],
+    correct: 1,
+    explanation: "In Wh- questions, the auxiliary <strong>will</strong> moves before the subject. The structure is: <em>Wh- word + will + subject + base verb</em>. So: <em>Where will you go?</em> — not <em>Where you will go?</em>"
+  },
+  {
+    topic: "Future Continuous",
+    difficulty: 2,
+    type: "fillin",
+    text: "Complete the sentence: <em>Don't call me at 3pm — I __________ (have) a meeting.</em>",
+    blanks: ["will be having"],
+    acceptVariants: [["will be having"]],
+    explanation: "<strong>Will be having</strong> is correct. Future Continuous (<em>will be + -ing</em>) describes an activity in progress at a specific moment — here, 3pm. Using 'will have' would imply the meeting is finished, not ongoing."
+  },
+  {
+    topic: "Future Perfect",
+    difficulty: 2,
+    type: "fillin",
+    text: "Complete the sentence: <em>By the time you arrive, we __________ (eat) already.</em>",
+    blanks: ["will have eaten", "will have already eaten"],
+    acceptVariants: [["will have eaten", "will have already eaten"]],
+    explanation: "<strong>Will have eaten</strong> is Future Perfect. It describes an action that will be completed before a future point — before 'you arrive'. The phrase <em>by the time</em> is a classic trigger for Future Perfect."
+  },
+  {
+    topic: "Probability",
+    difficulty: 2,
+    type: "mc",
+    text: "Choose the sentence that means the speaker is fairly confident, but not certain.",
+    options: [
+      "He might come to the meeting.",
+      "He will definitely come to the meeting.",
+      "He'll probably come to the meeting.",
+      "He's bound to come to the meeting."
+    ],
+    correct: 2,
+    explanation: "<strong>Probably</strong> signals high confidence without full certainty — roughly 70–80%. 'Might' is much weaker (around 30–50%). 'Definitely' and 'be bound to' both express near-certainty, so they don't match here."
+  },
+  {
+    topic: "Question Formation",
+    difficulty: 2,
+    type: "mc",
+    text: "Which is the correct indirect question?",
+    options: [
+      "Could you tell me where does he work?",
+      "Could you tell me where he works?",
+      "Could you tell me where he does work?",
+      "Could you tell me where works he?"
+    ],
+    correct: 1,
+    explanation: "In indirect questions, the word order <strong>does not invert</strong>. After a reporting phrase like <em>Could you tell me...</em>, use normal statement order: <em>where he works</em> — not <em>where does he work</em>. The auxiliary 'does' disappears entirely."
+  },
+  {
+    topic: "Future Continuous",
+    difficulty: 2,
+    type: "mc",
+    text: "What does this sentence imply? <em>'This time next month, I'll be living in Berlin.'</em>",
+    options: [
+      "The move to Berlin is already finished.",
+      "The speaker will be in the middle of living in Berlin at that future moment.",
+      "The speaker will move to Berlin exactly one month from now.",
+      "The speaker might move to Berlin."
+    ],
+    correct: 1,
+    explanation: "Future Continuous describes an action <strong>in progress at a future point</strong> — not starting or finishing, but ongoing. <em>This time next month</em> is the future moment; <em>I'll be living</em> means the action will be happening then. It implies the move will have already started."
+  },
+  {
+    topic: "Future Perfect",
+    difficulty: 2,
+    type: "mc",
+    text: "Which sentence correctly uses Future Perfect to talk about experience?",
+    options: [
+      "Next year, I will visit Japan.",
+      "Next year, I will be visiting Japan.",
+      "By next year, I will have visited Japan three times.",
+      "By next year, I am visiting Japan three times."
+    ],
+    correct: 2,
+    explanation: "<strong>Will have visited</strong> is correct. Future Perfect can describe an accumulated experience up to a deadline — three visits completed by next year. <em>By next year</em> marks that deadline. Option A is a simple plan; Option B suggests the visit is in progress."
+  },
+  {
+    topic: "Probability",
+    difficulty: 2,
+    type: "mc",
+    text: "Which sentence uses <em>be bound to</em> correctly?",
+    options: [
+      "She bound to pass the exam.",
+      "She is bound to pass the exam.",
+      "She will bound to pass the exam.",
+      "She is bound passing the exam."
+    ],
+    correct: 1,
+    explanation: "<strong>Is bound to</strong> is the correct structure. It always needs the verb <em>be</em> conjugated — <em>is/are/am bound to</em> + infinitive. It means something is virtually certain to happen, often because the evidence points strongly that way."
+  },
+  {
+    topic: "Question Formation",
+    difficulty: 2,
+    type: "fillin",
+    text: "Turn this into a Wh- question: <em>She will be arriving at 6pm.</em><br>__________ will she be arriving?",
+    blanks: ["when", "what time"],
+    acceptVariants: [["when", "what time"]],
+    explanation: "The answer to <em>at 6pm</em> is a time expression, so the question word is <strong>When</strong> (or <em>What time</em>). Future Continuous structure stays intact: <em>When will she be arriving?</em> Notice 'will' moves before the subject 'she'."
+  },
+  {
+    topic: "Future Continuous",
+    difficulty: 3,
+    type: "transform",
+    source: "I plan to work on the presentation at 10am tomorrow.",
+    text: "Rewrite using Future Continuous to describe what you'll be doing at that moment.",
+    modelAnswer: "I will be working on the presentation at 10am tomorrow.",
+    acceptVariants: ["i will be working on the presentation at 10am tomorrow", "i'll be working on the presentation at 10am tomorrow"],
+    explanation: "<strong>I will be working</strong> on the presentation at 10am tomorrow. Structure: <em>will be + -ing</em>. It shifts focus from a plan to a picture of what will be in progress at that specific moment — more vivid and precise than simple future."
+  },
+  {
+    topic: "Future Perfect",
+    difficulty: 3,
+    type: "transform",
+    source: "He starts his new job on Monday. It is now Thursday.",
+    text: "Complete using Future Perfect: <em>By Monday, he __________ for four days without a job.</em>",
+    modelAnswer: "will have been without a job",
+    acceptVariants: ["will have been without a job", "will have gone without a job", "will have been unemployed"],
+    explanation: "<strong>Will have been</strong> (or <em>will have gone</em>) without a job. Future Perfect here calculates a duration that will be complete by Monday — from Thursday through the weekend. It measures an interval, not just an event."
+  },
+  {
+    topic: "Probability",
+    difficulty: 3,
+    type: "mc",
+    text: "Which sentence correctly uses <em>be unlikely to</em>?",
+    options: [
+      "He unlikely to get the job.",
+      "He is unlikely to get the job.",
+      "He will unlikely get the job.",
+      "He is unlikely getting the job."
+    ],
+    correct: 1,
+    explanation: "<strong>Is unlikely to</strong> + infinitive is the correct structure, parallel to <em>is bound to</em>. Both follow the pattern: <em>subject + is/are + [bound/unlikely] + to + base verb</em>. You can't use them without the verb <em>be</em> or with -ing."
+  },
+  {
+    topic: "Future Continuous",
+    difficulty: 3,
+    type: "mc",
+    text: "What is the difference between these two? <em>A: 'I'll call you tonight.' / B: 'I'll be calling you tonight.'</em>",
+    options: [
+      "There is no difference — they mean the same thing.",
+      "A is a deliberate decision; B suggests the call will happen as part of a routine or natural sequence.",
+      "A is more polite than B.",
+      "B means the call will be finished tonight; A means it will be in progress."
+    ],
+    correct: 1,
+    explanation: "<strong>A (I'll call)</strong> is a deliberate decision made now — a promise or plan. <strong>B (I'll be calling)</strong> implies the call will happen as part of something already set — a routine, a schedule, a natural sequence. B can sound more detached and less like a personal promise."
+  },
+  {
+    topic: "Future Perfect",
+    difficulty: 3,
+    type: "fillin",
+    text: "Complete with Future Perfect: <em>By the end of the year, she __________ (work) at the company for a decade.</em>",
+    blanks: ["will have worked", "will have been working"],
+    acceptVariants: [["will have worked", "will have been working"]],
+    explanation: "<strong>Will have worked</strong> is the standard Future Perfect. <em>Will have been working</em> (Future Perfect Continuous) is also correct — it adds focus on the unbroken duration. Both are acceptable; the continuous form emphasises the ongoing stretch of time more strongly."
+  },
+  {
+    topic: "Probability",
+    difficulty: 3,
+    type: "mc",
+    text: "Rank these from least to most certain: <em>A: might / B: is bound to / C: probably / D: may</em>",
+    options: [
+      "A, D, C, B",
+      "D, A, B, C",
+      "A, D, B, C",
+      "D, A, C, B"
+    ],
+    correct: 3,
+    explanation: "Weakest to strongest: <strong>may ≈ might → probably → is bound to</strong>. <em>May</em> and <em>might</em> are roughly equal (around 30–50% certainty). <em>Probably</em> suggests strong likelihood (~70–80%). <em>Is bound to</em> is near-inevitable certainty. Order: D / A → C → B."
+  },
+  {
+    topic: "Question Formation",
+    difficulty: 3,
+    type: "mc",
+    text: "Which indirect question is correctly formed?",
+    options: [
+      "I'd like to know when will the results arrive.",
+      "I'd like to know when do the results arrive.",
+      "I'd like to know when the results will arrive.",
+      "I'd like to know when arrive the results."
+    ],
+    correct: 2,
+    explanation: "In embedded/indirect questions, use <strong>normal statement word order</strong> — no inversion. <em>I'd like to know when the results will arrive.</em> The subject <em>the results</em> comes before the verb <em>will arrive</em>. No auxiliary 'do/does/will' at the front of the embedded clause."
+  },
+  {
+    topic: "Question Formation",
+    difficulty: 3,
+    type: "mc",
+    text: "Your colleague says: <em>'I've been working on something important.'</em> You want to ask what it is. Which response is most natural and correct?",
+    options: [
+      "What have you been working on?",
+      "On what have you been working?",
+      "What you have been working on?",
+      "What have you working on?"
+    ],
+    correct: 0,
+    explanation: "<strong>What have you been working on?</strong> is correct and the most natural. English almost always places the preposition at the end of the question (<em>working on?</em>), not at the front. Option B is technically grammatical but extremely formal — rarely used in real speech."
+  }
+];
+
+let currentIndex = 0;
+let answered = [];
+let scores = {};
+let explanationVisible = false;
+
+function init() {
+  answered = new Array(questions.length).fill(null);
+  scores = {};
+  questions.forEach(q => {
+    if (!scores[q.topic]) scores[q.topic] = { correct: 0, total: 0 };
+    scores[q.topic].total++;
+  });
+  currentIndex = 0;
+  document.getElementById('score-screen').classList.remove('visible');
+  document.getElementById('quiz-main').style.display = '';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentIndex];
+  const total = questions.length;
+  const answeredCount = answered.filter(a => a !== null).length;
+
+  document.getElementById('progress-fill').style.width = ((answeredCount / total) * 100) + '%';
+  document.getElementById('progress-label').textContent = 'Question ' + (currentIndex + 1) + ' of ' + total;
+  document.getElementById('progress-count').textContent = answeredCount + ' / ' + total;
+  document.getElementById('topic-pill').textContent = q.topic;
+
+  const dots = document.getElementById('diff-dots');
+  dots.innerHTML = '';
+  for (let i = 1; i <= 3; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i <= q.difficulty ? ' active' : '');
+    dots.appendChild(d);
+  }
+
+  document.getElementById('q-text').innerHTML = q.text;
+
+  const area = document.getElementById('options-area');
+  area.innerHTML = '';
+  const prev = answered[currentIndex];
+  const isAnswered = prev !== null;
+
+  if (q.type === 'mc') {
+    const wrap = document.createElement('div');
+    wrap.className = 'options';
+    const letters = ['A','B','C','D'];
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'opt-btn';
+      if (isAnswered) {
+        btn.disabled = true;
+        if (i === q.correct) btn.classList.add('correct');
+        else if (i === prev && prev !== q.correct) btn.classList.add('wrong');
+        else btn.classList.add('dimmed');
+      }
+      btn.innerHTML = '<span class="opt-letter">' + letters[i] + '</span>' + opt;
+      if (!isAnswered) btn.onclick = () => selectMC(i);
+      wrap.appendChild(btn);
+    });
+    area.appendChild(wrap);
+    document.getElementById('btn-check').style.display = 'none';
+
+  } else if (q.type === 'fillin') {
+    const wrap = document.createElement('div');
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 'fillin-input';
+    inp.placeholder = 'Type your answer…';
+    if (isAnswered) {
+      inp.disabled = true;
+      inp.value = prev.userAnswer || '';
+      inp.classList.add(prev.wasCorrect ? 'correct' : 'wrong');
+    }
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') checkAnswer(); });
+    wrap.appendChild(inp);
+    area.appendChild(wrap);
+    document.getElementById('btn-check').style.display = isAnswered ? 'none' : '';
+
+  } else if (q.type === 'transform') {
+    const wrap = document.createElement('div');
+    const src = document.createElement('div');
+    src.className = 'source-sentence';
+    src.textContent = q.source;
+    wrap.appendChild(src);
+    const inp = document.createElement('textarea');
+    inp.className = 'transform-input';
+    inp.rows = 2;
+    inp.placeholder = 'Write your sentence here…';
+    if (isAnswered) {
+      inp.disabled = true;
+      inp.value = prev.userAnswer || '';
+      inp.classList.add(prev.wasCorrect ? 'correct' : 'wrong');
+    }
+    wrap.appendChild(inp);
+    area.appendChild(wrap);
+    document.getElementById('btn-check').style.display = isAnswered ? 'none' : '';
+  }
+
+  const tag = document.getElementById('result-tag');
+  tag.className = 'result-tag';
+  tag.textContent = '';
+  if (isAnswered) {
+    const wasCorrect = q.type === 'mc' ? prev === q.correct : prev.wasCorrect;
+    tag.className = 'result-tag ' + (wasCorrect ? 'show-correct' : 'show-wrong');
+    tag.textContent = wasCorrect ? 'Correct' : 'Incorrect';
+  }
+
+  explanationVisible = false;
+  const expBox = document.getElementById('explanation-box');
+  expBox.classList.remove('visible');
+  expBox.innerHTML = q.explanation;
+  document.getElementById('btn-explain').textContent = 'Show explanation';
+
+  document.getElementById('btn-prev').disabled = currentIndex === 0;
+  const nextBtn = document.getElementById('btn-next');
+  if (currentIndex === questions.length - 1) {
+    nextBtn.textContent = 'Finish';
+  } else {
+    nextBtn.textContent = 'Next →';
+  }
+}
+
+function selectMC(i) {
+  const q = questions[currentIndex];
+  if (answered[currentIndex] !== null) return;
+  const isCorrect = i === q.correct;
+  answered[currentIndex] = i;
+  if (isCorrect) scores[q.topic].correct++;
+
+  const tag = document.getElementById('result-tag');
+  tag.className = 'result-tag ' + (isCorrect ? 'show-correct' : 'show-wrong');
+  tag.textContent = isCorrect ? 'Correct' : 'Incorrect';
+
+  document.querySelectorAll('.opt-btn').forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === q.correct) btn.classList.add('correct');
+    else if (idx === i && !isCorrect) btn.classList.add('wrong');
+    else btn.classList.add('dimmed');
+  });
+
+  updateProgressCount();
+}
+
+function checkAnswer() {
+  const q = questions[currentIndex];
+  if (q.type !== 'fillin' && q.type !== 'transform') return;
+  const sel = q.type === 'fillin' ? '.fillin-input' : '.transform-input';
+  const inp = document.querySelector(sel);
+  if (!inp) return;
+  const val = inp.value.trim().toLowerCase();
+  if (!val) return;
+
+  let variants;
+  if (q.type === 'fillin') {
+    variants = q.acceptVariants[0].map(v => v.toLowerCase());
+  } else {
+    variants = q.acceptVariants.map(v => v.toLowerCase());
+  }
+  const wasCorrect = variants.some(v =>
+    val === v || val.replace(/[.,!?]/g, '') === v.replace(/[.,!?]/g, '')
+  );
+
+  if (answered[currentIndex] === null) {
+    answered[currentIndex] = { userAnswer: inp.value.trim(), wasCorrect };
+    if (wasCorrect) scores[q.topic].correct++;
+  }
+
+  inp.disabled = true;
+  inp.classList.add(wasCorrect ? 'correct' : 'wrong');
+
+  const tag = document.getElementById('result-tag');
+  tag.className = 'result-tag ' + (wasCorrect ? 'show-correct' : 'show-wrong');
+  tag.textContent = wasCorrect ? 'Correct' : 'Incorrect';
+  document.getElementById('btn-check').style.display = 'none';
+
+  updateProgressCount();
+}
+
+function updateProgressCount() {
+  const answeredCount = answered.filter(a => a !== null).length;
+  document.getElementById('progress-count').textContent = answeredCount + ' / ' + questions.length;
+  document.getElementById('progress-fill').style.width = ((answeredCount / questions.length) * 100) + '%';
+}
+
+function toggleExplanation() {
+  explanationVisible = !explanationVisible;
+  document.getElementById('explanation-box').classList.toggle('visible', explanationVisible);
+  document.getElementById('btn-explain').textContent = explanationVisible ? 'Hide explanation' : 'Show explanation';
+}
+
+function advanceQuestion() {
+  if (currentIndex === questions.length - 1) { showScore(); return; }
+  goTo(currentIndex + 1);
+}
+
+function goTo(idx) {
+  if (idx < 0 || idx >= questions.length) return;
+  currentIndex = idx;
+  renderQuestion();
+}
+
+function showScore() {
+  document.getElementById('quiz-main').style.display = 'none';
+  document.getElementById('score-screen').classList.add('visible');
+
+  const total = questions.length;
+  const correct = Object.values(scores).reduce((a, v) => a + v.correct, 0);
+  const pct = Math.round((correct / total) * 100);
+
+  document.getElementById('score-fraction').textContent = correct + ' / ' + total;
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('score-verdict').textContent = getVerdict(pct);
+
+  const grid = document.getElementById('breakdown-grid');
+  grid.innerHTML = '';
+  Object.entries(scores).forEach(([topic, s]) => {
+    const card = document.createElement('div');
+    card.className = 'breakdown-card';
+    card.innerHTML = '<div class="bd-topic">' + topic + '</div><div class="bd-score">' + s.correct + ' / ' + s.total + '</div>';
+    grid.appendChild(card);
+  });
+}
+
+function getVerdict(pct) {
+  if (pct >= 90) return 'Excellent recall.';
+  if (pct >= 75) return 'Strong overall.';
+  if (pct >= 55) return 'Good — a few gaps worth revisiting.';
+  return 'Worth reviewing the material together.';
+}
+
+function restart() {
+  document.getElementById('score-screen').classList.remove('visible');
+  init();
+}
+
+init();
+</script>
+</body>
+</html>

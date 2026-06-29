@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Counting the Cost — B2 Reading &amp; Vocabulary Workbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --rust: #a83232;
+    --teal: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 20%, rgba(168, 50, 50, 0.04) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 80%, rgba(45, 106, 79, 0.04) 0%, transparent 55%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 64px 32px 90px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 36px;
+    margin-bottom: 18px;
+  }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(46px, 8vw, 80px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  h1 .accent { color: var(--rust); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--ink-soft);
+    margin-top: 16px;
+    max-width: 600px;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    margin-top: 22px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+  }
+  .meta-row span strong {
+    color: var(--ink);
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  /* ---------- The "before you start" panel ---------- */
+  .setup {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--teal);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin: 34px 0 10px;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .setup .setup-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .setup p + p { margin-top: 8px; }
+
+  /* ---------- Sections ---------- */
+  section { margin-top: 56px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .section-no {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--rust);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(26px, 4vw, 34px);
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    line-height: 1.05;
+  }
+  .lead {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    font-style: italic;
+    margin: 14px 0 6px;
+  }
+
+  .task {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 24px 28px 26px;
+    margin-top: 22px;
+  }
+  .task + .task { margin-top: 18px; }
+
+  .task-title {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .task-instr {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  ol.q-list { list-style: none; counter-reset: q; }
+  ol.q-list > li {
+    counter-increment: q;
+    position: relative;
+    padding-left: 38px;
+    margin-bottom: 18px;
+  }
+  ol.q-list > li::before {
+    content: counter(q);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--rust);
+    width: 26px;
+    text-align: right;
+  }
+  ol.q-list.alpha { counter-reset: qa; }
+  ol.q-list.alpha > li { counter-increment: qa; }
+  ol.q-list.alpha > li::before { content: counter(qa, lower-alpha); }
+
+  .qtext { display: block; }
+
+  /* writing lines */
+  .write {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    background: transparent;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: var(--ink);
+    padding: 6px 2px 4px;
+    margin-top: 8px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .write:focus { border-color: var(--ink); }
+  textarea.write {
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    min-height: 78px;
+    resize: vertical;
+    padding: 10px 12px;
+    line-height: 1.55;
+  }
+  .gap {
+    display: inline-block;
+    min-width: 130px;
+    border: none;
+    border-bottom: 1px solid var(--rust);
+    background: transparent;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink);
+    text-align: center;
+    padding: 2px 6px;
+    outline: none;
+  }
+  .gap:focus { border-bottom-color: var(--ink); }
+  .short { min-width: 90px; }
+
+  /* True/False/NG controls */
+  .tfng {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .tfng label {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 4px 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.18s;
+  }
+  .tfng input { display: none; }
+  .tfng input:checked + label {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* preview checklist */
+  .preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 6px 18px;
+    margin-top: 4px;
+  }
+  .preview label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 14.5px;
+    cursor: pointer;
+    padding: 3px 0;
+  }
+  .preview input { accent-color: var(--teal); width: 15px; height: 15px; }
+
+  /* two-column match */
+  .match {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  @media (min-width: 620px) { .match { grid-template-columns: 1fr 1fr; } }
+  .match-col h4 {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .match-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 11px;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .match-item .lbox {
+    flex: 0 0 auto;
+    width: 30px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    text-align: center;
+    background: transparent;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 4px 0;
+    outline: none;
+  }
+  .match-item .lbox:focus { border-color: var(--ink); }
+  .match-item .word { color: var(--rust); font-style: italic; font-weight: 500; font-family: 'Fraunces', serif; font-size: 17px; }
+  .match-item .deftag {
+    flex: 0 0 auto;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    width: 26px;
+  }
+
+  /* word bank */
+  .bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+    padding: 14px 16px;
+    background: rgba(45, 106, 79, 0.06);
+    border: 1px dashed var(--teal);
+    border-radius: 2px;
+    margin-bottom: 22px;
+  }
+  .bank span {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--teal);
+  }
+  .bank span:not(:last-child)::after { content: "·"; color: var(--rule); margin-left: 10px; }
+
+  /* word-formation table */
+  table.wf {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    margin-top: 4px;
+  }
+  table.wf th, table.wf td {
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: middle;
+  }
+  table.wf th {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  table.wf td:first-child { font-style: italic; color: var(--rust); font-family: 'Fraunces', serif; font-size: 16px; }
+
+  /* answer key */
+  .key-wrap { margin-top: 20px; }
+  .key-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+    background: transparent;
+    border: 1px solid var(--rust);
+    border-radius: 2px;
+    padding: 9px 16px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .key-btn:hover { background: var(--rust); color: var(--paper); }
+  .key-btn .warn {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    background: var(--rust);
+    color: var(--paper);
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+  .key-btn:hover .warn { background: var(--paper); color: var(--rust); }
+
+  .key {
+    margin-top: 14px;
+    padding: 18px 22px;
+    background: rgba(168, 50, 50, 0.05);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--rust);
+    border-radius: 2px;
+    font-size: 14px;
+    line-height: 1.65;
+    display: none;
+  }
+  .key.open { display: block; }
+  .key .key-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .key ol { padding-left: 20px; }
+  .key li { margin-bottom: 5px; }
+  .key b { color: var(--ink); font-weight: 600; }
+  .key .ans { color: var(--teal); font-weight: 600; }
+  .key em { color: var(--ink-soft); }
+
+  footer {
+    margin-top: 78px;
+    padding-top: 26px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 44px 20px 64px; }
+    .task { padding: 20px 18px 22px; }
+  }
+
+  @media print {
+    body { background: white; background-image: none; }
+    .key-btn { display: none; }
+    .key { display: block !important; }
+    .task, .setup, .key { box-shadow: none; }
+    section { break-inside: avoid-page; }
+    .gap, .write { border-bottom: 1px solid #999; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Reading &amp; Vocabulary · Business English · Level B2</div>
+    <h1>Counting the <span class="accent">Cost</span></h1>
+    <div class="subtitle">A comprehension and vocabulary workbook built around a news feature on the economic effects of Brexit.</div>
+    <div class="meta-row">
+      <span><strong>Source.</strong> <em>The New York Times</em>, 23 June 2026</span>
+      <span><strong>Skills.</strong> Reading · Lexis · Speaking · Writing</span>
+      <span><strong>Time.</strong> ≈ 90 minutes</span>
+    </div>
+  </header>
+
+  <div class="setup">
+    <div class="setup-label">Before you start</div>
+    <p>This workbook is used <strong>with the article in front of you</strong>. Read the full feature first (your teacher will provide it), then work through the tasks. Most answers can be found by scanning the text; the discussion and writing tasks ask for your own ideas.</p>
+    <p>Each section ends with a hidden answer key. Tap <em>Reveal answer key</em> to check your work — but note it carries a warning so your teacher can keep it covered on a shared screen.</p>
+  </div>
+
+  <!-- ================= 1. BEFORE YOU READ ================= -->
+  <section>
+    <div class="section-head"><span class="section-no">01</span><h2>Before you read</h2></div>
+    <p class="lead">Warm up before opening the article. Speak first, in your own words.</p>
+
+    <div class="task">
+      <div class="task-title">A · Talk it through</div>
+      <div class="task-instr">Discuss with a partner or note a few ideas.</div>
+      <ol class="q-list">
+        <li><span class="qtext">When a country leaves a large trading bloc, what kinds of economic effects might appear? Predict two.</span>
+          <input class="write" type="text" aria-label="answer"></li>
+        <li><span class="qtext">Some economic costs are easy to measure (lost exports, for example) and some are not. Why might the hidden costs matter just as much?</span>
+          <input class="write" type="text" aria-label="answer"></li>
+        <li><span class="qtext">In your professional field, have you seen a change that looked small at first but added up over time? Describe it briefly.</span>
+          <input class="write" type="text" aria-label="answer"></li>
+      </ol>
+    </div>
+
+    <div class="task">
+      <div class="task-title">B · Vocabulary preview</div>
+      <div class="task-instr">Tick the words you already feel confident using. You'll meet all of them in the article.</div>
+      <div class="preview">
+        <label><input type="checkbox">to accumulate</label>
+        <label><input type="checkbox">to outweigh</label>
+        <label><input type="checkbox">turmoil</label>
+        <label><input type="checkbox">to obscure</label>
+        <label><input type="checkbox">to untangle</label>
+        <label><input type="checkbox">substantial</label>
+        <label><input type="checkbox">to lag behind</label>
+        <label><input type="checkbox">to curtail</label>
+        <label><input type="checkbox">an influx</label>
+        <label><input type="checkbox">disruption</label>
+        <label><input type="checkbox">halting</label>
+        <label><input type="checkbox">alluring</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 2. COMPREHENSION ================= -->
+  <section>
+    <div class="section-head"><span class="section-no">02</span><h2>Reading comprehension</h2></div>
+    <p class="lead">Read the whole article once for the general picture, then go back for the detail.</p>
+
+    <div class="task">
+      <div class="task-title">A · True, False or Not Given</div>
+      <div class="task-instr">Decide whether each statement agrees with the article (True), contradicts it (False), or isn't mentioned (Not Given).</div>
+      <ol class="q-list">
+        <li><span class="qtext">Economists broadly believe the UK economy would be larger today if the country had stayed in the EU.</span>
+          <div class="tfng">
+            <input type="radio" name="tf1" id="tf1t"><label for="tf1t">True</label>
+            <input type="radio" name="tf1" id="tf1f"><label for="tf1f">False</label>
+            <input type="radio" name="tf1" id="tf1n"><label for="tf1n">Not given</label>
+          </div></li>
+        <li><span class="qtext">Economists agree precisely on the size of Brexit's economic cost.</span>
+          <div class="tfng">
+            <input type="radio" name="tf2" id="tf2t"><label for="tf2t">True</label>
+            <input type="radio" name="tf2" id="tf2f"><label for="tf2f">False</label>
+            <input type="radio" name="tf2" id="tf2n"><label for="tf2n">Not given</label>
+          </div></li>
+        <li><span class="qtext">The UK's trading rules changed immediately after the 2016 vote.</span>
+          <div class="tfng">
+            <input type="radio" name="tf3" id="tf3t"><label for="tf3t">True</label>
+            <input type="radio" name="tf3" id="tf3f"><label for="tf3f">False</label>
+            <input type="radio" name="tf3" id="tf3n"><label for="tf3n">Not given</label>
+          </div></li>
+        <li><span class="qtext">The 2021 trade agreement placed high tariffs on most goods.</span>
+          <div class="tfng">
+            <input type="radio" name="tf4" id="tf4t"><label for="tf4t">True</label>
+            <input type="radio" name="tf4" id="tf4f"><label for="tf4f">False</label>
+            <input type="radio" name="tf4" id="tf4n"><label for="tf4n">Not given</label>
+          </div></li>
+        <li><span class="qtext">Food and agricultural exports were among the sectors hit hardest.</span>
+          <div class="tfng">
+            <input type="radio" name="tf5" id="tf5t"><label for="tf5t">True</label>
+            <input type="radio" name="tf5" id="tf5f"><label for="tf5f">False</label>
+            <input type="radio" name="tf5" id="tf5n"><label for="tf5n">Not given</label>
+          </div></li>
+        <li><span class="qtext">Overall immigration to the UK fell after Brexit, as some of its supporters had predicted.</span>
+          <div class="tfng">
+            <input type="radio" name="tf6" id="tf6t"><label for="tf6t">True</label>
+            <input type="radio" name="tf6" id="tf6f"><label for="tf6f">False</label>
+            <input type="radio" name="tf6" id="tf6n"><label for="tf6n">Not given</label>
+          </div></li>
+        <li><span class="qtext">London lost its position as Europe's largest financial centre.</span>
+          <div class="tfng">
+            <input type="radio" name="tf7" id="tf7t"><label for="tf7t">True</label>
+            <input type="radio" name="tf7" id="tf7f"><label for="tf7f">False</label>
+            <input type="radio" name="tf7" id="tf7n"><label for="tf7n">Not given</label>
+          </div></li>
+        <li><span class="qtext">Analysts expect the UK to rejoin the EU within the next two or three years.</span>
+          <div class="tfng">
+            <input type="radio" name="tf8" id="tf8t"><label for="tf8t">True</label>
+            <input type="radio" name="tf8" id="tf8f"><label for="tf8f">False</label>
+            <input type="radio" name="tf8" id="tf8n"><label for="tf8n">Not given</label>
+          </div></li>
+      </ol>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-2a">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-2a">
+          <div class="key-label">Section 2A — answers</div>
+          <ol>
+            <li><span class="ans">True.</span> The article reports broad agreement that the economy is roughly 4–6% smaller than it would otherwise have been.</li>
+            <li><span class="ans">False.</span> Estimates differ and economists dispute the methodology — one study suggests up to 8%, while the consensus is 4–6%.</li>
+            <li><span class="ans">False.</span> Rules did not fundamentally change until 2021, after the formal exit (end of January 2020) and an 11-month transition.</li>
+            <li><span class="ans">False.</span> Tariffs stayed mostly at zero; the new friction came from paperwork, border checks and regulations.</li>
+            <li><span class="ans">True.</span> Food and agricultural exports fell by nearly a third.</li>
+            <li><span class="ans">False.</span> Immigration did not fall; there was a large influx from non-EU countries instead.</li>
+            <li><span class="ans">False.</span> London kept its place as Europe's biggest hub, though it lost some specific business.</li>
+            <li><span class="ans">False.</span> Analysts don't expect major change soon, and the governing party has ruled out rejoining the single market or customs union. <em>(Accept "Not Given" with discussion — the timeframe is implied rather than stated outright.)</em></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-title">B · Find the figure</div>
+      <div class="task-instr">Scan the article for the numbers. Write a short answer.</div>
+      <ol class="q-list">
+        <li><span class="qtext">By what range of percentages do most economists think the economy is smaller?</span>
+          <input class="write" type="text" aria-label="answer"></li>
+        <li><span class="qtext">According to one Stanford-led study, by how much may GDP have been reduced?</span>
+          <input class="write" type="text" aria-label="answer"></li>
+        <li><span class="qtext">By roughly how much did UK exports to the EU fall — and imports from it?</span>
+          <input class="write" type="text" aria-label="answer"></li>
+        <li><span class="qtext">How far did agriculture and food exports fall?</span>
+          <input class="write" type="text" aria-label="answer"></li>
+        <li><span class="qtext">How many new trade deals has the UK signed, and how many countries do they cover?</span>
+          <input class="write" type="text" aria-label="answer"></li>
+        <li><span class="qtext">What share of UK trade does Europe still account for?</span>
+          <input class="write" type="text" aria-label="answer"></li>
+      </ol>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-2b">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-2b">
+          <div class="key-label">Section 2B — answers</div>
+          <ol>
+            <li><span class="ans">4 to 6 percent</span> smaller.</li>
+            <li><span class="ans">Up to 8 percent</span>, accumulating gradually over time.</li>
+            <li>Exports fell about <span class="ans">12%</span>; imports fell about <span class="ans">16%</span>.</li>
+            <li>By <span class="ans">nearly 30 percent</span> (about a third).</li>
+            <li><span class="ans">39 deals</span> covering <span class="ans">72 countries</span>.</li>
+            <li><span class="ans">More than 40 percent</span> of UK trade.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-title">C · Read between the lines</div>
+      <div class="task-instr">Answer in full sentences, in your own words.</div>
+      <ol class="q-list">
+        <li><span class="qtext">The writer says the 2016 warnings were "wrong, but only in their timing." What does that mean?</span>
+          <textarea class="write" aria-label="answer"></textarea></li>
+        <li><span class="qtext">Why is it difficult for economists to measure Brexit's exact impact?</span>
+          <textarea class="write" aria-label="answer"></textarea></li>
+        <li><span class="qtext">One expert describes London's loss of financial business as "like a slow puncture." What does the comparison suggest about <em>how</em> the change happened?</span>
+          <textarea class="write" aria-label="answer"></textarea></li>
+      </ol>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-2c">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-2c">
+          <div class="key-label">Section 2C — model answers</div>
+          <ol>
+            <li>The predicted damage did happen, but it built up slowly over years rather than arriving as a sudden shock right after the vote.</li>
+            <li>Other major events — the pandemic, US tariffs, the wars in Ukraine and Iran — hit the economy at the same time, so it is hard to separate Brexit's effect from everything else.</li>
+            <li>It suggests a slow, steady leak rather than a sudden collapse: the city is losing business gradually and continuously, not all at once. <em>(Accept any answer capturing "gradual / slow / continuous".)</em></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. VOCABULARY ================= -->
+  <section>
+    <div class="section-head"><span class="section-no">03</span><h2>Vocabulary in context</h2></div>
+    <p class="lead">These words all earn their place in business and economics writing. Work out meaning before you memorise it.</p>
+
+    <div class="task">
+      <div class="task-title">A · Match the word to its meaning</div>
+      <div class="task-instr">Write the letter of the correct definition in each box. Use the article to check the context if you're unsure.</div>
+      <div class="match">
+        <div class="match-col">
+          <h4>Word</h4>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">accumulate</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">outweigh</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">turmoil</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">obscure</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">untangle</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">substantial</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">lag behind</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">curtail</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">influx</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">disruption</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">halting</span></div>
+          <div class="match-item"><input class="lbox" maxlength="1" aria-label="match"><span class="word">alluring</span></div>
+        </div>
+        <div class="match-col">
+          <h4>Meaning</h4>
+          <div class="match-item"><span class="deftag">a</span><span>to be greater or more important than something else</span></div>
+          <div class="match-item"><span class="deftag">b</span><span>large in size, amount or importance</span></div>
+          <div class="match-item"><span class="deftag">c</span><span>to build up or increase gradually over time</span></div>
+          <div class="match-item"><span class="deftag">d</span><span>a state of great disturbance, confusion or instability</span></div>
+          <div class="match-item"><span class="deftag">e</span><span>to fall or stay behind others; to progress more slowly</span></div>
+          <div class="match-item"><span class="deftag">f</span><span>to make something unclear or hard to see and understand</span></div>
+          <div class="match-item"><span class="deftag">g</span><span>a large arrival or inflow of people or things</span></div>
+          <div class="match-item"><span class="deftag">h</span><span>to reduce, limit or cut back</span></div>
+          <div class="match-item"><span class="deftag">i</span><span>to separate and make sense of something complicated</span></div>
+          <div class="match-item"><span class="deftag">j</span><span>slow and hesitant; repeatedly stopping and starting</span></div>
+          <div class="match-item"><span class="deftag">k</span><span>a serious interruption to a normal process or activity</span></div>
+          <div class="match-item"><span class="deftag">l</span><span>attractive or tempting</span></div>
+        </div>
+      </div>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-3a">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-3a">
+          <div class="key-label">Section 3A — answers</div>
+          <ol>
+            <li>accumulate — <span class="ans">c</span></li>
+            <li>outweigh — <span class="ans">a</span></li>
+            <li>turmoil — <span class="ans">d</span></li>
+            <li>obscure — <span class="ans">f</span></li>
+            <li>untangle — <span class="ans">i</span></li>
+            <li>substantial — <span class="ans">b</span></li>
+            <li>lag behind — <span class="ans">e</span></li>
+            <li>curtail — <span class="ans">h</span></li>
+            <li>influx — <span class="ans">g</span></li>
+            <li>disruption — <span class="ans">k</span></li>
+            <li>halting — <span class="ans">j</span></li>
+            <li>alluring — <span class="ans">l</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-title">B · Word families</div>
+      <div class="task-instr">Complete the table with the missing word forms, then write the correct form in each sentence below.</div>
+      <table class="wf">
+        <thead><tr><th>Verb</th><th>Noun</th><th>Adjective / Adverb</th></tr></thead>
+        <tbody>
+          <tr><td>accumulate</td><td><input class="gap short" type="text" aria-label="noun"></td><td>—</td></tr>
+          <tr><td>disrupt</td><td><input class="gap short" type="text" aria-label="noun"></td><td><input class="gap short" type="text" aria-label="adj"></td></tr>
+          <tr><td>migrate</td><td><input class="gap short" type="text" aria-label="noun"></td><td>—</td></tr>
+          <tr><td>—</td><td>stability</td><td><input class="gap short" type="text" aria-label="adj"></td></tr>
+          <tr><td>—</td><td><input class="gap short" type="text" aria-label="noun"></td><td>vigorous</td></tr>
+        </tbody>
+      </table>
+      <ol class="q-list" style="margin-top:20px;">
+        <li><span class="qtext">Over a decade, the <input class="gap" type="text" aria-label="gap"> of small costs became significant.</span></li>
+        <li><span class="qtext">Border checks caused major <input class="gap" type="text" aria-label="gap"> to supply chains.</span></li>
+        <li><span class="qtext">Investment eventually grew again, but less <input class="gap" type="text" aria-label="gap"> than before.</span></li>
+        <li><span class="qtext">Years of political <input class="gap" type="text" aria-label="gap"> followed the vote.</span></li>
+      </ol>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-3b">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-3b">
+          <div class="key-label">Section 3B — answers</div>
+          <p style="margin-bottom:10px;"><b>Table:</b> accumulate → <span class="ans">accumulation</span> · disrupt → <span class="ans">disruption</span>, <span class="ans">disruptive</span> · migrate → <span class="ans">migration</span> · stability → <span class="ans">stable</span> · <span class="ans">vigour</span> → vigorous.</p>
+          <ol>
+            <li>the <span class="ans">accumulation</span> of small costs</li>
+            <li>major <span class="ans">disruption</span> to supply chains</li>
+            <li>less <span class="ans">vigorously</span> than before</li>
+            <li>political <span class="ans">instability</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-title">C · Business collocations</div>
+      <div class="task-instr">These words go together in the article. Complete each pair with one word from the bank.</div>
+      <div class="bank">
+        <span>friction</span><span>burden</span><span>stubborn</span><span>opportunity</span><span>net</span><span>long-run</span>
+      </div>
+      <ol class="q-list">
+        <li><span class="qtext">Brexit added trade <input class="gap short" type="text" aria-label="gap"> — paperwork, checks and new rules.</span></li>
+        <li><span class="qtext">The economy struggles under a heavy debt <input class="gap short" type="text" aria-label="gap">.</span></li>
+        <li><span class="qtext">Prices kept rising: the country faced <input class="gap short" type="text" aria-label="gap"> inflation.</span></li>
+        <li><span class="qtext">The hardest cost to measure is the <input class="gap short" type="text" aria-label="gap"> cost — the things that never happened.</span></li>
+        <li><span class="qtext">There was a sharp rise in <input class="gap short" type="text" aria-label="gap"> migration from outside the EU.</span></li>
+        <li><span class="qtext">Brexit is expected to lower the country's <input class="gap short" type="text" aria-label="gap"> productivity.</span></li>
+      </ol>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-3c">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-3c">
+          <div class="key-label">Section 3C — answers</div>
+          <ol>
+            <li>trade <span class="ans">friction</span></li>
+            <li>debt <span class="ans">burden</span></li>
+            <li><span class="ans">stubborn</span> inflation</li>
+            <li><span class="ans">opportunity</span> cost</li>
+            <li><span class="ans">net</span> migration</li>
+            <li><span class="ans">long-run</span> productivity</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-title">D · Picture this — figurative language</div>
+      <div class="task-instr">Writers use everyday images to describe economics. Find each one in the article, then explain what it means here. The first letters are given.</div>
+      <ol class="q-list">
+        <li><span class="qtext">A word for a sudden flood, used for political instability — a <strong>t__________</strong> of instability.</span>
+          <input class="write" type="text" aria-label="answer" placeholder="meaning here…"></li>
+        <li><span class="qtext">A market described as being on Britain's <strong>d__________</strong> — meaning very close by.</span>
+          <input class="write" type="text" aria-label="answer" placeholder="meaning here…"></li>
+        <li><span class="qtext">A verb usually about romance, used for trying to attract customers — to <strong>c______</strong> European customers.</span>
+          <input class="write" type="text" aria-label="answer" placeholder="meaning here…"></li>
+        <li><span class="qtext">The loss of London's business compared to a tyre slowly losing air — a slow <strong>p__________</strong>.</span>
+          <input class="write" type="text" aria-label="answer" placeholder="meaning here…"></li>
+      </ol>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-3d">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-3d">
+          <div class="key-label">Section 3D — answers</div>
+          <ol>
+            <li><span class="ans">torrent</span> — a sudden, overwhelming flood of something (here, a rush of political instability).</li>
+            <li><span class="ans">doorstep</span> — right next to you; the EU is a huge market immediately next door.</li>
+            <li><span class="ans">court</span> — to try to win over or attract (the way you might pursue someone romantically).</li>
+            <li><span class="ans">puncture</span> — a slow leak; a gradual, steady loss rather than a sudden burst.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="task">
+      <div class="task-title">E · Use the words</div>
+      <div class="task-instr">Complete each sentence with a word from the bank in the correct form. These are <em>new</em> contexts — show you can transfer the word.</div>
+      <div class="bank">
+        <span>accumulate</span><span>outweigh</span><span>turmoil</span><span>obscure</span><span>untangle</span><span>substantial</span><span>lag</span><span>curtail</span><span>influx</span><span>disruption</span>
+      </div>
+      <ol class="q-list">
+        <li><span class="qtext">Maintenance costs <input class="gap" type="text" aria-label="gap"> quickly if you keep delaying repairs.</span></li>
+        <li><span class="qtext">The benefits of the merger clearly <input class="gap" type="text" aria-label="gap"> the risks.</span></li>
+        <li><span class="qtext">After the CEO resigned, the company went through months of <input class="gap" type="text" aria-label="gap">.</span></li>
+        <li><span class="qtext">Poor record-keeping <input class="gap" type="text" aria-label="gap"> the true cause of the loss.</span></li>
+        <li><span class="qtext">It took auditors weeks to <input class="gap" type="text" aria-label="gap"> the complex accounts.</span></li>
+        <li><span class="qtext">We reported a <input class="gap" type="text" aria-label="gap"> profit in the second quarter.</span></li>
+        <li><span class="qtext">Our sales continue to <input class="gap" type="text" aria-label="gap"> behind our main competitor's.</span></li>
+        <li><span class="qtext">Rising fuel prices forced the airline to <input class="gap" type="text" aria-label="gap"> several routes.</span></li>
+        <li><span class="qtext">The festival brings a huge <input class="gap" type="text" aria-label="gap"> of visitors every summer.</span></li>
+        <li><span class="qtext">The strike caused serious <input class="gap" type="text" aria-label="gap"> to deliveries.</span></li>
+      </ol>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-3e">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-3e">
+          <div class="key-label">Section 3E — answers</div>
+          <ol>
+            <li><span class="ans">accumulate</span></li>
+            <li><span class="ans">outweigh</span></li>
+            <li><span class="ans">turmoil</span></li>
+            <li><span class="ans">obscured</span></li>
+            <li><span class="ans">untangle</span></li>
+            <li><span class="ans">substantial</span></li>
+            <li><span class="ans">lag</span></li>
+            <li><span class="ans">curtail</span></li>
+            <li><span class="ans">influx</span></li>
+            <li><span class="ans">disruption</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. SPEAK & WRITE ================= -->
+  <section>
+    <div class="section-head"><span class="section-no">04</span><h2>Speak &amp; write</h2></div>
+    <p class="lead">Now use the language. You know this territory — speak as the professional you are, not as a language learner.</p>
+
+    <div class="task">
+      <div class="task-title">A · Discuss</div>
+      <div class="task-instr">Choose two and talk for a minute on each. Try to use words from Section 3.</div>
+      <ol class="q-list">
+        <li><span class="qtext">The article calls the opportunity cost — "all the things that have not happened" — the most important cost of all. Do you agree that what <em>didn't</em> happen can matter more than measurable losses?</span></li>
+        <li><span class="qtext">From your own experience, how does a gradual loss (a "slow puncture") affect a business differently from a sudden shock?</span></li>
+        <li><span class="qtext">Are trade barriers ever worth the political benefits a country hopes to gain? Argue both sides.</span></li>
+        <li><span class="qtext">Nearly half of Britons now say Brexit is going worse than expected. How much should public opinion shape a major economic decision?</span></li>
+      </ol>
+    </div>
+
+    <div class="task">
+      <div class="task-title">B · Write</div>
+      <div class="task-instr">Choose one. Aim for 120–150 words and use at least five words from this workbook.</div>
+      <ol class="q-list alpha">
+        <li><span class="qtext"><b>Opinion.</b> Was Brexit primarily an economic decision or a political one? Give reasons.</span>
+          <textarea class="write" style="min-height:140px;" aria-label="writing"></textarea></li>
+        <li><span class="qtext"><b>Summary for a colleague.</b> In your own words, summarise the article's main economic findings for someone who hasn't read it. Paraphrase — don't copy sentences from the text.</span>
+          <textarea class="write" style="min-height:140px;" aria-label="writing"></textarea></li>
+      </ol>
+      <div class="key-wrap">
+        <button class="key-btn" type="button" data-key="key-4b">Reveal answer key <span class="warn">Don't screen-share</span></button>
+        <div class="key" id="key-4b">
+          <div class="key-label">Section 4B — what a strong answer shows</div>
+          <ol>
+            <li><b>Range of target vocabulary</b> used accurately (not forced in).</li>
+            <li><b>Genuine paraphrase</b> in the summary task — own wording, not lifted phrases.</li>
+            <li><b>A clear position</b> in the opinion task, supported with at least one specific reason or figure from the article.</li>
+            <li><b>Linking</b> across sentences (however, as a result, while, by contrast) rather than a list of separate facts.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Counting the Cost <span class="ornament">·</span> B2 Reading &amp; Vocabulary <span class="ornament">·</span> Built one lesson at a time
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('.key-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = document.getElementById(btn.dataset.key);
+      var open = key.classList.toggle('open');
+      btn.firstChild.textContent = open ? 'Hide answer key ' : 'Reveal answer key ';
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Voice Beneath the Voice — James, Percival Everett</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6F1E6;
+    --paper:#FBF8F1;
+    --ink:#2A2621;
+    --ink-soft:#5A5248;
+    --sage:#7F8E76;
+    --sage-deep:#5E6C57;
+    --clay:#B65A3F;
+    --clay-soft:#C97B61;
+    --teal:#2F6E69;
+    --teal-deep:#234F4B;
+    --line:#E3DBCB;
+    --shadow:0 1px 2px rgba(42,38,33,.06),0 8px 26px rgba(42,38,33,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:"IBM Plex Sans",sans-serif;
+    line-height:1.6;
+    padding:clamp(14px,3vw,40px);
+    background-image:radial-gradient(circle at 12% 8%,rgba(127,142,118,.07),transparent 40%),radial-gradient(circle at 88% 92%,rgba(182,90,63,.06),transparent 42%);
+    min-height:100vh;
+  }
+  .wrap{max-width:760px;margin:0 auto}
+
+  /* Header */
+  header{margin-bottom:22px}
+  .kicker{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--clay);font-weight:600}
+  h1{font-family:"Fraunces",serif;font-weight:500;font-size:clamp(1.9rem,5.5vw,3rem);line-height:1.04;margin:.25em 0 .15em;letter-spacing:-.01em}
+  h1 em{font-style:italic;color:var(--teal-deep)}
+  .byline{font-size:.92rem;color:var(--ink-soft)}
+  .byline b{color:var(--ink);font-weight:600}
+
+  /* Tabs */
+  nav{display:flex;flex-wrap:wrap;gap:6px;margin:22px 0 6px;border-bottom:1px solid var(--line);padding-bottom:2px}
+  .tab{font-family:"IBM Plex Sans";font-size:.82rem;font-weight:500;color:var(--ink-soft);background:none;border:none;cursor:pointer;padding:9px 13px;border-radius:9px 9px 0 0;position:relative;transition:.18s;display:flex;align-items:center;gap:7px;white-space:nowrap}
+  .tab .n{font-family:"Fraunces";font-size:.78rem;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--ink-soft);transition:.18s}
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--teal-deep);background:var(--paper);box-shadow:0 -2px 0 var(--teal) inset}
+  .tab.active .n{background:var(--teal);color:#fff}
+  .session-tag{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-deep);align-self:center;margin-left:auto;font-weight:600;padding-left:8px}
+
+  /* Panels */
+  .panel{display:none;animation:rise .4s ease both}
+  .panel.active{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:clamp(18px,3.5vw,30px);box-shadow:var(--shadow);margin-bottom:16px}
+  h2{font-family:"Fraunces";font-weight:500;font-size:clamp(1.3rem,3.6vw,1.7rem);margin-bottom:.1em;letter-spacing:-.01em}
+  .sub{color:var(--ink-soft);font-size:.9rem;margin-bottom:1.1em}
+  p{margin-bottom:.85em}
+  p:last-child{margin-bottom:0}
+
+  /* Context tab */
+  .flip-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+  @media(max-width:560px){.flip-row{grid-template-columns:1fr}}
+  .mini{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--cream)}
+  .mini h3{font-family:"Fraunces";font-weight:500;font-size:1.05rem;margin-bottom:.3em}
+  .mini .yr{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--clay)}
+  .mini.twain .yr{color:var(--sage-deep)}
+  .mini p{font-size:.86rem;color:var(--ink-soft)}
+  .arrowline{text-align:center;font-family:"Fraunces";font-style:italic;color:var(--teal);font-size:.95rem;margin:2px 0 6px}
+  .badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .badge{font-size:.72rem;background:var(--teal-deep);color:#F6F1E6;padding:4px 11px;border-radius:30px;font-weight:500}
+  .badge.alt{background:none;color:var(--teal-deep);border:1px solid var(--teal)}
+
+  /* The passage */
+  .passage{font-family:"Fraunces";font-weight:400;font-size:clamp(1.06rem,2.6vw,1.22rem);line-height:1.78;color:#322D26}
+  .passage .pg{font-size:.7rem;letter-spacing:.2em;color:var(--clay);font-family:"IBM Plex Sans";font-weight:600;display:block;margin-bottom:1em}
+  .gloss{border-bottom:1.5px dotted var(--clay);cursor:pointer;color:#322D26;transition:background .15s;border-radius:2px;position:relative}
+  .gloss:hover{background:rgba(182,90,63,.1)}
+  .gloss.open{background:rgba(47,110,105,.12);border-bottom-color:var(--teal)}
+  .gloss-note{display:none;font-family:"IBM Plex Sans";font-size:.82rem;line-height:1.5;color:var(--teal-deep);background:var(--cream);border-left:3px solid var(--teal);border-radius:0 8px 8px 0;padding:9px 13px;margin:10px 0}
+  .gloss-note.show{display:block;animation:rise .25s both}
+  .hint{font-size:.8rem;color:var(--sage-deep);font-style:italic;margin-top:16px;display:flex;align-items:center;gap:7px}
+
+  /* Close reading lenses */
+  .lens{border:1px solid var(--line);border-radius:12px;margin-bottom:11px;overflow:hidden;background:var(--cream)}
+  .lens-head{padding:14px 17px;cursor:pointer;display:flex;align-items:center;gap:13px;transition:.15s}
+  .lens-head:hover{background:rgba(127,142,118,.08)}
+  .lens-tag{font-family:"Fraunces";font-style:italic;font-size:.72rem;color:#fff;background:var(--sage-deep);padding:3px 10px;border-radius:30px;white-space:nowrap;flex-shrink:0}
+  .lens-q{font-family:"Fraunces";font-size:1rem;font-weight:500;flex:1}
+  .chev{color:var(--ink-soft);transition:transform .25s;flex-shrink:0;font-size:1.1rem}
+  .lens.open .chev{transform:rotate(90deg)}
+  .lens-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .lens.open .lens-body{max-height:520px}
+  .lens-inner{padding:2px 17px 17px;font-size:.9rem}
+  .lens-inner .frag{font-family:"Fraunces";font-style:italic;color:var(--clay);font-size:1.02rem;display:block;margin:2px 0 11px;line-height:1.4}
+  .elicit{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:11px 14px;margin-top:13px;font-size:.86rem}
+  .elicit b{color:var(--teal-deep);font-family:"IBM Plex Sans";font-weight:600;display:block;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;margin-bottom:4px}
+
+  /* The argument tab */
+  .full-line{font-family:"Fraunces";font-style:italic;font-size:clamp(1.05rem,2.7vw,1.28rem);line-height:1.7;color:#322D26;border-left:3px solid var(--clay);padding:6px 0 6px 18px;margin:6px 0 22px}
+  .move{display:flex;gap:14px;margin-bottom:12px;cursor:pointer;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--cream);transition:.15s}
+  .move:hover{background:rgba(47,110,105,.06);border-color:var(--teal)}
+  .move .dot{font-family:"Fraunces";flex-shrink:0;width:27px;height:27px;border-radius:50%;background:var(--clay);color:#fff;display:grid;place-items:center;font-size:.85rem;font-weight:500}
+  .move .mtext{flex:1}
+  .move .clause{font-family:"Fraunces";font-style:italic;color:#322D26;font-size:1rem}
+  .move .plain{font-size:.86rem;color:var(--teal-deep);margin-top:6px;display:none}
+  .move.open .plain{display:block;animation:rise .25s both}
+  .move.open{background:var(--paper);border-color:var(--teal)}
+
+  /* Discuss tab */
+  .prov{border:1px solid var(--line);border-radius:13px;margin-bottom:13px;background:var(--paper);overflow:hidden;box-shadow:var(--shadow)}
+  .prov-top{padding:17px 19px;cursor:pointer;position:relative}
+  .prov-top:hover{background:rgba(182,90,63,.05)}
+  .prov-no{font-family:"Fraunces";font-size:.72rem;letter-spacing:.1em;color:var(--clay);font-weight:600;display:block;margin-bottom:7px}
+  .prov-claim{font-family:"Fraunces";font-weight:500;font-size:clamp(1.05rem,2.7vw,1.2rem);line-height:1.4}
+  .prov-frame{max-height:0;overflow:hidden;transition:max-height .4s ease;background:var(--cream);border-top:0 solid var(--line)}
+  .prov.open .prov-frame{max-height:340px;border-top:1px solid var(--line)}
+  .prov-frame-inner{padding:15px 19px}
+  .prov-frame-inner .lbl{font-size:.66rem;letter-spacing:.13em;text-transform:uppercase;color:var(--sage-deep);font-weight:600;margin-bottom:9px}
+  .steps{display:flex;flex-wrap:wrap;gap:8px}
+  .step{font-size:.78rem;background:var(--paper);border:1px solid var(--line);border-radius:30px;padding:5px 13px;color:var(--ink-soft)}
+  .step b{color:var(--teal-deep);font-weight:600}
+  .tapadd{font-size:.72rem;color:var(--sage-deep);font-style:italic;margin-top:11px}
+
+  /* Production */
+  .task{background:linear-gradient(135deg,var(--teal-deep),var(--teal));color:#F6F1E6;border-radius:14px;padding:clamp(20px,4vw,30px);box-shadow:var(--shadow)}
+  .task h2{color:#FBF8F1}
+  .task .sub{color:rgba(246,241,230,.78)}
+  .task ul{list-style:none;margin-top:14px}
+  .task li{padding:10px 0;border-top:1px solid rgba(246,241,230,.18);font-size:.93rem;display:flex;gap:11px}
+  .task li:first-of-type{border-top:none}
+  .task li .b{font-family:"Fraunces";font-style:italic;color:#F0C9B8;flex-shrink:0}
+
+  footer{text-align:center;color:var(--sage-deep);font-size:.74rem;margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="kicker">Reading &amp; Discussion · C1</span>
+    <h1>The Voice Beneath<br>the Voice</h1>
+    <p class="byline">An extract from <em>James</em> by <b>Percival Everett</b> &nbsp;·&nbsp; a retelling of Mark Twain's <i>Huckleberry Finn</i></p>
+  </header>
+
+  <nav id="nav">
+    <button class="tab active" data-p="0"><span class="n">1</span>Context</button>
+    <button class="tab" data-p="1"><span class="n">2</span>The Passage</button>
+    <button class="tab" data-p="2"><span class="n">3</span>Close Reading</button>
+    <button class="tab" data-p="3"><span class="n">4</span>The Argument</button>
+    <button class="tab" data-p="4"><span class="n">5</span>Discuss</button>
+  </nav>
+
+  <!-- 0 CONTEXT -->
+  <section class="panel active">
+    <div class="card">
+      <h2>Two books, one river</h2>
+      <p class="sub">Session 1 · before we read</p>
+      <p>In 1884, Mark Twain published <i>The Adventures of Huckleberry Finn</i>: a runaway white boy, Huck, drifts down the Mississippi on a raft with Jim, an enslaved man fleeing sale. It is one of the most celebrated — and most argued-over — novels in American literature. Jim is loyal and warm, but Twain writes him in heavy dialect and largely through Huck's eyes.</p>
+      <div class="flip-row">
+        <div class="mini twain">
+          <span class="yr">1884 · Mark Twain</span>
+          <h3>Huckleberry Finn</h3>
+          <p>The story told by Huck. Jim speaks in dialect; we rarely enter his mind.</p>
+        </div>
+        <div class="mini">
+          <span class="yr">2024 · Percival Everett</span>
+          <h3>James</h3>
+          <p>The same journey, told by Jim — who renames himself James. Inside his head, he is brilliant.</p>
+        </div>
+      </div>
+      <p class="arrowline">— Everett gives the silenced man the pen —</p>
+      <p>Everett's twist: among white people, the enslaved characters <i>perform</i> a slow, broken "slave dialect" to stay safe. Alone, or with each other, they think and speak in sharp, educated English. The novel is set in the 1850s, in the slave states of the American South, in the tense years before the Civil War — when those states would soon secede to defend the right to own human beings.</p>
+      <div class="badges">
+        <span class="badge">Pulitzer Prize for Fiction, 2025</span>
+        <span class="badge">National Book Award, 2024</span>
+        <span class="badge alt">Booker Prize finalist</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 PASSAGE -->
+  <section class="panel">
+    <div class="card">
+      <h2>Read it slowly</h2>
+      <p class="sub">James is feverish, hurt, half-conscious. Tap any <span style="border-bottom:1.5px dotted var(--clay)">underlined</span> word to unlock its meaning.</p>
+      <div class="passage">
+        <span class="pg">— page 52 —</span>
+        <p>As the boy disappeared into the bright light of the outside, I felt again how sick I was. I suspected at that moment that I would not die, but it was unclear whether I would be pleased about that fact. My head was swimming and I was in great pain. I was <span class="gloss" data-g="Sick to the stomach; feeling you might vomit.">nauseated</span> and still <span class="gloss" data-g="Hot and shaking from a high temperature — a fever.">feverish</span>. I tried to pull myself to my feet, but my limbs were numb and <span class="gloss" data-g="They would not do what he told them to do — they refused to obey.">uncooperative</span>.</p>
+        <p>In truth, I was afraid to sleep again for fear of Huck coming back and hearing my thoughts without their passing through my <span class="gloss" data-g="James's key invention. The disguise he puts on his speech so white people hear a 'simple slave' — not the sharp mind underneath.">slave filter</span>. I was even more afraid of further unproductive, imagined conversations with <span class="gloss" data-g="Three giants of the Enlightenment who wrote about freedom, equality and natural rights — Voltaire, Rousseau and Locke. Locke himself profited from the slave trade.">Voltaire, Rousseau and Locke</span> about slavery, race and, of all things, <span class="gloss" data-g="The condition of having no skin pigment — being born pale-white. Raised here to push the logic of skin-colour hierarchy to its breaking point.">albinism</span>.</p>
+        <p>How strange a world, how strange an existence, that one's equal must argue for one's equality, that one's equal must hold a <span class="gloss" data-g="A position or rank in society — here, the standing that gives someone the right to be heard.">station</span> that allows <span class="gloss" data-g="The public expressing of an idea — saying it openly where others will listen.">airing</span> of that argument, that one cannot make that argument for oneself, that <span class="gloss" data-g="The starting assumptions a logical argument is built on.">premises</span> of said argument must be <span class="gloss" data-g="Checked and approved before being accepted as valid.">vetted</span> by those equals who do not agree.</p>
+      </div>
+      <p class="hint">→ Read it once for the feeling, then again for the thinking.</p>
+    </div>
+  </section>
+
+  <!-- 2 CLOSE READING -->
+  <section class="panel">
+    <div class="card">
+      <h2>Five lenses</h2>
+      <p class="sub">Tap a lens to open it. Look first — what do <i>you</i> notice?</p>
+
+      <div class="lens">
+        <div class="lens-head"><span class="lens-tag">metaphor</span><span class="lens-q">The "slave filter"</span><span class="chev">›</span></div>
+        <div class="lens-body"><div class="lens-inner">
+          <span class="frag">"hearing my thoughts without their passing through my slave filter"</span>
+          <p>A <b>filter</b> removes things and lets only some through. James's intelligence is dangerous to him — so he strains his speech through a disguise before letting white people hear it. Notice the fear isn't of being hurt. It's of being <i>understood</i>.</p>
+          <div class="elicit"><b>Steer the talk</b>Where else do people filter how they speak to seem less — or more — than they are? Do you have a "filter" in English?</div>
+        </div></div>
+      </div>
+
+      <div class="lens">
+        <div class="lens-head"><span class="lens-tag">understatement</span><span class="lens-q">"unclear whether I would be pleased"</span><span class="chev">›</span></div>
+        <div class="lens-body"><div class="lens-inner">
+          <span class="frag">"I would not die, but it was unclear whether I would be pleased about that fact."</span>
+          <p>He has just realised he will survive — and he is not sure that is good news. Everett says something devastating in the flattest, calmest voice. This restraint (saying less than you mean) hits harder than any cry of despair would.</p>
+          <div class="elicit"><b>Steer the talk</b>Why is the quiet version more powerful than "I wished I were dead"? What does calm do to the reader?</div>
+        </div></div>
+      </div>
+
+      <div class="lens">
+        <div class="lens-head"><span class="lens-tag">irony</span><span class="lens-q">"of all things, albinism"</span><span class="chev">›</span></div>
+        <div class="lens-body"><div class="lens-inner">
+          <span class="frag">"about slavery, race and, of all things, albinism"</span>
+          <p>The throwaway phrase "of all things" signals absurdity. If a whole social order is built on skin colour, what happens at the edges — a Black person born white, a white person born pale? The category that justifies slavery starts to dissolve under its own logic.</p>
+          <div class="elicit"><b>Steer the talk</b>Why does pushing a rule to its strangest case often expose how arbitrary it was?</div>
+        </div></div>
+      </div>
+
+      <div class="lens">
+        <div class="lens-head"><span class="lens-tag">allusion</span><span class="lens-q">Voltaire, Rousseau, Locke</span><span class="chev">›</span></div>
+        <div class="lens-body"><div class="lens-inner">
+          <span class="frag">"imagined conversations with Voltaire, Rousseau and Locke"</span>
+          <p>These are the philosophers of liberty and natural rights — the thinkers whose ideas fuelled revolutions. Yet several were entangled with slavery (Locke invested in the slave trade). An enslaved man debates his own humanity with the very men who wrote that all are born free. The bitter joke writes itself.</p>
+          <div class="elicit"><b>Steer the talk</b>What does it mean that James has read these books at all — and still must argue from inside a sickbed, alone?</div>
+        </div></div>
+      </div>
+
+      <div class="lens">
+        <div class="lens-head"><span class="lens-tag">repetition</span><span class="lens-q">The four-fold "that…"</span><span class="chev">›</span></div>
+        <div class="lens-body"><div class="lens-inner">
+          <span class="frag">"that one's equal must… that one's equal must… that one cannot… that premises…"</span>
+          <p>The final sentence stacks clause on clause, each beginning "that". The rhythm builds like an indictment — point after point in a case against an entire system. By the end, the structure itself feels like a trap closing. We unpack exactly what it argues in the next tab.</p>
+          <div class="elicit"><b>Steer the talk</b>Read it aloud. What does the repeated "that" <i>do</i> to the pace and the pressure?</div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 ARGUMENT -->
+  <section class="panel">
+    <div class="card">
+      <h2>The sentence that does the work</h2>
+      <p class="sub">Session 2 · the heart of the extract. Tap each clause to translate it into plain English.</p>
+      <p class="full-line">"How strange a world… that one's equal must argue for one's equality, that one's equal must hold a station that allows airing of that argument, that one cannot make that argument for oneself, that premises of said argument must be vetted by those equals who do not agree."</p>
+
+      <div class="move"><span class="dot">1</span><div class="mtext"><span class="clause">…one's equal must argue for one's equality…</span><span class="plain">Someone else — your equal — has to make the case that you are equal. You can't even be the one who says it.</span></div></div>
+      <div class="move"><span class="dot">2</span><div class="mtext"><span class="clause">…must hold a station that allows airing of that argument…</span><span class="plain">And that person needs power, rank, a platform. Only those already heard are allowed to speak the case at all.</span></div></div>
+      <div class="move"><span class="dot">3</span><div class="mtext"><span class="clause">…one cannot make that argument for oneself…</span><span class="plain">You — the person whose humanity is in question — are shut out of your own defence.</span></div></div>
+      <div class="move"><span class="dot">4</span><div class="mtext"><span class="clause">…premises must be vetted by those equals who do not agree.</span><span class="plain">And the judges? The very people who deny you're equal. They decide whether the argument for your equality is even allowed to begin.</span></div></div>
+
+      <p style="margin-top:20px;font-family:'Fraunces';font-style:italic;color:var(--teal-deep);font-size:1.05rem;line-height:1.5">The cruelty isn't only slavery. It's that the marginalised can't even speak in their own defence — and the people who hold the floor are the ones who profit from their silence.</p>
+    </div>
+  </section>
+
+  <!-- 4 DISCUSS -->
+  <section class="panel">
+    <div class="card">
+      <h2>Five provocations</h2>
+      <p class="sub">Pick one. Tap it for a frame to keep your spoken answer tight.</p>
+
+      <div class="prov"><div class="prov-top"><span class="prov-no">Provocation 1</span><span class="prov-claim">Everyone code-switches — so the "slave filter" is just ordinary social behaviour.</span></div><div class="prov-frame"><div class="prov-frame-inner"><div class="lbl">Speak with: P · R · E · P</div><div class="steps"><span class="step"><b>Position</b> agree / push back</span><span class="step"><b>Reason</b> why</span><span class="step"><b>Example</b> from life</span><span class="step"><b>Point</b> restate</span></div><p class="tapadd">Where does the comparison hold — and exactly where does it break?</p></div></div></div>
+
+      <div class="prov"><div class="prov-top"><span class="prov-no">Provocation 2</span><span class="prov-claim">Whose story is <i>Huckleberry Finn</i>? Was it Everett's to take back?</span></div><div class="prov-frame"><div class="prov-frame-inner"><div class="lbl">Speak with: P · R · E · P</div><div class="steps"><span class="step"><b>Position</b></span><span class="step"><b>Reason</b></span><span class="step"><b>Example</b></span><span class="step"><b>Point</b></span></div><p class="tapadd">Who has the "right" to retell a story — the original author, or the people it left out?</p></div></div></div>
+
+      <div class="prov"><div class="prov-top"><span class="prov-no">Provocation 3</span><span class="prov-claim">Putting Voltaire and Locke in a dying enslaved man's head is the whole point of the book.</span></div><div class="prov-frame"><div class="prov-frame-inner"><div class="lbl">Speak with: P · R · E · P</div><div class="steps"><span class="step"><b>Position</b></span><span class="step"><b>Reason</b></span><span class="step"><b>Example</b></span><span class="step"><b>Point</b></span></div><p class="tapadd">What does Everett gain by making James more well-read than his "masters"?</p></div></div></div>
+
+      <div class="prov"><div class="prov-top"><span class="prov-no">Provocation 4</span><span class="prov-claim">"Your equality is argued by others, and judged by people who disagree." Where does this logic still operate today?</span></div><div class="prov-frame"><div class="prov-frame-inner"><div class="lbl">Speak with: P · R · E · P</div><div class="steps"><span class="step"><b>Position</b></span><span class="step"><b>Reason</b></span><span class="step"><b>Example</b></span><span class="step"><b>Point</b></span></div><p class="tapadd">Think: who speaks, who is spoken for, who decides what counts.</p></div></div></div>
+
+      <div class="prov"><div class="prov-top"><span class="prov-no">Provocation 5</span><span class="prov-claim">Intelligence on the page is a political act.</span></div><div class="prov-frame"><div class="prov-frame-inner"><div class="lbl">Speak with: P · R · E · P</div><div class="steps"><span class="step"><b>Position</b></span><span class="step"><b>Reason</b></span><span class="step"><b>Example</b></span><span class="step"><b>Point</b></span></div><p class="tapadd">Why was giving Jim a brilliant inner voice such a powerful choice in 2024 — not 1884?</p></div></div></div>
+    </div>
+
+    <div class="task">
+      <h2>Your turn</h2>
+      <p class="sub">Close the arc — speak, then write.</p>
+      <ul>
+        <li><span class="b">Say</span> Two minutes, no notes: which single line of the extract stays with you, and why?</li>
+        <li><span class="b">Stretch</span> Use three words you unlocked in <i>The Passage</i> (e.g. <i>station, vet, air</i> an argument) in your answer.</li>
+        <li><span class="b">Write</span> Six sentences: rewrite James's final thought as a modern person, in a modern situation, who cannot speak for themselves.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>The Voice Beneath the Voice · close reading &amp; discussion · <i>James</i>, Percival Everett (2024)</footer>
+</div>
+
+<script>
+  // Tabs
+  const tabs=[...document.querySelectorAll('.tab')];
+  const panels=[...document.querySelectorAll('.panel')];
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    const i=+t.dataset.p;
+    tabs.forEach(x=>x.classList.remove('active'));
+    panels.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    panels[i].classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }));
+
+  // Glosses
+  document.querySelectorAll('.gloss').forEach(g=>{
+    g.addEventListener('click',()=>{
+      const open=g.classList.contains('open');
+      // close any open note that follows
+      document.querySelectorAll('.gloss-note.show').forEach(n=>n.classList.remove('show'));
+      document.querySelectorAll('.gloss.open').forEach(x=>x.classList.remove('open'));
+      if(open) return;
+      g.classList.add('open');
+      let note=g.nextElementSibling;
+      if(!note||!note.classList.contains('gloss-note')){
+        note=document.createElement('span');
+        note.className='gloss-note';
+        note.style.display='block';
+        note.textContent=g.dataset.g;
+        g.parentNode.insertBefore(note,g.nextSibling);
+      }
+      requestAnimationFrame(()=>note.classList.add('show'));
+    });
+  });
+
+  // Lenses
+  document.querySelectorAll('.lens-head').forEach(h=>{
+    h.addEventListener('click',()=>h.parentElement.classList.toggle('open'));
+  });
+
+  // Argument moves
+  document.querySelectorAll('.move').forEach(m=>{
+    m.addEventListener('click',()=>m.classList.toggle('open'));
+  });
+
+  // Provocations
+  document.querySelectorAll('.prov-top').forEach(p=>{
+    p.addEventListener('click',()=>p.parentElement.classList.toggle('open'));
+  });
+</script>
+</body>
+</html>

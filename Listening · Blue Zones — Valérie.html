@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening · Blue Zones — Valérie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --teal: #2a6f7a;
+    --rust: #b5562a;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 20%, rgba(42, 111, 122, 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 80%, rgba(45, 106, 79, 0.05) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 34px;
+    margin-bottom: 36px;
+  }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(52px, 9vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+
+  h1 .accent { color: var(--teal); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--ink-soft);
+    margin-top: 18px;
+    max-width: 620px;
+  }
+
+  /* ---- The clip panel ---- */
+  .clip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 28px;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--teal);
+    border-radius: 2px;
+    padding: 22px 26px;
+    margin-bottom: 46px;
+  }
+
+  .clip-meta { max-width: 540px; }
+
+  .clip-label {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .clip-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .clip-sub {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+
+  .clip-sub strong { color: var(--ink); font-weight: 600; }
+
+  .clip-btn {
+    display: inline-block;
+    background: var(--teal);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 13px 22px;
+    border-radius: 2px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+  }
+
+  .clip-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(42, 111, 122, 0.28);
+  }
+
+  /* ---- Step sections ---- */
+  .step { margin-bottom: 52px; }
+
+  .step-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 34px;
+    color: var(--teal);
+    line-height: 1;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--ink);
+  }
+
+  .step-kicker {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-left: auto;
+    align-self: center;
+  }
+
+  .instruction {
+    font-size: 16px;
+    line-height: 1.65;
+    margin-bottom: 22px;
+    color: var(--ink);
+  }
+
+  .instruction em { font-style: italic; color: var(--ink-soft); }
+
+  /* ---- Vocabulary cards ---- */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  .vcard {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 24px 20px;
+    position: relative;
+    animation: fadeIn 0.45s ease both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .vcard-num {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .vword {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 27px;
+    color: var(--teal);
+    line-height: 1.1;
+    padding-right: 30px;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .vpos {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin: 3px 0 12px;
+  }
+
+  .vdef { font-size: 14.5px; line-height: 1.5; margin-bottom: 10px; }
+
+  .vex {
+    font-style: italic;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    padding-left: 12px;
+    border-left: 2px solid var(--rule);
+  }
+
+  .vnote {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--rule);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .vnote .lbl {
+    font-weight: 600;
+    color: var(--trap);
+    letter-spacing: 0.04em;
+  }
+
+  /* ---- Question lists ---- */
+  .gist {
+    background: rgba(42, 111, 122, 0.08);
+    border-left: 3px solid var(--teal);
+    border-radius: 2px;
+    padding: 22px 26px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.35;
+    color: var(--ink);
+  }
+
+  .gist .mini {
+    display: block;
+    font-family: 'Lora', serif;
+    font-style: normal;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  ol.qlist { list-style: none; counter-reset: q; }
+
+  ol.qlist li {
+    counter-increment: q;
+    position: relative;
+    padding: 14px 0 14px 46px;
+    border-bottom: 1px solid rgba(201, 184, 150, 0.55);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  ol.qlist li:last-child { border-bottom: none; }
+
+  ol.qlist li::before {
+    content: counter(q);
+    position: absolute;
+    left: 0;
+    top: 13px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--teal);
+    width: 30px;
+    text-align: center;
+  }
+
+  ol.qlist li .hint {
+    display: block;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+  }
+
+  /* ---- Frames ---- */
+  .frames { display: grid; gap: 14px; }
+
+  .frame {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 16px 20px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .frame .blank {
+    color: var(--rust);
+    border-bottom: 1.5px dashed var(--rust);
+    padding: 0 22px;
+  }
+
+  /* ---- Timer ---- */
+  .timer {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 20px 24px;
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 22px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .timer.active {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 1px var(--teal), 0 12px 30px rgba(42, 111, 122, 0.16);
+  }
+
+  .timer.done {
+    border-color: var(--rust);
+    animation: donepulse 1.1s ease;
+  }
+
+  @keyframes donepulse {
+    0%, 100% { box-shadow: 0 0 0 1px var(--rust); }
+    50% { box-shadow: 0 0 0 5px rgba(181, 86, 42, 0.18); }
+  }
+
+  .t-display {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--ink);
+    min-width: 130px;
+    font-variant-numeric: tabular-nums;
+    font-variation-settings: "SOFT" 60;
+  }
+
+  .timer.active .t-display { color: var(--teal); }
+  .timer.done .t-display { color: var(--rust); }
+
+  .t-controls { display: flex; gap: 10px; }
+
+  .t-controls button {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 11px 20px;
+    border-radius: 2px;
+    border: 1px solid var(--teal);
+    background: var(--teal);
+    color: var(--paper);
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+
+  .t-controls button:hover { transform: translateY(-1px); }
+
+  .t-controls .t-reset {
+    background: transparent;
+    color: var(--teal);
+  }
+
+  .t-presets {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    flex-wrap: wrap;
+  }
+
+  .t-presets-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .t-preset {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    padding: 7px 13px;
+    border-radius: 2px;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .t-preset:hover { border-color: var(--ink-soft); }
+
+  .t-preset.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* ---- Teacher key ---- */
+  .teacher {
+    margin-top: 70px;
+    border: 1px dashed var(--rust);
+    border-radius: 2px;
+    background: rgba(181, 86, 42, 0.05);
+    padding: 24px 28px;
+  }
+
+  .teacher-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+    justify-content: space-between;
+  }
+
+  .teacher-badge {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--rust);
+  }
+
+  .teacher-badge span {
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--ink-soft);
+    font-size: 12px;
+    display: block;
+    margin-top: 3px;
+  }
+
+  #key-toggle {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 11px 22px;
+    border-radius: 2px;
+    border: 1px solid var(--rust);
+    background: var(--rust);
+    color: var(--paper);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  #key-toggle:hover { transform: translateY(-1px); }
+
+  #key-body {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  }
+
+  #key-body.open {
+    max-height: 1200px;
+    opacity: 1;
+    margin-top: 22px;
+  }
+
+  .key-block { margin-bottom: 18px; }
+  .key-block:last-child { margin-bottom: 0; }
+
+  .key-h {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .key-block p { font-size: 14.5px; line-height: 1.55; margin-bottom: 4px; }
+  .key-block .ans { color: var(--ink); }
+  .key-block .ans strong { color: var(--truth); }
+
+  footer {
+    margin-top: 72px;
+    padding-top: 26px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 44px 20px 60px; }
+    .vocab-grid { grid-template-columns: 1fr; }
+    .clip { flex-direction: column; align-items: flex-start; }
+    .step-kicker { margin-left: 0; }
+    .t-display { font-size: 44px; }
+    .t-presets { margin-left: 0; }
+  }
+
+  @media print {
+    body { background: white; }
+    .clip-btn, .timer, #key-toggle { display: none; }
+    .teacher, #key-body { max-height: none; opacity: 1; }
+    .step, .vcard { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">A listening session · Valérie</div>
+    <h1>Blue <span class="accent">Zones</span></h1>
+    <div class="subtitle">Where do people live the longest — and what do they do differently? A first listening session, scaffolded end to end.</div>
+  </header>
+
+  <div class="clip">
+    <div class="clip-meta">
+      <div class="clip-label">The talk</div>
+      <div class="clip-title">Dan Buettner — How to live to be 100+</div>
+      <div class="clip-sub">TED · ~19 min total. <strong>We use only the opening ~4 minutes:</strong> from the start until he finishes explaining the Blue Zones idea (before he travels to the individual places). Stop around <strong>4:00</strong>.</div>
+    </div>
+    <a class="clip-btn" href="https://www.ted.com/talks/dan_buettner_how_to_live_to_be_100" target="_blank" rel="noopener">Open the talk ↗</a>
+  </div>
+
+  <!-- STEP 1 -->
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">N° 1</span>
+      <span class="step-title">Before you listen — six words</span>
+      <span class="step-kicker">Input first</span>
+    </div>
+    <p class="instruction">Read these together before any audio. Say each word aloud, then build one quick sentence of your own. <em>You'll meet all six in the clip — listening is easier once the words are already in the room.</em></p>
+
+    <div class="vocab-grid">
+      <div class="vcard" style="animation-delay:0ms">
+        <div class="vcard-num">01</div>
+        <div class="vword">longevity</div>
+        <div class="vpos">noun</div>
+        <div class="vdef">A long life — living for many years.</div>
+        <div class="vex">"The talk is about the secrets of longevity."</div>
+        <div class="vnote"><span class="lbl">Goes with:</span> the secret <em>to</em> longevity.</div>
+      </div>
+
+      <div class="vcard" style="animation-delay:60ms">
+        <div class="vcard-num">02</div>
+        <div class="vword">lifestyle</div>
+        <div class="vpos">noun</div>
+        <div class="vdef">The way you live: your habits, food, work and activity.</div>
+        <div class="vex">"A healthy lifestyle matters more than your genes."</div>
+      </div>
+
+      <div class="vcard" style="animation-delay:120ms">
+        <div class="vcard-num">03</div>
+        <div class="vword">genes</div>
+        <div class="vpos">noun · adj. <em>genetic</em></div>
+        <div class="vdef">The information you inherit from your parents.</div>
+        <div class="vex">"Health is partly in your genes — but mostly in your habits."</div>
+        <div class="vnote"><span class="lbl">Say:</span> "it runs in the family" / "it's in my genes."</div>
+      </div>
+
+      <div class="vcard" style="animation-delay:180ms">
+        <div class="vcard-num">04</div>
+        <div class="vword">premise</div>
+        <div class="vpos">noun</div>
+        <div class="vdef">The basic idea an argument or study starts from.</div>
+        <div class="vex">"The premise is simple: find the best lifestyle, and you find the formula."</div>
+      </div>
+
+      <div class="vcard" style="animation-delay:240ms">
+        <div class="vcard-num">05</div>
+        <div class="vword">optimal</div>
+        <div class="vpos">adjective</div>
+        <div class="vdef">The best possible.</div>
+        <div class="vex">"He's looking for the optimal diet for a long life."</div>
+        <div class="vnote"><span class="lbl">Synonym:</span> ideal, best.</div>
+      </div>
+
+      <div class="vcard" style="animation-delay:300ms">
+        <div class="vcard-num">06</div>
+        <div class="vword">diet</div>
+        <div class="vpos">noun</div>
+        <div class="vdef">Two meanings: (1) what you usually eat — "a plant-based diet"; (2) eating less to lose weight — "she's on a diet."</div>
+        <div class="vex">"Their diet is mostly vegetables, beans and bread."</div>
+        <div class="vnote"><span class="lbl">Faux ami:</span> FR <em>régime</em> (food) → English <strong>diet</strong>. English <em>regime</em> = a system or government, never food.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">N° 2</span>
+      <span class="step-title">First listen — the big idea</span>
+      <span class="step-kicker">Audio only · no transcript</span>
+    </div>
+    <p class="instruction">Close the transcript. Play from the start. Don't try to catch every word — just listen for <em>one</em> thing:</p>
+
+    <div class="gist">
+      <span class="mini">Listen for this</span>
+      What matters more for a long life — your genes, or the way you live?
+    </div>
+
+    <div class="timer" data-default="240">
+      <div class="t-display">4:00</div>
+      <div class="t-controls">
+        <button class="t-start" type="button">Start</button>
+        <button class="t-reset" type="button">Reset</button>
+      </div>
+      <div class="t-presets">
+        <span class="t-presets-label">Set</span>
+        <button class="t-preset" data-sec="120" type="button">2 min</button>
+        <button class="t-preset active" data-sec="240" type="button">4 min</button>
+        <button class="t-preset" data-sec="300" type="button">5 min</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">N° 3</span>
+      <span class="step-title">Second listen — the details</span>
+      <span class="step-kicker">Audio only · take notes</span>
+    </div>
+    <p class="instruction">Play the same section again. This time, listen for the answers to these. <em>They're all in there — short and findable.</em></p>
+
+    <ol class="qlist">
+      <li>According to the Danish Twin Study, roughly what percentage of how long we live is decided by our <strong>genes</strong>?</li>
+      <li>So roughly what percentage is decided by our <strong>lifestyle</strong>?</li>
+      <li>He mentions popular diets and advice that people have heard of. <strong>Name one.</strong></li>
+      <li>In your own words: what is the <strong>premise</strong> of Blue Zones?<span class="hint">(What's the basic idea the whole study is built on?)</span></li>
+    </ol>
+
+    <div class="timer" data-default="300">
+      <div class="t-display">5:00</div>
+      <div class="t-controls">
+        <button class="t-start" type="button">Start</button>
+        <button class="t-reset" type="button">Reset</button>
+      </div>
+      <div class="t-presets">
+        <span class="t-presets-label">Set</span>
+        <button class="t-preset" data-sec="240" type="button">4 min</button>
+        <button class="t-preset active" data-sec="300" type="button">5 min</button>
+        <button class="t-preset" data-sec="420" type="button">7 min</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 4 -->
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">N° 4</span>
+      <span class="step-title">Check — read it back</span>
+      <span class="step-kicker">Transcript on</span>
+    </div>
+    <p class="instruction">Now open the transcript on the TED page (the <em>Read transcript</em> tab) and find the answers in the text. <em>This is the point of the session: where the ear missed something, the eye catches it. Notice what you understood by reading that you couldn't catch by listening — that gap is normal, and it shrinks with practice.</em></p>
+  </section>
+
+  <!-- STEP 5 -->
+  <section class="step">
+    <div class="step-head">
+      <span class="step-num">N° 5</span>
+      <span class="step-title">Say it</span>
+      <span class="step-kicker">Two sentences, out loud</span>
+    </div>
+    <p class="instruction">Finish each frame out loud, using the words from Step 1.</p>
+    <div class="frames">
+      <div class="frame">For a long life, <span class="blank">&nbsp;</span> matters more than <span class="blank">&nbsp;</span>.</div>
+      <div class="frame">The idea I found most interesting was <span class="blank">&nbsp;</span>.</div>
+      <div class="frame">A healthy diet, for me, means <span class="blank">&nbsp;</span>.</div>
+    </div>
+  </section>
+
+  <!-- TEACHER KEY -->
+  <div class="teacher">
+    <div class="teacher-top">
+      <div class="teacher-badge">Teacher only<span>Everything above is fine to screen-share. Keep this closed while sharing.</span></div>
+      <button id="key-toggle" type="button">Show teacher key</button>
+    </div>
+    <div id="key-body">
+      <div class="key-block">
+        <div class="key-h">First listen — the big idea</div>
+        <p class="ans">The <strong>way you live (lifestyle)</strong> — about <strong>90%</strong> of it — far more than genes.</p>
+      </div>
+      <div class="key-block">
+        <div class="key-h">Second listen — details</div>
+        <p class="ans">1. About <strong>10%</strong> (genes).</p>
+        <p class="ans">2. About <strong>90%</strong> (lifestyle).</p>
+        <p class="ans">3. Any of: the <strong>South Beach Diet</strong>, the <strong>Atkins Diet</strong>, the <strong>USDA food pyramid</strong>, <strong>Oprah</strong>, <strong>Dr Oz</strong>.</p>
+        <p class="ans">4. If we can find the <strong>best lifestyle for living long</strong>, we can build a rough <strong>formula</strong> for longevity — because habits, not genes, decide most of it.</p>
+      </div>
+      <div class="key-block">
+        <div class="key-h">If she's stuck on the numbers</div>
+        <p>The 90/10 stat is the one fact to land. If she misses it by ear, let her find it in the transcript rather than telling her — same self-discovery move as the recordings.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Listening cycle <span class="ornament">·</span> input before production <span class="ornament">·</span> reusable shell — swap the clip and the six words next time
+  </footer>
+</div>
+
+<script>
+  class Timer {
+    constructor(root) {
+      this.root = root;
+      this.display = root.querySelector('.t-display');
+      this.startBtn = root.querySelector('.t-start');
+      this.resetBtn = root.querySelector('.t-reset');
+      this.def = parseInt(root.dataset.default, 10) || 240;
+      this.remaining = this.def;
+      this.iv = null;
+      this.running = false;
+      this.startBtn.addEventListener('click', () => this.toggle());
+      this.resetBtn.addEventListener('click', () => this.reset());
+      root.querySelectorAll('.t-preset').forEach(p => {
+        p.addEventListener('click', () => {
+          root.querySelectorAll('.t-preset').forEach(x => x.classList.remove('active'));
+          p.classList.add('active');
+          this.set(parseInt(p.dataset.sec, 10));
+        });
+      });
+      this.render();
+    }
+    set(s) { this.stop(); this.def = s; this.remaining = s; this.root.classList.remove('done'); this.render(); }
+    toggle() { this.running ? this.stop() : this.start(); }
+    start() {
+      if (this.remaining <= 0) return;
+      this.running = true;
+      this.startBtn.textContent = 'Pause';
+      this.root.classList.add('active');
+      this.root.classList.remove('done');
+      this.iv = setInterval(() => {
+        this.remaining--;
+        this.render();
+        if (this.remaining <= 0) { this.stop(); this.done(); }
+      }, 1000);
+    }
+    stop() {
+      this.running = false;
+      this.startBtn.textContent = 'Start';
+      this.root.classList.remove('active');
+      clearInterval(this.iv);
+    }
+    reset() { this.stop(); this.remaining = this.def; this.root.classList.remove('done'); this.render(); }
+    done() { this.root.classList.add('done'); this.chime(); }
+    chime() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'sine';
+        o.frequency.value = 523.25;
+        g.gain.setValueAtTime(0.0001, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.1, ctx.currentTime + 0.05);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
+        o.start();
+        o.stop(ctx.currentTime + 1.25);
+      } catch (e) { /* silent if audio blocked */ }
+    }
+    render() {
+      const m = Math.floor(this.remaining / 60);
+      const s = this.remaining % 60;
+      this.display.textContent = m + ':' + String(s).padStart(2, '0');
+    }
+  }
+  document.querySelectorAll('.timer').forEach(t => new Timer(t));
+
+  const keyToggle = document.getElementById('key-toggle');
+  const keyBody = document.getElementById('key-body');
+  keyToggle.addEventListener('click', () => {
+    const open = keyBody.classList.toggle('open');
+    keyToggle.textContent = open ? 'Hide teacher key' : 'Show teacher key';
+  });
+</script>
+</body>
+</html>

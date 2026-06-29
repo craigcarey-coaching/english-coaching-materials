@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boeing 737 MAX — Listening Lesson · Laura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --rust: #a83232;
+    --teal: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+    --highlight: rgba(45, 106, 79, 0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 56px 32px 80px;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(36px, 7vw, 58px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+    margin-bottom: 14px;
+  }
+
+  h1 .accent { color: var(--rust); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(15px, 2vw, 17px);
+    color: var(--ink-soft);
+    max-width: 560px;
+    line-height: 1.5;
+  }
+
+  .video-link {
+    display: inline-block;
+    margin-top: 18px;
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(45, 106, 79, 0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.2s;
+  }
+  .video-link:hover { border-color: var(--teal); }
+
+  /* ── Section nav ── */
+  .section-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 48px;
+  }
+
+  .section-nav a {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 10px 18px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .section-nav a:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* ── Section headings ── */
+  .section { margin-bottom: 56px; }
+
+  .section-label {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(26px, 4.5vw, 34px);
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    font-variation-settings: "SOFT" 80;
+    margin-bottom: 8px;
+  }
+
+  .section-intro {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin-bottom: 28px;
+    max-width: 600px;
+  }
+
+  /* ── Vocabulary cards ── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 18px;
+  }
+
+  .vocab-card {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 24px 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .vocab-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px var(--shadow);
+  }
+
+  .vocab-term {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--teal);
+    margin-bottom: 4px;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .vocab-pos {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+
+  .vocab-def {
+    font-size: 14.5px;
+    line-height: 1.55;
+    margin-bottom: 10px;
+  }
+
+  .vocab-example {
+    font-style: italic;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    padding-left: 14px;
+    border-left: 2px solid var(--rule);
+    line-height: 1.5;
+  }
+
+  .vocab-example em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* ── Comprehension questions ── */
+  .question-block {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 24px 26px;
+    margin-bottom: 16px;
+  }
+
+  .q-number {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  .q-text {
+    font-size: 15.5px;
+    line-height: 1.55;
+    margin-bottom: 4px;
+  }
+
+  .q-hint {
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  /* ── Phrasal verb / preposition exercises ── */
+  .pv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+  }
+
+  .pv-table th {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--rule);
+    font-weight: 600;
+  }
+
+  .pv-table td {
+    padding: 12px 14px;
+    font-size: 14.5px;
+    border-bottom: 1px solid rgba(201, 184, 150, 0.4);
+    vertical-align: top;
+  }
+
+  .pv-table tr:last-child td { border-bottom: none; }
+
+  .pv-term {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--teal);
+    font-variation-settings: "SOFT" 80;
+    white-space: nowrap;
+  }
+
+  .pv-meaning { color: var(--ink); }
+  .pv-context {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 13.5px;
+  }
+
+  /* ── Gap-fill exercise ── */
+  .exercise-block {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 24px 26px;
+    margin-bottom: 14px;
+  }
+
+  .exercise-number {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+
+  .exercise-sentence {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .gap {
+    display: inline-block;
+    min-width: 100px;
+    border-bottom: 2px solid var(--teal);
+    text-align: center;
+    margin: 0 3px;
+    padding: 0 4px;
+    color: transparent;
+    transition: color 0.25s;
+    cursor: default;
+    font-weight: 600;
+  }
+
+  .gap.revealed { color: var(--teal); }
+
+  .word-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 18px 22px;
+    background: var(--highlight);
+    border: 1px solid rgba(45, 106, 79, 0.15);
+    border-radius: 2px;
+    margin-bottom: 28px;
+  }
+
+  .word-bank-label {
+    width: 100%;
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .bank-word {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 5px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+
+  /* ── Answer key ── */
+  .answer-key-wrapper {
+    margin-top: 40px;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+
+  .answer-key-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    transition: all 0.2s;
+    width: 100%;
+    text-align: left;
+  }
+  .answer-key-toggle:hover {
+    background: var(--paper-deep);
+    border-color: var(--ink-soft);
+  }
+
+  .answer-key-toggle .badge {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    background: var(--rust);
+    color: var(--paper);
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  .answer-key-toggle .arrow {
+    transition: transform 0.25s;
+    font-size: 14px;
+  }
+  .answer-key-toggle.open .arrow { transform: rotate(90deg); }
+
+  .answer-key-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .answer-key-content.open { max-height: 4000px; }
+
+  .answer-key-inner {
+    padding: 24px 0 8px;
+  }
+
+  .answer-section-label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    margin-top: 20px;
+    font-variation-settings: "SOFT" 80;
+  }
+  .answer-section-label:first-child { margin-top: 0; }
+
+  .answer-item {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 6px;
+    padding-left: 8px;
+  }
+
+  .answer-item strong {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .answer-note {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin-top: 2px;
+    padding-left: 16px;
+  }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer .dot { color: var(--rule); margin: 0 10px; }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .container { padding: 40px 20px 60px; }
+    .vocab-grid { grid-template-columns: 1fr; }
+    .pv-table { font-size: 13.5px; }
+    .pv-table td, .pv-table th { padding: 10px; }
+    .section-nav { gap: 6px; }
+    .section-nav a { padding: 8px 14px; font-size: 11px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .section-nav, .video-link { display: none; }
+    .answer-key-content { max-height: none !important; }
+    .gap { color: var(--teal) !important; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Listening lesson · Laura</div>
+    <h1>The <span class="accent">737 MAX</span> Crisis</h1>
+    <div class="subtitle">Vocabulary, comprehension, and a deep dive into the phrasal verbs and prepositions pilots and engineers actually use.</div>
+    <a class="video-link" href="https://www.youtube.com/watch?v=H2tuKiiznsY" target="_blank" rel="noopener">Watch the video — Vox, 5:59 ↗</a>
+  </header>
+
+  <nav class="section-nav" aria-label="Page sections">
+    <a href="#vocab">Vocabulary</a>
+    <a href="#comprehension">Comprehension</a>
+    <a href="#phrasal-verbs">Phrasal verbs</a>
+    <a href="#prepositions">Prepositions</a>
+    <a href="#gap-fill">Gap-fill exercise</a>
+  </nav>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 1 — VOCABULARY                 -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="vocab">
+    <div class="section-label">Section 1</div>
+    <h2>Key vocabulary</h2>
+    <p class="section-intro">Words and phrases from the video. Read through before watching, then revisit after.</p>
+
+    <div class="vocab-grid">
+
+      <div class="vocab-card">
+        <div class="vocab-term">angle of attack</div>
+        <div class="vocab-pos">noun phrase</div>
+        <div class="vocab-def">The angle between the wing and the oncoming air. Too high an angle of attack can cause a stall.</div>
+        <div class="vocab-example">"The <em>angle of attack</em> sensor was sending faulty data to the flight computer."</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-term">stall</div>
+        <div class="vocab-pos">noun / verb</div>
+        <div class="vocab-def">When a wing loses lift because the angle of attack is too high. The aircraft stops flying — it doesn't stop moving. Not the same as an engine stall.</div>
+        <div class="vocab-example">"MCAS was designed to prevent the aircraft from entering a <em>stall</em>."</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-term">horizontal stabiliser</div>
+        <div class="vocab-pos">noun</div>
+        <div class="vocab-def">The small "wing" at the tail of the aircraft. It controls pitch — nose up or nose down. MCAS moved it automatically.</div>
+        <div class="vocab-example">"The system moved the <em>horizontal stabiliser</em> to push the nose down."</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-term">to certify / certification</div>
+        <div class="vocab-pos">verb / noun</div>
+        <div class="vocab-def">The official process where a regulator (like the FAA) confirms an aircraft is safe to fly. Without certification, no airline can operate the plane.</div>
+        <div class="vocab-example">"Boeing wanted the MAX <em>certified</em> as a variant of the 737, not as a new aircraft."</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-term">to delegate</div>
+        <div class="vocab-pos">verb</div>
+        <div class="vocab-def">To hand responsibility to someone else. The FAA delegated parts of the safety review to Boeing itself.</div>
+        <div class="vocab-example">"The FAA <em>delegated</em> the evaluation of MCAS to Boeing's own engineers."</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-term">to ground (a fleet)</div>
+        <div class="vocab-pos">verb</div>
+        <div class="vocab-def">To officially stop an aircraft type from flying. All 737 MAX aircraft were grounded worldwide after the second crash.</div>
+        <div class="vocab-example">"Regulators around the world <em>grounded</em> the MAX fleet."</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-term">fuel-efficient</div>
+        <div class="vocab-pos">adjective</div>
+        <div class="vocab-def">Using less fuel for the same journey. The A320neo's new engines were more fuel-efficient, which pressured Boeing to respond.</div>
+        <div class="vocab-example">"Airlines wanted a more <em>fuel-efficient</em> narrow-body aircraft."</div>
+      </div>
+
+      <div class="vocab-card">
+        <div class="vocab-term">to cut corners</div>
+        <div class="vocab-pos">idiom</div>
+        <div class="vocab-def">To do something the cheapest or fastest way, sacrificing quality or safety. Boeing cut corners on pilot training and system transparency.</div>
+        <div class="vocab-example">"Critics say Boeing <em>cut corners</em> to get the MAX to market faster."</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 2 — COMPREHENSION              -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="comprehension">
+    <div class="section-label">Section 2</div>
+    <h2>Comprehension</h2>
+    <p class="section-intro">Answer after watching. Try from memory first, then rewatch to check.</p>
+
+    <div class="question-block">
+      <div class="q-number">Q1</div>
+      <div class="q-text">What event forced Boeing to rush the development of the 737 MAX instead of designing a completely new aircraft?</div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-number">Q2</div>
+      <div class="q-text">The new engines were physically larger than the old ones. What problem did this create, and where on the aircraft did Boeing have to reposition them?</div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-number">Q3</div>
+      <div class="q-text">What does MCAS stand for, and what was it originally designed to do?</div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-number">Q4</div>
+      <div class="q-text">MCAS relied on data from a single sensor. What type of sensor, and why is relying on just one a serious design weakness?</div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-number">Q5</div>
+      <div class="q-text">Why did Boeing want to avoid requiring additional simulator training for pilots moving from the older 737 to the MAX?</div>
+      <div class="q-hint">Think about what airlines would demand in their contracts.</div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-number">Q6</div>
+      <div class="q-text">The video describes the flight paths of both crashed aircraft as "eerily similar." In your own words, what pattern did they share?</div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-number">Q7</div>
+      <div class="q-text">What role did the FAA play in the certification of MCAS, and why is that relationship controversial?</div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-number">Q8 — opinion</div>
+      <div class="q-text">The video argues this isn't just a technical failure — it's a scandal. Do you agree with that framing? Where would you draw the line between an engineering mistake and corporate negligence?</div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 3 — PHRASAL VERBS              -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="phrasal-verbs">
+    <div class="section-label">Section 3</div>
+    <h2>Phrasal verbs from the video</h2>
+    <p class="section-intro">Aviation English is full of phrasal verbs. These all appear in or relate directly to the video.</p>
+
+    <table class="pv-table">
+      <thead>
+        <tr>
+          <th>Phrasal verb</th>
+          <th>Meaning</th>
+          <th>From the video</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pv-term">take off</span></td>
+          <td class="pv-meaning">leave the ground; begin flight</td>
+          <td class="pv-context">"Shortly after take-off, the nose began to pitch down."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">kick in</span></td>
+          <td class="pv-meaning">activate automatically; start working</td>
+          <td class="pv-context">"Two minutes into the flight, MCAS kicked in."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">push down</span></td>
+          <td class="pv-meaning">force something lower — here, the aircraft's nose</td>
+          <td class="pv-context">"The system pushed the nose down repeatedly."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">sign off on</span></td>
+          <td class="pv-meaning">formally approve something</td>
+          <td class="pv-context">"The FAA signed off on the design without full scrutiny."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">roll out</span></td>
+          <td class="pv-meaning">launch; present a new product to the public</td>
+          <td class="pv-context">"Boeing rolled out the 737 MAX prototype from its Renton factory."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">come up with</span></td>
+          <td class="pv-meaning">devise; invent a solution</td>
+          <td class="pv-context">"Engineers came up with a software fix instead of redesigning the airframe."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">keep up with</span></td>
+          <td class="pv-meaning">match the pace of a competitor</td>
+          <td class="pv-context">"Boeing needed to keep up with Airbus after the A320neo launch."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">fall out of</span></td>
+          <td class="pv-meaning">drop from; leave a place or state suddenly</td>
+          <td class="pv-context">"Two aircraft fell out of the sky in six months."</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 4 — PREPOSITIONS               -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="prepositions">
+    <div class="section-label">Section 4</div>
+    <h2>Prepositions in aviation</h2>
+    <p class="section-intro">The video uses spatial prepositions constantly. In aviation English, the wrong preposition can change the meaning completely.</p>
+
+    <table class="pv-table">
+      <thead>
+        <tr>
+          <th>Preposition pattern</th>
+          <th>Meaning / context</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="pv-term">under the wing</span></td>
+          <td class="pv-meaning">position: engines are mounted under (= beneath) the wing</td>
+          <td class="pv-context">"The engines hang under the wing on pylons."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">further forward on</span></td>
+          <td class="pv-meaning">repositioned toward the front of something</td>
+          <td class="pv-context">"They had to mount the engines further forward on the wing."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">at the back of</span></td>
+          <td class="pv-meaning">at the rear; the stabiliser is at the back of the fuselage</td>
+          <td class="pv-context">"The horizontal stabiliser sits at the back of the aircraft."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">at a high angle of attack</span></td>
+          <td class="pv-meaning">at = in a particular state or configuration</td>
+          <td class="pv-context">"At a high angle of attack, the aircraft becomes unstable."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">into a stall</span></td>
+          <td class="pv-meaning">into = entering a dangerous state (motion toward)</td>
+          <td class="pv-context">"MCAS was supposed to prevent the aircraft from going into a stall."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">out of the sky</span></td>
+          <td class="pv-meaning">out of = departing from (dramatic: falling from the sky)</td>
+          <td class="pv-context">"Two planes fell out of the sky."</td>
+        </tr>
+        <tr>
+          <td><span class="pv-term">behind (the competition)</span></td>
+          <td class="pv-meaning">trailing; in a weaker position than a rival</td>
+          <td class="pv-context">"Boeing found itself behind Airbus in the narrow-body market."</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SECTION 5 — GAP-FILL                   -->
+  <!-- ═══════════════════════════════════════ -->
+  <section class="section" id="gap-fill">
+    <div class="section-label">Section 5</div>
+    <h2>Put it together</h2>
+    <p class="section-intro">Fill each gap with a phrasal verb or preposition from Sections 3 and 4. Click "Reveal answers" when you're done.</p>
+
+    <div class="word-bank">
+      <div class="word-bank-label">Word bank</div>
+      <span class="bank-word">kicked in</span>
+      <span class="bank-word">keep up with</span>
+      <span class="bank-word">rolled out</span>
+      <span class="bank-word">signed off on</span>
+      <span class="bank-word">came up with</span>
+      <span class="bank-word">further forward on</span>
+      <span class="bank-word">into</span>
+      <span class="bank-word">at</span>
+      <span class="bank-word">under</span>
+      <span class="bank-word">push down</span>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-number">1</div>
+      <div class="exercise-sentence">Airbus launched the A320neo, and Boeing had to <span class="gap" data-answer="keep up with">keep up with</span> its rival or lose market share.</div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-number">2</div>
+      <div class="exercise-sentence">The new engines were too large to fit <span class="gap" data-answer="under">under</span> the wing in the original position, so engineers mounted them <span class="gap" data-answer="further forward on">further forward on</span> the wing.</div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-number">3</div>
+      <div class="exercise-sentence">This repositioning changed how the aircraft handled <span class="gap" data-answer="at">at</span> a high angle of attack.</div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-number">4</div>
+      <div class="exercise-sentence">Boeing engineers <span class="gap" data-answer="came up with">came up with</span> a software solution called MCAS instead of redesigning the airframe.</div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-number">5</div>
+      <div class="exercise-sentence">MCAS was designed to prevent the aircraft from going <span class="gap" data-answer="into">into</span> a stall by using the stabiliser to <span class="gap" data-answer="push down">push down</span> the nose.</div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-number">6</div>
+      <div class="exercise-sentence">Shortly after take-off on both flights, a faulty sensor told the computer the angle of attack was too high, and MCAS <span class="gap" data-answer="kicked in">kicked in</span>.</div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-number">7</div>
+      <div class="exercise-sentence">The FAA <span class="gap" data-answer="signed off on">signed off on</span> the design partly because Boeing had not identified MCAS as a safety-critical system.</div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-number">8</div>
+      <div class="exercise-sentence">Boeing <span class="gap" data-answer="rolled out">rolled out</span> the 737 MAX as the fastest-selling jet in the company's history.</div>
+    </div>
+
+    <button class="answer-key-toggle" id="gapReveal" type="button">
+      <span class="arrow">▶</span>
+      Reveal answers
+    </button>
+  </section>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- ANSWER KEY                              -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="answer-key-wrapper">
+    <button class="answer-key-toggle" id="answerToggle" type="button">
+      <span class="arrow">▶</span>
+      Teacher answer key — comprehension
+      <span class="badge">Don't screen-share</span>
+    </button>
+    <div class="answer-key-content" id="answerContent">
+      <div class="answer-key-inner">
+
+        <div class="answer-section-label">Comprehension answers</div>
+
+        <div class="answer-item"><strong>Q1.</strong> Airbus launched the A320neo with new, fuel-efficient engines. Airlines were ordering it in large numbers. Boeing felt it couldn't afford the time (and risk) of designing an entirely new aircraft, so it chose to update the existing 737 platform instead.</div>
+
+        <div class="answer-item"><strong>Q2.</strong> The new engines were physically larger (wider diameter). They wouldn't fit under the wing in the original position without scraping the ground, so Boeing had to mount them further forward and slightly higher on the wing. This changed the aircraft's aerodynamic behaviour — at high angles of attack, the engine position created an additional nose-up pitching force.</div>
+
+        <div class="answer-item"><strong>Q3.</strong> Maneuvering Characteristics Augmentation System. It was a software system that automatically moved the horizontal stabiliser to push the nose down if the aircraft's angle of attack got too high, in order to prevent a stall and to make the MAX handle like the older 737.</div>
+
+        <div class="answer-item"><strong>Q4.</strong> A single angle-of-attack sensor. The aircraft had two sensors, but MCAS only read data from one. If that one sensor sent faulty data (as happened on both flights), MCAS would activate unnecessarily — and there was no cross-check to catch the error.</div>
+
+        <div class="answer-item"><strong>Q5.</strong> Simulator training is extremely expensive. Airlines — especially low-cost carriers — wanted their pilots to move directly from the older 737 to the MAX without extra time or cost. Some airline contracts reportedly included price penalties if simulator training became necessary. If the MAX were classified as a new type rather than a variant, it would require a separate type rating.</div>
+
+        <div class="answer-item"><strong>Q6.</strong> Both aircraft experienced repeated nose-down commands from MCAS shortly after take-off. The pilots pulled the nose back up, MCAS pushed it down again, and this cycle repeated — each time pushing the nose further down — until the aircraft hit the ground. The radar flight paths showed a distinctive "sawtooth" pattern of climbs and descents.</div>
+
+        <div class="answer-item"><strong>Q7.</strong> The FAA delegated key parts of the MCAS safety evaluation to Boeing itself. Boeing did not classify MCAS as a safety-critical system, so it received less scrutiny. This self-certification model meant the company responsible for building the system was also responsible for judging its safety — a clear conflict of interest.</div>
+
+        <div class="answer-item"><strong>Q8.</strong> Open discussion. Accept any well-argued position. Key distinction to draw out: an engineering mistake is a failure of competence (you tried and got it wrong); corporate negligence implies knowingly accepting risk, cutting corners, or hiding information from regulators and pilots. The evidence suggests Boeing knew about MCAS limitations and chose to minimise them.</div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Boeing 737 MAX listening lesson <span class="dot">·</span> Laura <span class="dot">·</span> June 2026
+  </footer>
+
+</div>
+
+<script>
+  // Gap-fill reveal
+  const gapBtn = document.getElementById('gapReveal');
+  let gapsRevealed = false;
+  gapBtn.addEventListener('click', () => {
+    gapsRevealed = !gapsRevealed;
+    document.querySelectorAll('.gap').forEach(g => {
+      g.classList.toggle('revealed', gapsRevealed);
+    });
+    gapBtn.querySelector('.arrow').style.transform = gapsRevealed ? 'rotate(90deg)' : '';
+    gapBtn.childNodes.forEach(n => {
+      if (n.nodeType === 3 && n.textContent.trim()) {
+        n.textContent = gapsRevealed ? ' Hide answers' : ' Reveal answers';
+      }
+    });
+  });
+
+  // Answer key toggle
+  const answerToggle = document.getElementById('answerToggle');
+  const answerContent = document.getElementById('answerContent');
+  answerToggle.addEventListener('click', () => {
+    const open = answerContent.classList.toggle('open');
+    answerToggle.classList.toggle('open', open);
+  });
+</script>
+</body>
+</html>

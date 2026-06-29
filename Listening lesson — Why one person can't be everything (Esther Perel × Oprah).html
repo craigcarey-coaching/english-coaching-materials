@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening lesson — Why one person can't be everything (Esther Perel × Oprah)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --paper-warm: #f0e6d4;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --accent: #2d6a4f;
+    --highlight: #a83232;
+    --gold: #b58040;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 25%, rgba(45, 106, 79, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 75%, rgba(168, 50, 50, 0.04) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 56px 32px 80px;
+  }
+
+  /* === Header === */
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(44px, 7vw, 78px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+
+  h1 .accent { color: var(--accent); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--ink-soft);
+    margin-top: 16px;
+    max-width: 640px;
+  }
+
+  .episode-meta {
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px dashed var(--rule);
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .episode-meta strong { color: var(--ink); font-weight: 500; }
+
+  /* === Generic section === */
+  section { margin-bottom: 56px; }
+
+  .section-label {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(28px, 4vw, 38px);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: -0.015em;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .prose {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 18px;
+    max-width: 740px;
+  }
+
+  /* === Overview / orientation === */
+  .orientation {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 28px 32px;
+  }
+
+  .orientation-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 14px;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .orientation .prose { font-size: 15px; max-width: none; }
+  .orientation .prose:last-child { margin-bottom: 0; }
+
+  /* === Warm-up === */
+  .warmup-list {
+    list-style: none;
+    margin-top: 14px;
+  }
+
+  .warmup-list li {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+    padding: 10px 0 10px 24px;
+    border-bottom: 1px dashed rgba(201, 184, 150, 0.55);
+    position: relative;
+  }
+
+  .warmup-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .warmup-list li:last-child { border-bottom: none; }
+
+  /* === Segment === */
+  .segment {
+    margin-bottom: 64px;
+  }
+
+  .segment-header {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    border-radius: 2px;
+    padding: 22px 28px;
+    margin-bottom: 28px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .segment-letter {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 54px;
+    color: var(--accent);
+    line-height: 1;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .segment-title-wrap { display: flex; flex-direction: column; gap: 4px; }
+
+  .segment-meta {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  .segment-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(22px, 3vw, 28px);
+    color: var(--ink);
+    line-height: 1.15;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .segment-time {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  .segment-time strong { color: var(--ink); font-weight: 500; font-style: normal; display: block; font-size: 15px; }
+
+  /* === Block within a segment === */
+  .block {
+    margin-bottom: 22px;
+  }
+
+  .block-label {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .block-body {
+    font-family: 'Lora', serif;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  /* === Pre-vocab === */
+  .vocab {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 18px 22px;
+  }
+
+  .vocab dl { display: grid; gap: 8px; }
+
+  .vocab dt {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent);
+    font-size: 15.5px;
+    display: inline;
+  }
+
+  .vocab dd {
+    display: inline;
+    font-family: 'Lora', serif;
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-left: 6px;
+  }
+
+  .vocab .vocab-row {
+    padding: 4px 0;
+    border-bottom: 1px dashed rgba(201, 184, 150, 0.45);
+  }
+  .vocab .vocab-row:last-child { border-bottom: none; }
+
+  /* === Listen-for prompt === */
+  .listen-for {
+    border-left: 3px solid var(--gold);
+    background: rgba(181, 128, 64, 0.06);
+    padding: 14px 20px;
+  }
+
+  .listen-for .block-label { color: var(--gold); }
+
+  .listen-for-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80;
+  }
+
+  /* === Pause prompts (the live cue box) === */
+  .pause-prompts {
+    background: rgba(45, 106, 79, 0.06);
+    border: 1.5px solid var(--accent);
+    border-radius: 2px;
+    padding: 20px 24px;
+  }
+
+  .pause-label {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pause-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 10px;
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .pause-list { list-style: none; }
+
+  .pause-list li {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding: 12px 0 12px 28px;
+    border-bottom: 1px dashed rgba(45, 106, 79, 0.25);
+    position: relative;
+  }
+
+  .pause-list li:last-child { border-bottom: none; }
+
+  .pause-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    top: 12px;
+    color: var(--accent);
+    font-style: normal;
+    font-size: 14px;
+  }
+
+  .pause-when {
+    font-family: 'Lora', serif;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* === Comprehension check === */
+  .check {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 18px 22px;
+  }
+
+  .check ol {
+    list-style: none;
+    counter-reset: q;
+  }
+
+  .check li {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    padding: 8px 0 8px 32px;
+    border-bottom: 1px dashed rgba(201, 184, 150, 0.5);
+    position: relative;
+    counter-increment: q;
+  }
+
+  .check li::before {
+    content: counter(q);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-style: normal;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    padding-top: 2px;
+  }
+
+  .check li:last-child { border-bottom: none; }
+
+  /* === Discussion === */
+  .discuss {
+    border-left: 3px solid var(--highlight);
+    padding: 6px 0 6px 20px;
+  }
+
+  .discuss .block-label { color: var(--highlight); }
+
+  .discuss ul { list-style: none; }
+
+  .discuss li {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink);
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(168, 50, 50, 0.2);
+  }
+
+  .discuss li:last-child { border-bottom: none; }
+
+  /* === Level scaffolds === */
+  .levels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .level-card {
+    padding: 16px 20px;
+    border-radius: 2px;
+    border: 1px dashed var(--rule);
+    background: var(--paper-warm);
+  }
+
+  .level-card.b1 { border-color: var(--gold); }
+  .level-card.c1 { border-color: var(--accent); }
+
+  .level-tag {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .level-card.b1 .level-tag { color: var(--gold); }
+  .level-card.c1 .level-tag { color: var(--accent); }
+
+  .level-body {
+    font-family: 'Lora', serif;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  .level-body em.fr { font-style: italic; color: var(--ink-soft); }
+
+  /* === Wrap-up === */
+  .wrapup {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--highlight);
+    border-radius: 2px;
+    padding: 32px 36px;
+  }
+
+  .wrapup-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--ink);
+    margin-bottom: 8px;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .wrapup-intro {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+
+  .wrapup-list { list-style: none; }
+
+  .wrapup-list li {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink);
+    padding: 14px 0 14px 32px;
+    border-bottom: 1px dashed rgba(201, 184, 150, 0.5);
+    position: relative;
+  }
+
+  .wrapup-list li:last-child { border-bottom: none; }
+
+  .wrapup-list li::before {
+    content: counter(wrap);
+    counter-increment: wrap;
+    position: absolute;
+    left: 0;
+    top: 14px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--highlight);
+    font-weight: 500;
+  }
+
+  .wrapup-list { counter-reset: wrap; }
+
+  /* === Take-home === */
+  .takehome {
+    text-align: center;
+    padding: 28px 24px;
+    border: 1px dashed var(--rule);
+    border-radius: 2px;
+    background: var(--paper-warm);
+  }
+
+  .takehome-label {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .takehome-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--ink);
+    max-width: 560px;
+    margin: 0 auto;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  /* === Footer === */
+  footer {
+    margin-top: 64px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+
+  /* === Responsive === */
+  @media (max-width: 760px) {
+    .segment-header {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      text-align: center;
+    }
+    .segment-time { text-align: center; }
+    .levels { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .container { padding: 40px 18px 60px; }
+    .segment-header { padding: 20px 22px; }
+    .orientation, .wrapup { padding: 24px 22px; }
+  }
+  @media print {
+    body { background: white; }
+    .segment, .pause-prompts, .check, .vocab, .listen-for { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Listening lesson · Teacher cue sheet</div>
+    <h1>Why one person<br><span class="accent">can't be everything</span></h1>
+    <div class="subtitle">A guided in-class listen with Esther Perel × Oprah, designed to adapt across levels.</div>
+    <div class="episode-meta">
+      <div><strong>Source:</strong> The Oprah Podcast, 26 May 2026</div>
+      <div><strong>Total runtime:</strong> 58 min</div>
+      <div><strong>You'll use:</strong> ~13 min of audio across 3 segments</div>
+    </div>
+  </header>
+
+  <!-- === Orientation === -->
+  <section>
+    <div class="section-label">How to use this</div>
+    <div class="orientation">
+      <div class="orientation-title">Open this alongside Spotify; let the segment timestamps drive the flow.</div>
+      <p class="prose">Three segments build a single arc — <em>how relationships have changed</em>, then <em>the core thesis (one person can't be everything)</em>, then <em>what to do about it</em>. Around 5 minutes of audio each, with pause-and-ask prompts inside so you can interrupt at natural moments and direct the conversation without losing momentum.</p>
+      <p class="prose">For <strong>B1</strong> students, play in shorter bursts (30–60 seconds at a time), pre-teach the vocabulary thoroughly, and lean on the B1-scaffold sentence frames in each segment. If comprehension breaks down, stop pushing — switch to discussing the topic without the audio. Esther's pace is fast and her vocabulary is sophisticated, so for true beginners this podcast is a stretch.</p>
+      <p class="prose">For <strong>B2 and above</strong>, play each segment in one go, then use the pause prompts as your tool kit for the discussion that follows. C1-stretch prompts push toward more abstract or contested territory if the student is ready for it.</p>
+    </div>
+  </section>
+
+  <!-- === Warm-up === -->
+  <section>
+    <div class="section-label">Before pressing play · 5 min</div>
+    <h2>Warm-up — set the topic.</h2>
+    <p class="prose">Ask one or two of these to prime the theme before any audio plays. Their answers also tell you where they are emotionally on the topic — useful calibration.</p>
+    <ul class="warmup-list">
+      <li>When you were growing up, what did people in your family or culture say about love?</li>
+      <li>What does the perfect partner look like to a 20-year-old? What does it look like to a 50-year-old? Is the picture the same?</li>
+      <li>If you have a partner — what do you ask of them that perhaps your grandparents wouldn't have asked of theirs?</li>
+      <li>Is it possible to ask too much of one person? Where's the line?</li>
+    </ul>
+  </section>
+
+  <!-- === SEGMENT A === -->
+  <section class="segment">
+    <div class="segment-header">
+      <div class="segment-letter">A</div>
+      <div class="segment-title-wrap">
+        <div class="segment-meta">Segment A — diagnosis</div>
+        <div class="segment-title">How relationships have changed</div>
+      </div>
+      <div class="segment-time"><strong>5:12 – 10:32</strong>≈ 5 min 20 s</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Topic snapshot</div>
+      <div class="block-body">Esther wrote <em>Mating in Captivity</em> 20 years ago. She and Oprah reflect on what's changed between 2006 and 2026 — and the paradox at the heart of modern life: we're more "connected" than ever and lonelier than ever.</div>
+    </div>
+
+    <div class="block vocab">
+      <div class="block-label">Pre-listen vocabulary</div>
+      <dl>
+        <div class="vocab-row"><dt>intimacy</dt><dd>— closeness, especially emotional closeness</dd></div>
+        <div class="vocab-row"><dt>accessibility</dt><dd>— being available, reachable, present in a real way</dd></div>
+        <div class="vocab-row"><dt>disconnection</dt><dd>— feeling apart, distant, separated</dd></div>
+        <div class="vocab-row"><dt>paradox</dt><dd>— when two opposite things are true at the same time</dd></div>
+        <div class="vocab-row"><dt>to erode</dt><dd>— to slowly wear away (often used about trust, intimacy)</dd></div>
+      </dl>
+    </div>
+
+    <div class="block listen-for">
+      <div class="block-label">Listen for</div>
+      <div class="listen-for-text">Esther contrasts being <em>connected</em> with being <em>accessible</em>. What's the difference she's pointing at?</div>
+    </div>
+
+    <div class="block pause-prompts">
+      <div class="pause-label"><span class="pause-icon">II</span>Pause &amp; ask</div>
+      <ul class="pause-list">
+        <li><span class="pause-when">When she names what's changed</span>She said relationships in 2026 are different from 2006. Did you catch the main change? Do you see it in your own life?</li>
+        <li><span class="pause-when">When she mentions phones / screens</span>How does what she's describing show up in your relationships with a partner, friends, or family?</li>
+        <li><span class="pause-when">When she says "more connected, less ___"</span>What's the difference between being <em>available</em> and being <em>present</em>? Can you think of someone close to you who is one but not the other?</li>
+      </ul>
+    </div>
+
+    <div class="block check">
+      <div class="block-label">Quick comprehension check</div>
+      <ol>
+        <li>What word does Esther use for the contradiction of modern life?</li>
+        <li>What's the basic contrast she draws between then and now?</li>
+        <li>What kinds of technology or behaviour does she mention as part of the problem?</li>
+      </ol>
+    </div>
+
+    <div class="block discuss">
+      <div class="block-label">Discussion</div>
+      <ul>
+        <li>Do you agree we're more connected and less accessible than 20 years ago?</li>
+        <li>Is the picture different in France from what you know of other cultures?</li>
+        <li>What's one specific moment from this week where you noticed this in your own life?</li>
+      </ul>
+    </div>
+
+    <div class="levels">
+      <div class="level-card b1">
+        <div class="level-tag">B1 — softer entry</div>
+        <div class="level-body">Use the sentence frame: <em>"Yes / no, I agree because in my life ___. For example, ___."</em> Keep questions concrete and personal; resist abstract ones.</div>
+      </div>
+      <div class="level-card c1">
+        <div class="level-tag">C1 — push further</div>
+        <div class="level-body">Is "more connected, less accessible" actually new — or has every generation had its version of this complaint? Are we doing this to ourselves?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === SEGMENT B === -->
+  <section class="segment">
+    <div class="segment-header">
+      <div class="segment-letter">B</div>
+      <div class="segment-title-wrap">
+        <div class="segment-meta">Segment B — the core thesis</div>
+        <div class="segment-title">One person can't be everything</div>
+      </div>
+      <div class="segment-time"><strong>17:30 – 22:50</strong>≈ 5 min 20 s</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Topic snapshot</div>
+      <div class="block-body">Esther's central thesis. In the past, the <em>village</em> provided most of our emotional needs — friends, neighbours, extended family, community. Today, we ask one person — our romantic partner — to be everything: best friend, lover, intellectual equal, co-parent, therapist, business partner. No one person can carry that load. The romantic myth that "the one" exists makes the burden heavier still.</div>
+    </div>
+
+    <div class="block vocab">
+      <div class="block-label">Pre-listen vocabulary</div>
+      <dl>
+        <div class="vocab-row"><dt>the village</dt><dd>— a small community where everyone knows everyone (here, used as a metaphor for the network of people who used to support us)</dd></div>
+        <div class="vocab-row"><dt>demands</dt><dd>— what you ask of someone or expect from them</dd></div>
+        <div class="vocab-row"><dt>"the one"</dt><dd>— a cultural idea of a single perfect soulmate</dd></div>
+        <div class="vocab-row"><dt>myth</dt><dd>— a widely-believed story that may not be true</dd></div>
+        <div class="vocab-row"><dt>burden</dt><dd>— a heavy responsibility or weight</dd></div>
+        <div class="vocab-row"><dt>to outsource</dt><dd>— to give a task to someone else to handle</dd></div>
+      </dl>
+    </div>
+
+    <div class="block listen-for">
+      <div class="block-label">Listen for</div>
+      <div class="listen-for-text">Esther talks about what we used to get from a "village" — and what we now demand from one partner. Can you catch the list?</div>
+    </div>
+
+    <div class="block pause-prompts">
+      <div class="pause-label"><span class="pause-icon">II</span>Pause &amp; ask</div>
+      <ul class="pause-list">
+        <li><span class="pause-when">When she lists what we ask of partners</span>Could you make your own list — what do you ask of your partner or closest people? Best friend, therapist, business partner — which roles are on your list?</li>
+        <li><span class="pause-when">When she mentions the "village" or community</span>Who is "the village" in your life — friends, family, neighbours, colleagues? Is it bigger or smaller than it was ten years ago?</li>
+        <li><span class="pause-when">When she talks about the love myth or "the one"</span>What did you grow up believing about love? Was there a fairy-tale version in your family or culture?</li>
+        <li><span class="pause-when">When she names something as a "burden"</span>Have you ever felt that you were asking too much of one person — or that someone was asking too much of you?</li>
+      </ul>
+    </div>
+
+    <div class="block check">
+      <div class="block-label">Quick comprehension check</div>
+      <ol>
+        <li>What did the "village" used to provide that we now expect from one partner?</li>
+        <li>What does Esther say about the myth of "the one"?</li>
+        <li>What's the consequence — what happens when one person is asked to be everything?</li>
+      </ol>
+    </div>
+
+    <div class="block discuss">
+      <div class="block-label">Discussion</div>
+      <ul>
+        <li>Do you think the French version of romantic love is different from the American version Esther is describing?</li>
+        <li>Who, besides your partner if you have one, "is" things for you — your humour, your honesty, your challenge? Where do those people come from?</li>
+        <li>Is "the one" a useful idea or a harmful one?</li>
+        <li>What have you stopped asking of a partner over the years — and where does that need go now?</li>
+      </ul>
+    </div>
+
+    <div class="levels">
+      <div class="level-card b1">
+        <div class="level-tag">B1 — softer entry</div>
+        <div class="level-body">Use the sentence frame: <em>"For me, my ___ is ___. My ___ is ___. But my partner is mostly my ___."</em> Visual aid: write the list of roles on screen (lover, best friend, co-parent, therapist…) and have her point to who in her life plays each one.</div>
+      </div>
+      <div class="level-card c1">
+        <div class="level-tag">C1 — push further</div>
+        <div class="level-body">Esther's argument is that one partner can't be everything. The counter-argument: but isn't intimate love supposed to be all-encompassing? Where do you land? How much of this conversation is cultural, and how much is universal human nature?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === SEGMENT C === -->
+  <section class="segment">
+    <div class="segment-header">
+      <div class="segment-letter">C</div>
+      <div class="segment-title-wrap">
+        <div class="segment-meta">Segment C — the reframe</div>
+        <div class="segment-title">What to look for instead</div>
+      </div>
+      <div class="segment-time"><strong>22:50 – 25:30</strong>≈ 2 min 40 s</div>
+    </div>
+
+    <div class="block">
+      <div class="block-label">Topic snapshot</div>
+      <div class="block-body">If one person can't be everything, what does that mean practically — for how we choose a partner, and how we stay with one? Esther's reframe of the question.</div>
+    </div>
+
+    <div class="block vocab">
+      <div class="block-label">Pre-listen vocabulary</div>
+      <dl>
+        <div class="vocab-row"><dt>compatible</dt><dd>— well-matched, work well together</dd></div>
+        <div class="vocab-row"><dt>chemistry</dt><dd>— instant attraction, spark</dd></div>
+        <div class="vocab-row"><dt>maintenance</dt><dd>— the ongoing care needed to keep something working</dd></div>
+        <div class="vocab-row"><dt>realistic</dt><dd>— based on what's actually true, not on fantasy</dd></div>
+      </dl>
+    </div>
+
+    <div class="block listen-for">
+      <div class="block-label">Listen for</div>
+      <div class="listen-for-text">What does Esther say matters more than "finding the right person" in a long-term relationship?</div>
+    </div>
+
+    <div class="block pause-prompts">
+      <div class="pause-label"><span class="pause-icon">II</span>Pause &amp; ask</div>
+      <ul class="pause-list">
+        <li><span class="pause-when">When she names what to look for</span>What's on your own list of what makes a partner work over time? Has the list changed as you've got older?</li>
+        <li><span class="pause-when">When she talks about ongoing work</span>People often say "a relationship is work." Is that romantic, or is it sad?</li>
+      </ul>
+    </div>
+
+    <div class="block check">
+      <div class="block-label">Quick comprehension check</div>
+      <ol>
+        <li>What's Esther's reframe — what matters more than "finding the one"?</li>
+        <li>What kind of skill or quality does she emphasise?</li>
+      </ol>
+    </div>
+
+    <div class="block discuss">
+      <div class="block-label">Discussion</div>
+      <ul>
+        <li>Is being a "good partner" something you're born with, or something you learn?</li>
+        <li>Have you ever changed your idea of what makes a good relationship? When, and why?</li>
+      </ul>
+    </div>
+
+    <div class="levels">
+      <div class="level-card b1">
+        <div class="level-tag">B1 — softer entry</div>
+        <div class="level-body">Sentence frame: <em>"For me, the most important thing in a relationship is ___, because ___."</em></div>
+      </div>
+      <div class="level-card c1">
+        <div class="level-tag">C1 — push further</div>
+        <div class="level-body">Esther focuses on what we ask <em>from</em> partners. What do you think we should be asking <em>of ourselves</em> in a relationship?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === Wrap-up production === -->
+  <section>
+    <div class="section-label">Closing · production · 8–10 min</div>
+    <h2>Wrap-up — pick one, speak for 2 minutes.</h2>
+    <p class="prose">All three prompts work whether the student is single, partnered, married, or divorced — designed not to exclude anyone. Let them choose. Note vocabulary they reach for and any structures they avoid.</p>
+    <div class="wrapup">
+      <div class="wrapup-title">Talk to me for two minutes.</div>
+      <div class="wrapup-intro">Pick the one that pulls you.</div>
+      <ul class="wrapup-list">
+        <li>Describe your "village" — who do you depend on, and for what? Be specific.</li>
+        <li>What's one thing you've stopped expecting from your partner or closest person — and where does that need go now?</li>
+        <li>Was there a moment when you realised the romantic fairy-tale wasn't true? What happened?</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- === Take-home === -->
+  <section>
+    <div class="takehome">
+      <div class="takehome-label">Optional take-home</div>
+      <div class="takehome-text">Choose one of the three wrap-up questions and write 100–150 words in response. Bring it to our next session.</div>
+    </div>
+  </section>
+
+  <footer>
+    Teacher cue sheet <span class="ornament">·</span> Open alongside Spotify <span class="ornament">·</span> Adapt freely
+  </footer>
+
+</div>
+</body>
+</html>

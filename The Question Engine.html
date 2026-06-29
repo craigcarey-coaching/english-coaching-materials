@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Question Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4efe5;
+    --surface:#fffdf8;
+    --surface-2:#faf5ea;
+    --ink:#23201b;
+    --muted:#857f72;
+    --teal:#236b62;
+    --teal-soft:#e3efeb;
+    --clay:#c0613e;
+    --clay-soft:#f8e9e1;
+    --sage:#8a9a7b;
+    --sage-soft:#eaeee2;
+    --border:#e3ddcf;
+    --shadow:0 1px 3px rgba(35,32,27,.06),0 8px 28px rgba(35,32,27,.05);
+    --radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.55;
+    padding:clamp(1rem,3vw,2.5rem);
+  }
+  .wrap{max-width:820px;margin:0 auto}
+  .mono{font-family:'IBM Plex Mono',monospace}
+
+  /* ---------- header ---------- */
+  header.top{margin-bottom:1.4rem}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--teal);margin-bottom:.5rem;
+  }
+  h1{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(2rem,6vw,2.9rem);line-height:1.02;
+    letter-spacing:-.01em;margin-bottom:.5rem;
+  }
+  h1 em{font-style:italic;color:var(--clay)}
+  .lede{color:var(--muted);font-size:1.02rem;max-width:48ch}
+
+  /* ---------- tabs ---------- */
+  nav.tabs{
+    display:flex;gap:.35rem;flex-wrap:wrap;
+    margin:1.4rem 0 1.6rem;
+    position:sticky;top:0;z-index:20;
+    background:linear-gradient(var(--bg) 72%,transparent);
+    padding:.5rem 0 .6rem;
+  }
+  .tab{
+    font-family:'IBM Plex Sans',sans-serif;font-weight:500;
+    font-size:.86rem;color:var(--muted);
+    background:var(--surface);border:1px solid var(--border);
+    padding:.5rem .9rem;border-radius:999px;cursor:pointer;
+    transition:all .18s ease;display:flex;align-items:center;gap:.45rem;
+  }
+  .tab:hover{color:var(--ink);border-color:var(--sage)}
+  .tab[aria-selected="true"]{
+    background:var(--ink);color:var(--surface);border-color:var(--ink);
+  }
+  .tab .tnum{font-family:'IBM Plex Mono',monospace;font-size:.72rem;opacity:.6}
+  .tab[aria-selected="true"] .tnum{opacity:.8}
+  .tier-pill{
+    font-family:'IBM Plex Mono',monospace;font-size:.6rem;
+    letter-spacing:.08em;text-transform:uppercase;
+    padding:.1rem .4rem;border-radius:5px;
+    background:var(--clay-soft);color:var(--clay);
+  }
+
+  /* ---------- panels ---------- */
+  .panel{display:none;animation:fade .3s ease}
+  .panel.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:clamp(1.1rem,3vw,1.8rem);margin-bottom:1.1rem;
+  }
+  .card h2{
+    font-family:'Fraunces',serif;font-weight:500;font-size:1.45rem;
+    letter-spacing:-.01em;margin-bottom:.3rem;
+  }
+  .card h2 .step{color:var(--teal);font-family:'IBM Plex Mono',monospace;font-size:1rem;margin-right:.5rem}
+  .card .sub{color:var(--muted);font-size:.95rem;margin-bottom:1.1rem}
+  .card p{margin-bottom:.8rem}
+  .card p:last-child{margin-bottom:0}
+  .tierhead{display:flex;align-items:center;gap:.6rem;margin-bottom:.2rem}
+
+  /* ---------- the engine ---------- */
+  .engine{
+    background:var(--surface-2);border:1px solid var(--border);
+    border-radius:var(--radius);padding:1.4rem 1.2rem 1.2rem;
+  }
+  .engine-stage{
+    min-height:118px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:.5rem;text-align:center;
+  }
+  .sentence{
+    font-family:'Fraunces',serif;font-size:clamp(1.25rem,4.4vw,1.7rem);
+    line-height:1.35;font-weight:400;
+    display:flex;flex-wrap:wrap;gap:.32em;justify-content:center;align-items:baseline;
+  }
+  .sentence .w{transition:transform .45s cubic-bezier(.2,.8,.2,1),color .3s,opacity .3s}
+  .sentence .aux{
+    color:var(--teal);font-weight:500;position:relative;
+    background:var(--teal-soft);border-radius:7px;padding:.02em .28em;
+  }
+  .sentence .borrowed{
+    color:var(--clay);font-weight:500;
+    background:var(--clay-soft);border-radius:7px;padding:.02em .28em;
+  }
+  .sentence .dim{opacity:.32}
+  .punct{margin-left:-.32em}
+  .move-label{
+    font-family:'IBM Plex Mono',monospace;font-size:.74rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+    min-height:1.1em;
+  }
+  .move-label b{color:var(--teal)}
+  .move-label.borrow b{color:var(--clay)}
+  .engine-controls{
+    display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;
+    margin-top:1.1rem;
+  }
+  button.btn{
+    font-family:'IBM Plex Sans',sans-serif;font-weight:500;font-size:.9rem;
+    border:none;border-radius:9px;padding:.6rem 1.1rem;cursor:pointer;
+    transition:all .16s ease;
+  }
+  button.btn:focus-visible{outline:2.5px solid var(--teal);outline-offset:2px}
+  .btn-primary{background:var(--ink);color:var(--surface)}
+  .btn-primary:hover{background:#3a352c}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--sage)}
+  .engine-meta{
+    text-align:center;font-size:.82rem;color:var(--muted);
+    margin-top:.7rem;font-family:'IBM Plex Mono',monospace;
+  }
+
+  /* ---------- two-move grid ---------- */
+  .moves{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:1.1rem}
+  @media(max-width:560px){.moves{grid-template-columns:1fr}}
+  .move{
+    border:1px solid var(--border);border-radius:11px;padding:1rem;
+    background:var(--surface);
+  }
+  .move.t{border-top:3px solid var(--teal)}
+  .move.c{border-top:3px solid var(--clay)}
+  .move .mtag{
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;
+    text-transform:uppercase;margin-bottom:.4rem;
+  }
+  .move.t .mtag{color:var(--teal)}
+  .move.c .mtag{color:var(--clay)}
+  .move h3{font-family:'Fraunces',serif;font-weight:500;font-size:1.1rem;margin-bottom:.35rem}
+  .move .ex{font-family:'IBM Plex Mono',monospace;font-size:.82rem;color:var(--ink);background:var(--surface-2);border-radius:7px;padding:.5rem .6rem;margin-top:.5rem}
+  .move .ex .hl-t{color:var(--teal);font-weight:500}
+  .move .ex .hl-c{color:var(--clay);font-weight:500}
+
+  /* ---------- contrast (subject vs object) ---------- */
+  .contrast{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:1rem}
+  @media(max-width:560px){.contrast{grid-template-columns:1fr}}
+  .ccol{border:1px solid var(--border);border-radius:11px;padding:1rem;background:var(--surface-2)}
+  .ccol .lab{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem}
+  .ccol .q{font-family:'Fraunces',serif;font-size:1.18rem;margin-bottom:.3rem}
+  .ccol .note{font-size:.85rem;color:var(--muted)}
+  .ccol .no{color:var(--teal);font-weight:500}
+  .ccol .yes{color:var(--clay);font-weight:500}
+
+  /* ---------- reveal rows (embedded / tags) ---------- */
+  .reveal-row{
+    border:1px solid var(--border);border-radius:11px;
+    padding:.9rem 1rem;margin-bottom:.7rem;background:var(--surface);
+    cursor:pointer;transition:border-color .16s;
+  }
+  .reveal-row:hover{border-color:var(--sage)}
+  .reveal-row .start{font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--muted)}
+  .reveal-row .arrow{color:var(--sage);margin:0 .2rem}
+  .reveal-row .result{
+    font-family:'Fraunces',serif;font-size:1.12rem;margin-top:.4rem;
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .3s ease,opacity .3s ease,margin .3s ease;
+  }
+  .reveal-row.open .result{max-height:90px;opacity:1;margin-top:.55rem}
+  .reveal-row .result .k{color:var(--teal);font-weight:500}
+  .reveal-row .hint{font-size:.78rem;color:var(--muted);margin-top:.3rem;font-style:italic}
+  .reveal-row .tapme{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--clay);letter-spacing:.08em;text-transform:uppercase}
+
+  /* ---------- drills ---------- */
+  .drill-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem;margin-bottom:1rem}
+  .score{
+    font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--muted);
+    background:var(--surface-2);border:1px solid var(--border);border-radius:8px;
+    padding:.35rem .7rem;
+  }
+  .score b{color:var(--ink)}
+  .drill{border-top:1px solid var(--border);padding:1.1rem 0}
+  .drill:first-of-type{border-top:none;padding-top:0}
+  .drill .qtype{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:.4rem}
+  .drill .prompt{font-size:1rem;margin-bottom:.2rem}
+  .drill .prompt .stmt{font-family:'Fraunces',serif;font-style:italic;font-size:1.12rem}
+  .opts{display:flex;flex-direction:column;gap:.5rem;margin-top:.7rem}
+  .opt{
+    text-align:left;font-family:'IBM Plex Sans',sans-serif;font-size:.95rem;
+    background:var(--surface);border:1px solid var(--border);border-radius:9px;
+    padding:.6rem .8rem;cursor:pointer;transition:all .14s ease;color:var(--ink);
+  }
+  .opt:hover:not(:disabled){border-color:var(--sage)}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:var(--teal-soft);border-color:var(--teal);color:#185049}
+  .opt.wrong{background:var(--clay-soft);border-color:var(--clay);color:#8f3f23}
+  .opt .tick{float:right;font-weight:600}
+  .explain{
+    font-size:.86rem;color:var(--muted);margin-top:.6rem;
+    border-left:2px solid var(--sage);padding-left:.7rem;
+    max-height:0;overflow:hidden;transition:max-height .3s ease,margin .3s ease;
+  }
+  .explain.show{max-height:140px;margin-top:.7rem}
+  .explain b{color:var(--ink)}
+
+  /* ---------- build your own ---------- */
+  .build-intro{background:var(--sage-soft);border:1px solid var(--border);border-radius:11px;padding:.9rem 1rem;font-size:.9rem;color:#4f5a44;margin-bottom:1.1rem}
+  .task{border:1px solid var(--border);border-radius:11px;padding:1rem;margin-bottom:.9rem;background:var(--surface)}
+  .task .scenario{font-family:'Fraunces',serif;font-size:1.1rem;margin-bottom:.2rem}
+  .task .ask{font-size:.9rem;color:var(--muted);margin-bottom:.7rem}
+  .task .ask .chip{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.7rem;background:var(--surface-2);border:1px solid var(--border);border-radius:5px;padding:.05rem .35rem;margin:0 .1rem;color:var(--teal)}
+  .task textarea{
+    width:100%;font-family:'IBM Plex Sans',sans-serif;font-size:.95rem;
+    border:1px solid var(--border);border-radius:8px;padding:.6rem .7rem;
+    resize:vertical;min-height:74px;background:var(--surface-2);color:var(--ink);
+  }
+  .task textarea:focus{outline:none;border-color:var(--teal);background:var(--surface)}
+  .build-actions{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-top:.4rem}
+  .saved-note{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:var(--sage)}
+
+  footer{text-align:center;color:var(--muted);font-size:.78rem;font-family:'IBM Plex Mono',monospace;margin-top:1.5rem;padding-bottom:1rem}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">Asking, by design</div>
+    <h1>The Question <em>Engine</em></h1>
+    <p class="lede">Every English question runs on one hidden part: the auxiliary verb. Find it, move it, and the question builds itself.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" aria-selected="true" data-panel="engine"><span class="tnum">01</span> The engine</button>
+    <button class="tab" role="tab" aria-selected="false" data-panel="wh"><span class="tnum">02</span> Wh- &amp; Who</button>
+    <button class="tab" role="tab" aria-selected="false" data-panel="adv"><span class="tnum">03</span> Advanced <span class="tier-pill">B2+</span></button>
+    <button class="tab" role="tab" aria-selected="false" data-panel="drills"><span class="tnum">04</span> Drills</button>
+    <button class="tab" role="tab" aria-selected="false" data-panel="build"><span class="tnum">05</span> Build your own</button>
+  </nav>
+
+  <!-- ============ PANEL 1: ENGINE ============ -->
+  <section class="panel show" id="engine" role="tabpanel">
+    <div class="card">
+      <h2><span class="step">↻</span>Watch it run</h2>
+      <p class="sub">A statement goes in. A question comes out. Notice <em>which</em> part moves.</p>
+
+      <div class="engine">
+        <div class="engine-stage">
+          <div class="sentence" id="eng-sentence" aria-live="polite"></div>
+          <div class="move-label mono" id="eng-move"></div>
+        </div>
+        <div class="engine-controls">
+          <button class="btn btn-primary" id="eng-flip">Make it a question</button>
+          <button class="btn btn-ghost" id="eng-next">Next sentence →</button>
+        </div>
+        <div class="engine-meta" id="eng-meta"></div>
+      </div>
+
+      <div class="moves">
+        <div class="move t">
+          <div class="mtag">Move A · Invert</div>
+          <h3>There's already an auxiliary</h3>
+          <p style="font-size:.9rem;color:var(--muted);margin:0">If you can see a <b>be, have, will, can, should…</b> — just jump it in front of the subject.</p>
+          <div class="ex"><span class="hl-t">Is</span> she working? · <span class="hl-t">Have</span> they finished?</div>
+        </div>
+        <div class="move c">
+          <div class="mtag">Move B · Borrow</div>
+          <h3>There's no auxiliary</h3>
+          <p style="font-size:.9rem;color:var(--muted);margin:0">Plain present or past? English lends you <b>do / does / did</b> to invert — and the main verb drops back to base form.</p>
+          <div class="ex"><span class="hl-c">Does</span> he work here? · <span class="hl-c">Did</span> you go?</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 2: WH & WHO ============ -->
+  <section class="panel" id="wh" role="tabpanel">
+    <div class="card">
+      <h2><span class="step">?</span>Add a question word</h2>
+      <p class="sub">Wh- questions are the engine plus one move: drop the wh-word on the very front. Everything behind it works exactly the same.</p>
+      <div class="engine">
+        <div class="engine-stage">
+          <div class="sentence" id="wh-sentence" aria-live="polite"></div>
+          <div class="move-label mono" id="wh-move"></div>
+        </div>
+        <div class="engine-controls">
+          <button class="btn btn-primary" id="wh-flip">Build the question</button>
+          <button class="btn btn-ghost" id="wh-next">Next →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="step">!</span>The exception worth knowing</h2>
+      <p class="sub">When the question word <em>is</em> the subject, the engine switches off — no <span class="mono">do/does/did</span>, no inversion. Ask "who or what does the action?" to spot it.</p>
+      <div class="contrast">
+        <div class="ccol">
+          <div class="lab">Subject question</div>
+          <div class="q">Who <span style="color:var(--teal)">broke</span> the window?</div>
+          <div class="note"><span class="no">No borrowing.</span> "Who" is the one doing it, so the verb stays put.</div>
+        </div>
+        <div class="ccol">
+          <div class="lab">Object question</div>
+          <div class="q">What <span style="color:var(--clay)">did</span> you break?</div>
+          <div class="note"><span class="yes">Borrow "did".</span> "What" is the thing acted on, so the engine runs as normal.</div>
+        </div>
+      </div>
+      <p style="font-size:.88rem;color:var(--muted);margin-top:1rem;margin-bottom:0"><b style="color:var(--ink)">Quick test:</b> can you answer with the subject right after the verb? <em>"Sara broke it."</em> → subject question, no <span class="mono">did</span>.</p>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 3: ADVANCED ============ -->
+  <section class="panel" id="adv" role="tabpanel">
+    <div class="card">
+      <div class="tierhead"><span class="tier-pill">B2+</span></div>
+      <h2><span class="step">⤵</span>Indirect questions</h2>
+      <p class="sub">Be polite or report a question, and the engine quietly switches off: the word order goes <em>back</em> to a normal statement. Tap each to see it.</p>
+      <div id="embed-list"></div>
+      <p style="font-size:.86rem;color:var(--muted);margin-top:.6rem;margin-bottom:0">The same applies after <span class="mono">I wonder…</span>, <span class="mono">Do you know…</span>, <span class="mono">I'd like to know…</span> — and the preposition still lives at the end: <em>What are you waiting for?</em> → <em>Can I ask what you're waiting for?</em></p>
+    </div>
+
+    <div class="card">
+      <div class="tierhead"><span class="tier-pill">B2+</span></div>
+      <h2><span class="step">↔</span>Tag questions</h2>
+      <p class="sub">A statement plus a mini-question on the end — and the tag just <em>borrows the same auxiliary</em> the engine would, then flips the polarity. Positive sentence, negative tag. Tap to reveal.</p>
+      <div id="tag-list"></div>
+      <p style="font-size:.86rem;color:var(--muted);margin-top:.6rem;margin-bottom:0">No auxiliary in the statement? The tag borrows <span class="mono">do/does/did</span> — exactly like Move B. <em>You went home, <b style="color:var(--clay)">didn't</b> you?</em></p>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 4: DRILLS ============ -->
+  <section class="panel" id="drills" role="tabpanel">
+    <div class="card">
+      <div class="drill-head">
+        <div>
+          <h2 style="margin-bottom:.1rem">Quick drills</h2>
+          <p class="sub" style="margin-bottom:0">Pick the form the engine produces. Instant feedback.</p>
+        </div>
+        <div class="score">Score <b id="score-now">0</b> / <span id="score-tot">0</span></div>
+      </div>
+      <div id="drill-list"></div>
+      <div style="text-align:center;margin-top:1rem">
+        <button class="btn btn-ghost" id="drill-reset">Reset drills</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 5: BUILD ============ -->
+  <section class="panel" id="build" role="tabpanel">
+    <div class="card">
+      <h2 style="margin-bottom:.2rem">Build your own</h2>
+      <p class="sub">No right answer here — write real questions, out loud first if you can. Your work saves automatically on this device.</p>
+      <div class="build-intro">Read your questions aloud as you write. If the auxiliary feels wrong in your mouth, it usually is — that's the engine telling you.</div>
+      <div id="build-list"></div>
+      <div class="build-actions">
+        <button class="btn btn-primary" id="build-save">Save now</button>
+        <button class="btn btn-ghost" id="build-copy">Copy all</button>
+        <button class="btn btn-ghost" id="build-clear">Clear</button>
+        <span class="saved-note" id="build-status"></span>
+      </div>
+    </div>
+  </section>
+
+  <footer>The Question Engine · find the auxiliary, move the auxiliary</footer>
+</div>
+
+<script>
+"use strict";
+
+/* ---------------- safe storage ---------------- */
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); return true; }catch(e){ return false; } }
+};
+const SKEY = "question_engine_v1";
+
+/* ---------------- tab switching ---------------- */
+const tabs = Array.from(document.querySelectorAll('.tab'));
+const panels = Array.from(document.querySelectorAll('.panel'));
+function selectTab(name){
+  tabs.forEach(t=>{
+    const on = t.dataset.panel===name;
+    t.setAttribute('aria-selected', on?'true':'false');
+  });
+  panels.forEach(p=> p.classList.toggle('show', p.id===name));
+}
+tabs.forEach(t=> t.addEventListener('click', ()=> selectTab(t.dataset.panel)));
+
+/* ---------------- the engine (panel 1) ---------------- */
+/* Each item: words before flip (statement) and the question rebuild.
+   type: 'invert' (aux already there) | 'borrow' (do-support) */
+const engineData = [
+  { type:'invert', aux:'is',
+    statement:[['She'],['is','aux'],['working'],['today.','punct']],
+    question:[['Is','aux'],['she'],['working'],['today?','punct']],
+    note:'be → jump it to the front' },
+  { type:'invert', aux:'have',
+    statement:[['They'],['have','aux'],['finished','dim'],['already.','punct']],
+    question:[['Have','aux'],['they'],['finished','dim'],['already?','punct']],
+    note:'have → jump it to the front' },
+  { type:'borrow', aux:'does',
+    statement:[['He'],['works'],['in'],['Berlin.','punct']],
+    question:[['Does','borrowed'],['he'],['work'],['in'],['Berlin?','punct']],
+    note:'no auxiliary → borrow does, works → work' },
+  { type:'borrow', aux:'did',
+    statement:[['You'],['went'],['home.','punct']],
+    question:[['Did','borrowed'],['you'],['go'],['home?','punct']],
+    note:'no auxiliary → borrow did, went → go' },
+  { type:'invert', aux:'can',
+    statement:[['We'],['can','aux'],['start'],['now.','punct']],
+    question:[['Can','aux'],['we'],['start'],['now?','punct']],
+    note:'modal → jump it to the front' },
+  { type:'borrow', aux:'did',
+    statement:[['The'],['meeting'],['started'],['late.','punct']],
+    question:[['Did','borrowed'],['the'],['meeting'],['start'],['late?','punct']],
+    note:'no auxiliary → borrow did, started → start' }
+];
+
+/* wh- engine items */
+const whData = [
+  { type:'borrow',
+    statement:[['He'],['works'],['somewhere.','dim']],
+    question:[['Where','wh'],['does','borrowed'],['he'],['work?','punct']],
+    note:'where + borrow does + base verb' },
+  { type:'invert',
+    statement:[['She'],['is','aux'],['reading','dim'],['something.','dim']],
+    question:[['What','wh'],['is','aux'],['she'],['reading?','punct']],
+    note:'what + invert is' },
+  { type:'borrow',
+    statement:[['They'],['left','dim'],['for a reason.','dim']],
+    question:[['Why','wh'],['did','borrowed'],['they'],['leave?','punct']],
+    note:'why + borrow did + base verb' },
+  { type:'invert',
+    statement:[['You'],['will','aux'],['arrive','dim'],['at some time.','dim']],
+    question:[['When','wh'],['will','aux'],['you'],['arrive?','punct']],
+    note:'when + invert will' }
+];
+
+function renderSentence(el, parts){
+  el.innerHTML = '';
+  parts.forEach(p=>{
+    const span = document.createElement('span');
+    const cls = p[1];
+    span.className = 'w' + (cls? ' '+cls : '');
+    span.textContent = p[0];
+    el.appendChild(span);
+  });
+}
+
+/* generic engine controller */
+function makeEngine(cfg){
+  let idx = 0, flipped = false;
+  const sEl = document.getElementById(cfg.sentence);
+  const mEl = document.getElementById(cfg.move);
+  const metaEl = cfg.meta ? document.getElementById(cfg.meta) : null;
+  const flipBtn = document.getElementById(cfg.flip);
+  const nextBtn = document.getElementById(cfg.next);
+
+  function show(){
+    const item = cfg.data[idx];
+    renderSentence(sEl, flipped ? item.question : item.statement);
+    if(flipped){
+      const borrow = item.type==='borrow';
+      mEl.innerHTML = borrow
+        ? 'Move B · <b>borrowed</b> "'+item.aux+'" — verb back to base'
+        : 'Move A · <b>inverted</b> the auxiliary';
+      mEl.className = 'move-label mono' + (borrow?' borrow':'');
+      flipBtn.textContent = '↺ Statement again';
+    } else {
+      mEl.textContent = cfg.flip==='wh-flip' ? 'A statement with a gap…' : 'A plain statement.';
+      mEl.className = 'move-label mono';
+      flipBtn.textContent = cfg.flip==='wh-flip' ? 'Build the question' : 'Make it a question';
+    }
+    if(metaEl) metaEl.textContent = (idx+1)+' / '+cfg.data.length + (item.note? '   ·   '+item.note : '');
+  }
+  flipBtn.addEventListener('click', ()=>{ flipped = !flipped; show(); });
+  nextBtn.addEventListener('click', ()=>{ idx = (idx+1)%cfg.data.length; flipped = false; show(); });
+  show();
+}
+makeEngine({ data:engineData, sentence:'eng-sentence', move:'eng-move', meta:'eng-meta', flip:'eng-flip', next:'eng-next' });
+makeEngine({ data:whData, sentence:'wh-sentence', move:'wh-move', flip:'wh-flip', next:'wh-next' });
+
+/* ---------------- advanced: embedded reveals ---------------- */
+const embedData = [
+  { start:'Where is the station?', result:'Could you tell me where the station <span class="k">is</span>?', hint:'inversion undone — "is" goes back after "the station"' },
+  { start:'What does this word mean?', result:'Do you know what this word <span class="k">means</span>?', hint:'no more "does" — the meaning folds back into the verb' },
+  { start:'When did they leave?', result:'I wonder when they <span class="k">left</span>.', hint:'"did" disappears, "leave" → "left"' },
+  { start:'Why are you waiting?', result:'Can I ask why you <span class="k">are</span> waiting?', hint:'"are you" → "you are"' }
+];
+const tagData = [
+  { start:"You're coming tonight,", result:'<span class="k">aren\'t</span> you?', hint:'positive be → negative tag' },
+  { start:"She doesn't drive,", result:'<span class="k">does</span> she?', hint:'negative → positive, same auxiliary' },
+  { start:"They finished on time,", result:'<span class="k">didn\'t</span> they?', hint:'no auxiliary → borrow "did", then negate' },
+  { start:"We should leave soon,", result:'<span class="k">shouldn\'t</span> we?', hint:'modal mirrored and negated' }
+];
+function buildReveals(containerId, data){
+  const wrap = document.getElementById(containerId);
+  data.forEach(d=>{
+    const row = document.createElement('div');
+    row.className = 'reveal-row';
+    row.setAttribute('role','button');
+    row.setAttribute('tabindex','0');
+    row.innerHTML =
+      '<div class="start">'+d.start+' <span class="arrow">›</span> <span class="tapme">tap</span></div>'+
+      '<div class="result">'+(containerId==='tag-list'? d.start+' ' : '')+d.result+
+        '<div class="hint">'+d.hint+'</div></div>';
+    const toggle = ()=> row.classList.toggle('open');
+    row.addEventListener('click', toggle);
+    row.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); }});
+    wrap.appendChild(row);
+  });
+}
+buildReveals('embed-list', embedData);
+buildReveals('tag-list', tagData);
+
+/* ---------------- drills ---------------- */
+const drillData = [
+  { type:'Invert or borrow?', prompt:'Make a yes/no question:', stmt:'They are leaving on Friday.',
+    options:['Do they are leaving on Friday?','Are they leaving on Friday?','Are they leave on Friday?'],
+    answer:1, explain:'There\'s already an auxiliary (<b>are</b>) — invert it. Never add <b>do</b> when an auxiliary is present.' },
+  { type:'Invert or borrow?', prompt:'Make a yes/no question:', stmt:'She lives near the office.',
+    options:['Does she live near the office?','Does she lives near the office?','Lives she near the office?'],
+    answer:0, explain:'No auxiliary, so borrow <b>does</b> — and the main verb drops to base form: <b>live</b>, not <b>lives</b>.' },
+  { type:'Wh- question', prompt:'Complete the wh- question:', stmt:'You finished the report ___.',
+    options:['When you did finish the report?','When did you finish the report?','When did you finished the report?'],
+    answer:1, explain:'Wh-word first, then the engine: <b>did</b> + base verb <b>finish</b>.' },
+  { type:'Subject or object?', prompt:'Choose the correct question:', stmt:'Someone called you. (you want to know the caller)',
+    options:['Who did call you?','Who called you?','Who did called you?'],
+    answer:1, explain:'"Who" is the <b>subject</b> — the one doing the calling — so the engine switches off. No <b>did</b>.' },
+  { type:'Subject or object?', prompt:'Choose the correct question:', stmt:'You saw someone. (you want to know who)',
+    options:['Who did you see?','Who you saw?','Who saw you?'],
+    answer:0, explain:'Here "who" is the <b>object</b> — the person seen — so the engine runs: borrow <b>did</b> + base verb.' },
+  { type:'Indirect question', prompt:'Make it polite / indirect:', stmt:'Where is the meeting room?',
+    options:['Could you tell me where is the meeting room?','Could you tell me where the meeting room is?','Could you tell me where does the meeting room is?'],
+    answer:1, explain:'Indirect questions switch the engine off — word order goes back to a statement: <b>the meeting room is</b>.' },
+  { type:'Tag question', prompt:'Add the right tag:', stmt:'You haven\'t met Tom, ___?',
+    options:['have you','haven\'t you','did you'],
+    answer:0, explain:'Negative statement (<b>haven\'t</b>) → positive tag, same auxiliary: <b>have you</b>.' },
+  { type:'Tag question', prompt:'Add the right tag:', stmt:'The train left on time, ___?',
+    options:['didn\'t it','wasn\'t it','isn\'t it'],
+    answer:0, explain:'No auxiliary in the statement, so the tag borrows <b>did</b> — positive statement → negative tag: <b>didn\'t it</b>.' }
+];
+
+let score = 0, answered = 0;
+const scoreNow = document.getElementById('score-now');
+const scoreTot = document.getElementById('score-tot');
+scoreTot.textContent = drillData.length;
+
+function buildDrills(){
+  const wrap = document.getElementById('drill-list');
+  wrap.innerHTML = '';
+  score = 0; answered = 0;
+  scoreNow.textContent = '0';
+  drillData.forEach((d, di)=>{
+    const block = document.createElement('div');
+    block.className = 'drill';
+    const opts = document.createElement('div');
+    opts.className = 'opts';
+    block.innerHTML =
+      '<div class="qtype">'+d.type+'</div>'+
+      '<div class="prompt">'+d.prompt+' <span class="stmt">'+d.stmt+'</span></div>';
+    const explain = document.createElement('div');
+    explain.className = 'explain';
+    explain.innerHTML = d.explain;
+
+    d.options.forEach((o, oi)=>{
+      const b = document.createElement('button');
+      b.className = 'opt';
+      b.textContent = o;
+      b.addEventListener('click', ()=>{
+        if(b.disabled || opts.dataset.done) return;
+        opts.dataset.done = '1';
+        const correct = oi===d.answer;
+        Array.from(opts.children).forEach((btn,bi)=>{
+          btn.disabled = true;
+          if(bi===d.answer){ btn.classList.add('correct'); btn.innerHTML = btn.textContent+'<span class="tick">✓</span>'; }
+          else if(bi===oi){ btn.classList.add('wrong'); btn.innerHTML = btn.textContent+'<span class="tick">✗</span>'; }
+        });
+        explain.classList.add('show');
+        answered++;
+        if(correct){ score++; scoreNow.textContent = String(score); }
+      });
+      opts.appendChild(b);
+    });
+    block.appendChild(opts);
+    block.appendChild(explain);
+    wrap.appendChild(block);
+  });
+}
+document.getElementById('drill-reset').addEventListener('click', buildDrills);
+buildDrills();
+
+/* ---------------- build your own ---------------- */
+const buildTasks = [
+  { id:'b1', scenario:'You\'ve just met a new colleague.',
+    ask:'Write 3 questions to get to know them — one <span class="chip">yes/no</span>, one <span class="chip">wh-</span>, one <span class="chip">subject</span> (Who…?).' },
+  { id:'b2', scenario:'You missed a team meeting yesterday.',
+    ask:'Write 3 <span class="chip">past</span> questions to catch up — make at least two borrow <span class="chip">did</span>.' },
+  { id:'b3', scenario:'You need information politely from a stranger.',
+    ask:'Turn two direct questions into <span class="chip">indirect</span> ones: "Could you tell me…?" / "Do you know…?"' },
+  { id:'b4', scenario:'You\'re checking something you already half-believe.',
+    ask:'Write 3 statements about your week, each with a <span class="chip">tag</span> question on the end.' }
+];
+function loadBuild(){
+  let data = {};
+  const raw = store.get(SKEY);
+  if(raw){ try{ data = JSON.parse(raw)||{}; }catch(e){ data = {}; } }
+  return data;
+}
+function saveBuild(silent){
+  const data = {};
+  buildTasks.forEach(t=>{
+    const ta = document.getElementById('ta-'+t.id);
+    if(ta) data[t.id] = ta.value;
+  });
+  const ok = store.set(SKEY, JSON.stringify(data));
+  const status = document.getElementById('build-status');
+  if(!silent){
+    status.textContent = ok ? '✓ saved' : 'couldn\'t save on this device';
+    setTimeout(()=>{ status.textContent=''; }, 2200);
+  }
+}
+function buildBuilders(){
+  const wrap = document.getElementById('build-list');
+  const saved = loadBuild();
+  buildTasks.forEach(t=>{
+    const card = document.createElement('div');
+    card.className = 'task';
+    card.innerHTML =
+      '<div class="scenario">'+t.scenario+'</div>'+
+      '<div class="ask">'+t.ask+'</div>';
+    const ta = document.createElement('textarea');
+    ta.id = 'ta-'+t.id;
+    ta.placeholder = 'Type your questions here…';
+    ta.value = saved[t.id] || '';
+    ta.addEventListener('input', ()=> saveBuild(true));
+    card.appendChild(ta);
+    wrap.appendChild(card);
+  });
+}
+buildBuilders();
+document.getElementById('build-save').addEventListener('click', ()=> saveBuild(false));
+document.getElementById('build-clear').addEventListener('click', ()=>{
+  buildTasks.forEach(t=>{ const ta=document.getElementById('ta-'+t.id); if(ta) ta.value=''; });
+  saveBuild(false);
+});
+document.getElementById('build-copy').addEventListener('click', ()=>{
+  const lines = buildTasks.map(t=>{
+    const ta = document.getElementById('ta-'+t.id);
+    return t.scenario+'\n'+(ta? ta.value : '')+'\n';
+  }).join('\n');
+  const status = document.getElementById('build-status');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(lines).then(
+      ()=>{ status.textContent='✓ copied'; setTimeout(()=>status.textContent='',2200); },
+      ()=>{ status.textContent='copy failed'; setTimeout(()=>status.textContent='',2200); }
+    );
+  } else {
+    status.textContent='copy not available'; setTimeout(()=>status.textContent='',2200);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faux Amis — Laura's Aviation Glossary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4ede0;--paper-deep:#ebe1cf;--ink:#1d2438;--ink-soft:#5a607a;
+    --trap:#a83232;--truth:#2d6a4f;--rule:#c9b896;--shadow:rgba(29,36,56,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Lora',Georgia,serif;
+    font-size:16px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse at 15% 25%,rgba(168,50,50,0.04) 0%,transparent 50%),
+      radial-gradient(ellipse at 85% 75%,rgba(45,106,79,0.04) 0%,transparent 50%)}
+  .container{max-width:1120px;margin:0 auto;padding:64px 32px 80px}
+  header{border-bottom:1px solid var(--rule);padding-bottom:36px;margin-bottom:40px}
+  .eyebrow{font-size:11px;letter-spacing:0.32em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-style:italic;
+    font-size:clamp(56px,10vw,104px);line-height:0.95;letter-spacing:-0.025em;
+    font-variation-settings:"SOFT" 80,"WONK" 1}
+  h1 .amis{color:var(--trap)}
+  .subtitle{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,2vw,19px);
+    color:var(--ink-soft);margin-top:18px;max-width:640px}
+  .controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:36px}
+  .search{flex:1;min-width:220px;padding:13px 18px;background:var(--paper-deep);
+    border:1px solid var(--rule);border-radius:2px;font-family:'Lora',serif;font-size:15px;
+    color:var(--ink);outline:none;transition:border-color .2s}
+  .search:focus{border-color:var(--ink)}
+  .search::placeholder{color:var(--ink-soft);font-style:italic}
+  .mode-toggle{display:flex;background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+  .mode-toggle button{padding:13px 22px;background:transparent;border:none;font-family:'Lora',serif;
+    font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;transition:all .2s}
+  .mode-toggle button.active{background:var(--ink);color:var(--paper)}
+  .counter{font-family:'Fraunces',serif;font-style:italic;color:var(--ink-soft);font-size:14px;padding-left:4px}
+  .counter strong{color:var(--ink);font-weight:500;font-size:17px;font-style:normal;margin-right:4px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:22px}
+  .card{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;
+    padding:28px 30px 26px;position:relative;transition:transform .25s,box-shadow .25s;
+    cursor:default;animation:fadeIn .45s ease both}
+  .study-mode .card{cursor:pointer}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .card:hover{transform:translateY(-2px);box-shadow:0 14px 36px var(--shadow)}
+  .card-number{position:absolute;top:22px;right:26px;font-family:'Fraunces',serif;font-style:italic;
+    font-size:12px;color:var(--ink-soft);letter-spacing:0.05em}
+  .trap-word{font-family:'Fraunces',serif;font-weight:400;font-style:italic;font-size:34px;line-height:1.1;
+    color:var(--trap);margin-bottom:6px;letter-spacing:-0.01em;padding-right:40px;font-variation-settings:"SOFT" 80}
+  .trap-word .strike{text-decoration:line-through;text-decoration-color:rgba(168,50,50,0.45);text-decoration-thickness:1.5px}
+  .french-source{font-family:'Lora',serif;font-style:italic;font-size:13px;color:var(--ink-soft);
+    margin-bottom:22px;letter-spacing:0.02em}
+  .french-source .tag{font-style:normal;font-weight:600;letter-spacing:0.18em;font-size:10px;color:var(--ink-soft);margin-right:8px}
+  .reveal-content{transition:opacity .25s,max-height .35s;overflow:hidden;max-height:800px}
+  .study-mode .card:not(.revealed) .reveal-content{opacity:0;max-height:0;pointer-events:none}
+  .study-mode .card:not(.revealed) .tap-hint{display:block}
+  .tap-hint{display:none;text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:13px;
+    color:var(--ink-soft);margin-top:8px;padding-top:16px;border-top:1px dashed var(--rule)}
+  .truth-section{padding:14px 16px;background:rgba(45,106,79,0.07);border-left:3px solid var(--truth);margin-bottom:18px}
+  .truth-label{font-family:'Lora',serif;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--truth);font-weight:600;margin-bottom:4px}
+  .truth-word{font-family:'Fraunces',serif;font-weight:500;font-size:19px;color:var(--ink);line-height:1.3}
+  .example-row{margin-bottom:12px}
+  .example-row:last-child{margin-bottom:0}
+  .example-label{font-family:'Lora',serif;font-size:10px;text-transform:uppercase;letter-spacing:0.22em;color:var(--ink-soft);margin-bottom:5px}
+  .example-text{font-family:'Lora',serif;font-style:italic;font-size:14.5px;line-height:1.5}
+  .example-text.wrong{color:var(--trap);opacity:0.85}
+  .example-text.right{color:var(--ink)}
+  .note{margin-top:16px;padding-top:14px;border-top:1px solid rgba(201,184,150,0.55);
+    font-family:'Lora',serif;font-size:13px;line-height:1.55;color:var(--ink-soft)}
+  .note::before{content:"Note. ";font-weight:600;color:var(--ink);letter-spacing:0.02em}
+  .seed-banner{background:rgba(45,106,79,0.07);border:1px solid var(--rule);border-left:3px solid var(--truth);
+    border-radius:2px;padding:14px 18px;margin-bottom:32px;font-size:13.5px;color:var(--ink-soft);font-style:italic}
+  footer{margin-top:80px;padding-top:28px;border-top:1px solid var(--rule);text-align:center;
+    font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-soft)}
+  footer .ornament{color:var(--rule);margin:0 10px}
+  .empty-state{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--ink-soft);
+    font-family:'Fraunces',serif;font-style:italic;font-size:17px}
+  @media(max-width:640px){.container{padding:44px 20px 60px}.controls{flex-direction:column;align-items:stretch}
+    .grid{grid-template-columns:1fr;gap:18px}.card{padding:24px 22px}.trap-word{font-size:30px}.counter{text-align:center}}
+  @media print{body{background:#fff}.controls,footer,.seed-banner{display:none}.card{break-inside:avoid;box-shadow:none}.grid{gap:12px}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">A working glossary · Laura · Aviation</div>
+    <h1>Faux <span class="amis">amis</span></h1>
+    <div class="subtitle">French words that look like good English in the cockpit and the terminal — and the English you actually want.</div>
+  </header>
+
+  <div class="seed-banner">Seeded set — the wrong/right examples below are typical francophone slips, not yet Laura's own. As she produces real errors in session, report them and this file regenerates around what she actually says.</div>
+
+  <div class="controls">
+    <input type="search" class="search" id="search" placeholder="Search a word, French or English…" aria-label="Search entries" />
+    <div class="mode-toggle" role="group" aria-label="Display mode">
+      <button class="active" id="mode-ref" type="button">Reference</button>
+      <button id="mode-study" type="button">Study</button>
+    </div>
+    <div class="counter"><strong id="count">0</strong>entries</div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>Built one lesson at a time. <span class="ornament">·</span> Seeded 17 June 2026</footer>
+</div>
+
+<script>
+const entries = [
+  { trap:"reactor", french:"réacteur (= moteur à réaction)", truth:"jet engine · engine",
+    yourSentence:"The plane has two reactors under the wings.",
+    betterSentence:"The plane has two (jet) engines under the wings.",
+    note:"A 'reactor' in English is nuclear. The aircraft unit is a jet engine, or simply an engine. The adjective is 'jet' — 'a twin-engine jet'." },
+  { trap:"porthole", french:"hublot", truth:"(cabin) window · window seat",
+    yourSentence:"I had a seat next to the porthole.",
+    betterSentence:"I had a window seat. / a seat by the window.",
+    note:"'Porthole' is nautical and sounds old-fashioned for an aircraft. Passengers sit by a window; you book a 'window seat'." },
+  { trap:"commands", french:"les commandes (de l'avion)", truth:"the controls",
+    yourSentence:"The captain has the commands.",
+    betterSentence:"The captain has the controls. / is at the controls.",
+    note:"In the cockpit, 'les commandes' are the controls. A 'command' in English is an instruction or authority ('in command'). 'Take the controls' ≠ 'take command'." },
+  { trap:"correspondence", french:"une correspondance", truth:"a connection · connecting flight",
+    yourSentence:"My correspondence in Amsterdam was very short.",
+    betterSentence:"My connection in Amsterdam was very tight. / I had a tight connection.",
+    note:"'Correspondence' in English is letters and emails. Changing planes is a 'connection'; the onward flight is a 'connecting flight'. A short one is 'tight'." },
+  { trap:"scale", french:"une escale", truth:"a stopover · a layover",
+    yourSentence:"The flight has one scale in Dubai.",
+    betterSentence:"The flight has one stopover in Dubai. / a layover in Dubai.",
+    note:"'Scale' is unrelated. A planned stop on a journey is a 'stopover' (or 'layover', especially US). A flight with none is 'direct' or 'non-stop'." },
+  { trap:"exploit (a line)", french:"exploiter (une ligne / un avion)", truth:"operate · run",
+    yourSentence:"The airline exploits this route since 2010.",
+    betterSentence:"The airline has operated this route since 2010.",
+    note:"'Exploit' usually means to take unfair advantage. Airlines 'operate' or 'run' routes and aircraft. (Note also the tense: 'has operated… since'.)" },
+  { trap:"delay (= un délai)", french:"un délai (= laps de temps imparti)", truth:"a time-frame · deadline · notice",
+    yourSentence:"We have a delay of two weeks to confirm.",
+    betterSentence:"We have two weeks to confirm. / a two-week deadline.",
+    note:"Careful: 'un délai' is the time allowed; 'a delay' (= un retard) is lateness. Same letters, opposite jobs." },
+  { trap:"actually", french:"actuellement", truth:"currently · at the moment",
+    yourSentence:"Actually, I am training to become a pilot.",
+    betterSentence:"Currently, I'm training to become a pilot. (if you mean 'at the moment')",
+    note:"'Actually' = en fait / en réalité (it corrects or surprises). 'Actuellement' = currently / at the moment. Very easy to swap by reflex." },
+  { trap:"assist (at)", french:"assister à", truth:"attend · be at",
+    yourSentence:"I assisted at the briefing this morning.",
+    betterSentence:"I attended the briefing this morning. / I was at the briefing.",
+    note:"'Assist' = to help. 'Assister à' = to attend / be present at. 'Attend' takes no preposition: 'attend the briefing'." },
+  { trap:"demand", french:"demander", truth:"ask · request",
+    yourSentence:"I demanded the controller for a new heading.",
+    betterSentence:"I asked the controller for a new heading. / I requested a new heading.",
+    note:"'Demand' is forceful — to insist. Ordinary requests use 'ask (for)' or 'request'. Also: 'ask someone for something', no 'to'." },
+  { trap:"attend (= attendre)", french:"attendre", truth:"wait (for)",
+    yourSentence:"We attended thirty minutes on the taxiway.",
+    betterSentence:"We waited (for) thirty minutes on the taxiway.",
+    note:"The mirror image of the entry above. 'Attendre' = to wait (for); 'to attend' = assister à. 'Wait for' a person/thing; 'wait' alone for a length of time." },
+  { trap:"piste", french:"la piste", truth:"runway · taxiway",
+    yourSentence:"The plane is waiting on the piste.",
+    betterSentence:"The plane is holding on the runway. / on the taxiway.",
+    note:"Where aircraft take off and land is the 'runway'; where they roll to and from it is the 'taxiway'. 'Piste' (ski/athletics) won't be understood in aviation English." }
+];
+
+const grid=document.getElementById('grid'),search=document.getElementById('search'),
+  count=document.getElementById('count'),modeRef=document.getElementById('mode-ref'),
+  modeStudy=document.getElementById('mode-study'),container=document.querySelector('.container');
+
+function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+function render(list){
+  grid.innerHTML='';
+  if(list.length===0){grid.innerHTML='<div class="empty-state">No matches in the glossary yet.</div>';count.textContent='0';return}
+  list.forEach((e,i)=>{
+    const idx=entries.indexOf(e)+1;
+    const card=document.createElement('div');
+    card.className='card';
+    card.style.animationDelay=(i*28)+'ms';
+    card.innerHTML=`
+      <div class="card-number">N°&nbsp;${String(idx).padStart(2,'0')}</div>
+      <div class="trap-word"><span class="strike">${escapeHtml(e.trap)}</span></div>
+      <div class="french-source"><span class="tag">FR.</span>${escapeHtml(e.french)}</div>
+      <div class="reveal-content">
+        <div class="truth-section">
+          <div class="truth-label">Use instead</div>
+          <div class="truth-word">${escapeHtml(e.truth)}</div>
+        </div>
+        <div class="example-row"><div class="example-label">Slip</div><div class="example-text wrong">${escapeHtml(e.yourSentence)}</div></div>
+        <div class="example-row"><div class="example-label">Try</div><div class="example-text right">${escapeHtml(e.betterSentence)}</div></div>
+        ${e.note?`<div class="note">${escapeHtml(e.note)}</div>`:''}
+      </div>
+      <div class="tap-hint">Tap to reveal</div>`;
+    card.addEventListener('click',()=>{if(container.classList.contains('study-mode'))card.classList.toggle('revealed')});
+    grid.appendChild(card);
+  });
+  count.textContent=list.length;
+}
+function filter(){
+  const q=search.value.toLowerCase().trim();
+  if(!q){render(entries);return}
+  render(entries.filter(e=>e.trap.toLowerCase().includes(q)||e.french.toLowerCase().includes(q)||
+    e.truth.toLowerCase().includes(q)||e.yourSentence.toLowerCase().includes(q)||
+    e.betterSentence.toLowerCase().includes(q)||(e.note&&e.note.toLowerCase().includes(q))));
+}
+search.addEventListener('input',filter);
+modeRef.addEventListener('click',()=>{modeRef.classList.add('active');modeStudy.classList.remove('active');
+  container.classList.remove('study-mode');document.querySelectorAll('.card').forEach(c=>c.classList.remove('revealed'))});
+modeStudy.addEventListener('click',()=>{modeStudy.classList.add('active');modeRef.classList.remove('active');
+  container.classList.add('study-mode')});
+render(entries);
+</script>
+</body>
+</html>

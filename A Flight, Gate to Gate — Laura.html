@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Flight, Gate to Gate — Laura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4ede0;--paper-deep:#ebe1cf;--ink:#1d2438;--ink-soft:#5a607a;
+    --trap:#a83232;--truth:#2d6a4f;--rule:#c9b896;--shadow:rgba(29,36,56,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Lora',Georgia,serif;
+    font-size:16px;line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse at 80% 8%,rgba(45,106,79,0.05) 0%,transparent 48%),
+      radial-gradient(ellipse at 8% 94%,rgba(168,50,50,0.035) 0%,transparent 50%)}
+  .container{max-width:840px;margin:0 auto;padding:64px 32px 80px}
+  header{border-bottom:1px solid var(--rule);padding-bottom:32px;margin-bottom:34px}
+  .eyebrow{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-style:italic;
+    font-size:clamp(42px,7.5vw,76px);line-height:0.96;letter-spacing:-0.025em;
+    font-variation-settings:"SOFT" 80,"WONK" 1}
+  h1 .em{color:var(--truth)}
+  .subtitle{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(15px,2vw,18px);
+    color:var(--ink-soft);margin-top:16px;max-width:620px}
+  .section-eyebrow{font-size:11px;letter-spacing:0.26em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .section-eyebrow .n{font-family:'Fraunces',serif;font-style:italic;color:var(--truth);margin-right:10px}
+  h2{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(24px,4vw,34px);
+    letter-spacing:-0.02em;margin-bottom:14px;font-variation-settings:"SOFT" 70}
+  .lede{max-width:660px;color:var(--ink-soft);margin-bottom:24px;font-size:15.5px}
+  section{margin-top:54px}
+
+  /* stretch toggle */
+  .stretchbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;
+    padding:14px 18px;margin-bottom:26px}
+  .stretchbar .label{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--ink)}
+  .stretchbar .sub{font-size:13px;color:var(--ink-soft);flex:1;min-width:160px}
+  .switch{position:relative;width:60px;height:30px;background:var(--paper);border:1px solid var(--rule);
+    border-radius:30px;cursor:pointer;transition:all .22s;flex-shrink:0}
+  .switch::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;
+    background:var(--ink-soft);transition:all .22s}
+  body.stretch-on .switch{background:var(--truth);border-color:var(--truth)}
+  body.stretch-on .switch::after{left:33px;background:var(--paper)}
+  .switch-txt{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+
+  .c1-only{display:none}
+  body.stretch-on .c1-only{display:block}
+
+  /* timeline */
+  .rail{position:relative;margin-left:6px;padding-left:42px}
+  .rail::before{content:"";position:absolute;left:14px;top:14px;bottom:14px;width:2px;
+    background:linear-gradient(var(--rule),var(--rule));}
+  .phase{position:relative;margin-bottom:12px}
+  .phase .pin{position:absolute;left:-42px;top:18px;width:30px;height:30px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--rule);display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--ink-soft);
+    transition:all .2s;z-index:1;cursor:pointer}
+  .phase.open .pin{background:var(--truth);border-color:var(--truth);color:var(--paper)}
+  .phase-head{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;
+    padding:16px 22px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+    transition:border-color .2s;cursor:pointer}
+  .phase.open .phase-head{border-color:var(--truth)}
+  .phase:hover .phase-head{border-color:var(--ink-soft)}
+  .phase-name{font-family:'Fraunces',serif;font-style:italic;font-size:21px;color:var(--ink)}
+  .phase-tag{font-style:italic;font-size:12px;color:var(--ink-soft);letter-spacing:0.04em}
+  .phase-body{max-height:0;overflow:hidden;transition:max-height .32s ease;
+    background:var(--paper-deep);border:1px solid var(--rule);border-top:none;border-radius:0 0 2px 2px}
+  .phase.open .phase-body{max-height:420px}
+  .phase-inner{padding:4px 22px 20px}
+  .phase-what{font-size:14.5px;margin-bottom:12px}
+  .phase-what b{color:var(--ink)}
+  .phase-model{padding:12px 15px;background:rgba(45,106,79,0.08);border-left:3px solid var(--truth)}
+  .phase-model .lbl{display:block;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--truth);font-weight:600;margin-bottom:4px}
+  .phase-model .txt{font-style:italic;font-size:14.5px;line-height:1.5}
+  .phase-c1{margin-top:10px;padding:12px 15px;background:var(--paper);border:1px dashed var(--truth);border-radius:2px}
+  .phase-c1 .lbl{display:block;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:600;margin-bottom:4px}
+  .phase-c1 .lbl b{color:var(--truth)}
+  .phase-c1 .txt{font-style:italic;font-size:14.5px;line-height:1.5;color:var(--ink)}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:inline-block;padding:6px 13px;background:var(--paper-deep);border:1px solid var(--rule);
+    border-radius:2px;font-size:14px}
+  .chip.teal{border-color:var(--truth);color:var(--truth)}
+  .chips.c1-only{display:none;margin-top:12px}
+  body.stretch-on .chips.c1-only{display:flex}
+
+  .vnote{margin-top:18px;font-size:14px;color:var(--ink-soft);padding:15px 18px;background:var(--paper);
+    border:1px solid var(--rule);border-left:3px solid var(--trap);border-radius:2px}
+  .vnote b{color:var(--trap)}
+  .vnote .row{margin-bottom:7px}
+  .vnote .row:last-child{margin-bottom:0}
+  .vnote .say{color:var(--truth);font-style:italic}
+  .vnote .not{color:var(--trap);font-style:italic;text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:rgba(168,50,50,.4)}
+
+  /* drill */
+  .prompt{background:var(--paper-deep);border:1px solid var(--rule);border-left:3px solid var(--truth);
+    border-radius:2px;padding:24px 26px}
+  .prompt h4{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:22px;margin-bottom:10px}
+  .prompt p{font-size:15.5px}
+  .prompt .frame{margin-top:14px;font-size:13.5px;color:var(--ink-soft);padding:12px 15px;
+    background:var(--paper);border:1px dashed var(--rule);border-radius:2px}
+  .prompt .frame b{color:var(--ink)}
+
+  .rubric{margin-top:22px}
+  .rubric .rubric-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+    margin-bottom:6px}
+  .rubric .rubric-title{font-family:'Fraunces',serif;font-style:italic;font-size:18px;color:var(--ink)}
+  .rubric .rubric-sub{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+  .tier-label{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-soft);
+    font-weight:600;margin:16px 0 8px}
+  .tier-label.stretch{color:var(--truth)}
+  .check{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;background:var(--paper);
+    border:1px solid var(--rule);border-radius:2px;margin-bottom:8px;cursor:pointer;transition:all .15s;
+    user-select:none}
+  .check:hover{border-color:var(--ink-soft)}
+  .check .box{flex-shrink:0;width:22px;height:22px;border:1.5px solid var(--rule);border-radius:3px;
+    background:var(--paper-deep);position:relative;transition:all .15s;margin-top:1px}
+  .check.on .box{background:var(--truth);border-color:var(--truth)}
+  .check.on .box::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:var(--paper);font-size:14px;font-weight:700}
+  .check .ctxt{font-size:14.5px;line-height:1.45}
+  .check .ctxt b{color:var(--ink)}
+  .check.on .ctxt{color:var(--ink-soft)}
+  .stretch-checks{display:none}
+  body.stretch-on .stretch-checks{display:block}
+
+  .tally{margin-top:18px;padding:16px 20px;background:rgba(45,106,79,0.07);border:1px solid var(--truth);
+    border-radius:2px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .tally .score{font-family:'Fraunces',serif;font-style:italic;font-size:30px;color:var(--truth);line-height:1}
+  .tally .verdict{flex:1;min-width:180px}
+  .tally .verdict .band{font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--ink);margin-bottom:2px}
+  .tally .verdict .msg{font-size:13.5px;color:var(--ink-soft)}
+  .tally .reset{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-soft);
+    background:transparent;border:1px solid var(--rule);border-radius:2px;padding:8px 14px;cursor:pointer;
+    font-family:'Lora',serif;transition:all .15s}
+  .tally .reset:hover{border-color:var(--ink-soft);color:var(--ink)}
+
+  footer{margin-top:80px;padding-top:26px;border-top:1px solid var(--rule);text-align:center;
+    font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-soft)}
+  footer .ornament{color:var(--rule);margin:0 10px}
+  @media(max-width:600px){.container{padding:44px 18px 60px}.phase-name{font-size:19px}}
+  @media print{
+    body{background:#fff}
+    body .c1-only,body .stretch-checks,body .chips.c1-only{display:block!important}
+    .phase-body{max-height:none!important}
+    .stretchbar,.tally .reset{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">Speaking · Sequencing · Aviation · Laura</div>
+    <h1>A flight,<br><span class="em">gate to gate</span></h1>
+    <div class="subtitle">Eleven phases, from the jet-bridge out to the jet-bridge back. Say what happens, in the right order, in the register a flight deck would actually use.</div>
+  </header>
+
+  <div class="stretchbar">
+    <div class="switch" id="switch" role="switch" aria-checked="false" tabindex="0"></div>
+    <div>
+      <div class="label">Stretch to C1</div>
+      <div class="switch-txt" id="switch-state">Off · standard B2</div>
+    </div>
+    <div class="sub">Turn this on to reveal a flight-deck register line on every phase, an extra band of linking language, and three stretch targets in the self-check.</div>
+  </div>
+
+  <section style="margin-top:0">
+    <div class="section-eyebrow"><span class="n">i</span>The sequence · tap to open</div>
+    <h2>Boarding to deplaning</h2>
+    <p class="lede">Tap each phase for what happens and a model line. Notice how the model sentences chain together with sequencing language rather than starting fresh each time — that linking is the skill, not the individual words.</p>
+    <div class="rail" id="rail"></div>
+  </section>
+
+  <section>
+    <div class="section-eyebrow"><span class="n">ii</span>The glue &amp; the traps</div>
+    <h2>Linking language</h2>
+    <p class="lede">These hold a description together over time. Keep them in view while you talk.</p>
+    <div class="chips">
+      <span class="chip teal">First, …</span>
+      <span class="chip">Once everyone's aboard, …</span>
+      <span class="chip teal">Once we're airborne, …</span>
+      <span class="chip">After that, …</span>
+      <span class="chip">As soon as …</span>
+      <span class="chip">During the cruise, …</span>
+      <span class="chip">At that point, …</span>
+      <span class="chip teal">As we begin our descent, …</span>
+      <span class="chip teal">On (final) approach, …</span>
+      <span class="chip">Just before …</span>
+      <span class="chip">Finally, …</span>
+      <span class="chip">then · next · meanwhile</span>
+    </div>
+    <div class="chips c1-only">
+      <span class="chip teal">By the time …</span>
+      <span class="chip teal">No sooner … than …</span>
+      <span class="chip teal">The moment we're cleared, …</span>
+      <span class="chip teal">Having levelled off, …</span>
+      <span class="chip teal">With the gear down, …</span>
+      <span class="chip teal">Once established, …</span>
+    </div>
+
+    <div class="vnote">
+      <div class="row"><b>The cognate traps.</b> The obvious word is usually the wrong one.</div>
+      <div class="row">Aircraft <span class="say">take off</span> and <span class="say">land</span> — <span class="not">depart / atterrish</span>.</div>
+      <div class="row">On the ground they <span class="say">taxi</span> — <span class="not">roll / roulent</span>.</div>
+      <div class="row">They use the <span class="say">runway</span> and <span class="say">taxiway</span> — <span class="not">the piste</span>.</div>
+      <div class="row">Passengers <span class="say">board</span> and <span class="say">deplane / disembark</span> — <span class="not">embark / debark</span>.</div>
+      <div class="row">They board through the <span class="say">jet-bridge / jetway</span> — <span class="not">the finger / passerelle</span>.</div>
+      <div class="row">The aircraft parks on a <span class="say">stand</span> on the <span class="say">apron / ramp</span> — <span class="not">the tarmac</span> (loose &amp; journalistic).</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-eyebrow"><span class="n">iii</span>Now you narrate</div>
+    <h2>Talk me through it</h2>
+    <div class="prompt">
+      <h4>Gate to gate, in your own words</h4>
+      <p>Close the panels. Talk through a complete flight, from boarding at the jet-bridge to the passengers deplaning at the destination, in ten to twelve sentences. One take, no stopping — if a word won't come, talk around it and keep moving.</p>
+      <div class="frame"><b>Targets:</b> all eleven phases in order · at least five linking phrases · the precise verbs (<em>push back, taxi, line up, rotate, climb, level off, descend, vacate, deplane</em>) · none of the cognate traps. <b>Fluency beats completeness.</b></div>
+
+      <div class="rubric">
+        <div class="rubric-head">
+          <div class="rubric-title">Self-check — score your own take</div>
+        </div>
+        <div class="rubric-sub">Narrate first, <em>then</em> read these. Be honest — the gaps are the lesson plan for next time.</div>
+
+        <div class="tier-label">Core — B2</div>
+        <div id="core-checks"></div>
+
+        <div class="tier-label stretch stretch-checks">Stretch — reaching for C1</div>
+        <div class="stretch-checks" id="stretch-checks"></div>
+
+        <div class="tally">
+          <div class="score" id="score">0</div>
+          <div class="verdict">
+            <div class="band" id="band">Nothing ticked yet</div>
+            <div class="msg" id="msg">Do your take, then work down the list.</div>
+          </div>
+          <button class="reset" id="reset" type="button">Reset</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Speaking · Aviation strand <span class="ornament">·</span> Tap, sequence, narrate, score.</footer>
+</div>
+
+<script>
+const phases=[
+  {name:"Boarding",tag:"at the gate",
+   what:"Passengers <b>board</b> through the <b>jet-bridge</b>; the aircraft is on its <b>stand</b> while the crew runs the pre-flight checks.",
+   model:"First, the passengers board through the jet-bridge while the crew completes the pre-flight checks.",
+   c1:"With boarding complete and the doors armed, the jet-bridge is retracted and we&rsquo;re ready to push."},
+  {name:"Pushback",tag:"off the stand",
+   what:"A tug <b>pushes the aircraft back</b> off the stand; the engines are <b>started</b>.",
+   model:"Once everyone&rsquo;s aboard, a tug pushes the aircraft back from the stand and the engines are started.",
+   c1:"We call for pushback, the tug eases us off-stand, and the engines spool up."},
+  {name:"Taxi out",tag:"to the runway",
+   what:"The aircraft <b>taxis</b> from the stand to the runway under its own power, following the <b>taxiways</b>.",
+   model:"After that, it taxis out towards the runway, following the taxiway centreline.",
+   c1:"We taxi out to the holding point and run the final checks before lining up."},
+  {name:"Take-off",tag:"the roll &amp; rotate",
+   what:"Lined up on the runway, it applies full power, <b>rotates</b>, and <b>lifts off</b>.",
+   model:"Once it&rsquo;s cleared, it lines up, applies full power and takes off, rotating as the nose lifts.",
+   c1:"Cleared for take-off, we advance the thrust levers, reach rotation speed, and rotate cleanly off the runway."},
+  {name:"Climb",tag:"clean up",
+   what:"It <b>climbs</b> away; the <b>gear</b> and <b>flaps</b> are retracted as it heads for cruising altitude.",
+   model:"It then climbs steadily, retracting the gear and flaps on the way up.",
+   c1:"Positive rate, gear up &mdash; we climb out, clean up the flaps, and accelerate towards our climb profile."},
+  {name:"Cruise",tag:"level off",
+   what:"It <b>levels off</b> at altitude and <b>holds</b> it &mdash; the long, steady, fuel-efficient part of the flight.",
+   model:"During the cruise &mdash; the smoothest phase &mdash; it levels off and holds its altitude.",
+   c1:"We level off at our cruising altitude, the longest and most fuel-efficient phase of the flight."},
+  {name:"Descent",tag:"start down",
+   what:"It <b>begins its descent</b>, gradually coming down towards the destination.",
+   model:"As it begins its descent, it gradually comes down towards the airport.",
+   c1:"We&rsquo;re cleared to descend, pull the power back, and start down towards the arrival."},
+  {name:"Approach",tag:"configure &amp; line up",
+   what:"It <b>configures for landing</b> &mdash; gear down, flaps extended &mdash; and <b>lines up</b> with the runway.",
+   model:"On final approach, the gear and flaps are down and it lines up with the runway.",
+   c1:"We configure for landing, establish on the ILS, and stabilise on final approach."},
+  {name:"Landing",tag:"flare &amp; brake",
+   what:"It <b>flares</b>, <b>touches down</b>, <b>brakes</b>, and slows to taxi speed.",
+   model:"It touches down, brakes firmly, and slows to taxi speed.",
+   c1:"We flare just before touchdown, deploy reverse thrust and the spoilers, and brake down to taxi speed."},
+  {name:"Taxi in",tag:"vacate &amp; in",
+   what:"It <b>vacates the runway</b> and <b>taxis in</b> to its allocated stand.",
+   model:"Finally, it vacates the runway and taxis in to the stand.",
+   c1:"We vacate via a rapid-exit taxiway and taxi in to our allocated stand."},
+  {name:"Deplaning",tag:"jet-bridge on",
+   what:"On stand, the engines are <b>shut down</b>, the <b>jet-bridge</b> connects, and the passengers <b>deplane</b>.",
+   model:"At the stand, the jet-bridge connects and the passengers deplane.",
+   c1:"On stand, the engines are shut down, the jet-bridge is connected, and the passengers disembark."}
+];
+
+const rail=document.getElementById('rail');
+phases.forEach((p,i)=>{
+  const el=document.createElement('div');
+  el.className='phase';
+  el.innerHTML=
+    '<div class="pin">'+(i+1)+'</div>'+
+    '<div class="phase-head">'+
+      '<span class="phase-name">'+p.name+'</span>'+
+      '<span class="phase-tag">'+p.tag+'</span>'+
+    '</div>'+
+    '<div class="phase-body"><div class="phase-inner">'+
+      '<div class="phase-what">'+p.what+'</div>'+
+      '<div class="phase-model"><span class="lbl">Say it like this</span><span class="txt">'+p.model+'</span></div>'+
+      '<div class="phase-c1 c1-only"><span class="lbl">Push it to <b>C1</b> · flight-deck register</span><span class="txt">'+p.c1+'</span></div>'+
+    '</div></div>';
+  const toggle=()=>el.classList.toggle('open');
+  el.querySelector('.phase-head').addEventListener('click',toggle);
+  el.querySelector('.pin').addEventListener('click',toggle);
+  rail.appendChild(el);
+});
+
+/* stretch toggle */
+const sw=document.getElementById('switch');
+const swState=document.getElementById('switch-state');
+function flip(){
+  const on=document.body.classList.toggle('stretch-on');
+  sw.setAttribute('aria-checked',on);
+  swState.textContent=on?'On · stretch to C1':'Off · standard B2';
+  updateTally();
+}
+sw.addEventListener('click',flip);
+sw.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();flip();}});
+
+/* self-check */
+const coreItems=[
+  'Covered <b>every phase</b>, boarding through deplaning, with no gaps.',
+  'Used <b>at least five</b> linking phrases (first, once, after that, as soon as, finally…).',
+  'Used the <b>precise verbs</b>: push back · taxi · rotate · climb · level off · descend · vacate · deplane.',
+  'Said <b>jet-bridge, stand/apron, runway/taxiway</b> — none of the cognate traps.',
+  'Kept it <b>flowing</b> — talked around any missing word instead of stopping.'
+];
+const stretchItems=[
+  'Slipped in <b>two or more flight-deck items</b> (spool up · configure for landing · establish on the ILS · reverse thrust · rapid-exit taxiway).',
+  'Linked phases <b>causally</b>, not just "and then" (once… / by the time… / having…).',
+  'Varied your verbs — no "<b>go / come</b>" where a precise verb exists.'
+];
+
+function buildChecks(container,items){
+  items.forEach(t=>{
+    const d=document.createElement('div');
+    d.className='check';
+    d.innerHTML='<div class="box"></div><div class="ctxt">'+t+'</div>';
+    d.addEventListener('click',()=>{d.classList.toggle('on');updateTally();});
+    container.appendChild(d);
+  });
+}
+buildChecks(document.getElementById('core-checks'),coreItems);
+buildChecks(document.getElementById('stretch-checks'),stretchItems);
+
+const scoreEl=document.getElementById('score');
+const bandEl=document.getElementById('band');
+const msgEl=document.getElementById('msg');
+
+function updateTally(){
+  const stretchOn=document.body.classList.contains('stretch-on');
+  const coreOn=document.querySelectorAll('#core-checks .check.on').length;
+  const stretchHit=document.querySelectorAll('#stretch-checks .check.on').length;
+  const total=stretchOn?(coreOn+stretchHit):coreOn;
+  const max=stretchOn?8:5;
+  scoreEl.textContent=total+' / '+max;
+
+  let band,msg;
+  if(total===0){band='Nothing ticked yet';msg='Do your take, then work down the list.';}
+  else if(coreOn<3){band='Find the gaps';msg='The core five are the floor for B2 — go again and close one.';}
+  else if(coreOn<5){band='Almost solid B2';msg='Close the last core item and it holds together end to end.';}
+  else if(!stretchOn){band='Solid B2 ✓';msg='Clean run. Flip on Stretch to C1 and raise the bar.';}
+  else if(stretchHit<2){band='Solid B2, reaching up';msg='Core is locked — now pull one or two stretch items into the next take.';}
+  else if(stretchHit<3){band='Knocking on C1';msg='Register is showing. One more stretch item and it&rsquo;s a C1 narration.';}
+  else{band='C1 narration ✓';msg='Sequenced, linked, and in the right register. That&rsquo;s the standard.';}
+  bandEl.textContent=band;
+  msgEl.innerHTML=msg;
+}
+
+document.getElementById('reset').addEventListener('click',()=>{
+  document.querySelectorAll('.check.on').forEach(c=>c.classList.remove('on'));
+  updateTally();
+});
+
+updateTally();
+</script>
+</body>
+</html>

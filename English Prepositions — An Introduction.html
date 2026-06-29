@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Prepositions — An Introduction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --ink:#13161f;
+  --ink-soft:#2c3242;
+  --paper:#eef0f4;
+  --surface:#ffffff;
+  --surface-2:#f6f7fa;
+  --rule:#dfe3ea;
+  --rule-strong:#c7cdda;
+  --muted:#646c7e;
+  --muted-soft:#8a92a3;
+
+  --navy:#1f3a5f;
+  --navy-deep:#14263f;
+  --navy-tint:#e9eef5;
+  --amber:#c2842a;
+  --amber-tint:#f7efe0;
+  --amber-deep:#9a6515;
+
+  --good:#1f6e4a;
+  --good-tint:#e6f1ea;
+  --bad:#a8321f;
+  --bad-tint:#f8e9e6;
+
+  /* per-preposition accents (muted, mature) */
+  --c-to:#3a5a8c;
+  --c-for:#b07a2a;
+  --c-at:#9c4f57;
+  --c-in:#2f7c78;
+  --c-on:#4a7a4f;
+  --c-about:#6a5a8f;
+  --c-with:#4d6173;
+
+  --serif:'Newsreader',Georgia,serif;
+  --sans:'Hanken Grotesk',-apple-system,system-ui,sans-serif;
+  --radius:14px;
+  --radius-sm:9px;
+  --shadow:0 1px 2px rgba(19,22,31,.04),0 8px 24px -12px rgba(19,22,31,.12);
+  --shadow-lg:0 2px 6px rgba(19,22,31,.05),0 24px 48px -20px rgba(19,22,31,.22);
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  background-image:radial-gradient(circle at 18% -10%,#f6f8fc 0%,transparent 45%),radial-gradient(circle at 100% 0%,#eaedf3 0%,transparent 40%);
+  color:var(--ink);
+  line-height:1.6;
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 1.25rem 5rem}
+
+/* ============== MASTHEAD ============== */
+.masthead{padding:2.6rem 0 1.6rem;text-align:center}
+.kicker{
+  font-size:11px;letter-spacing:.32em;text-transform:uppercase;font-weight:700;
+  color:var(--amber-deep);margin-bottom:.85rem;
+}
+.masthead h1{
+  font-family:var(--serif);font-weight:500;font-size:clamp(2.1rem,6vw,3rem);
+  line-height:1.08;letter-spacing:-.01em;color:var(--ink);margin-bottom:.5rem;
+}
+.masthead h1 em{font-style:italic;color:var(--navy)}
+.masthead .lede{font-size:1rem;color:var(--muted);max-width:42ch;margin:0 auto}
+
+.chip-row{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin-top:1.5rem}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 12px 5px 9px;border-radius:99px;background:var(--surface);
+  border:1px solid var(--rule);font-size:.8rem;font-weight:700;color:var(--ink-soft);
+  box-shadow:0 1px 1px rgba(19,22,31,.03);
+}
+.chip svg{width:15px;height:15px;flex:none}
+
+/* ============== TABS ============== */
+.tabs-sticky{position:sticky;top:0;z-index:30;padding-top:.5rem;
+  background:linear-gradient(var(--paper) 62%,rgba(238,240,244,0));}
+.tabs{
+  display:flex;gap:4px;background:var(--surface);border:1px solid var(--rule);
+  border-radius:99px;padding:5px;box-shadow:var(--shadow);
+}
+.tab{
+  flex:1;border:none;background:transparent;cursor:pointer;
+  font-family:var(--sans);font-size:.92rem;font-weight:700;color:var(--muted);
+  padding:.62rem .5rem;border-radius:99px;transition:color .18s,background .18s;
+  display:flex;align-items:center;justify-content:center;gap:.45rem;
+}
+.tab .num{font-family:var(--serif);font-style:italic;font-weight:500;opacity:.7}
+.tab:hover{color:var(--ink)}
+.tab.active{background:var(--navy);color:#fff;box-shadow:0 6px 16px -8px rgba(31,58,95,.7)}
+.tab.active .num{opacity:.85;color:var(--amber-tint)}
+
+/* ============== PANELS ============== */
+.panel{display:none;padding-top:1.9rem}
+.panel.show{display:block;animation:rise .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.section-head{margin-bottom:1.3rem}
+.section-head .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:700;color:var(--amber-deep);margin-bottom:.4rem}
+.section-head h2{font-family:var(--serif);font-weight:500;font-size:1.7rem;line-height:1.15;
+  letter-spacing:-.01em;margin-bottom:.45rem}
+.section-head p{color:var(--muted);font-size:.97rem;max-width:60ch}
+
+/* ---- concept block ---- */
+.concept{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:1.5rem 1.5rem 1.6rem;box-shadow:var(--shadow);margin-bottom:1.5rem;position:relative;overflow:hidden;
+}
+.concept::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;
+  background:linear-gradient(var(--navy),var(--amber))}
+.concept .big{font-family:var(--serif);font-size:1.28rem;line-height:1.35;color:var(--ink);margin-bottom:.7rem;font-weight:400;padding-left:.4rem}
+.concept .big b{color:var(--navy);font-weight:600}
+.concept p{color:var(--ink-soft);font-size:.95rem;padding-left:.4rem}
+
+/* worked example */
+.worked{margin-top:1.2rem;padding-left:.4rem}
+.worked .wlabel{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:.6rem}
+.worked .stem{font-family:var(--serif);font-size:1.12rem;margin-bottom:.85rem}
+.worked .stem .gap{color:var(--amber-deep);font-style:italic;border-bottom:2px dotted var(--amber);padding:0 .3em}
+.wrows{display:flex;flex-direction:column;gap:.5rem}
+.wrow{display:flex;gap:.7rem;align-items:baseline;font-size:.94rem}
+.wrow .w{font-weight:800;color:var(--navy);min-width:3.2em;font-feature-settings:"tnum"}
+.wrow .meaning{color:var(--ink-soft)}
+.wrow .meaning b{color:var(--ink);font-weight:600}
+
+/* mental-image legend */
+.legend{display:grid;grid-template-columns:repeat(2,1fr);gap:.7rem;margin-bottom:1.7rem}
+@media(min-width:560px){.legend{grid-template-columns:repeat(4,1fr)}}
+.legend-item{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius-sm);
+  padding:.95rem .8rem;text-align:center;box-shadow:0 1px 1px rgba(19,22,31,.03)}
+.legend-item .glyph{display:flex;justify-content:center;margin-bottom:.5rem}
+.legend-item .glyph svg{width:30px;height:30px}
+.legend-item .word{font-weight:800;font-size:.95rem;letter-spacing:.02em}
+.legend-item .desc{font-size:.78rem;color:var(--muted);margin-top:.1rem}
+
+/* ---- preposition cards (accordion) ---- */
+.cards{display:flex;flex-direction:column;gap:.7rem}
+.pcard{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;border-left:4px solid var(--accent,var(--navy))}
+.pcard summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:.9rem;
+  padding:1.05rem 1.2rem;user-select:none}
+.pcard summary::-webkit-details-marker{display:none}
+.pcard .pglyph{width:38px;height:38px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;
+  background:var(--accent-tint,var(--navy-tint));color:var(--accent,var(--navy))}
+.pcard .pglyph svg{width:22px;height:22px}
+.pcard .ptitle{flex:1}
+.pcard .pword{font-family:var(--serif);font-size:1.4rem;font-weight:500;color:var(--ink);line-height:1}
+.pcard .pimg{font-size:.82rem;color:var(--muted);font-weight:600;margin-top:.1rem}
+.pcard .chev{color:var(--muted-soft);transition:transform .25s;flex:none}
+.pcard[open] .chev{transform:rotate(90deg)}
+.pcard .pbody{padding:0 1.2rem 1.3rem;border-top:1px solid var(--rule);margin-top:0}
+.pcard[open] .pbody{animation:fade .3s ease both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+.use{padding-top:1rem}
+.use+.use{border-top:1px dashed var(--rule);margin-top:.9rem}
+.use .uname{font-weight:700;color:var(--accent,var(--navy));font-size:.83rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.4rem}
+.eg{display:block;font-family:var(--serif);font-size:1.04rem;color:var(--ink-soft);padding-left:.85rem;border-left:2px solid var(--rule-strong);margin:.28rem 0}
+.eg b{color:var(--accent,var(--navy));font-weight:600;font-style:normal}
+
+.caveat{margin-top:1.05rem;background:var(--amber-tint);border:1px solid #ecdcbb;border-radius:var(--radius-sm);
+  padding:.75rem .85rem;font-size:.88rem;color:#5e4715}
+.caveat+.caveat{margin-top:.55rem}
+.caveat strong{color:var(--amber-deep)}
+.caveat em{font-style:italic;color:var(--ink)}
+
+/* ============== QUIZ (practice + recap shared) ============== */
+.progress{margin-bottom:1.3rem}
+.progress .meta{display:flex;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:.4rem}
+.track{height:7px;background:var(--rule);border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--navy),var(--amber));border-radius:99px;transition:width .4s cubic-bezier(.2,.7,.2,1)}
+
+.q{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:1.15rem 1.2rem;margin-bottom:.8rem;box-shadow:var(--shadow)}
+.q .qnum{font-family:var(--serif);font-style:italic;color:var(--muted-soft);font-size:.9rem;margin-bottom:.45rem}
+.q .stem{font-family:var(--serif);font-size:1.12rem;line-height:1.5;margin-bottom:.9rem}
+.q .stem .slot{display:inline-block;min-width:3.4em;border-bottom:2px solid var(--rule-strong);
+  text-align:center;color:var(--navy);font-weight:600;font-style:normal}
+.q.answered .stem .slot{border-bottom-color:transparent}
+.opts{display:flex;flex-wrap:wrap;gap:.5rem}
+.opt{font-family:var(--sans);font-size:.96rem;font-weight:700;color:var(--ink-soft);
+  background:var(--surface-2);border:1.5px solid var(--rule);border-radius:99px;
+  padding:.5rem 1.15rem;cursor:pointer;transition:all .15s;min-width:3.2em}
+.opt:hover:not(:disabled){border-color:var(--navy);color:var(--navy);transform:translateY(-1px)}
+.opt:disabled{cursor:default}
+.opt.chosen{border-color:var(--navy);background:var(--navy-tint);color:var(--navy)}
+.opt.correct{border-color:var(--good);background:var(--good-tint);color:var(--good)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-tint);color:var(--bad)}
+.none-lab{font-family:var(--sans);font-style:normal;font-weight:700;letter-spacing:.02em}
+.explain{margin-top:.85rem;font-size:.9rem;color:var(--ink-soft);padding:.7rem .85rem;border-radius:var(--radius-sm);
+  background:var(--surface-2);border:1px solid var(--rule);display:none}
+.q.answered .explain{display:block;animation:fade .3s ease both}
+.explain .tag{font-weight:800;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-right:.4rem}
+.explain.ok .tag{color:var(--good)}
+.explain.no .tag{color:var(--bad)}
+.explain b{color:var(--ink)}
+
+.actionbar{display:flex;gap:.7rem;margin-top:1.4rem;flex-wrap:wrap}
+.btn{font-family:var(--sans);font-weight:700;font-size:.95rem;border-radius:99px;
+  padding:.75rem 1.6rem;cursor:pointer;border:1.5px solid transparent;transition:all .15s}
+.btn-primary{background:var(--navy);color:#fff;box-shadow:0 8px 18px -8px rgba(31,58,95,.6)}
+.btn-primary:hover:not(:disabled){background:var(--navy-deep);transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.btn-ghost{background:transparent;color:var(--ink-soft);border-color:var(--rule-strong)}
+.btn-ghost:hover{border-color:var(--navy);color:var(--navy)}
+
+/* results */
+.results{display:none;background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:1.6rem 1.4rem;margin-top:1.4rem;box-shadow:var(--shadow-lg);text-align:center}
+.results.show{display:block;animation:rise .4s ease both}
+.results .score{font-family:var(--serif);font-size:3rem;line-height:1;color:var(--navy);font-weight:500}
+.results .score .of{font-size:1.4rem;color:var(--muted-soft)}
+.results .verdict{font-size:.95rem;color:var(--ink-soft);margin-top:.5rem}
+.breakdown{margin-top:1.4rem;text-align:left}
+.breakdown h3{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:.7rem;text-align:center}
+.bd-row{display:flex;align-items:center;gap:.7rem;padding:.4rem 0}
+.bd-glyph{width:26px;height:26px;border-radius:7px;flex:none;display:flex;align-items:center;justify-content:center}
+.bd-glyph svg{width:15px;height:15px}
+.bd-word{font-weight:800;min-width:3.6em;font-size:.9rem}
+.bd-track{flex:1;height:8px;background:var(--rule);border-radius:99px;overflow:hidden}
+.bd-bar{height:100%;border-radius:99px;transition:width .6s ease}
+.bd-stat{font-size:.82rem;color:var(--muted);font-weight:600;min-width:2.6em;text-align:right;font-feature-settings:"tnum"}
+
+/* discussion / talk block */
+.talk{background:var(--navy);color:#eef2f8;border-radius:var(--radius);padding:1.5rem 1.5rem;margin-top:1.4rem;box-shadow:var(--shadow-lg);position:relative;overflow:hidden}
+.talk::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:rgba(194,132,42,.16)}
+.talk h3{font-family:var(--serif);font-weight:500;font-size:1.3rem;margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem}
+.talk ul{list-style:none;display:flex;flex-direction:column;gap:.7rem}
+.talk li{position:relative;padding-left:1.4rem;font-size:.97rem;color:#dbe3ef}
+.talk li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--amber)}
+
+/* recap intro note */
+.recap-note{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--amber);
+  border-radius:var(--radius);padding:1.1rem 1.25rem;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+.recap-note p{color:var(--ink-soft);font-size:.95rem}
+.recap-note p b{color:var(--ink)}
+
+.recap-block-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
+  color:var(--amber-deep);margin:1.8rem 0 .9rem;display:flex;align-items:center;gap:.6rem}
+.recap-block-label::after{content:"";flex:1;height:1px;background:var(--rule)}
+.recap-block-label:first-child{margin-top:0}
+
+/* next step */
+.nextstep{margin-top:1.6rem;background:linear-gradient(120deg,var(--navy-deep),var(--navy));color:#fff;
+  border-radius:var(--radius);padding:1.5rem 1.5rem;box-shadow:var(--shadow-lg);display:none}
+.nextstep.show{display:block;animation:rise .4s ease both}
+.nextstep .ns-k{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber-tint);font-weight:700;margin-bottom:.5rem}
+.nextstep h3{font-family:var(--serif);font-weight:500;font-size:1.35rem;margin-bottom:.4rem}
+.nextstep p{color:#cdd7e6;font-size:.94rem}
+
+.foot{text-align:center;margin-top:3rem;color:var(--muted-soft);font-size:.8rem}
+.foot span{color:var(--amber-deep);font-family:var(--serif);font-style:italic}
+
+@media(max-width:480px){
+  .tab{font-size:.82rem;padding:.6rem .3rem}
+  .tab .num{display:none}
+  .legend{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===================== MASTHEAD ===================== -->
+  <header class="masthead">
+    <div class="kicker">English Grammar · Foundations</div>
+    <h1>Prepositions<br><em>An Introduction</em></h1>
+    <p class="lede">The little words that tell English <em>where</em>, <em>when</em>, and <em>how</em>. Learn the picture behind each one, then put them to work.</p>
+    <div class="chip-row" id="chip-row"></div>
+  </header>
+
+  <!-- ===================== TABS ===================== -->
+  <div class="tabs-sticky">
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="learn"><span class="num">01</span> Learn</button>
+      <button class="tab" data-tab="practice"><span class="num">02</span> Practice</button>
+      <button class="tab" data-tab="recap"><span class="num">03</span> Recap</button>
+    </div>
+  </div>
+
+  <!-- ===================== PANEL 1 — LEARN ===================== -->
+  <section class="panel show" id="panel-learn">
+
+    <div class="section-head">
+      <div class="eyebrow">The Idea</div>
+      <h2>Prepositions draw a picture</h2>
+      <p>English doesn't ask "which word goes here?" — it asks "how do I see this situation?" Once you can see the picture, the right word usually follows.</p>
+    </div>
+
+    <div class="concept">
+      <div class="big">A preposition shows the <b>relationship</b> between things — in space, in time, or in the way an action happens.</div>
+      <p>Change the preposition and you change the whole meaning. The words are short, but they carry a lot.</p>
+
+      <div class="worked">
+        <div class="wlabel">One sentence, three pictures</div>
+        <div class="stem">I'm waiting <span class="gap">___</span> the bus.</div>
+        <div class="wrows">
+          <div class="wrow"><span class="w">at</span><span class="meaning"><b>at the bus</b> stop — you're standing at a point, waiting.</span></div>
+          <div class="wrow"><span class="w">on</span><span class="meaning"><b>on the bus</b> — you're already inside, on board.</span></div>
+          <div class="wrow"><span class="w">for</span><span class="meaning"><b>waiting for the bus</b> — the bus is the thing you want to arrive.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="eyebrow">The Mental Model</div>
+      <h2>Four shapes to remember</h2>
+      <p>Most place-and-time prepositions come back to four simple shapes. Hold these in mind.</p>
+    </div>
+
+    <div class="legend" id="legend"></div>
+
+    <div class="section-head">
+      <div class="eyebrow">The Seven</div>
+      <h2>Tap a word to open it</h2>
+      <p>Seven high-frequency prepositions, each with its picture, its main uses, and the traps to watch for.</p>
+    </div>
+
+    <div class="cards" id="cards"></div>
+
+  </section>
+
+  <!-- ===================== PANEL 2 — PRACTICE ===================== -->
+  <section class="panel" id="panel-practice">
+    <div class="section-head">
+      <div class="eyebrow">Anchor It</div>
+      <h2>Choose the right preposition</h2>
+      <p>Fifteen sentences from everyday and working life. Pick the word that fits, then check. Each answer comes with a quick reason.</p>
+    </div>
+
+    <div class="progress">
+      <div class="meta"><span id="pr-count">0 of 15 answered</span><span id="pr-pct">0%</span></div>
+      <div class="track"><div class="fill" id="pr-fill"></div></div>
+    </div>
+
+    <div id="practice-q"></div>
+
+    <div class="actionbar" id="practice-actions">
+      <button class="btn btn-primary" id="pr-check" disabled>Check answers</button>
+      <button class="btn btn-ghost" data-goto="learn">← Back to Learn</button>
+    </div>
+
+    <div class="results" id="pr-results">
+      <div class="score"><span id="pr-score">0</span><span class="of"> / 15</span></div>
+      <div class="verdict" id="pr-verdict"></div>
+      <div class="breakdown"><h3>Your strengths &amp; gaps</h3><div id="pr-breakdown"></div></div>
+    </div>
+
+    <div class="talk" id="pr-talk" style="display:none">
+      <h3>Let's talk</h3>
+      <ul>
+        <li>Which prepositions came automatically? Which made you stop and think?</li>
+        <li>Where does your first language use one word for what English splits into two?</li>
+        <li>Pick three words you found hard. Say one true sentence about your own life with each.</li>
+      </ul>
+    </div>
+
+    <div class="actionbar" id="pr-retry" style="display:none">
+      <button class="btn btn-primary" id="pr-again">Try again</button>
+      <button class="btn btn-ghost" data-goto="recap">On to the Recap →</button>
+    </div>
+  </section>
+
+  <!-- ===================== PANEL 3 — RECAP ===================== -->
+  <section class="panel" id="panel-recap">
+    <div class="section-head">
+      <div class="eyebrow">Pull It Together</div>
+      <h2>The recap challenge</h2>
+      <p>A tougher mixed round — including the exceptions and the words that travel in fixed pairs. One of the options is sometimes "no word at all."</p>
+    </div>
+
+    <div class="recap-note">
+      <p><b>Watch for the traps:</b> "home" takes no preposition, you sit <em>in</em> a car but <em>on</em> a bus, and some words lock together — <em>good at</em>, <em>married to</em>, <em>paid by</em>. Read the picture, not just the gap.</p>
+    </div>
+
+    <div class="progress">
+      <div class="meta"><span id="rc-count">0 of 12 answered</span><span id="rc-pct">0%</span></div>
+      <div class="track"><div class="fill" id="rc-fill"></div></div>
+    </div>
+
+    <div id="recap-q"></div>
+
+    <div class="actionbar" id="recap-actions">
+      <button class="btn btn-primary" id="rc-check" disabled>Check answers</button>
+      <button class="btn btn-ghost" data-goto="practice">← Back to Practice</button>
+    </div>
+
+    <div class="results" id="rc-results">
+      <div class="score"><span id="rc-score">0</span><span class="of"> / 12</span></div>
+      <div class="verdict" id="rc-verdict"></div>
+    </div>
+
+    <div class="nextstep" id="rc-next">
+      <div class="ns-k">Where next</div>
+      <h3>You've got the foundations.</h3>
+      <p>You can now picture each preposition and handle the common exceptions. The next lesson goes deeper — prepositions inside questions, trickier collocations, and how they behave in real professional English.</p>
+    </div>
+
+    <div class="actionbar" id="rc-retry" style="display:none">
+      <button class="btn btn-primary" id="rc-again">Try again</button>
+      <button class="btn btn-ghost" data-goto="learn">Review the Learn tab</button>
+    </div>
+  </section>
+
+  <div class="foot">English Prepositions · <span>an introduction</span></div>
+
+</div>
+
+<script>
+/* ============================================================
+   GLYPHS — small spatial diagrams, use currentColor
+   ============================================================ */
+const G = {
+  dot:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity=".3" stroke-width="1.4" stroke-dasharray="2 3"/></svg>',
+  box:'<svg viewBox="0 0 24 24" fill="none"><rect x="4.5" y="4.5" width="15" height="15" rx="3" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>',
+  surface:'<svg viewBox="0 0 24 24" fill="none"><line x1="3" y1="16.5" x2="21" y2="16.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><rect x="8.5" y="8" width="7" height="7" rx="1.6" fill="currentColor"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24" fill="none"><line x1="3.5" y1="12" x2="18" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 7.5 L20 12 L14 16.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>',
+  target:'<svg viewBox="0 0 24 24" fill="none"><circle cx="15" cy="12" r="6.5" stroke="currentColor" stroke-width="1.5"/><circle cx="15" cy="12" r="2.4" fill="currentColor"/><line x1="2.5" y1="12" x2="8" y2="12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M6 9 L9 12 L6 15" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  orbit:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="2.8" fill="currentColor"/><ellipse cx="12" cy="12" rx="9" ry="5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2.5 3"/></svg>',
+  join:'<svg viewBox="0 0 24 24" fill="none"><circle cx="6.5" cy="12" r="3.2" fill="currentColor"/><circle cx="17.5" cy="12" r="3.2" stroke="currentColor" stroke-width="1.7"/><line x1="9.5" y1="12" x2="14.5" y2="12" stroke="currentColor" stroke-width="1.7"/></svg>'
+};
+
+/* ============================================================
+   DATA — the seven prepositions
+   ============================================================ */
+const PREPS = [
+  { w:'to', glyph:'arrow', accent:'--c-to', img:'an arrow → direction',
+    uses:[
+      {name:'Movement & destination', egs:['go <b>to</b> work','travel <b>to</b> Madrid','walk <b>to</b> the station']},
+      {name:'The person who receives', egs:['talk <b>to</b> your manager','give it <b>to</b> her','explain it <b>to</b> me']}
+    ],
+    caveats:[
+      ['Watch out','"to" is also the infinitive marker (<em>to</em> go, <em>to</em> work). Same word — different job from the preposition.'],
+      ['Exception · "home"','We go <em>home</em>, not "to home". <em>Home</em> behaves like a direction word: "I got home late." But add an adjective and it\'s a noun again: "I drove to my new home."']
+    ]},
+  { w:'for', glyph:'target', accent:'--c-for', img:'an arrow to a goal',
+    uses:[
+      {name:'Purpose & reason', egs:['a tool <b>for</b> cutting','study <b>for</b> the exam','this is <b>for</b> work']},
+      {name:'Benefit & recipient', egs:['I made this <b>for</b> you','good <b>for</b> your health']},
+      {name:'How long (duration)', egs:['for two hours','for three years']},
+      {name:'Gratitude', egs:['thank you <b>for</b> your help']}
+    ],
+    caveats:[
+      ['For vs. To','<em>for</em> = purpose or benefit ("a gift <em>for</em> you"). <em>to</em> = direction or recipient ("give it <em>to</em> you").']
+    ]},
+  { w:'at', glyph:'dot', accent:'--c-at', img:'a dot · a precise point',
+    uses:[
+      {name:'A point in time', egs:['at 9:00','at noon','at midnight']},
+      {name:'A specific place / point', egs:['at the door','at the bus stop','at home']},
+      {name:'Events', egs:['at a meeting','at a party','at a conference']}
+    ],
+    caveats:[
+      ['At vs. In','<em>at</em> marks a point ("<em>at</em> the station"); <em>in</em> marks the inside of a space ("<em>in</em> the building").'],
+      ['Useful pairs','good <em>at</em>, bad <em>at</em>, look <em>at</em>, arrive <em>at</em> (a place).']
+    ]},
+  { w:'in', glyph:'box', accent:'--c-in', img:'a box · inside',
+    uses:[
+      {name:'Inside a space', egs:['in the room','in Paris','in your pocket']},
+      {name:'Longer periods of time', egs:['in the morning','in July','in 2026']},
+      {name:'Fields & abstract areas', egs:['in business','in medicine','in the report']}
+    ],
+    caveats:[
+      ['In vs. On (time)','<em>in</em> for long stretches — months, years, parts of the day. <em>on</em> for exact days and dates ("<em>on</em> Monday", "<em>on</em> 5 May").']
+    ]},
+  { w:'on', glyph:'surface', accent:'--c-on', img:'a surface · a line',
+    uses:[
+      {name:'On a surface', egs:['on the table','on the wall','on the floor']},
+      {name:'Days & dates', egs:['on Monday','on my birthday','on 5 May']},
+      {name:'Larger transport', egs:['on the bus','on the train','on a plane']}
+    ],
+    caveats:[
+      ['Transport','You travel <em>on</em> the bus, train, plane or bike — but <em>in</em> a car and <em>in</em> a taxi. Rule of thumb: if you can stand up and move inside, use <em>on</em>; if you sit in a small enclosed seat, use <em>in</em>.'],
+      ['On vs. About','"a talk <em>on</em> climate change" sounds more formal and expert; "a talk <em>about</em> it" is more general and everyday.']
+    ]},
+  { w:'about', glyph:'orbit', accent:'--c-about', img:'circling a topic',
+    uses:[
+      {name:'Topic & subject', egs:['a book <b>about</b> history','worried <b>about</b> money','tell me <b>about</b> it']},
+      {name:'Roughly / approximately', egs:['about 20 people','about an hour']},
+      {name:'Common verb pairs', egs:['think <b>about</b>','talk <b>about</b>','complain <b>about</b>']}
+    ],
+    caveats:[
+      ['Think about vs. think of','<em>think about</em> = consider, reflect ("I\'m thinking <em>about</em> moving"). <em>think of</em> = bring to mind or give an opinion ("I can\'t think <em>of</em> his name").']
+    ]},
+  { w:'with', glyph:'join', accent:'--c-with', img:'joining · together',
+    uses:[
+      {name:'Together / accompanying', egs:['come <b>with</b> me','coffee <b>with</b> milk']},
+      {name:'The tool you use', egs:['cut it <b>with</b> a knife','write <b>with</b> a pen']},
+      {name:'Describing something', egs:['a man <b>with</b> a beard','a room <b>with</b> a view']},
+      {name:'Feelings toward', egs:['pleased <b>with</b> the result','angry <b>with</b> him']}
+    ],
+    caveats:[
+      ['With vs. By','<em>with</em> = the tool in your hand ("cut <em>with</em> a knife"). <em>by</em> = the method or means ("travel <em>by</em> train", "pay <em>by</em> card").']
+    ]}
+];
+
+const SHAPES = [
+  {glyph:'dot', word:'AT', desc:'a point'},
+  {glyph:'box', word:'IN', desc:'inside'},
+  {glyph:'surface', word:'ON', desc:'a surface / day'},
+  {glyph:'arrow', word:'TO', desc:'direction'}
+];
+
+/* short helper to read a css var colour at runtime not needed; we inline via style */
+
+/* ============================================================
+   PRACTICE QUESTIONS (15) — balanced, everyday + work
+   ============================================================ */
+const PRACTICE = [
+  {stem:'I usually wake up ___ 7 o\'clock.', ans:'at', opts:['at','in','on'], key:'at', exp:'A point on the clock takes <b>at</b> — at 7:00, at noon, at midnight.'},
+  {stem:'Can you send the file ___ me?', ans:'to', opts:['to','for','at'], key:'to', exp:'<b>to</b> marks the person who receives — send it <b>to</b> me.'},
+  {stem:'Thanks ___ your help yesterday.', ans:'for', opts:['for','to','about'], key:'for', exp:'Gratitude pairs with <b>for</b> — thank you <b>for</b> something.'},
+  {stem:'The keys are ___ the drawer.', ans:'in', opts:['in','on','at'], key:'in', exp:'Inside an enclosed space → <b>in</b> the drawer.'},
+  {stem:'There\'s a stain ___ your shirt.', ans:'on', opts:['on','in','at'], key:'on', exp:'Touching a surface → <b>on</b> the shirt.'},
+  {stem:'We need to talk ___ the budget.', ans:'about', opts:['about','for','on'], key:'about', exp:'The topic of talking takes <b>about</b> — talk <b>about</b> something.'},
+  {stem:'I\'m coming ___ you to the party.', ans:'with', opts:['with','to','for'], key:'with', exp:'Accompaniment → come <b>with</b> someone.'},
+  {stem:'She was born ___ 1998.', ans:'in', opts:['in','on','at'], key:'in', exp:'Years are long periods → <b>in</b> 1998. (Exact days take <em>on</em>.)'},
+  {stem:'The shop is closed ___ Sundays.', ans:'on', opts:['on','in','at'], key:'on', exp:'Specific days take <b>on</b> — <b>on</b> Sunday, <b>on</b> Monday.'},
+  {stem:'He cut the bread ___ a sharp knife.', ans:'with', opts:['with','by','for'], key:'with', exp:'The tool in your hand → cut <b>with</b> a knife.'},
+  {stem:'I\'ll be ready ___ ten minutes.', ans:'in', opts:['in','at','for'], key:'in', exp:'"In ten minutes" = after that period passes → <b>in</b>.'},
+  {stem:'Several people complained ___ the noise.', ans:'about', opts:['about','for','on'], key:'about', exp:'complain <b>about</b> something — the subject of the complaint.'},
+  {stem:'This train goes ___ the airport.', ans:'to', opts:['to','at','for'], key:'to', exp:'Movement toward a destination → <b>to</b> the airport.'},
+  {stem:'We sat ___ the table and ate.', ans:'at', opts:['at','on','in'], key:'at', exp:'You sit <b>at</b> the table (a point you gather around) — not "on" it.'},
+  {stem:'I\'ve worked here ___ five years.', ans:'for', opts:['for','since','in'], key:'for', exp:'A length of time → <b>for</b> five years. (<em>since</em> needs a start point: since 2021.)'}
+];
+
+/* ============================================================
+   RECAP QUESTIONS (12) — exceptions + collocations; "—" allowed
+   ============================================================ */
+const NONE = '—';
+const RECAP = [
+  {stem:'After the match we walked ___ home.', ans:NONE, opts:['to','at',NONE], key:'home', exp:'<b>Home</b> takes no preposition — "we walked home". Adding "to" is the classic slip.'},
+  {stem:'We took a taxi, so we travelled ___ the car.', ans:'in', opts:['on','in','by'], key:'on', exp:'A car or taxi is small and enclosed → <b>in</b> the car. (Buses and trains take <em>on</em>.)'},
+  {stem:'She\'s really good ___ chess.', ans:'at', opts:['at','in','on'], key:'at', exp:'A fixed pair: good <b>at</b> something.'},
+  {stem:'The report is ___ renewable energy.', ans:'about', opts:['about','for','at'], key:'about', exp:'The topic → <b>about</b>. ("a report <em>on</em>" also works, and sounds more formal.)'},
+  {stem:'I didn\'t have cash, so I paid ___ card.', ans:'by', opts:['with','by','on'], key:'with', exp:'A method of payment → pay <b>by</b> card. (You\'d pay <em>with</em> a specific note or coin.)'},
+  {stem:'Open the box ___ these scissors.', ans:'with', opts:['with','by','for'], key:'by', exp:'The tool in your hand → <b>with</b> scissors. (<em>by</em> is for the method, not the object.)'},
+  {stem:'The team meeting is ___ Thursday morning.', ans:'on', opts:['on','in','at'], key:'on', exp:'A specific day → <b>on</b> Thursday — even with "morning" attached.'},
+  {stem:'I\'ll give you a call ___ the evening.', ans:'in', opts:['on','in','at'], key:'in', exp:'Parts of the day take <b>in</b> — in the morning, in the evening. (But: <em>at</em> night.)'},
+  {stem:'Let\'s meet ___ the entrance at six.', ans:'at', opts:['at','in','to'], key:'at', exp:'A precise meeting point → <b>at</b> the entrance.'},
+  {stem:'Thanks so much ___ the lift home.', ans:'for', opts:['for','to','about'], key:'for', exp:'Gratitude → thank you <b>for</b> something.'},
+  {stem:'My sister is married ___ a doctor.', ans:'to', opts:['with','to','for'], key:'to', exp:'A fixed pair in English: married <b>to</b> someone (not "with").'},
+  {stem:'He\'s been thinking ___ changing jobs.', ans:'about', opts:['about','of','on'], key:'about', exp:'Considering / reflecting → think <b>about</b>. (<em>think of</em> = bring to mind or give an opinion.)'}
+];
+
+/* ============================================================
+   RENDER — chips, legend, cards
+   ============================================================ */
+function cssVar(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
+
+function renderChips(){
+  const row=document.getElementById('chip-row');
+  row.innerHTML=PREPS.map(p=>{
+    const c=cssVar(p.accent);
+    return `<span class="chip"><span style="color:${c};display:inline-flex">${G[p.glyph]}</span>${p.w}</span>`;
+  }).join('');
+}
+function renderLegend(){
+  const el=document.getElementById('legend');
+  el.innerHTML=SHAPES.map(s=>`
+    <div class="legend-item">
+      <div class="glyph" style="color:var(--navy)">${G[s.glyph]}</div>
+      <div class="word">${s.word}</div>
+      <div class="desc">${s.desc}</div>
+    </div>`).join('');
+}
+function renderCards(){
+  const el=document.getElementById('cards');
+  el.innerHTML=PREPS.map((p,i)=>{
+    const uses=p.uses.map(u=>`
+      <div class="use">
+        <div class="uname">${u.name}</div>
+        ${u.egs.map(e=>`<span class="eg">${e}</span>`).join('')}
+      </div>`).join('');
+    const cav=p.caveats.map(c=>`<div class="caveat"><strong>${c[0]}:</strong> ${c[1]}</div>`).join('');
+    return `
+    <details class="pcard" ${i===0?'open':''} style="--accent:var(${p.accent});--accent-tint:color-mix(in srgb, var(${p.accent}) 13%, white)">
+      <summary>
+        <span class="pglyph">${G[p.glyph]}</span>
+        <span class="ptitle">
+          <span class="pword">${p.w}</span>
+          <span class="pimg">${p.img}</span>
+        </span>
+        <span class="chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </summary>
+      <div class="pbody">${uses}${cav}</div>
+    </details>`;
+  }).join('');
+}
+
+/* ============================================================
+   QUIZ ENGINE (shared)
+   ============================================================ */
+function shuffle(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+function makeQuiz(cfg){
+  // cfg: {data, containerId, total, countId, pctId, fillId, checkId, onComplete}
+  const state={answers:new Array(cfg.data.length).fill(null), shuffled:[], checked:false};
+
+  function render(){
+    state.shuffled=cfg.data.map(q=>shuffle(q.opts));
+    const cont=document.getElementById(cfg.containerId);
+    cont.innerHTML=cfg.data.map((q,i)=>{
+      const opts=state.shuffled[i].map(o=>{
+        const lab = o===NONE ? `<span class="none-lab">no word</span>` : o;
+        return `<button class="opt" data-q="${i}" data-o="${o}">${lab}</button>`;
+      }).join('');
+      const stem=q.stem.replace('___',`<span class="slot" id="${cfg.containerId}-slot-${i}">?</span>`);
+      return `
+        <div class="q" id="${cfg.containerId}-q-${i}">
+          <div class="qnum">${String(i+1).padStart(2,'0')}</div>
+          <div class="stem">${stem}</div>
+          <div class="opts">${opts}</div>
+          <div class="explain" id="${cfg.containerId}-exp-${i}"></div>
+        </div>`;
+    }).join('');
+    cont.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',onPick));
+    state.checked=false;
+    updateProgress();
+  }
+
+  function onPick(e){
+    if(state.checked) return;
+    const qi=+e.target.dataset.q, o=e.target.dataset.o;
+    state.answers[qi]=o;
+    const q=document.getElementById(`${cfg.containerId}-q-${qi}`);
+    q.querySelectorAll('.opt').forEach(b=>b.classList.toggle('chosen', b.dataset.o===o));
+    const slot=document.getElementById(`${cfg.containerId}-slot-${qi}`);
+    slot.textContent = o===NONE ? '—' : o;
+    updateProgress();
+  }
+
+  function updateProgress(){
+    const done=state.answers.filter(a=>a!==null).length;
+    document.getElementById(cfg.countId).textContent=`${done} of ${cfg.total} answered`;
+    const pct=Math.round(done/cfg.total*100);
+    document.getElementById(cfg.pctId).textContent=`${pct}%`;
+    document.getElementById(cfg.fillId).style.width=`${pct}%`;
+    document.getElementById(cfg.checkId).disabled = done<cfg.total;
+  }
+
+  function check(){
+    state.checked=true;
+    let correct=0;
+    cfg.data.forEach((q,i)=>{
+      const a=state.answers[i];
+      const isOk=a===q.ans;
+      if(isOk) correct++;
+      const qEl=document.getElementById(`${cfg.containerId}-q-${i}`);
+      qEl.classList.add('answered');
+      qEl.querySelectorAll('.opt').forEach(b=>{
+        b.disabled=true;
+        if(b.dataset.o===q.ans) b.classList.add('correct');
+        else if(b.dataset.o===a) b.classList.add('wrong');
+      });
+      const exp=document.getElementById(`${cfg.containerId}-exp-${i}`);
+      exp.className=`explain ${isOk?'ok':'no'}`;
+      exp.innerHTML=`<span class="tag">${isOk?'Correct':'Not quite'}</span>${q.exp}`;
+    });
+    cfg.onComplete(correct, state.answers);
+    return correct;
+  }
+
+  function reset(){
+    state.answers=new Array(cfg.data.length).fill(null);
+    render();
+  }
+
+  render();
+  return {check, reset, state, data:cfg.data};
+}
+
+/* per-preposition breakdown (practice only) */
+function renderBreakdown(quiz){
+  const byKey={};
+  quiz.data.forEach((q,i)=>{
+    const k=q.key;
+    byKey[k]=byKey[k]||{ok:0,total:0};
+    byKey[k].total++;
+    if(quiz.state.answers[i]===q.ans) byKey[k].ok++;
+  });
+  const order=PREPS.map(p=>p.w);
+  const el=document.getElementById('pr-breakdown');
+  el.innerHTML=Object.keys(byKey)
+    .sort((a,b)=>order.indexOf(a)-order.indexOf(b))
+    .map(k=>{
+      const {ok,total}=byKey[k];
+      const pct=Math.round(ok/total*100);
+      const p=PREPS.find(x=>x.w===k);
+      const c=p?cssVar(p.accent):cssVar('--navy');
+      const barC = pct>=67? c : (pct>=34? cssVar('--amber') : cssVar('--bad'));
+      return `
+        <div class="bd-row">
+          <span class="bd-glyph" style="color:${c};background:color-mix(in srgb, ${c} 12%, white)">${p?G[p.glyph]:''}</span>
+          <span class="bd-word">${k}</span>
+          <span class="bd-track"><span class="bd-bar" style="width:${pct}%;background:${barC}"></span></span>
+          <span class="bd-stat">${ok}/${total}</span>
+        </div>`;
+    }).join('');
+}
+
+function verdict(score,total){
+  const r=score/total;
+  if(r===1) return 'Flawless. You\'ve got the picture.';
+  if(r>=.8) return 'Strong work — just a couple to firm up.';
+  if(r>=.6) return 'Solid foundation. Review the ones you missed.';
+  if(r>=.4) return 'Getting there — go back and reopen the cards you find tricky.';
+  return 'A good start. Spend more time on the Learn tab, then try again.';
+}
+
+/* ============================================================
+   WIRE UP
+   ============================================================ */
+let practiceQuiz, recapQuiz;
+
+document.addEventListener('DOMContentLoaded',()=>{
+  renderChips();
+  renderLegend();
+  renderCards();
+
+  // PRACTICE
+  practiceQuiz=makeQuiz({
+    data:PRACTICE, containerId:'practice-q', total:15,
+    countId:'pr-count', pctId:'pr-pct', fillId:'pr-fill', checkId:'pr-check',
+    onComplete:(score)=>{
+      document.getElementById('pr-score').textContent=score;
+      document.getElementById('pr-verdict').textContent=verdict(score,15);
+      renderBreakdown(practiceQuiz);
+      document.getElementById('pr-results').classList.add('show');
+      document.getElementById('pr-talk').style.display='block';
+      document.getElementById('practice-actions').style.display='none';
+      document.getElementById('pr-retry').style.display='flex';
+      document.getElementById('pr-results').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+  document.getElementById('pr-check').addEventListener('click',()=>practiceQuiz.check());
+  document.getElementById('pr-again').addEventListener('click',()=>{
+    practiceQuiz.reset();
+    document.getElementById('pr-results').classList.remove('show');
+    document.getElementById('pr-talk').style.display='none';
+    document.getElementById('practice-actions').style.display='flex';
+    document.getElementById('pr-retry').style.display='none';
+    document.getElementById('panel-practice').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  // RECAP
+  recapQuiz=makeQuiz({
+    data:RECAP, containerId:'recap-q', total:12,
+    countId:'rc-count', pctId:'rc-pct', fillId:'rc-fill', checkId:'rc-check',
+    onComplete:(score)=>{
+      document.getElementById('rc-score').textContent=score;
+      document.getElementById('rc-verdict').textContent=verdict(score,12);
+      document.getElementById('rc-results').classList.add('show');
+      document.getElementById('rc-next').classList.add('show');
+      document.getElementById('recap-actions').style.display='none';
+      document.getElementById('rc-retry').style.display='flex';
+      document.getElementById('rc-results').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+  document.getElementById('rc-check').addEventListener('click',()=>recapQuiz.check());
+  document.getElementById('rc-again').addEventListener('click',()=>{
+    recapQuiz.reset();
+    document.getElementById('rc-results').classList.remove('show');
+    document.getElementById('rc-next').classList.remove('show');
+    document.getElementById('recap-actions').style.display='flex';
+    document.getElementById('rc-retry').style.display='none';
+    document.getElementById('panel-recap').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  // TABS
+  const tabs=document.querySelectorAll('.tab');
+  function go(name){
+    tabs.forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('show', p.id===`panel-${name}`));
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>go(t.dataset.tab)));
+  document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.goto)));
+});
+</script>
+</body>
+</html>

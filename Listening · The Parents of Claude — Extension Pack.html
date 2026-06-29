@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening · The Parents of Claude — Extension Pack</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --teal: #2a6f7a;
+    --rust: #b5562a;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 12% 18%, rgba(42, 111, 122, 0.05) 0%, transparent 52%),
+      radial-gradient(ellipse at 88% 82%, rgba(181, 86, 42, 0.045) 0%, transparent 52%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 940px; margin: 0 auto; padding: 60px 32px 80px; }
+
+  /* ---------- Header ---------- */
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 30px; margin-bottom: 30px; }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400; font-style: italic;
+    font-size: clamp(46px, 8vw, 84px); line-height: 0.95;
+    letter-spacing: -0.025em; color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  h1 .accent { color: var(--rust); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: clamp(16px, 2vw, 19px); color: var(--ink-soft);
+    margin-top: 16px; max-width: 640px;
+  }
+
+  .source-line {
+    margin-top: 22px; font-size: 14px; color: var(--ink-soft);
+    display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline;
+  }
+  .source-line a { color: var(--teal); text-decoration: none; border-bottom: 1px solid rgba(42,111,122,0.35); }
+  .source-line a:hover { border-bottom-color: var(--teal); }
+  .source-line .meta { font-style: italic; }
+
+  /* ---------- How to use + controls ---------- */
+  .howto {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 22px 26px; margin-bottom: 26px;
+  }
+  .howto h2 {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+    font-size: 21px; margin-bottom: 10px;
+  }
+  .howto p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 8px; }
+  .howto p:last-child { margin-bottom: 0; }
+  .howto strong { color: var(--ink); }
+
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    margin-bottom: 30px;
+  }
+  .toggle-btn {
+    padding: 12px 18px; background: var(--paper-deep); border: 1px solid var(--rule);
+    border-radius: 2px; font-family: 'Lora', serif; font-size: 12px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .toggle-btn:hover { border-color: var(--ink-soft); }
+  .toggle-btn.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .toggle-btn.teacher.on { background: var(--rust); border-color: var(--rust); }
+
+  .legend { margin-left: auto; display: flex; gap: 14px; font-size: 12px; color: var(--ink-soft); align-items: center; }
+  .chip {
+    display: inline-block; font-family: 'Lora', serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; padding: 2px 8px; border-radius: 2px; vertical-align: middle;
+  }
+  .chip.b1 { background: rgba(45,106,79,0.12); color: var(--truth); }
+  .chip.b2 { background: rgba(42,111,122,0.13); color: var(--teal); }
+
+  /* ---------- Segment cards ---------- */
+  .segment {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 30px 32px 28px; margin-bottom: 24px; position: relative;
+    animation: fadeIn 0.4s ease both;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+
+  .segment.optional { border-style: dashed; opacity: 0.96; }
+
+  .seg-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 4px; }
+  .seg-num {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 15px; color: var(--rust);
+    letter-spacing: 0.04em;
+  }
+  .seg-time {
+    font-family: 'Lora', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-soft); background: rgba(29,36,56,0.05); padding: 3px 9px; border-radius: 2px;
+  }
+  .seg-title {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+    font-size: 29px; line-height: 1.12; letter-spacing: -0.01em; color: var(--ink);
+    margin: 6px 0 4px; font-variation-settings: "SOFT" 60;
+  }
+  .seg-snapshot { font-style: italic; color: var(--ink-soft); font-size: 15.5px; margin-bottom: 18px; }
+
+  .crosslink {
+    font-size: 13px; background: rgba(42,111,122,0.08); border-left: 3px solid var(--teal);
+    padding: 9px 13px; margin-bottom: 18px; color: var(--ink); border-radius: 0 2px 2px 0;
+  }
+  .crosslink::before { content: "↪ "; color: var(--teal); font-weight: 600; }
+
+  .care-note {
+    font-size: 12.5px; background: rgba(181,86,42,0.07); border-left: 3px solid var(--rust);
+    padding: 9px 13px; margin-bottom: 18px; color: var(--ink-soft); border-radius: 0 2px 2px 0;
+  }
+  .care-note b { color: var(--rust); letter-spacing: 0.04em; font-size: 10px; text-transform: uppercase; }
+
+  .block-label {
+    font-family: 'Lora', serif; font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--ink-soft); margin: 20px 0 9px; font-weight: 600;
+  }
+
+  /* vocab */
+  .vocab { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 22px; }
+  .vocab-item { padding-bottom: 9px; border-bottom: 1px dotted rgba(201,184,150,0.7); }
+  .vocab-w { font-family: 'Fraunces', serif; font-weight: 500; font-size: 16px; }
+  .vocab-d { font-size: 13.5px; color: var(--ink); }
+  .vocab-b1 { font-size: 12.5px; color: var(--ink-soft); font-style: italic; margin-top: 2px; }
+  .vocab-b1::before { content: "B1 — "; font-style: normal; font-weight: 600; color: var(--truth); letter-spacing: 0.04em; }
+  .vocab-trap { color: var(--trap); font-style: italic; }
+
+  /* listen-for */
+  .qlist { list-style: none; }
+  .qlist li { position: relative; padding-left: 26px; margin-bottom: 8px; font-size: 15px; }
+  .qlist li::before {
+    content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 8px;
+    border: 1.5px solid var(--teal); border-radius: 50%;
+  }
+  .gist-q {
+    font-size: 15.5px; padding: 11px 14px; background: rgba(45,106,79,0.07);
+    border-left: 3px solid var(--truth); border-radius: 0 2px 2px 0; margin-bottom: 4px;
+  }
+
+  /* discussion + stems */
+  .discuss { font-size: 15px; margin-top: 4px; }
+  .stems { margin-top: 10px; padding: 10px 14px; background: rgba(45,106,79,0.06); border-radius: 2px; display: none; }
+  body.b1-on .stems { display: block; }
+  .stems-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--truth); font-weight: 600; margin-bottom: 5px; }
+  .stems p { font-size: 14px; font-style: italic; color: var(--ink); margin-bottom: 3px; }
+
+  /* ---------- Timer ---------- */
+  .timer {
+    margin-top: 20px; padding: 16px 18px; background: var(--paper);
+    border: 1px solid var(--rule); border-radius: 2px;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .timer.zero { animation: rustPulse 0.6s ease 3; }
+  @keyframes rustPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(181,86,42,0); }
+    50% { box-shadow: 0 0 0 4px rgba(181,86,42,0.45); border-color: var(--rust); }
+  }
+  .timer-display {
+    font-family: 'Fraunces', serif; font-size: 32px; font-weight: 500;
+    letter-spacing: 0.02em; min-width: 96px; color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .timer.running .timer-display { color: var(--teal); }
+  .timer-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .timer-btns button {
+    font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.08em;
+    padding: 8px 14px; border: 1px solid var(--rule); background: var(--paper-deep);
+    color: var(--ink); border-radius: 2px; cursor: pointer; transition: all 0.18s;
+  }
+  .timer-btns button:hover { border-color: var(--ink-soft); }
+  .timer-btns .start.active { background: var(--teal); color: var(--paper); border-color: var(--teal); }
+  .timer-presets { display: flex; gap: 6px; margin-left: auto; }
+  .timer-presets button {
+    font-family: 'Lora', serif; font-size: 11px; padding: 6px 10px;
+    border: 1px solid var(--rule); background: transparent; color: var(--ink-soft);
+    border-radius: 2px; cursor: pointer;
+  }
+  .timer-presets button:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* ---------- Answer key ---------- */
+  .key-wrap { margin-top: 20px; }
+  .key-toggle {
+    font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 9px 15px; background: transparent; border: 1px dashed var(--rust);
+    color: var(--rust); border-radius: 2px; cursor: pointer; transition: all 0.18s;
+  }
+  .key-toggle:hover { background: rgba(181,86,42,0.07); }
+  .key-badge {
+    display: inline-block; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--rust); margin-left: 10px; font-weight: 600;
+  }
+  .key-body {
+    display: none; margin-top: 12px; padding: 16px 18px;
+    background: rgba(181,86,42,0.05); border: 1px solid rgba(181,86,42,0.25); border-radius: 2px;
+  }
+  .key-body.open { display: block; }
+  .key-body .kline { font-size: 14px; margin-bottom: 8px; }
+  .key-body .kline:last-child { margin-bottom: 0; }
+  .key-body .kk { font-weight: 600; color: var(--rust); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+
+  /* ---------- Production close ---------- */
+  .close-card {
+    background: var(--ink); color: var(--paper); border-radius: 2px;
+    padding: 32px 34px; margin-top: 34px;
+  }
+  .close-card .eyebrow { color: rgba(244,237,224,0.6); }
+  .close-card h2 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 30px; margin-bottom: 16px; }
+  .close-card .task { margin-bottom: 16px; }
+  .close-card .task:last-child { margin-bottom: 0; }
+  .close-card .lvl { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; }
+  .close-card .lvl.b1 { color: #8fd0b3; }
+  .close-card .lvl.b2 { color: #8fc6d0; }
+  .close-card .task p { font-size: 15px; color: rgba(244,237,224,0.92); margin-top: 4px; }
+
+  footer {
+    margin-top: 54px; padding-top: 26px; border-top: 1px solid var(--rule);
+    text-align: center; font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 12.5px; color: var(--ink-soft); line-height: 1.7;
+  }
+  footer .ornament { color: var(--rule); margin: 0 8px; }
+  footer a { color: var(--ink-soft); }
+
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 40px 18px 60px; }
+    .vocab { grid-template-columns: 1fr; }
+    .legend { margin-left: 0; width: 100%; }
+    .controls { gap: 8px; }
+    .segment { padding: 24px 20px; }
+    .seg-title { font-size: 24px; }
+    .timer-presets { margin-left: 0; width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; scroll-behavior: auto; }
+  }
+
+  @media print {
+    body { background: white; }
+    .controls, .timer, .timer-btns, footer .ornament { display: none; }
+    .key-body { display: block !important; }
+    .segment { break-inside: avoid; border: 1px solid #ccc; }
+    .stems { display: block !important; }
+  }
+</style>
+</head>
+<body class="b1-on">
+<div class="container">
+  <header>
+    <div class="eyebrow">Listening extension · The Oprah Podcast</div>
+    <h1>The Parents of <span class="accent">Claude</span></h1>
+    <div class="subtitle">More segments from Oprah Winfrey's conversation with Anthropic founders Dario &amp; Daniela Amodei — pre-vocabulary, listen-for tasks, and discussion, ready to drop into the lesson.</div>
+    <div class="source-line">
+      <span class="meta">Aired 19 May 2026 · approx. 1 hour</span>
+      <a href="https://www.iheart.com/podcast/269-the-oprah-podcast-244299529/episode/the-founders-of-claude-ai-tell-334080292/" target="_blank" rel="noopener">Listen — iHeart</a>
+      <a href="https://podcasts.apple.com/us/podcast/the-oprah-podcast/id1782960381" target="_blank" rel="noopener">Listen — Apple Podcasts</a>
+    </div>
+  </header>
+
+  <div class="howto">
+    <h2>How to use this</h2>
+    <p><strong>Timestamps are approximate</strong> (taken from the published chapter markers — nudge a few seconds either way on your platform). Each segment runs the same shape: pre-teach the vocabulary, play once for the <span class="chip b1">B1</span> gist question, play again for the <span class="chip b2">B2</span> detail questions, then open the discussion. The built-in timer is for the listen itself.</p>
+    <p><strong>Levels:</strong> every segment works at B2; the green B1 items and sentence stems are the on-ramp. Toggle the stems off for stronger groups. <strong>Answer keys are teacher-only</strong> — they're collapsed and flagged; don't reveal them on a shared screen.</p>
+  </div>
+
+  <div class="controls">
+    <button class="toggle-btn on" id="b1toggle" type="button" aria-pressed="true">B1 support: on</button>
+    <button class="toggle-btn teacher" id="teachertoggle" type="button" aria-pressed="false">Reveal all answer keys</button>
+    <div class="legend">
+      <span><span class="chip b1">B1</span> gist / on-ramp</span>
+      <span><span class="chip b2">B2</span> detail / stretch</span>
+    </div>
+  </div>
+
+  <div id="segments"></div>
+
+  <div class="close-card">
+    <div class="eyebrow">Production wrap-up · reusable</div>
+    <h2>Say it back</h2>
+    <div class="task">
+      <span class="lvl b1">B1 path</span>
+      <p>Choose one segment. In four or five sentences, say what the founders think about it — and whether you agree. Use one new word from the segment's vocabulary.</p>
+    </div>
+    <div class="task">
+      <span class="lvl b2">B2 stretch</span>
+      <p>Pick the claim you found most arguable and take the opposite side for two minutes. Then write an 80-word position paragraph: state your view, give one reason, concede one point to the other side.</p>
+    </div>
+  </div>
+
+  <footer>
+    Built one segment at a time, in Corinne's house style. <span class="ornament">·</span>
+    Source: The Oprah Podcast with Dario &amp; Daniela Amodei (19 May 2026). Point students to the official audio above.
+    <span class="ornament">·</span> Last updated 10 June 2026
+  </footer>
+</div>
+
+<script>
+const segments = [
+  {
+    num: "Segment 1",
+    time: "≈ 11:20 – 14:00",
+    title: "Two siblings who promised to do good",
+    snapshot: "Before Claude, before the company — a brother and sister who agreed as kids to build something good together.",
+    timer: 180,
+    vocab: [
+      { w: "sibling", d: "a brother or sister.", b1: "a brother or sister." },
+      { w: "complementary", d: "two things that combine well because each supplies what the other lacks.", b1: "they fit together (≠ complimentary = free / praising).", trap: true },
+      { w: "to converge", d: "to come together towards the same point.", b1: "to meet / come together." },
+      { w: "global development", d: "work to widen access to health, education and opportunity worldwide.", b1: "helping people in poorer countries." }
+    ],
+    gist: "Were Dario and Daniela friends, work colleagues, or family before Anthropic?",
+    detail: [
+      "What did Dario originally imagine his career would be?",
+      "What field did Daniela start her career in, and why?",
+      "What do the two of them do when they spend time together as siblings?"
+    ],
+    discuss: "They say staying \u201cjust siblings\u201d outside work makes them better at their jobs. Do you keep work and personal relationships separate, or do they mix?",
+    stems: [ "Before the company, they were\u2026", "Dario wanted to be a\u2026, and Daniela worked in\u2026" ],
+    key: {
+      gist: "Family \u2014 they're brother and sister, and talked as children about working together to do something good.",
+      detail: [
+        "Dario imagined being a scientist / researcher (he studied biophysics at Stanford, hoping to help cure disease).",
+        "Daniela began in global development, driven by the belief that people everywhere should have equal access to healthcare, education and opportunity.",
+        "They meet roughly once a week \u2014 he plays with her kids, they play video games and watch movies, and they deliberately don't talk about work."
+      ]
+    }
+  },
+  {
+    num: "Segment 2",
+    time: "≈ 18:52 – 20:30",
+    title: "Falling in love with the machine",
+    snapshot: "Oprah asks what they make of people falling in love with AI. Both founders answer in two words.",
+    crosslink: "Pairs with your Esther Perel \u00d7 Oprah listening lesson \u2014 Oprah brings up that exact conversation here.",
+    timer: 180,
+    vocab: [
+      { w: "compelling", d: "so interesting or attractive that it pulls you in.", b1: "very hard to resist." },
+      { w: "attachment", d: "a strong emotional bond to someone or something.", b1: "a strong feeling towards." },
+      { w: "a contrasting vision", d: "a clearly different picture of how things could be.", b1: "a very different idea." },
+      { w: "to turn inward", d: "to focus only on yourself and withdraw from others.", b1: "to close yourself off." }
+    ],
+    gist: "Do the founders think falling in love with an AI is a good thing or a bad thing?",
+    detail: [
+      "Oprah mentions a relationship expert she recently interviewed. Who is it, and what case did that expert describe?",
+      "The founders describe a \u201cgood\u201d way to use AI in relationships. What is it?"
+    ],
+    discuss: "Dario contrasts falling in love with an AI against using AI to build a better relationship with a real partner. Where's the line for you \u2014 would you use an \u201cAI coach\u201d for a relationship?",
+    stems: [ "I think it's a good / bad idea because\u2026", "I would / wouldn't use an AI coach because\u2026" ],
+    key: {
+      gist: "A bad idea \u2014 a real danger; both agree immediately.",
+      detail: [
+        "Esther Perel; she described a consultation with a man who was in love with his AI.",
+        "The hopeful version: each partner has an AI coach that helps them have a better relationship with each other \u2014 not with the AI itself."
+      ]
+    }
+  },
+  {
+    num: "Segment 3",
+    time: "≈ 20:30 – 22:18",
+    title: "How would Claude even know you're a kid?",
+    snapshot: "Anthropic doesn't allow under-18s. The interesting part is how it tries to tell.",
+    care: "Oprah opens this segment by referring to a family bereavement. To keep the focus on the policy, you may want to start the clip a little after the very top.",
+    timer: 180,
+    vocab: [
+      { w: "to detect", d: "to notice or discover something that isn't obvious.", b1: "to notice / find out." },
+      { w: "a pattern", d: "a regular, repeated way that something happens.", b1: "something that repeats." },
+      { w: "to suspend (an account)", d: "to stop it temporarily.", b1: "to pause / block it for now." },
+      { w: "verification", d: "proof that something is true.", b1: "showing it's true." }
+    ],
+    gist: "Does Claude allow people under 18 to use it?",
+    detail: [
+      "How does Claude try to work out that a user might be a minor?",
+      "What happens to a suspected account \u2014 and how can a real adult get it back?",
+      "What trade-off do the founders admit this creates?"
+    ],
+    discuss: "Claude guesses age from how you write and what you ask, not from a date-of-birth box. Is behaviour-based age-checking clever, intrusive, or both?",
+    stems: [ "Claude can tell because\u2026", "I think this is a good / bad way to check age because\u2026" ],
+    key: {
+      gist: "No \u2014 under-18s are not allowed to use it.",
+      detail: [
+        "It infers likely age from interaction patterns \u2014 the kinds of questions asked, the way someone writes, when they use it \u2014 rather than a stated birthday.",
+        "A suspected account is suspended; you can appeal by verifying that you're over 18.",
+        "The trade-off: some genuine adults get mistaken for minors and wrongly blocked."
+      ]
+    }
+  },
+  {
+    num: "Segment 4",
+    time: "≈ 22:18 – 24:00",
+    title: "Why there are no ads",
+    snapshot: "The business model quietly decides what a product wants from you. Theirs, they argue, wants you to leave once you're done.",
+    timer: 180,
+    vocab: [
+      { w: "an incentive", d: "a reason that pushes you to act in a certain way.", b1: "a reason to do something." },
+      { w: "a subscription", d: "a regular payment to keep using a service.", b1: "you pay each month." },
+      { w: "to be addicted (to)", d: "unable to stop using something.", b1: "can't stop." },
+      { w: "warped", d: "twisted away from what is healthy or correct.", b1: "bent the wrong way." }
+    ],
+    gist: "How does Anthropic make its money \u2014 ads, subscriptions, or selling your data?",
+    detail: [
+      "According to Dario, why does an ads business want you on screen as long as possible?",
+      "What do the founders say their incentive pushes the model to be instead?",
+      "Name one technical choice they say follows from this."
+    ],
+    discuss: "An ad-funded app earns more the longer you stay; a subscription app earns the same whether you stay one minute or one hour. Which would you trust more, and why?",
+    stems: [ "They make money from\u2026", "I trust this model more / less because\u2026" ],
+    key: {
+      gist: "Subscriptions, plus selling to companies; the consumer version is free up to a point. No ads.",
+      detail: [
+        "With ads, every extra second of your attention is another second of seeing the advert \u2014 so the incentive is maximum screen time.",
+        "Their incentive, they argue, is for the model to be useful.",
+        "Example: once you've got the answer you came for, the goal is not to keep you engaged or drag the conversation out."
+      ]
+    }
+  },
+  {
+    num: "Segment 5",
+    time: "≈ 24:00 – 28:30",
+    title: "The frictionless life",
+    snapshot: "Should AI just hand you the answer? In a classroom, the founders say no \u2014 and Oprah pushes on what we lose without struggle.",
+    timer: 240,
+    vocab: [
+      { w: "frictionless", d: "with every difficulty smoothed away; effortless.", b1: "very easy, no problems." },
+      { w: "to empower", d: "to give someone the confidence or ability to do something.", b1: "to help someone feel able." },
+      { w: "to deploy", d: "to put a technology to use in a real situation.", b1: "to put into use." },
+      { w: "foundational", d: "forming a base that everything else is built on.", b1: "very basic and important." }
+    ],
+    gist: "In a university \u201clearning mode\u201d, will Claude simply write a student's essay for them?",
+    detail: [
+      "What does Claude do instead of giving the essay answer?",
+      "Daniela gives two real examples of AI empowering people. What are they?",
+      "Oprah argues a life with no friction has a downside. What is it?"
+    ],
+    discuss: "Where's the line between AI removing pointless friction and removing the struggle you actually grow from? Name one task you'd happily make frictionless, and one you wouldn't.",
+    stems: [ "It's fine to make ____ easier, but ____ should stay difficult because\u2026" ],
+    key: {
+      gist: "No \u2014 in learning mode it refuses to simply produce the essay.",
+      detail: [
+        "It turns the request back into questions \u2014 what didn't you understand, did you read the book, shall we talk through the themes together.",
+        "Daniela (not a developer) built a website with Claude; and a lawyer friend with two small children changed careers to write a book, using Claude as a \u201cwriting buddy\u201d \u2014 though Claude doesn't write the novel for her.",
+        "Oprah's point: without friction you don't get to grow, or to learn from your mistakes."
+      ]
+    }
+  },
+  {
+    num: "Segment 6",
+    time: "≈ 28:33 – 35:00",
+    title: "Saying no to the military",
+    snapshot: "They were asked to take the safety limits off Claude for the military. They refused \u2014 and believed it might sink the company.",
+    timer: 240,
+    vocab: [
+      { w: "guardrails", d: "built-in limits that keep something safe.", b1: "safety limits." },
+      { w: "to decline / refuse", d: "to say no to a request.", b1: "to say no." },
+      { w: "conviction", d: "a strong belief you won't give up.", b1: "a strong belief." },
+      { w: "at stake", d: "able to be won or lost; in danger.", b1: "in danger / could be lost." }
+    ],
+    gist: "Did Anthropic agree to remove Claude's safety guardrails for the military, or refuse?",
+    detail: [
+      "Why was saying no such a risky decision for the company?",
+      "Were the founders divided or united about it?",
+      "Listen for what they say was financially at stake."
+    ],
+    discuss: "When, if ever, is it right for a company to walk away from a large contract on principle? Can you think of a real example?",
+    stems: [ "A company should refuse when\u2026", "I think they made the right / wrong choice because\u2026" ],
+    key: {
+      gist: "They refused.",
+      detail: [
+        "They believed the refusal could genuinely end the company, which made it high-risk.",
+        "The founders (all seven co-founders) were united in the decision.",
+        "A large contract was at stake \u2014 reported in the press as worth around $200 million; confirm the figure against your audio. They frame this as the last of several \u201claddered\u201d choices, the first of which was deciding not to run ads."
+      ]
+    }
+  },
+  {
+    num: "Bonus",
+    optional: true,
+    time: "≈ 01:47 – 08:00",
+    title: "You can't stop the train",
+    snapshot: "Optional warm-up — likely overlaps your opener, so cut it if you already have it. Claude itself wrote Oprah's toughest first question.",
+    timer: 240,
+    vocab: [
+      { w: "epochal", d: "marking the start of a major new period in history.", b1: "a huge turning point." },
+      { w: "to steer", d: "to control the direction something moves in.", b1: "to control where it goes." },
+      { w: "a trade-off", d: "a balance in which you give up one thing to gain another.", b1: "you lose something to get something." },
+      { w: "to race", d: "to compete to be first or fastest.", b1: "to rush to win." }
+    ],
+    gist: "Dario compares AI to two earlier turning points in human history. What are they?",
+    detail: [
+      "What image does Dario use for handling a technology you can't stop?",
+      "Why does he say there is a \u201crace\u201d at all?"
+    ],
+    discuss: "Dario's image is a fast train you can't stop but can steer. Is that a fair picture of AI today \u2014 or could humanity still choose to slow down?",
+    stems: [ "He compares AI to\u2026 and to\u2026", "There's a race because\u2026" ],
+    key: {
+      gist: "Humans first using fire, and the Industrial Revolution.",
+      detail: [
+        "A fast-moving train you cannot stop but can steer \u2014 the aim is to steer it away from the rocks and lower the risk towards zero.",
+        "Because the technology has commercial uses that fund the work and are partly necessary, so it's entangled and everyone is pulled along."
+      ]
+    }
+  }
+];
+
+/* ---------- Render ---------- */
+function fmt(s) {
+  const m = Math.floor(s / 60), sec = s % 60;
+  return m + ":" + String(sec).padStart(2, "0");
+}
+
+const wrap = document.getElementById("segments");
+
+segments.forEach((seg, idx) => {
+  const el = document.createElement("section");
+  el.className = "segment" + (seg.optional ? " optional" : "");
+  el.style.animationDelay = (idx * 30) + "ms";
+
+  const vocabHtml = seg.vocab.map(v => `
+    <div class="vocab-item">
+      <div class="vocab-w ${v.trap ? "vocab-trap" : ""}">${v.w}</div>
+      <div class="vocab-d">${v.d}</div>
+      <div class="vocab-b1">${v.b1}</div>
+    </div>`).join("");
+
+  const detailHtml = seg.detail.map(q => `<li>${q}</li>`).join("");
+  const stemsHtml = seg.stems.map(s => `<p>${s}</p>`).join("");
+  const keyDetailHtml = seg.key.detail.map(k => `<div class="kline">${k}</div>`).join("");
+
+  el.innerHTML = `
+    <div class="seg-head">
+      <span class="seg-num">${seg.num}</span>
+      <span class="seg-time">${seg.time}</span>
+    </div>
+    <h3 class="seg-title">${seg.title}</h3>
+    <div class="seg-snapshot">${seg.snapshot}</div>
+    ${seg.crosslink ? `<div class="crosslink">${seg.crosslink}</div>` : ""}
+    ${seg.care ? `<div class="care-note"><b>Teacher note</b><br>${seg.care}</div>` : ""}
+
+    <div class="block-label">Pre-teach &mdash; vocabulary</div>
+    <div class="vocab">${vocabHtml}</div>
+
+    <div class="block-label">First listen <span class="chip b1">B1</span> &mdash; gist</div>
+    <div class="gist-q">${seg.gist}</div>
+
+    <div class="timer" data-default="${seg.timer}">
+      <div class="timer-display">${fmt(seg.timer)}</div>
+      <div class="timer-btns">
+        <button class="start" type="button">Start</button>
+        <button class="reset" type="button">Reset</button>
+      </div>
+      <div class="timer-presets">
+        <button data-sec="120" type="button">2:00</button>
+        <button data-sec="180" type="button">3:00</button>
+        <button data-sec="300" type="button">5:00</button>
+      </div>
+    </div>
+
+    <div class="block-label">Second listen <span class="chip b2">B2</span> &mdash; detail</div>
+    <ul class="qlist">${detailHtml}</ul>
+
+    <div class="block-label">Discuss</div>
+    <div class="discuss">${seg.discuss}</div>
+    <div class="stems">
+      <div class="stems-label">B1 sentence starters</div>
+      ${stemsHtml}
+    </div>
+
+    <div class="key-wrap">
+      <button class="key-toggle" type="button">Show answer key</button>
+      <span class="key-badge">Teacher only &middot; don't screen-share</span>
+      <div class="key-body">
+        <div class="kline"><span class="kk">Gist</span>${seg.key.gist}</div>
+        <div class="kline"><span class="kk">Detail</span></div>
+        ${keyDetailHtml}
+      </div>
+    </div>
+  `;
+  wrap.appendChild(el);
+});
+
+/* ---------- Timer logic ---------- */
+function chime() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
+    o.type = "sine"; o.frequency.value = 660;
+    g.gain.setValueAtTime(0.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.9);
+    o.start(); o.stop(ctx.currentTime + 0.95);
+  } catch (e) { /* offline / blocked audio is fine */ }
+}
+
+document.querySelectorAll(".timer").forEach(timer => {
+  const display = timer.querySelector(".timer-display");
+  const startBtn = timer.querySelector(".start");
+  const resetBtn = timer.querySelector(".reset");
+  let remaining = parseInt(timer.dataset.default, 10);
+  let total = remaining;
+  let tick = null;
+
+  function paint() { display.textContent = fmt(Math.max(remaining, 0)); }
+
+  function stop() {
+    clearInterval(tick); tick = null;
+    timer.classList.remove("running");
+    startBtn.classList.remove("active");
+    startBtn.textContent = "Start";
+  }
+
+  startBtn.addEventListener("click", () => {
+    if (tick) { stop(); return; }
+    if (remaining <= 0) { remaining = total; paint(); }
+    timer.classList.add("running");
+    timer.classList.remove("zero");
+    startBtn.classList.add("active");
+    startBtn.textContent = "Pause";
+    tick = setInterval(() => {
+      remaining--;
+      paint();
+      if (remaining <= 0) {
+        stop();
+        timer.classList.add("zero");
+        chime();
+      }
+    }, 1000);
+  });
+
+  resetBtn.addEventListener("click", () => {
+    stop(); timer.classList.remove("zero");
+    remaining = total; paint();
+  });
+
+  timer.querySelectorAll(".timer-presets button").forEach(p => {
+    p.addEventListener("click", () => {
+      stop(); timer.classList.remove("zero");
+      total = parseInt(p.dataset.sec, 10);
+      remaining = total; paint();
+    });
+  });
+});
+
+/* ---------- Answer key toggles ---------- */
+document.querySelectorAll(".key-toggle").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const body = btn.parentElement.querySelector(".key-body");
+    const open = body.classList.toggle("open");
+    btn.textContent = open ? "Hide answer key" : "Show answer key";
+  });
+});
+
+/* ---------- Global controls ---------- */
+const b1toggle = document.getElementById("b1toggle");
+b1toggle.addEventListener("click", () => {
+  const on = document.body.classList.toggle("b1-on");
+  b1toggle.classList.toggle("on", on);
+  b1toggle.setAttribute("aria-pressed", on);
+  b1toggle.textContent = "B1 support: " + (on ? "on" : "off");
+});
+
+const teacherToggle = document.getElementById("teachertoggle");
+teacherToggle.addEventListener("click", () => {
+  const on = !teacherToggle.classList.contains("on");
+  teacherToggle.classList.toggle("on", on);
+  teacherToggle.setAttribute("aria-pressed", on);
+  teacherToggle.textContent = on ? "Hide all answer keys" : "Reveal all answer keys";
+  document.querySelectorAll(".key-body").forEach(b => b.classList.toggle("open", on));
+  document.querySelectorAll(".key-toggle").forEach(b => b.textContent = on ? "Hide answer key" : "Show answer key");
+});
+</script>
+</body>
+</html>

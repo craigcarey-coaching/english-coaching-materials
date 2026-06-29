@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick a Pair — Valérie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --card-back: #e4d8c2;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --rust: #a83232;
+    --teal: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 20%, rgba(168, 50, 50, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 80%, rgba(45, 106, 79, 0.04) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 56px 32px 80px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(48px, 9vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  h1 .accent { color: var(--rust); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--ink-soft);
+    margin-top: 14px;
+    max-width: 620px;
+  }
+
+  /* ---- controls ---- */
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    align-items: center;
+    margin-bottom: 22px;
+  }
+
+  .decks {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .decks button {
+    padding: 11px 16px;
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--rule);
+    font-family: 'Lora', serif;
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  .decks button:last-child { border-right: none; }
+  .decks button:hover { color: var(--ink); }
+  .decks button.active { background: var(--ink); color: var(--paper); }
+
+  .ghost-btn {
+    padding: 11px 18px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    font-family: 'Lora', serif;
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .ghost-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ink-soft);
+    cursor: pointer;
+    user-select: none;
+  }
+  .toggle .track {
+    width: 38px; height: 21px;
+    background: var(--card-back);
+    border: 1px solid var(--rule);
+    border-radius: 21px;
+    position: relative;
+    transition: background 0.2s;
+    flex: none;
+  }
+  .toggle .knob {
+    position: absolute; top: 2px; left: 2px;
+    width: 15px; height: 15px;
+    background: var(--ink-soft);
+    border-radius: 50%;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .toggle.on .track { background: rgba(45,106,79,0.25); }
+  .toggle.on .knob { transform: translateX(17px); background: var(--teal); }
+
+  .scoreline {
+    margin-left: auto;
+    display: flex;
+    gap: 22px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  .scoreline b {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 17px;
+    margin-right: 5px;
+  }
+
+  /* ---- feedback strip ---- */
+  .feedback {
+    min-height: 0;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    background: rgba(45, 106, 79, 0.08);
+    border-left: 3px solid var(--teal);
+    border-radius: 2px;
+  }
+  .feedback.show {
+    max-height: 240px;
+    opacity: 1;
+    margin-bottom: 24px;
+    padding: 15px 20px;
+  }
+  .feedback.miss {
+    background: rgba(168, 50, 50, 0.07);
+    border-left-color: var(--rust);
+  }
+  .fb-pair {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .fb-pair .arrow { color: var(--ink-soft); margin: 0 8px; font-style: italic; }
+  .fb-note {
+    font-family: 'Lora', serif;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+  .fb-model {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--teal);
+    margin-top: 8px;
+  }
+  .fb-model::before {
+    content: "Your turn — say it: ";
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .fr-badge {
+    display: inline-block;
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    color: var(--rust);
+    border: 1px solid rgba(168,50,50,0.4);
+    border-radius: 2px;
+    padding: 1px 5px;
+    margin-left: 9px;
+    vertical-align: middle;
+  }
+
+  /* ---- board ---- */
+  .board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    perspective: 1200px;
+  }
+
+  .cell {
+    aspect-ratio: 4 / 3;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.45s cubic-bezier(.4,.1,.2,1);
+    animation: deal 0.4s ease both;
+  }
+  @keyframes deal {
+    from { opacity: 0; transform: translateY(8px) rotateY(180deg); }
+    to   { opacity: 1; transform: translateY(0) rotateY(180deg); }
+  }
+  .cell.up, .cell.solved { transform: rotateY(0deg); }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 14px;
+    border: 1px solid var(--rule);
+  }
+
+  .face.back {
+    background: var(--card-back);
+    transform: rotateY(180deg);
+    background-image:
+      repeating-linear-gradient(45deg, rgba(168,50,50,0.05) 0 2px, transparent 2px 12px);
+  }
+  .face.back .mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--ink-soft);
+    opacity: 0.55;
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+
+  .face.front {
+    background: var(--paper-deep);
+  }
+  .cell.up .face.front { box-shadow: 0 10px 26px var(--shadow); }
+
+  .face .kicker {
+    font-family: 'Lora', serif;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .face .word {
+    font-family: 'Lora', serif;
+    font-size: clamp(13px, 1.7vw, 16px);
+    line-height: 1.28;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .kicker.k-rust { color: var(--rust); }
+  .kicker.k-teal { color: var(--teal); }
+  .kicker.k-amber { color: #b07a17; }
+
+  .cell.solved { cursor: default; }
+  .cell.solved .face.front {
+    background: rgba(45,106,79,0.10);
+    border-color: rgba(45,106,79,0.4);
+    box-shadow: none;
+  }
+  .cell.solved .face.front .word { color: var(--teal); }
+  .cell.solved .check {
+    position: absolute;
+    top: 7px; right: 9px;
+    color: var(--teal);
+    font-size: 13px;
+    opacity: 0.8;
+  }
+
+  .cell.miss { animation: nudge 0.4s ease; }
+  @keyframes nudge {
+    0%,100% { transform: rotateY(0); }
+    25% { transform: rotateY(0) translateX(-4px); }
+    75% { transform: rotateY(0) translateX(4px); }
+  }
+
+  /* ---- win banner ---- */
+  .win {
+    display: none;
+    margin-top: 26px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--teal);
+    border-radius: 3px;
+    padding: 30px 34px;
+  }
+  .win.show { display: block; animation: fadeIn 0.5s ease both; }
+  @keyframes fadeIn { from {opacity:0; transform:translateY(6px);} to {opacity:1; transform:translateY(0);} }
+  .win h2 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 30px;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80;
+  }
+  .win .stat {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+  .win .stat b { color: var(--ink); font-weight: 600; }
+  .recap-title {
+    font-family: 'Lora', serif;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 22px 0 12px;
+  }
+  .recap {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 8px 22px;
+  }
+  .recap-item {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .recap-item .a { font-weight: 600; }
+  .recap-item .arrow { color: var(--ink-soft); margin: 0 7px; }
+  .recap-item .b { color: var(--teal); }
+  .win .again { margin-top: 24px; }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer .ornament { color: var(--rule); margin: 0 9px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 40px 18px 60px; }
+    .controls { gap: 10px; }
+    .scoreline { margin-left: 0; width: 100%; justify-content: flex-start; }
+    .board { gap: 9px; }
+    .face .word { font-size: 12.5px; }
+    .face .kicker { font-size: 8px; letter-spacing: 0.14em; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cell, .feedback, .win { transition: none !important; animation: none !important; }
+    .cell { transform: rotateY(0); }
+    .cell:not(.up):not(.solved) .face.front { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">A memory game · Valérie</div>
+    <h1>Pick a <span class="accent">Pair</span></h1>
+    <div class="subtitle">Flip two cards. Find the match — an everyday word and its upgrade, a term and its meaning, a verb and the noun it lives with.</div>
+  </header>
+
+  <div class="controls">
+    <div class="decks" role="group" aria-label="Choose a deck">
+      <button class="active" data-deck="register" type="button">Everyday → Upgrade</button>
+      <button data-deck="terms" type="button">HR Terms</button>
+      <button data-deck="colloc" type="button">Collocations</button>
+      <button data-deck="mixed" type="button">Mixed Bag</button>
+    </div>
+    <button class="ghost-btn" id="newgame" type="button">New game</button>
+    <div class="toggle" id="ytToggle" role="switch" aria-checked="false" tabindex="0">
+      <span class="track"><span class="knob"></span></span>
+      <span>“Your turn” prompts</span>
+    </div>
+    <div class="scoreline">
+      <span><b id="matches">0</b>/ 8 found</span>
+      <span><b id="moves">0</b>moves</span>
+    </div>
+  </div>
+
+  <div class="feedback" id="feedback" aria-live="polite"></div>
+
+  <div class="board" id="board" aria-label="Memory game board"></div>
+
+  <div class="win" id="win" aria-live="polite"></div>
+
+  <footer>
+    Pick a Pair <span class="ornament">·</span> recognition before production <span class="ornament">·</span> B2 with quick wins
+  </footer>
+</div>
+
+<script>
+/* ----------  CONTENT BANK  ---------- */
+const DECKS = {
+  register: {
+    labelA: "everyday", labelB: "upgrade", kA: "k-rust", kB: "k-teal",
+    pairs: [
+      { a:"get", b:"obtain", lvl:1, note:"“Get” is fine in speech; “obtain” lifts a written report.", model:"Could you obtain the latest figures before Friday?" },
+      { a:"talk about", b:"discuss", lvl:1, fr:true, note:"“Discuss” takes no preposition: discuss it, not discuss about it.", model:"Let’s discuss the budget on Monday." },
+      { a:"ask for", b:"request", lvl:1, note:"“Request” is more formal and takes a direct object: request a meeting.", model:"I’d like to request a short meeting this week." },
+      { a:"go up", b:"increase", lvl:1, note:"Use “increase” for figures and prices; “go up” is conversational.", model:"Costs have increased by 8% this year." },
+      { a:"get better", b:"improve", lvl:1, note:"“Improve” is the workhorse business verb.", model:"We’re working to improve our response times." },
+      { a:"find out", b:"determine", lvl:2, note:"“Determine” suits analysis and reports; “find out” is everyday.", model:"We need to determine the cause of the delay." },
+      { a:"put off", b:"postpone", lvl:2, note:"Both mean delay; “postpone” is the formal one.", model:"Can we postpone the review until next week?" },
+      { a:"tell", b:"notify", lvl:2, note:"“Notify” = formally inform, often in writing: notify HR.", model:"Please notify HR of any change of address." },
+      { a:"start", b:"launch", lvl:2, note:"You launch a product or an initiative; “start” is plainer.", model:"We launch the new policy in September." },
+      { a:"help", b:"support", lvl:2, note:"“Support a colleague / a project” — common HR register.", model:"HR is here to support managers through the change." }
+    ]
+  },
+  terms: {
+    labelA: "HR term", labelB: "meaning", kA: "k-amber", kB: "k-teal",
+    pairs: [
+      { a:"appraisal", b:"a performance review", lvl:2, note:"An appraisal is a formal review of how someone is performing.", model:"Her annual appraisal is scheduled for June." },
+      { a:"onboarding", b:"settling a new hire in", lvl:2, note:"Onboarding is everything that helps a new hire settle in.", model:"Onboarding lasts about two weeks here." },
+      { a:"shortlist", b:"the final candidates", lvl:2, note:"The shortlist is the final group chosen to interview.", model:"We have five names on the shortlist." },
+      { a:"probation", b:"a trial period", lvl:2, note:"Probation is a trial period at the start of a job.", model:"He’s still on probation for three months." },
+      { a:"headcount", b:"the number of staff", lvl:2, note:"Headcount is the total number of employees.", model:"We’re increasing headcount in the Lyon office." },
+      { a:"line manager", b:"the boss you report to", lvl:2, note:"Your line manager is the person you report to directly.", model:"Speak to your line manager first." },
+      { a:"notice period", b:"time worked before leaving", lvl:3, note:"The notice period is how long you keep working after resigning.", model:"She’s on a three-month notice period." },
+      { a:"severance", b:"pay when a job ends", lvl:3, note:"Severance is money paid when the employer ends a job.", model:"They offered a generous severance package." },
+      { a:"staff turnover", b:"how fast staff leave", lvl:3, note:"Turnover here = the rate staff leave and are replaced (not revenue).", model:"High turnover is costing the team time." },
+      { a:"grievance", b:"a formal complaint", lvl:3, note:"A grievance is a formal complaint raised by an employee.", model:"He filed a grievance about the schedule." }
+    ]
+  },
+  colloc: {
+    labelA: "verb", labelB: "+ noun", kA: "k-rust", kB: "k-amber",
+    pairs: [
+      { a:"give", b:"feedback", lvl:1, note:"Give or provide feedback — not make feedback.", model:"I’ll give you feedback by Thursday." },
+      { a:"make", b:"a decision", lvl:1, fr:true, note:"Make a decision — not take or do a decision.", model:"We need to make a decision today." },
+      { a:"hold", b:"a meeting", lvl:2, fr:true, note:"Hold or have a meeting — you don’t do a meeting.", model:"We’ll hold a meeting on Friday." },
+      { a:"meet", b:"a deadline", lvl:2, fr:true, note:"Meet a deadline = reach it in time; not respect a deadline.", model:"Can your team meet the deadline?" },
+      { a:"reach", b:"an agreement", lvl:2, note:"Reach — or come to — an agreement.", model:"We finally reached an agreement." },
+      { a:"set", b:"a target", lvl:2, note:"Set a target; then hit it or miss it.", model:"Let’s set a realistic target for Q3." },
+      { a:"do", b:"an internship", lvl:2, fr:true, note:"Do an internship — not make an internship.", model:"She did an internship in Paris last summer." },
+      { a:"raise", b:"an issue", lvl:3, note:"Raise an issue, a point, or a concern.", model:"She raised an issue about workload." },
+      { a:"conduct", b:"an interview", lvl:3, note:"Conduct — or hold — an interview. Formal register.", model:"HR will conduct the interviews next week." },
+      { a:"take", b:"the minutes", lvl:3, note:"Take the minutes = write the record of a meeting.", model:"Who’s taking the minutes today?" }
+    ]
+  }
+};
+
+/* ----------  DRAW LOGIC (guarantees quick wins)  ---------- */
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function taggedPairs(deckKey){
+  const d = DECKS[deckKey];
+  return d.pairs.map((p,i)=>({ ...p, deck:deckKey, id:deckKey+"_"+i, labelA:d.labelA, labelB:d.labelB, kA:d.kA, kB:d.kB }));
+}
+
+function drawPairs(deckKey, n=8){
+  let pool;
+  if(deckKey === "mixed"){
+    pool = [...taggedPairs("register"), ...taggedPairs("terms"), ...taggedPairs("colloc")];
+  } else {
+    pool = taggedPairs(deckKey);
+  }
+  const byLvl = { 1:shuffle(pool.filter(p=>p.lvl===1)), 2:shuffle(pool.filter(p=>p.lvl===2)), 3:shuffle(pool.filter(p=>p.lvl===3)) };
+  let chosen = [];
+  // quick-win bias: a few easy, some medium, a couple of stretch
+  const want = { 1:3, 2:3, 3:2 };
+  [1,2,3].forEach(l => { chosen = chosen.concat(byLvl[l].splice(0, want[l])); });
+  // backfill if any bucket was short
+  const rest = shuffle([...byLvl[1], ...byLvl[2], ...byLvl[3]]);
+  while(chosen.length < n && rest.length) chosen.push(rest.shift());
+  chosen = chosen.slice(0, n);
+
+  // for mixed, nudge toward variety: ensure each type appears if room allows
+  if(deckKey === "mixed"){
+    const types = ["register","terms","colloc"];
+    types.forEach(t => {
+      if(!chosen.some(p=>p.deck===t)){
+        const swapIn = pool.find(p=>p.deck===t && !chosen.includes(p));
+        if(swapIn){ chosen[chosen.length-1] = swapIn; }
+      }
+    });
+  }
+  return shuffle(chosen);
+}
+
+/* ----------  STATE  ---------- */
+let deck = "register";
+let board = [];          // card objects on the table
+let pairMap = {};        // id -> pair data
+let first = null, lock = false, moves = 0, matched = 0;
+let yourTurn = false;
+
+const boardEl = document.getElementById("board");
+const feedbackEl = document.getElementById("feedback");
+const winEl = document.getElementById("win");
+const movesEl = document.getElementById("moves");
+const matchesEl = document.getElementById("matches");
+
+function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function newGame(){
+  const pairs = drawPairs(deck, 8);
+  pairMap = {};
+  let cards = [];
+  pairs.forEach(p => {
+    pairMap[p.id] = p;
+    cards.push({ id:p.id, side:"a", face:p.a, kicker:p.labelA, kClass:p.kA });
+    cards.push({ id:p.id, side:"b", face:p.b, kicker:p.labelB, kClass:p.kB });
+  });
+  board = shuffle(cards);
+  first = null; lock = false; moves = 0; matched = 0;
+  movesEl.textContent = "0";
+  matchesEl.textContent = "0";
+  feedbackEl.className = "feedback";
+  feedbackEl.innerHTML = "";
+  winEl.className = "win";
+  winEl.innerHTML = "";
+  renderBoard();
+}
+
+function renderBoard(){
+  boardEl.innerHTML = "";
+  board.forEach((c, i) => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.style.animationDelay = (i * 35) + "ms";
+    cell.dataset.idx = i;
+    cell.innerHTML = `
+      <div class="face back"><span class="mark">F.A.</span></div>
+      <div class="face front">
+        <span class="check">✓</span>
+        <span class="kicker ${c.kClass}">${esc(c.kicker)}</span>
+        <span class="word">${esc(c.face)}</span>
+      </div>`;
+    cell.addEventListener("click", () => flip(i, cell));
+    boardEl.appendChild(cell);
+  });
+}
+
+function flip(i, cell){
+  if(lock) return;
+  if(cell.classList.contains("solved") || cell.classList.contains("up")) return;
+  cell.classList.add("up");
+
+  if(first === null){
+    first = { i, cell };
+    return;
+  }
+  if(first.i === i) return;
+
+  // second pick
+  moves++;
+  movesEl.textContent = moves;
+  const a = board[first.i], b = board[i];
+
+  if(a.id === b.id){
+    // match
+    lock = true;
+    setTimeout(() => {
+      first.cell.classList.add("solved");
+      cell.classList.add("solved");
+      matched++;
+      matchesEl.textContent = matched;
+      showFeedback(pairMap[a.id], true);
+      first = null; lock = false;
+      if(matched === 8) winSequence();
+    }, 280);
+  } else {
+    // miss
+    lock = true;
+    showFeedback(null, false);
+    first.cell.classList.add("miss");
+    cell.classList.add("miss");
+    setTimeout(() => {
+      first.cell.classList.remove("up","miss");
+      cell.classList.remove("up","miss");
+      first = null; lock = false;
+    }, 850);
+  }
+}
+
+function showFeedback(pair, isMatch){
+  if(!isMatch){
+    feedbackEl.className = "feedback miss show";
+    feedbackEl.innerHTML = `<div class="fb-pair" style="font-size:16px;color:var(--ink-soft)">Not a pair — flip them back and remember where they were.</div>`;
+    return;
+  }
+  const fr = pair.fr ? `<span class="fr-badge">FR trap</span>` : "";
+  const model = yourTurn ? `<div class="fb-model">${esc(pair.model)}</div>` : "";
+  feedbackEl.className = "feedback show";
+  feedbackEl.innerHTML = `
+    <div class="fb-pair"><span>${esc(pair.a)}</span><span class="arrow">→</span><span>${esc(pair.b)}</span>${fr}</div>
+    <div class="fb-note">${esc(pair.note)}</div>
+    ${model}`;
+}
+
+function winSequence(){
+  feedbackEl.className = "feedback";
+  const items = Object.values(pairMap).map(p =>
+    `<div class="recap-item"><span class="a">${esc(p.a)}</span><span class="arrow">→</span><span class="b">${esc(p.b)}</span></div>`
+  ).join("");
+  const par = 8; // ideal moves = number of pairs
+  const sharp = moves <= 11;
+  const line = sharp
+    ? `Cleared in <b>${moves} moves</b> — sharp recall.`
+    : `Cleared in <b>${moves} moves</b>. Eight pairs locked in.`;
+  winEl.innerHTML = `
+    <h2>All eight matched.</h2>
+    <div class="stat">${line}</div>
+    <div class="recap-title">What you matched today</div>
+    <div class="recap">${items}</div>
+    <button class="ghost-btn again" id="again" type="button">Play again</button>`;
+  winEl.className = "win show";
+  document.getElementById("again").addEventListener("click", newGame);
+  winEl.scrollIntoView({ behavior:"smooth", block:"nearest" });
+}
+
+/* ----------  CONTROLS  ---------- */
+document.querySelectorAll(".decks button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".decks button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    deck = btn.dataset.deck;
+    newGame();
+  });
+});
+
+document.getElementById("newgame").addEventListener("click", newGame);
+
+const ytToggle = document.getElementById("ytToggle");
+function toggleYT(){
+  yourTurn = !yourTurn;
+  ytToggle.classList.toggle("on", yourTurn);
+  ytToggle.setAttribute("aria-checked", yourTurn ? "true" : "false");
+}
+ytToggle.addEventListener("click", toggleYT);
+ytToggle.addEventListener("keydown", e => {
+  if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggleYT(); }
+});
+
+newGame();
+</script>
+</body>
+</html>
