@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Coaching Materials — Craig Carey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --rust: #a83232;
+    --teal: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 25%, rgba(168, 50, 50, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 75%, rgba(45, 106, 79, 0.04) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 36px;
+    margin-bottom: 40px;
+  }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(48px, 9vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+
+  h1 .accent { color: var(--rust); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--ink-soft);
+    margin-top: 18px;
+    max-width: 620px;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 44px;
+  }
+
+  .search {
+    flex: 1;
+    min-width: 240px;
+    padding: 13px 18px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search:focus { border-color: var(--ink); }
+  .search::placeholder { color: var(--ink-soft); font-style: italic; }
+
+  .counter {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 14px;
+    padding-left: 4px;
+  }
+
+  .counter strong {
+    color: var(--ink);
+    font-weight: 500;
+    font-size: 17px;
+    font-style: normal;
+    margin-right: 4px;
+  }
+
+  .section { margin-bottom: 46px; }
+  .section.hidden { display: none; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .section-count {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 18px;
+  }
+
+  .lesson {
+    display: block;
+    text-decoration: none;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 24px;
+    position: relative;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    animation: fadeIn 0.4s ease both;
+  }
+
+  .lesson.hidden { display: none; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .lesson:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px var(--shadow);
+    border-color: var(--ink-soft);
+  }
+
+  .lesson-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.25;
+    color: var(--ink);
+    margin-bottom: 14px;
+    padding-right: 14px;
+    font-variation-settings: "SOFT" 80;
+  }
+
+  .lesson-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .pill {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 3px 8px;
+  }
+
+  .pill.level { color: var(--teal); border-color: rgba(45, 106, 79, 0.4); }
+
+  .arrow {
+    position: absolute;
+    bottom: 20px;
+    right: 22px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--rust);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+
+  .lesson:hover .arrow { opacity: 1; transform: translateX(0); }
+
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--ink-soft);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    display: none;
+  }
+
+  .empty-state.show { display: block; }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 44px 20px 60px; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .grid { grid-template-columns: 1fr; gap: 14px; }
+    .counter { text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">English coaching · Craig Carey</div>
+    <h1>Lesson <span class="accent">materials</span></h1>
+    <div class="subtitle">Interactive, self-contained lessons — bookmark any of them; they work offline once loaded.</div>
+  </header>
+
+  <div class="controls">
+    <input type="search" class="search" id="search" placeholder="Search a lesson, topic or student…" aria-label="Search lessons" />
+    <div class="counter"><strong id="count">0</strong>lessons</div>
+  </div>
+
+  <div id="sections"></div>
+  <div class="empty-state" id="empty">Nothing matches that search.</div>
+
+  <footer>
+    Built one lesson at a time. <span class="ornament">·</span> Last updated 7 July 2026
+  </footer>
+</div>
+
+<script>
+// ── Add new lessons here. group determines the section; keep hrefs relative. ──
+const lessons = [
+  // Laura — aviation English
+  { title: "A Flight, Gate to Gate", href: "laura/flight-gate-to-gate.html", group: "Laura", tag: "Aviation" },
+  { title: "Boeing 737 MAX — Listening", href: "laura/boeing-737-max-listening.html", group: "Laura", tag: "Listening" },
+  { title: "How a Flight Gets onto the Schedule", href: "laura/how-a-flight-gets-scheduled.html", group: "Laura", tag: "Aviation" },
+  { title: "Faux Amis — Aviation Glossary", href: "laura/faux-amis-aviation.html", group: "Laura", tag: "Vocabulary" },
+
+  // Valérie — general business English
+  { title: "Listening · Blue Zones", href: "valerie/listening-blue-zones.html", group: "Valérie", tag: "Listening" },
+  { title: "Pick a Pair", href: "valerie/pick-a-pair.html", group: "Valérie", tag: "Collocations" },
+
+  // Corinne — CFO / TOEIC
+  { title: "Faux Amis — Working Glossary", href: "corinne/faux-amis.html", group: "Corinne", tag: "Vocabulary" },
+
+  // Resources — reusable
+  { title: "English Prepositions — An Introduction", href: "resources/prepositions-introduction.html", group: "Resources", tag: "Grammar" },
+  { title: "Phrasal Verbs — The Particle Workshop", href: "resources/phrasal-verbs-particle-workshop.html", group: "Resources", tag: "Vocabulary" },
+  { title: "Grammar Recall — Future Tenses", href: "resources/grammar-recall-future-tenses.html", group: "Resources", tag: "Grammar" },
+  { title: "Counting the Cost", href: "resources/counting-the-cost-reading-vocab.html", group: "Resources", tag: "Reading", level: "B2" },
+  { title: "Listening · AI — Benefits & Harms", href: "resources/listening-ai-benefits-harms.html", group: "Resources", tag: "Listening" },
+  { title: "Listening · The Parents of Claude", href: "resources/listening-parents-of-claude.html", group: "Resources", tag: "Listening" },
+  { title: "Listening — Why One Person Can't…", href: "resources/listening-why-one-person.html", group: "Resources", tag: "Listening" }
+];
+
+// Section order. Add "Rayane", "MBA" here when those folders exist.
+const groupOrder = ["Laura", "Valérie", "Corinne", "Resources"];
+
+const sectionsEl = document.getElementById('sections');
+const searchEl = document.getElementById('search');
+const countEl = document.getElementById('count');
+const emptyEl = document.getElementById('empty');
+
+function escapeHtml(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function build() {
+  sectionsEl.innerHTML = '';
+  groupOrder.forEach(group => {
+    const items = lessons.filter(l => l.group === group);
+    if (!items.length) return;
+
+    const section = document.createElement('section');
+    section.className = 'section';
+    section.dataset.group = group;
+
+    const cards = items.map(l => {
+      const levelPill = l.level ? `<span class="pill level">${escapeHtml(l.level)}</span>` : '';
+      const tagPill = l.tag ? `<span class="pill">${escapeHtml(l.tag)}</span>` : '';
+      const hay = (l.title + ' ' + l.group + ' ' + (l.tag || '') + ' ' + (l.level || '')).toLowerCase();
+      return `
+        <a class="lesson" href="${escapeHtml(l.href)}" data-hay="${escapeHtml(hay)}">
+          <div class="lesson-title">${escapeHtml(l.title)}</div>
+          <div class="lesson-meta">${levelPill}${tagPill}</div>
+          <span class="arrow">→</span>
+        </a>`;
+    }).join('');
+
+    section.innerHTML = `
+      <div class="section-head">
+        <div class="section-title">${escapeHtml(group)}</div>
+        <div class="section-rule"></div>
+        <div class="section-count">${items.length} lesson${items.length === 1 ? '' : 's'}</div>
+      </div>
+      <div class="grid">${cards}</div>`;
+    sectionsEl.appendChild(section);
+  });
+  countEl.textContent = lessons.length;
+}
+
+function filter() {
+  const q = searchEl.value.toLowerCase().trim();
+  let visible = 0;
+
+  document.querySelectorAll('.section').forEach(section => {
+    let sectionVisible = 0;
+    section.querySelectorAll('.lesson').forEach(card => {
+      const match = !q || card.dataset.hay.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) { sectionVisible++; visible++; }
+    });
+    section.classList.toggle('hidden', sectionVisible === 0);
+  });
+
+  countEl.textContent = visible;
+  emptyEl.classList.toggle('show', visible === 0);
+}
+
+searchEl.addEventListener('input', filter);
+build();
+</script>
+</body>
+</html>
