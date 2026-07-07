@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Quiz — Valérie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 25%, rgba(168, 50, 50, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 75%, rgba(45, 106, 79, 0.04) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 32px;
+    margin-bottom: 12px;
+  }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(48px, 9vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+
+  h1 .accent { color: var(--trap); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 19px);
+    color: var(--ink-soft);
+    margin-top: 18px;
+    max-width: 600px;
+  }
+
+  /* Results banner */
+  .result-banner {
+    display: none;
+    margin: 28px 0 8px;
+    padding: 26px 30px;
+    background: rgba(45, 106, 79, 0.09);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--truth);
+    border-radius: 2px;
+    animation: fadeIn 0.4s ease both;
+  }
+  .result-banner.show { display: block; }
+
+  .result-score {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(38px, 7vw, 58px);
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .result-score span { color: var(--truth); }
+  .result-fraction {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+  .result-message {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink);
+    margin-top: 14px;
+    max-width: 640px;
+  }
+
+  .section-head {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 44px 0 4px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-head:first-of-type { margin-top: 34px; }
+
+  .q {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 24px 26px 22px;
+    margin-top: 20px;
+    position: relative;
+    animation: fadeIn 0.4s ease both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .q-text {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 18px;
+    padding-right: 44px;
+  }
+  .q-text .fill {
+    color: var(--trap);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 11px 15px;
+    margin-bottom: 9px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .opt:last-child { margin-bottom: 0; }
+  .opt:hover { border-color: var(--ink-soft); }
+
+  .opt input { position: absolute; opacity: 0; pointer-events: none; }
+
+  .opt .marker {
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--rule);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 1px;
+    transition: all 0.18s;
+  }
+
+  .opt .opt-text {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .opt.selected {
+    border-color: var(--ink);
+    background: #fff;
+  }
+  .opt.selected .marker {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  /* Locked / reviewed states */
+  .locked .opt { cursor: default; }
+  .locked .opt:hover { border-color: var(--rule); }
+
+  .opt.correct {
+    border-color: var(--truth);
+    background: rgba(45, 106, 79, 0.08);
+  }
+  .opt.correct .marker {
+    background: var(--truth);
+    color: #fff;
+    border-color: var(--truth);
+  }
+  .opt.wrong {
+    border-color: var(--trap);
+    background: rgba(168, 50, 50, 0.07);
+  }
+  .opt.wrong .marker {
+    background: var(--trap);
+    color: #fff;
+    border-color: var(--trap);
+  }
+
+  .explain {
+    display: none;
+    margin-top: 15px;
+    padding-top: 13px;
+    border-top: 1px solid rgba(201, 184, 150, 0.6);
+    font-family: 'Lora', serif;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .explain.show { display: block; }
+  .explain .tag {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-right: 8px;
+  }
+  .explain.got .tag { color: var(--truth); }
+  .explain.miss .tag { color: var(--trap); }
+  .explain.blank .tag { color: var(--ink-soft); }
+
+  .actions {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .btn {
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 15px 30px;
+    border-radius: 2px;
+    border: 1px solid var(--trap);
+    background: var(--trap);
+    color: var(--paper);
+    cursor: pointer;
+    transition: opacity 0.18s, transform 0.18s;
+  }
+  .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn.ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border-color: var(--rule);
+  }
+  .btn.ghost:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+  .nudge {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--trap);
+  }
+
+  footer {
+    margin-top: 70px;
+    padding-top: 26px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+
+  @media (max-width: 640px) {
+    .container { padding: 44px 20px 60px; }
+    .q { padding: 20px 18px; }
+    .q-text { padding-right: 34px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">A quick quiz · Valérie</div>
+    <h1>Quick <span class="accent">check</span></h1>
+    <div class="subtitle">A relaxed run through things we've covered. Go with your instinct — pick an answer for each, then reveal your score at the end.</div>
+  </header>
+
+  <div class="result-banner" id="banner">
+    <div class="result-score"><span id="pct">0%</span></div>
+    <div class="result-fraction" id="fraction"></div>
+    <div class="result-message" id="message"></div>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="actions">
+    <button class="btn" id="submit" type="button">See my score</button>
+    <button class="btn ghost" id="retry" type="button" style="display:none;">Try again</button>
+    <span class="nudge" id="nudge" style="display:none;"></span>
+  </div>
+
+  <footer>
+    Built one lesson at a time. <span class="ornament">·</span> A quiz, not a test.
+  </footer>
+</div>
+
+<script>
+const questions = [
+  { section: "Vocabulary",
+    q: 'She is very <span class="fill">fussy</span> about what she eats. "Fussy" means:',
+    options: ["Easily pleased and relaxed", "Hard to please; very particular", "Extremely generous", "Always hungry"],
+    answer: 1, exp: "Fussy = difficult to please, picky about food or details." },
+
+  { q: 'He couldn\'t <span class="fill">cope</span> with the pressure. "To cope (with)" means:',
+    options: ["To copy something exactly", "To deal successfully with a difficulty", "To give up quickly", "To rest and relax"],
+    answer: 1, exp: "Cope (with) = manage a difficult situation." },
+
+  { q: 'The team made an important <span class="fill">breakthrough</span>. A "breakthrough" is:',
+    options: ["A short rest or pause", "An important discovery or advance", "A serious error", "A broken machine"],
+    answer: 1, exp: "Breakthrough = a significant advance, often after difficulty." },
+
+  { q: 'We had no oven, so we <span class="fill">made do</span> with a microwave. "To make do (with)" means:',
+    options: ["To manage with what you have", "To make a firm decision", "To finish something early", "To do a task twice"],
+    answer: 0, exp: "Make do (with) = get by with what's available, even if it isn't ideal." },
+
+  { q: 'The benefits <span class="fill">outweigh</span> the risks. "To outweigh" means:',
+    options: ["To weigh something on scales", "To be lighter than something", "To be greater or more important than", "To measure very carefully"],
+    answer: 2, exp: "Outweigh = to be more significant or important than something else." },
+
+  { q: 'The company was in <span class="fill">turmoil</span> after the news. "Turmoil" means:',
+    options: ["A state of confusion and disorder", "A long period of calm", "A large profit", "A quiet celebration"],
+    answer: 0, exp: "Turmoil = great disturbance, confusion or uncertainty." },
+
+  { q: 'Our sales are <span class="fill">lagging behind</span> our rivals\'. "To lag behind" means:',
+    options: ["To lead the group", "To be slower or make less progress than others", "To finish first", "To stop entirely"],
+    answer: 1, exp: "Lag behind = fail to keep up with others." },
+
+  { q: 'He drew a <span class="fill">crude</span> sketch on a napkin. Here "crude" means:',
+    options: ["Very detailed and precise", "Rough, basic, unrefined", "Extremely expensive", "Bright and colourful"],
+    answer: 1, exp: "Crude = rough or unrefined. (Also: crude oil = unrefined oil; crude behaviour = rude.)" },
+
+  { q: 'Let\'s <span class="fill">switch gears</span> and talk about marketing. "To switch / shift gears" means:',
+    options: ["To repair a car", "To slow down and rest", "To change topic or approach", "To make a mistake"],
+    answer: 2, exp: "Switch / shift gears = change direction, topic, or approach." },
+
+  { q: 'We need to <span class="fill">untangle</span> the causes of the problem. "To untangle" means:',
+    options: ["To separate and make sense of something confused", "To tie things together tightly", "To create more confusion", "To throw something away"],
+    answer: 0, exp: "Untangle = separate or clarify something complicated — literally or figuratively." },
+
+  { section: "Make or do?",
+    q: 'I need to ___ a decision by Friday.',
+    options: ["do", "make", "take", "have"],
+    answer: 1, exp: "We make a decision." },
+
+  { q: 'Have you ___ your homework yet?',
+    options: ["made", "did", "done", "make"],
+    answer: 2, exp: "We do homework; the present perfect uses the past participle done." },
+
+  { q: 'The two firms have ___ business together for years.',
+    options: ["done", "made", "make", "been"],
+    answer: 0, exp: "Collocation: do business." },
+
+  { q: 'You should ___ an effort to speak up in meetings.',
+    options: ["do", "take", "make", "give"],
+    answer: 2, exp: "Make an effort." },
+
+  { section: "The small words",
+    q: 'She is really interested ___ nutrition.',
+    options: ["by", "in", "for", "about"],
+    answer: 1, exp: "interested IN. (French \u2018intéressé par\u2019 tempts \u2018by\u2019.)" },
+
+  { q: 'It depends ___ the weather.',
+    options: ["of", "from", "on", "to"],
+    answer: 2, exp: "depend ON. (French \u2018dépendre de\u2019 tempts \u2018of / from\u2019.)" },
+
+  { q: 'I\'m quite good ___ giving presentations.',
+    options: ["in", "at", "on", "for"],
+    answer: 1, exp: "good AT something." },
+
+  { q: 'He is responsible ___ the whole project.',
+    options: ["of", "about", "for", "on"],
+    answer: 2, exp: "responsible FOR. (French \u2018responsable de\u2019 tempts \u2018of\u2019.)" },
+
+  { q: 'This report is ___ climate change.',
+    options: ["of", "about", "for", "to"],
+    answer: 1, exp: "about = concerning the topic." },
+
+  { q: 'I\'m really looking forward ___ the weekend.',
+    options: ["for", "at", "to", "on"],
+    answer: 2, exp: "look forward TO — and TO + -ing: \u2018looking forward to seeing you\u2019." },
+
+  { section: "Putting it together",
+    q: 'In which word is "-ed" pronounced as an extra syllable, /\u026Ad/ ("id")?',
+    options: ["worked", "played", "decided", "cleaned"],
+    answer: 2, exp: "If the verb ends in a t/d sound (decide \u2192 decided), -ed = /\u026Ad/. worked = /t/, played & cleaned = /d/ with no extra syllable." },
+
+  { q: 'In the talk, "Blue Zones" are places where people:',
+    options: ["never eat any meat", "live much longer than average", "have the fastest broadband", "train hardest in the gym"],
+    answer: 1, exp: "Blue Zones = regions with unusually high longevity." },
+
+  { q: 'A French "salon professionnel" is best translated in English as:',
+    options: ["a hair salon", "an art exhibition", "a trade fair", "a waiting room"],
+    answer: 2, exp: "Professional \u2018salon\u2019 = trade fair. Beware \u2018exhibition\u2019, which usually means an art or museum display." },
+
+  { q: 'Which sentence is correct? ("carelessness")',
+    options: ["He made several carelessnesses.", "The fire was caused by carelessness.", "She has a carelessness at work.", "There were many carelessness."],
+    answer: 1, exp: "Carelessness is uncountable \u2014 no plural, and no \u2018a / many + singular\u2019." },
+
+  { q: 'The British word "lift" is called ___ in American English.',
+    options: ["escalator", "elevator", "staircase", "ladder"],
+    answer: 1, exp: "UK \u2018lift\u2019 = US \u2018elevator\u2019." },
+
+  { q: '"Great Britain" refers to:',
+    options: ["England only", "England, Scotland and Wales", "England, Scotland, Wales and Northern Ireland", "the UK and the Republic of Ireland"],
+    answer: 1, exp: "Great Britain = England + Scotland + Wales. Add Northern Ireland and you have the United Kingdom." }
+];
+
+const quiz = document.getElementById('quiz');
+const submitBtn = document.getElementById('submit');
+const retryBtn = document.getElementById('retry');
+const nudge = document.getElementById('nudge');
+const banner = document.getElementById('banner');
+const letters = ['A', 'B', 'C', 'D', 'E'];
+const state = {};       // qIndex -> selected option index
+let locked = false;
+let qCounter = 0;
+
+function build() {
+  quiz.innerHTML = '';
+  qCounter = 0;
+  questions.forEach((item, qi) => {
+    if (item.section) {
+      const h = document.createElement('div');
+      h.className = 'section-head';
+      h.textContent = item.section;
+      quiz.appendChild(h);
+    }
+    qCounter++;
+    const num = qCounter;
+    const card = document.createElement('div');
+    card.className = 'q';
+    card.dataset.qi = qi;
+    card.style.animationDelay = Math.min(qi * 12, 220) + 'ms';
+
+    let html = `<div class="q-number">${String(num).padStart(2, '0')}</div>`;
+    html += `<div class="q-text">${item.q}</div>`;
+    item.options.forEach((opt, oi) => {
+      html += `
+        <label class="opt" data-oi="${oi}">
+          <input type="radio" name="q${qi}" value="${oi}">
+          <span class="marker">${letters[oi]}</span>
+          <span class="opt-text">${opt}</span>
+        </label>`;
+    });
+    html += `<div class="explain"><span class="tag"></span><span class="exp-text"></span></div>`;
+    card.innerHTML = html;
+
+    card.querySelectorAll('.opt').forEach(optEl => {
+      optEl.addEventListener('click', () => {
+        if (locked) return;
+        const oi = parseInt(optEl.dataset.oi, 10);
+        state[qi] = oi;
+        card.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+        optEl.classList.add('selected');
+        optEl.querySelector('input').checked = true;
+        nudge.style.display = 'none';
+      });
+    });
+
+    quiz.appendChild(card);
+  });
+}
+
+function grade() {
+  const answered = Object.keys(state).length;
+  const total = questions.length;
+
+  if (answered < total && !locked) {
+    const missing = total - answered;
+    nudge.textContent = `${missing} still blank — leave them or finish first, your call. Tap again to see your score anyway.`;
+    nudge.style.display = 'inline';
+    // second tap grades regardless
+    submitBtn.dataset.warned = 'yes';
+    if (submitBtn.dataset.warned === 'yes' && submitBtn.dataset.confirmed === 'yes') {
+      // fallthrough handled below
+    } else {
+      submitBtn.dataset.confirmed = 'yes';
+      return;
+    }
+  }
+
+  locked = true;
+  let correct = 0;
+
+  quiz.querySelectorAll('.q').forEach(card => {
+    const qi = parseInt(card.dataset.qi, 10);
+    const item = questions[qi];
+    const chosen = state[qi];
+    card.classList.add('locked');
+
+    card.querySelectorAll('.opt').forEach(optEl => {
+      const oi = parseInt(optEl.dataset.oi, 10);
+      optEl.classList.remove('selected');
+      if (oi === item.answer) optEl.classList.add('correct');
+      if (chosen !== undefined && oi === chosen && chosen !== item.answer) optEl.classList.add('wrong');
+    });
+
+    const explain = card.querySelector('.explain');
+    const tag = explain.querySelector('.tag');
+    const expText = explain.querySelector('.exp-text');
+    expText.textContent = item.exp;
+
+    if (chosen === undefined) {
+      explain.classList.add('show', 'blank');
+      tag.textContent = 'No answer';
+    } else if (chosen === item.answer) {
+      correct++;
+      explain.classList.add('show', 'got');
+      tag.textContent = 'Right';
+    } else {
+      explain.classList.add('show', 'miss');
+      tag.textContent = 'Not quite';
+    }
+  });
+
+  const pct = Math.round((correct / questions.length) * 100);
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('fraction').textContent = correct + ' of ' + questions.length + ' correct';
+
+  let msg;
+  if (pct >= 85) msg = "Really solid — most of this is locked in. Have a quick look at anything marked in red.";
+  else if (pct >= 70) msg = "Good footing. A handful of things to firm up — they're marked below.";
+  else if (pct >= 55) msg = "A fair bit landed. The marked answers show exactly where to look next.";
+  else msg = "Plenty of raw material here — the marked answers point to where the next few lessons can aim.";
+  document.getElementById('message').textContent = msg;
+
+  banner.classList.add('show');
+  submitBtn.style.display = 'none';
+  nudge.style.display = 'none';
+  retryBtn.style.display = 'inline-block';
+  banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function reset() {
+  for (const k in state) delete state[k];
+  locked = false;
+  submitBtn.dataset.warned = '';
+  submitBtn.dataset.confirmed = '';
+  banner.classList.remove('show');
+  submitBtn.style.display = 'inline-block';
+  retryBtn.style.display = 'none';
+  nudge.style.display = 'none';
+  build();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+submitBtn.addEventListener('click', grade);
+retryBtn.addEventListener('click', reset);
+
+build();
+</script>
+</body>
+</html>
