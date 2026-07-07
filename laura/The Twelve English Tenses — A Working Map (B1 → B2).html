@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Twelve English Tenses — A Working Map (B1 → B2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F0E6;
+    --paper-deep:#ECE4D2;
+    --paper-shadow:#E0D6BF;
+    --ink:#1B2230;
+    --ink-soft:#4A5260;
+    --ink-faint:#7A8090;
+    --terracotta:#B14A3E;
+    --terracotta-deep:#8C3A30;
+    --teal:#1F5E5A;
+    --teal-soft:rgba(31,94,90,0.08);
+    --gold:#A88542;
+    --rule:rgba(27,34,48,0.18);
+    --rule-soft:rgba(27,34,48,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(176,141,66,0.05), transparent 50%),
+      radial-gradient(circle at 80% 90%, rgba(177,74,62,0.04), transparent 60%);
+    color:var(--ink);
+    font-family:'Newsreader',Georgia,serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:880px;margin:0 auto;padding:56px 40px 80px}
+
+  /* Masthead */
+  .masthead{
+    border-top:3px solid var(--ink);
+    border-bottom:1px solid var(--rule);
+    padding:18px 0 14px;
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:'Fraunces',serif;
+    font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--ink-soft);font-weight:600;
+  }
+  .masthead .vol em{font-style:italic;color:var(--terracotta);text-transform:none;letter-spacing:0;font-weight:500}
+
+  /* Title */
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:clamp(44px,7vw,76px);
+    line-height:0.98;
+    letter-spacing:-0.025em;
+    margin:64px 0 28px;
+    font-variation-settings:'opsz' 144, 'SOFT' 30;
+  }
+  h1 em{font-style:italic;color:var(--terracotta);font-weight:400}
+  h1 .small{display:block;font-size:0.42em;font-weight:500;color:var(--ink-soft);letter-spacing:0;margin-top:14px;font-style:italic}
+
+  .deck{
+    font-family:'Newsreader',serif;
+    font-size:21px;line-height:1.45;
+    color:var(--ink-soft);
+    max-width:620px;
+    font-style:italic;
+    border-left:2px solid var(--terracotta);
+    padding-left:22px;
+    margin-bottom:72px;
+  }
+
+  /* Section markers */
+  .marker{
+    font-family:'Fraunces',serif;
+    font-size:11px;letter-spacing:0.24em;text-transform:uppercase;
+    color:var(--terracotta);font-weight:700;
+    margin-bottom:12px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .marker::after{content:"";flex:1;height:1px;background:var(--rule-soft)}
+
+  h2{
+    font-family:'Fraunces',serif;
+    font-size:clamp(28px,4vw,40px);
+    font-weight:500;line-height:1.12;
+    letter-spacing:-0.012em;
+    margin-bottom:18px;
+    font-variation-settings:'opsz' 144;
+  }
+  h2 em{font-style:italic;color:var(--terracotta)}
+
+  .lede{
+    font-size:18px;color:var(--ink-soft);
+    margin-bottom:32px;max-width:680px;
+  }
+
+  section{margin-bottom:80px}
+
+  /* Hook */
+  .hook{
+    background:var(--paper-deep);
+    border-left:3px solid var(--terracotta);
+    padding:30px 36px;
+    margin:8px 0 0;
+    box-shadow:6px 6px 0 var(--paper-shadow);
+  }
+  .hook .puzzle{
+    font-family:'Fraunces',serif;
+    font-size:24px;font-style:italic;
+    line-height:1.35;margin-bottom:18px;color:var(--ink);
+    font-weight:500;
+  }
+  .hook .puzzle .a{color:var(--terracotta)}
+  .hook .puzzle .b{color:var(--teal)}
+  .hook p{font-size:16px;color:var(--ink-soft);margin-bottom:10px}
+  .hook p:last-child{margin-bottom:0}
+  .hook strong{color:var(--ink);font-weight:600}
+
+  /* The Map - 12 tenses grid */
+  .grid-wrap{
+    margin:8px 0 0;
+    overflow-x:auto;
+  }
+  .tense-grid{
+    display:grid;
+    grid-template-columns:120px repeat(4,1fr);
+    gap:1px;
+    background:var(--rule);
+    border:1px solid var(--rule);
+    min-width:680px;
+  }
+  .tense-grid > div{background:var(--paper);padding:14px 12px}
+  .tg-head{
+    background:var(--ink) !important;
+    color:var(--paper);
+    font-family:'Fraunces',serif;
+    font-size:11px;text-transform:uppercase;letter-spacing:0.14em;
+    font-weight:600;text-align:center;
+    padding:14px 8px !important;
+  }
+  .tg-rowhead{
+    background:var(--paper-deep) !important;
+    font-family:'Fraunces',serif;
+    font-size:13px;font-weight:600;letter-spacing:0.1em;
+    text-transform:uppercase;
+    display:flex;align-items:center;
+    color:var(--ink);
+  }
+  .tg-cell{transition:background 0.2s}
+  .tg-cell:hover{background:var(--teal-soft) !important}
+  .tg-name{
+    font-family:'Fraunces',serif;
+    font-size:13px;font-weight:600;
+    margin-bottom:4px;color:var(--ink);
+    letter-spacing:0.01em;
+  }
+  .tg-ex{
+    font-size:13.5px;color:var(--ink-soft);
+    font-style:italic;line-height:1.35;
+  }
+
+  .map-key{
+    margin-top:22px;
+    font-size:14px;color:var(--ink-soft);
+    line-height:1.6;
+    background:var(--paper-deep);
+    padding:18px 22px;
+    border-radius:2px;
+  }
+  .map-key strong{font-family:'Fraunces',serif;color:var(--ink)}
+
+  /* Contrasts */
+  .contrast-block{margin:0 0 56px}
+  .contrast-block h3{
+    font-family:'Fraunces',serif;
+    font-size:26px;font-weight:500;
+    margin-top:48px;margin-bottom:8px;
+    letter-spacing:-0.005em;
+  }
+  .contrast-block h3 .num{
+    color:var(--terracotta);
+    font-style:italic;font-weight:400;
+    margin-right:10px;
+  }
+  .contrast-block .why{
+    font-size:16px;color:var(--ink-soft);
+    margin-bottom:22px;font-style:italic;
+  }
+  .contrast-pair{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;margin-bottom:28px;
+  }
+  @media (max-width:640px){.contrast-pair{grid-template-columns:1fr}}
+  .ccard{
+    padding:26px 28px;
+    background:var(--paper);
+    border:1px solid var(--rule);
+    border-top-width:3px;
+    border-radius:2px;
+    position:relative;
+  }
+  .ccard.l{border-top-color:var(--terracotta)}
+  .ccard.r{border-top-color:var(--teal)}
+  .ccard .lab{
+    font-family:'Fraunces',serif;
+    font-size:10.5px;letter-spacing:0.18em;
+    text-transform:uppercase;font-weight:700;
+    margin-bottom:8px;
+  }
+  .ccard.l .lab{color:var(--terracotta)}
+  .ccard.r .lab{color:var(--teal)}
+  .ccard .form{
+    font-family:'Fraunces',serif;
+    font-size:13px;color:var(--ink-soft);
+    margin-bottom:14px;letter-spacing:0.02em;
+    font-style:italic;
+  }
+  .ccard .ex{
+    font-family:'Newsreader',serif;
+    font-size:18px;font-style:italic;
+    color:var(--ink);line-height:1.45;
+    margin-bottom:16px;
+    padding-left:14px;border-left:2px solid var(--rule-soft);
+  }
+  .ccard .when{font-size:14px;color:var(--ink-soft);line-height:1.55}
+  .ccard .when strong{color:var(--ink);font-family:'Fraunces',serif;font-weight:600}
+
+  .markers-row{
+    background:var(--paper-deep);
+    padding:18px 22px;
+    margin:18px 0 0;
+    font-size:14px;line-height:1.55;
+    border-radius:2px;
+  }
+  .markers-row strong{font-family:'Fraunces',serif;color:var(--terracotta);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;display:block;margin-bottom:6px}
+  .markers-row code{
+    font-family:'Newsreader',serif;font-style:italic;
+    background:var(--paper);padding:1px 8px;
+    border-radius:2px;color:var(--ink);
+    margin-right:4px;
+    border:1px solid var(--rule-soft);
+  }
+
+  /* Practice */
+  .practice{
+    background:var(--paper-deep);
+    padding:34px 36px;
+    margin:24px 0 0;
+    border-radius:3px;
+    box-shadow:6px 6px 0 var(--paper-shadow);
+  }
+  .practice .ptitle{
+    font-family:'Fraunces',serif;
+    font-size:13px;letter-spacing:0.16em;text-transform:uppercase;
+    color:var(--terracotta);font-weight:700;margin-bottom:6px;
+  }
+  .practice h4{
+    font-family:'Fraunces',serif;
+    font-size:22px;font-weight:500;
+    margin-bottom:20px;line-height:1.25;
+  }
+  .pitem{
+    margin-bottom:18px;
+    padding-bottom:18px;
+    border-bottom:1px dashed var(--rule);
+  }
+  .pitem:last-of-type{border-bottom:none;padding-bottom:0;margin-bottom:8px}
+  .pprompt{
+    font-size:17px;line-height:1.6;
+    color:var(--ink);margin-bottom:8px;
+  }
+  .pprompt .ctx{display:block;font-size:14px;color:var(--ink-faint);font-style:italic;margin-bottom:4px}
+  .pinput{
+    display:inline-block;width:170px;
+    padding:5px 10px;margin:0 3px;
+    border:none;border-bottom:1.5px solid var(--ink);
+    background:transparent;
+    font-family:'Newsreader',serif;font-size:17px;font-style:italic;
+    color:var(--ink);
+  }
+  .pinput:focus{outline:none;border-bottom-color:var(--terracotta);background:rgba(255,255,255,0.4)}
+  .pinput.ok{border-bottom-color:var(--teal);color:var(--teal);font-style:italic;font-weight:600}
+  .pinput.no{border-bottom-color:var(--terracotta);color:var(--terracotta);text-decoration:line-through;text-decoration-thickness:1px}
+  .pfeedback{
+    margin-top:8px;font-size:14px;
+    color:var(--ink-soft);font-style:italic;
+    display:none;line-height:1.5;
+  }
+  .pfeedback.show{display:block}
+  .pfeedback .right{color:var(--teal);font-weight:600;font-style:normal}
+  .pbtn{
+    display:inline-block;margin-top:18px;
+    padding:11px 24px;
+    background:var(--ink);color:var(--paper);
+    border:none;border-radius:2px;
+    font-family:'Fraunces',serif;
+    font-size:12px;letter-spacing:0.16em;
+    text-transform:uppercase;font-weight:600;
+    cursor:pointer;transition:background 0.2s;
+  }
+  .pbtn:hover{background:var(--terracotta)}
+  .pbtn.ghost{
+    background:transparent;color:var(--ink);
+    border:1px solid var(--ink);margin-left:10px;
+  }
+  .pbtn.ghost:hover{background:var(--ink);color:var(--paper)}
+
+  .pscore{
+    margin-top:18px;font-family:'Fraunces',serif;
+    font-size:14px;color:var(--ink-soft);
+    font-style:italic;display:none;
+  }
+  .pscore.show{display:block}
+  .pscore strong{color:var(--terracotta);font-style:normal;font-weight:600}
+
+  /* Closing card */
+  .close-card{
+    margin-top:48px;
+    padding:36px 40px;
+    background:var(--ink);
+    color:var(--paper);
+    border-radius:3px;
+    position:relative;
+  }
+  .close-card .marker{color:var(--paper)}
+  .close-card .marker::after{background:rgba(245,240,230,0.2)}
+  .close-card h2{color:var(--paper);margin-bottom:14px}
+  .close-card h2 em{color:#E8B570}
+  .close-card p{color:rgba(245,240,230,0.85);font-size:17px;line-height:1.6;margin-bottom:14px}
+  .close-card p:last-of-type{margin-bottom:0}
+  .close-card .pull{
+    font-family:'Fraunces',serif;font-style:italic;
+    font-size:20px;color:#E8B570;line-height:1.4;
+    border-left:2px solid #E8B570;padding-left:18px;
+    margin:18px 0;
+  }
+
+  /* Footer */
+  footer{
+    margin-top:64px;
+    padding-top:28px;
+    border-top:1px solid var(--rule);
+    text-align:center;
+  }
+  footer p{
+    font-family:'Fraunces',serif;
+    font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+    color:var(--ink-faint);font-weight:600;
+  }
+  footer p em{font-style:italic;color:var(--terracotta);text-transform:none;letter-spacing:0;font-weight:500}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <span class="vol">A Working Map · <em>For Laura</em></span>
+    <span>B1 → B2 · Tenses</span>
+  </div>
+
+  <h1>The Twelve <em>English Tenses</em><span class="small">— a system, not a list to memorise</span></h1>
+  <p class="deck">English doesn't really have twelve tenses. It has three times and four ways of looking at them. Once you see the system, the names stop mattering.</p>
+
+  <!-- ===== HOOK ===== -->
+  <section>
+    <div class="marker">01 · The Hook</div>
+    <h2>Why does English have so <em>many</em>?</h2>
+    <p class="lede">In French, one form often does the work of two or three English forms. Choosing the wrong English form sounds odd to a native — even when the grammar looks correct on paper. Here is the question that unlocks almost everything.</p>
+
+    <div class="hook">
+      <div class="puzzle">"<span class="a">When did you arrive?</span>" &nbsp;vs.&nbsp; "<span class="b">Have you arrived?</span>"</div>
+      <p>Both are about an arrival. Both are grammatically correct. They are <strong>not</strong> interchangeable.</p>
+      <p>The first asks about a finished moment in finished time. The second asks about now — <em>are you here yet?</em></p>
+      <p>The difference isn't really about time. It's about <strong>relationship to now</strong>. Hold that idea — it's the secret behind every contrast in this document.</p>
+    </div>
+  </section>
+
+  <!-- ===== THE MAP ===== -->
+  <section>
+    <div class="marker">02 · The Map</div>
+    <h2>Three times. Four aspects. <em>Twelve</em> combinations.</h2>
+    <p class="lede">English doesn't just place an event in time (past / present / future). It also marks <em>how</em> the event sits inside that time — finished, in progress, finished-with-effects, or ongoing-with-duration. That second layer is called <strong>aspect</strong>, and it's what French speakers often miss.</p>
+
+    <div class="grid-wrap">
+      <div class="tense-grid">
+        <div class="tg-head">&nbsp;</div>
+        <div class="tg-head">Simple</div>
+        <div class="tg-head">Continuous</div>
+        <div class="tg-head">Perfect</div>
+        <div class="tg-head">Perfect Continuous</div>
+
+        <div class="tg-rowhead">Past</div>
+        <div class="tg-cell"><div class="tg-name">Past Simple</div><div class="tg-ex">I worked.</div></div>
+        <div class="tg-cell"><div class="tg-name">Past Continuous</div><div class="tg-ex">I was working.</div></div>
+        <div class="tg-cell"><div class="tg-name">Past Perfect</div><div class="tg-ex">I had worked.</div></div>
+        <div class="tg-cell"><div class="tg-name">Past Perfect Cont.</div><div class="tg-ex">I had been working.</div></div>
+
+        <div class="tg-rowhead">Present</div>
+        <div class="tg-cell"><div class="tg-name">Present Simple</div><div class="tg-ex">I work.</div></div>
+        <div class="tg-cell"><div class="tg-name">Present Continuous</div><div class="tg-ex">I am working.</div></div>
+        <div class="tg-cell"><div class="tg-name">Present Perfect</div><div class="tg-ex">I have worked.</div></div>
+        <div class="tg-cell"><div class="tg-name">Present Perfect Cont.</div><div class="tg-ex">I have been working.</div></div>
+
+        <div class="tg-rowhead">Future</div>
+        <div class="tg-cell"><div class="tg-name">Future Simple</div><div class="tg-ex">I will work.</div></div>
+        <div class="tg-cell"><div class="tg-name">Future Continuous</div><div class="tg-ex">I will be working.</div></div>
+        <div class="tg-cell"><div class="tg-name">Future Perfect</div><div class="tg-ex">I will have worked.</div></div>
+        <div class="tg-cell"><div class="tg-name">Future Perfect Cont.</div><div class="tg-ex">I will have been working.</div></div>
+      </div>
+    </div>
+
+    <div class="map-key">
+      <strong>Reading the four aspects:</strong><br>
+      • <strong>Simple</strong> — a fact, a complete event, a habit.<br>
+      • <strong>Continuous</strong> — an action in progress, framed in a moment.<br>
+      • <strong>Perfect</strong> — finished before another point in time, with consequences for that point.<br>
+      • <strong>Perfect Continuous</strong> — duration of an action up to a point, often still going.
+    </div>
+  </section>
+
+  <!-- ===== CONTRAST 1 ===== -->
+  <section>
+    <div class="marker">03 · The Three Hardest Contrasts at B1 → B2</div>
+    <h2>Fix these three and the <em>rest</em> fall into place.</h2>
+
+    <div class="contrast-block">
+      <h3><span class="num">i.</span>Past Simple vs. Present Perfect</h3>
+      <p class="why">The single most common B1→B2 mistake. Ask one question: <em>does the moment of speaking still matter?</em></p>
+
+      <div class="contrast-pair">
+        <div class="ccard l">
+          <div class="lab">Past Simple</div>
+          <div class="form">subject + verb-ed</div>
+          <div class="ex">"I worked in a bakery for two years."</div>
+          <div class="when"><strong>Use when:</strong> the action is finished AND the time is finished. The past is closed. Often a specific time word: <em>yesterday, in 2022, last week, when I was a student.</em></div>
+        </div>
+        <div class="ccard r">
+          <div class="lab">Present Perfect</div>
+          <div class="form">have / has + past participle</div>
+          <div class="ex">"I have worked in bakeries since 2020."</div>
+          <div class="when"><strong>Use when:</strong> the action connects to NOW — still relevant, still possible, or the time period is unfinished. Often: <em>since, for, ever, never, already, just, yet, this week, today.</em></div>
+        </div>
+      </div>
+
+      <div class="markers-row">
+        <strong>Time-words tell you which one</strong>
+        <code>yesterday</code> <code>last year</code> <code>in 2022</code> <code>when I was…</code> → Past Simple<br>
+        <code>since 2020</code> <code>for ten years</code> <code>ever</code> <code>never</code> <code>just</code> <code>yet</code> <code>this morning</code>(if it's still morning) → Present Perfect
+      </div>
+
+      <div class="practice">
+        <div class="ptitle">Quick check · Practice 1</div>
+        <h4>Past Simple or Present Perfect?</h4>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">A friend asks about your work history.</span>
+            "I <input type="text" class="pinput" data-answers="have worked,'ve worked" data-explain="Time period (since 2020) is unfinished and connects to now → Present Perfect."> in three different bakeries since 2020."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">Telling a colleague about your last job.</span>
+            "I <input type="text" class="pinput" data-answers="worked" data-explain="The time (last year) is finished. Closed past → Past Simple."> there last year for six months."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">Someone asks if you know Galway well.</span>
+            "Yes — I <input type="text" class="pinput" data-answers="have lived,'ve lived" data-explain="Still living there now → Present Perfect connects past to present."> here for four years."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">Discussing your morning.</span>
+            "I <input type="text" class="pinput" data-answers="had" data-explain="Specific finished moment (at 8am). Time word 'at' + clock time → Past Simple."> a coffee at 8 this morning."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <button class="pbtn" onclick="checkPractice(this)">Check answers</button>
+        <button class="pbtn ghost" onclick="resetPractice(this)">Reset</button>
+        <div class="pscore"></div>
+      </div>
+    </div>
+
+    <!-- ===== CONTRAST 2 ===== -->
+    <div class="contrast-block">
+      <h3><span class="num">ii.</span>Past Simple vs. Past Perfect</h3>
+      <p class="why">When two things happened in the past, the one that happened <em>first</em> moves backwards a step. That's all the past perfect does.</p>
+
+      <div class="contrast-pair">
+        <div class="ccard l">
+          <div class="lab">Past Simple</div>
+          <div class="form">verb-ed</div>
+          <div class="ex">"When I arrived, the meeting <em>started</em>."</div>
+          <div class="when"><strong>Reads as:</strong> I arrived, then the meeting started — same sequence as the sentence.</div>
+        </div>
+        <div class="ccard r">
+          <div class="lab">Past Perfect</div>
+          <div class="form">had + past participle</div>
+          <div class="ex">"When I arrived, the meeting <em>had started</em>."</div>
+          <div class="when"><strong>Reads as:</strong> the meeting started <em>before</em> I arrived. I walked in late. The past perfect signals "earlier than the other past."</div>
+        </div>
+      </div>
+
+      <div class="markers-row">
+        <strong>The mental picture</strong>
+        Imagine two dots on a timeline. The dot further left (earlier) gets <em>had + past participle</em>. The dot further right (later, the "main" past) gets simple past. Same logic as French <em>plus-que-parfait</em>.
+      </div>
+
+      <div class="practice">
+        <div class="ptitle">Quick check · Practice 2</div>
+        <h4>Which past happened first?</h4>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">You forgot your keys at home.</span>
+            "I realised I <input type="text" class="pinput" data-answers="had left,'d left" data-explain="The leaving (cause) happened before the realising (effect). Earlier past → had + past participle."> them on the kitchen table."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">A film you'd seen before.</span>
+            "I <input type="text" class="pinput" data-answers="had seen,'d seen" data-explain="Seeing it before is earlier than 'last night'. Earlier past → had + past participle."> the film once before, but I watched it again last night."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">A simple sequence in order.</span>
+            "I opened the oven and <input type="text" class="pinput" data-answers="took" data-explain="Two actions in natural order, same level of past → both Past Simple."> out the bread."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <button class="pbtn" onclick="checkPractice(this)">Check answers</button>
+        <button class="pbtn ghost" onclick="resetPractice(this)">Reset</button>
+        <div class="pscore"></div>
+      </div>
+    </div>
+
+    <!-- ===== CONTRAST 3 ===== -->
+    <div class="contrast-block">
+      <h3><span class="num">iii.</span>Three Ways to Talk About the Future</h3>
+      <p class="why">English future is not one form — it's a choice between three, and the choice depends on <em>how sure</em> and <em>how planned</em> the future is.</p>
+
+      <div class="contrast-pair" style="grid-template-columns:1fr 1fr 1fr;gap:14px;">
+        <div class="ccard l">
+          <div class="lab">will</div>
+          <div class="form">decision now</div>
+          <div class="ex">"I'll help you with that."</div>
+          <div class="when">A decision made <strong>at the moment of speaking</strong>. Predictions, offers, promises.</div>
+        </div>
+        <div class="ccard l" style="border-top-color:var(--gold)">
+          <div class="lab" style="color:var(--gold)">going to</div>
+          <div class="form">prior intention or evidence</div>
+          <div class="ex">"I'm going to start my own business."</div>
+          <div class="when">An intention <strong>already decided</strong>, OR a prediction based on <strong>visible evidence</strong> ("Look at those clouds — it's going to rain").</div>
+        </div>
+        <div class="ccard r">
+          <div class="lab">present continuous</div>
+          <div class="form">fixed arrangement</div>
+          <div class="ex">"I'm meeting the accountant on Tuesday."</div>
+          <div class="when">A <strong>fixed arrangement</strong> with another person — diary date, appointment, ticket booked.</div>
+        </div>
+      </div>
+
+      <div class="markers-row">
+        <strong>The mental picture</strong>
+        <code>will</code> = the decision happens <em>as you speak</em>.
+        <code>going to</code> = the decision was made <em>before</em> you spoke (or evidence is in front of you).
+        <code>present continuous</code> = the calendar already says so.
+      </div>
+
+      <div class="practice">
+        <div class="ptitle">Quick check · Practice 3</div>
+        <h4>Which future fits?</h4>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">Phone rings at the table.</span>
+            "Don't worry, I <input type="text" class="pinput" data-answers="will get,'ll get" data-explain="Decision made AT the moment of speaking → will."> it!"
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">You've decided this already; you have a plan.</span>
+            "I <input type="text" class="pinput" data-answers="am going to,'m going to" data-explain="Prior intention, decision already made → going to."> open my own bakery next year."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <div class="pitem">
+          <div class="pprompt">
+            <span class="ctx">It's in your diary; the time is fixed.</span>
+            "I <input type="text" class="pinput" data-answers="am seeing,'m seeing,am meeting,'m meeting" data-explain="Fixed arrangement on the calendar → present continuous."> the supplier at three on Thursday."
+          </div>
+          <div class="pfeedback"></div>
+        </div>
+
+        <button class="pbtn" onclick="checkPractice(this)">Check answers</button>
+        <button class="pbtn ghost" onclick="resetPractice(this)">Reset</button>
+        <div class="pscore"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MIXED RETRIEVAL ===== -->
+  <section>
+    <div class="marker">04 · Mixed Retrieval</div>
+    <h2>All three contrasts, <em>shuffled</em>.</h2>
+    <p class="lede">In real conversation, you don't know which contrast is coming. This mixed set is the test that matters — your brain has to choose, not just apply a single rule.</p>
+
+    <div class="practice">
+      <div class="ptitle">Final practice · Mixed</div>
+      <h4>Read the situation. Choose carefully.</h4>
+
+      <div class="pitem">
+        <div class="pprompt">
+          <span class="ctx">You walk into a kitchen and smell smoke.</span>
+          "Someone <input type="text" class="pinput" data-answers="has burnt,'s burnt,has burned,'s burned" data-explain="Visible / smellable result NOW → Present Perfect (action with present consequence)."> the toast!"
+        </div>
+        <div class="pfeedback"></div>
+      </div>
+
+      <div class="pitem">
+        <div class="pprompt">
+          <span class="ctx">A colleague looks tired at 10am.</span>
+          "I <input type="text" class="pinput" data-answers="didn't sleep,did not sleep" data-explain="Last night is a finished time → Past Simple."> well last night."
+        </div>
+        <div class="pfeedback"></div>
+      </div>
+
+      <div class="pitem">
+        <div class="pprompt">
+          <span class="ctx">A weather forecast looking out the window.</span>
+          "Look at those clouds — it <input type="text" class="pinput" data-answers="is going to,'s going to" data-explain="Visible evidence right now → going to."> rain any minute."
+        </div>
+        <div class="pfeedback"></div>
+      </div>
+
+      <div class="pitem">
+        <div class="pprompt">
+          <span class="ctx">Explaining a late arrival.</span>
+          "By the time I got to the station, the train <input type="text" class="pinput" data-answers="had left,'d left" data-explain="The leaving was earlier than the arriving (both past) → Past Perfect."> already."
+        </div>
+        <div class="pfeedback"></div>
+      </div>
+
+      <div class="pitem">
+        <div class="pprompt">
+          <span class="ctx">Talking about your week.</span>
+          "I <input type="text" class="pinput" data-answers="have had,'ve had" data-explain="'This week' is unfinished from the speaker's point of view → Present Perfect."> three trial students this week."
+        </div>
+        <div class="pfeedback"></div>
+      </div>
+
+      <div class="pitem">
+        <div class="pprompt">
+          <span class="ctx">Booked appointment in the calendar.</span>
+          "I can't on Friday — I <input type="text" class="pinput" data-answers="am having,'m having,am meeting,'m meeting,am seeing,'m seeing" data-explain="Fixed arrangement → present continuous."> a meeting with the bank."
+        </div>
+        <div class="pfeedback"></div>
+      </div>
+
+      <button class="pbtn" onclick="checkPractice(this)">Check answers</button>
+      <button class="pbtn ghost" onclick="resetPractice(this)">Reset</button>
+      <div class="pscore"></div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING ===== -->
+  <section>
+    <div class="close-card">
+      <div class="marker">05 · How to Keep This in Your Head</div>
+      <h2>The one question that <em>fixes</em> most mistakes</h2>
+      <p>Before you choose a tense, pause for one second and ask yourself: <strong>"Is the time finished, or does it still touch now?"</strong></p>
+      <p class="pull">Past Simple closes the door on the past. Present Perfect leaves it open.</p>
+      <p>Use this document like a reference, not a textbook. Read one section per week. Re-do the practice with different examples from your own life — what you did yesterday, what you've done since you moved to Galway, what you're doing on Saturday.</p>
+      <p>The grammar lives in the <em>using</em>, not the reading.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>The Twelve English Tenses · <em>For Laura</em> · Lesson Document</p>
+  </footer>
+</div>
+
+<script>
+  function checkPractice(btn){
+    const block = btn.closest('.practice');
+    const inputs = block.querySelectorAll('.pinput');
+    let correct = 0, total = inputs.length;
+
+    inputs.forEach(inp => {
+      const raw = (inp.value || '').trim().toLowerCase();
+      const answers = (inp.dataset.answers || '').toLowerCase().split(',').map(s => s.trim());
+      const fb = inp.closest('.pitem').querySelector('.pfeedback');
+      const explain = inp.dataset.explain || '';
+      const primary = answers[0];
+
+      inp.classList.remove('ok','no');
+      fb.classList.remove('show');
+      fb.innerHTML = '';
+
+      if(!raw) return;
+
+      if(answers.includes(raw)){
+        inp.classList.add('ok');
+        fb.innerHTML = '<span class="right">✓ Right.</span> ' + explain;
+        fb.classList.add('show');
+        correct++;
+      } else {
+        inp.classList.add('no');
+        fb.innerHTML = 'The answer is <span class="right">' + primary + '</span>. ' + explain;
+        fb.classList.add('show');
+      }
+    });
+
+    const scoreEl = block.querySelector('.pscore');
+    const attempted = Array.from(inputs).filter(i => i.value.trim()).length;
+    if(attempted > 0){
+      scoreEl.innerHTML = '<strong>' + correct + ' / ' + attempted + '</strong> correct of those attempted.';
+      scoreEl.classList.add('show');
+    } else {
+      scoreEl.classList.remove('show');
+    }
+  }
+
+  function resetPractice(btn){
+    const block = btn.closest('.practice');
+    block.querySelectorAll('.pinput').forEach(inp => {
+      inp.value = '';
+      inp.classList.remove('ok','no');
+    });
+    block.querySelectorAll('.pfeedback').forEach(fb => {
+      fb.classList.remove('show');
+      fb.innerHTML = '';
+    });
+    const scoreEl = block.querySelector('.pscore');
+    if(scoreEl){scoreEl.classList.remove('show');scoreEl.innerHTML = '';}
+  }
+</script>
+</body>
+</html>
