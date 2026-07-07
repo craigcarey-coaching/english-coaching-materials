@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active or Passive — a voice clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4ede0; --paper-deep:#ebe1cf; --ink:#1d2438; --ink-soft:#5a607a;
+    --rust:#a83232; --teal:#2d6a4f; --rule:#c9b896; --shadow:rgba(29,36,56,.08);
+    --rust-wash:rgba(168,50,50,.07); --teal-wash:rgba(45,106,79,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Lora',Georgia,serif;font-size:16px;
+    line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse at 15% 20%,rgba(168,50,50,.04) 0%,transparent 50%),
+      radial-gradient(ellipse at 85% 80%,rgba(45,106,79,.04) 0%,transparent 50%);}
+  .container{max-width:900px;margin:0 auto;padding:56px 30px 80px}
+
+  header{border-bottom:1px solid var(--rule);padding-bottom:30px;margin-bottom:14px}
+  .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-style:italic;
+     font-size:clamp(46px,9vw,88px);line-height:.95;letter-spacing:-.025em;font-variation-settings:"SOFT" 80,"WONK" 1}
+  h1 .a{color:var(--teal)} h1 .b{color:var(--rust)}
+  .subtitle{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,2vw,19px);color:var(--ink-soft);margin-top:18px;max-width:640px}
+
+  .toolbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:22px 0 46px}
+  .c1-switch{display:inline-flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+  .c1-switch .lab{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  .c1-switch .track{width:44px;height:24px;border-radius:14px;background:var(--paper-deep);border:1px solid var(--rule);position:relative;transition:background .2s}
+  .c1-switch .knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--ink-soft);transition:transform .2s,background .2s}
+  body.show-c1 .c1-switch .track{background:var(--teal)}
+  body.show-c1 .c1-switch .knob{transform:translateX(20px);background:var(--paper)}
+  .c1-only{display:none}
+  body.show-c1 .c1-only{display:block;animation:fade .4s ease both}
+
+  section{margin-bottom:56px;scroll-margin-top:20px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:22px;border-bottom:1px solid var(--rule);padding-bottom:12px;flex-wrap:wrap}
+  .sec-num{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--rust)}
+  .sec-title{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(26px,4vw,36px);letter-spacing:-.01em;flex:1;min-width:200px}
+  .badge-time{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;padding:5px 10px;white-space:nowrap}
+  p{margin-bottom:14px}.lead{font-size:18px}strong{font-weight:600}em{font-style:italic}
+
+  .model{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:26px 28px;margin:22px 0}
+  .model .kicker{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .model .big{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(19px,3vw,25px);line-height:1.4;color:var(--ink)}
+  .model .big .r{color:var(--rust)} .model .big .t{color:var(--teal)}
+
+  /* the flip demo — signature device */
+  .flip{margin:24px 0;border:1px solid var(--rule);border-radius:2px;overflow:hidden}
+  .flip-row{display:grid;grid-template-columns:90px 1fr;align-items:center}
+  .flip-row+.flip-row{border-top:1px solid var(--rule)}
+  .flip-tag{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:18px 16px;height:100%;display:flex;align-items:center}
+  .flip-tag.act{background:var(--teal-wash);color:var(--teal)}
+  .flip-tag.pas{background:var(--rust-wash);color:var(--rust)}
+  .flip-sent{padding:18px 22px;font-size:16px}
+  .flip-sent .doer{color:var(--teal);font-weight:600}
+  .flip-sent .done{color:var(--rust);font-weight:600}
+  .flip-sent .bepp{border-bottom:2px solid var(--rust)}
+
+  table.rules{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+  table.rules th,table.rules td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+  table.rules th{font-family:'Lora',serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  table.rules td:first-child{font-family:'Lora',serif;font-weight:600;color:var(--ink-soft);white-space:nowrap}
+  table.rules .act{color:var(--teal);font-style:italic}
+  table.rules .pas{color:var(--rust);font-style:italic}
+  table.rules tr:last-child td{border-bottom:none}
+
+  .why{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+  .why .item{border:1px solid var(--rule);border-left:3px solid var(--teal);border-radius:2px;padding:16px 18px;background:var(--paper-deep)}
+  .why .item h4{font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--teal);margin-bottom:4px}
+  .why .item p{font-size:13.5px;margin-bottom:0;color:var(--ink-soft)}
+  .why .item em{color:var(--ink)}
+
+  .traps{border:1px solid var(--rust);border-radius:2px;background:var(--rust-wash);padding:22px 26px;margin:24px 0}
+  .traps .kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);font-weight:600;margin-bottom:14px}
+  .trap-line{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;padding:10px 0;border-top:1px dashed rgba(168,50,50,.3);font-size:14.5px}
+  .trap-line:first-of-type{border-top:none}
+  .trap-line .no{color:var(--rust);font-style:italic;text-decoration:line-through;text-decoration-color:rgba(168,50,50,.4)}
+  .trap-line .arr{color:var(--ink-soft)} .trap-line .yes{color:var(--teal);font-style:italic}
+  .trap-fr{font-size:11px;color:var(--ink-soft);font-style:normal;margin-top:2px;text-decoration:none;display:block}
+
+  .exc{margin:18px 0}
+  .exc li{list-style:none;padding:12px 0 12px 26px;border-bottom:1px solid rgba(201,184,150,.5);position:relative;font-size:14.5px}
+  .exc li::before{content:"✦";position:absolute;left:0;color:var(--rule)}
+  .exc li:last-child{border-bottom:none}.exc b{font-weight:600}
+  .ex-ok{color:var(--teal)}.ex-no{color:var(--rust);text-decoration:line-through;text-decoration-color:rgba(168,50,50,.4)}
+
+  .sub{font-family:'Fraunces',serif;font-style:italic;font-size:20px;margin:30px 0 6px;color:var(--ink)}
+  .sub .tag{font-family:'Lora',serif;font-style:normal;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;padding:3px 8px;margin-left:10px;vertical-align:middle}
+  .instr{font-size:14px;color:var(--ink-soft);font-style:italic;margin-bottom:16px}
+
+  .q{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:18px 20px;margin-bottom:14px}
+  .q-text{font-size:15.5px;margin-bottom:12px}
+  .q-text .blank{color:var(--rust);font-weight:600;letter-spacing:.06em}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{font-family:'Lora',serif;font-size:14px;padding:8px 16px;background:var(--paper);border:1px solid var(--rule);border-radius:2px;color:var(--ink);cursor:pointer;transition:all .15s}
+  .opt:hover:not(.done){border-color:var(--ink);transform:translateY(-1px)}
+  .opt.correct{background:var(--teal);color:var(--paper);border-color:var(--teal)}
+  .opt.wrong{background:var(--rust);color:var(--paper);border-color:var(--rust)}
+  .opt.reveal-correct{border-color:var(--teal);color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal)}
+  .q-fb{margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--ink-soft);display:none;padding-top:11px;border-top:1px dashed var(--rule)}
+  .q-fb.show{display:block;animation:fade .3s ease both}.q-fb b{color:var(--ink)}
+
+  .scorebar{position:sticky;bottom:14px;display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);padding:9px 18px;border-radius:20px;font-size:13px;letter-spacing:.05em;margin-top:8px;box-shadow:0 8px 24px var(--shadow)}
+  .scorebar b{font-family:'Fraunces',serif;font-style:italic;font-size:16px}
+
+  .reveal-btn,.key-toggle{font-family:'Lora',serif;font-size:13px;letter-spacing:.04em;background:transparent;border:1px solid var(--rule);border-radius:2px;padding:10px 18px;color:var(--ink);cursor:pointer;transition:all .18s}
+  .reveal-btn:hover,.key-toggle:hover{border-color:var(--ink);background:var(--paper-deep)}
+  .reveal-body{display:none;margin-top:14px;padding:18px 20px;background:var(--teal-wash);border-left:3px solid var(--teal);border-radius:2px;font-size:14.5px;line-height:1.6}
+  .reveal-body.show{display:block;animation:fade .3s ease both}
+
+  .feynman{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:24px 26px;margin:16px 0}
+  .feynman .task{font-size:15px;margin-bottom:8px}.feynman .task b{color:var(--rust)}
+  .feynman textarea{width:100%;min-height:90px;margin:12px 0;padding:12px 14px;background:var(--paper);border:1px solid var(--rule);border-radius:2px;font-family:'Lora',serif;font-size:14.5px;color:var(--ink);resize:vertical;line-height:1.5}
+  .feynman textarea:focus{outline:none;border-color:var(--ink)}
+  .rubric{font-size:13px;color:var(--ink-soft);margin-top:10px}.rubric li{margin-left:20px;margin-bottom:4px}
+
+  .answer-key{margin-top:34px;border-top:1px solid var(--rule);padding-top:22px}
+  .key-toggle .badge{background:var(--rust);color:var(--paper);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 7px;border-radius:2px;margin-left:10px;vertical-align:middle}
+  .key-body{display:none;margin-top:16px;padding:20px 22px;background:var(--paper-deep);border:1px dashed var(--rust);border-radius:2px;font-size:13.5px;line-height:1.65}
+  .key-body.show{display:block}
+  .key-body h5{font-family:'Fraunces',serif;font-style:italic;font-size:16px;margin:14px 0 6px;color:var(--rust)}
+  .key-body h5:first-child{margin-top:0}.key-body ol{margin-left:22px}.key-body li{margin-bottom:5px}
+
+  footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--rule);text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-soft)}
+  footer .orn{color:var(--rule);margin:0 10px}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+  @media (max-width:640px){
+    .container{padding:40px 18px 60px}
+    .why{grid-template-columns:1fr}
+    .flip-row{grid-template-columns:1fr}.flip-tag{padding:10px 16px}
+    .trap-line{grid-template-columns:1fr;gap:3px}.trap-line .arr{display:none}
+    .toolbar{justify-content:flex-start}
+    table.rules,table.rules tbody,table.rules tr,table.rules td{display:block;width:100%}
+    table.rules thead{display:none}
+    table.rules td{border-bottom:none;padding:3px 0}
+    table.rules tr{border-bottom:1px solid var(--rule);padding:12px 0}
+    table.rules td:first-child{color:var(--ink);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+  }
+  @media print{body{background:#fff}.toolbar,.scorebar,footer{display:none}.c1-only{display:block!important}.q-fb,.reveal-body,.key-body{display:block!important}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">A voice clinic · B2 · recognise it, then choose it</div>
+    <h1><span class="a">Active</span> or <span class="b">Passive</span></h1>
+    <div class="subtitle">Voice doesn’t change what happened — it changes <em>who stands in the spotlight</em>. Learn to hear the switch, then use it on purpose.</div>
+  </header>
+
+  <div class="toolbar">
+    <label class="c1-switch" for="c1"><span class="lab">C1 stretch</span>
+      <span class="track"><span class="knob"></span></span>
+      <input type="checkbox" id="c1" hidden></label>
+  </div>
+
+  <!-- 1 · HOOK -->
+  <section id="hook">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">The native instinct</h2><span class="badge-time">≈ 5 min</span></div>
+
+    <p class="lead">Same event, two camera angles. Watch what moves to the front:</p>
+
+    <div class="flip">
+      <div class="flip-row">
+        <div class="flip-tag act">Active</div>
+        <div class="flip-sent"><span class="doer">The engineer</span> fixed the bug.</div>
+      </div>
+      <div class="flip-row">
+        <div class="flip-tag pas">Passive</div>
+        <div class="flip-sent"><span class="done">The bug</span> <span class="bepp">was fixed</span> (by the engineer).</div>
+      </div>
+    </div>
+
+    <p>Nothing about the event changed — the engineer still fixed the bug. What changed is <strong>who leads the sentence</strong>. In the <span style="color:var(--teal)"><b>active</b></span>, the <em>doer</em> goes first. In the <span style="color:var(--rust)"><b>passive</b></span>, the <em>thing done to</em> goes first, and the doer either follows with <em>by…</em> or vanishes completely.</p>
+
+    <div class="model">
+      <div class="kicker">The recognition fingerprint</div>
+      <div class="big">Every passive carries the same DNA: a form of <span class="r">be</span> + a <span class="r">past participle</span>. <span class="t">was fixed · is being built · has been sent · must be signed.</span></div>
+    </div>
+
+    <p><strong>The two-second test:</strong> find the main verb, then ask — <em>is the subject doing it, or having it done to them?</em> If you can naturally add “<em>…by someone</em>” to the end, you’re looking at a passive.</p>
+
+    <div class="traps" style="margin-top:26px">
+      <div class="kicker">Why French speakers under-use it</div>
+      <p style="font-size:14.5px;margin-bottom:0">French usually dodges the passive. It reaches for <em>on</em> — “<em>on dit que…</em>” → <strong class="ex-ok">it is said that…</strong> / <strong class="ex-ok">people say…</strong> — or a reflexive — “<em>ça se vend bien</em>” → <strong class="ex-ok">it sells well</strong>. So francophones often keep everything active where careful English would go passive, and sometimes build the passive wrongly (“<span class="ex-no">on says</span>”). English also has a form French can’t mirror cleanly: the <strong>get-passive</strong> — “<em>I got promoted</em>.”</p>
+    </div>
+  </section>
+
+  <!-- 2 · RULE -->
+  <section id="rule">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Rule, structure &amp; the edges</h2><span class="badge-time">≈ 9 min</span></div>
+
+    <p>The recipe never changes: <strong>subject + <span style="color:var(--rust)">be</span> (in the right tense) + <span style="color:var(--rust)">past participle</span> (+ by + doer)</strong>. Only the form of <em>be</em> moves with the tense.</p>
+
+    <table class="rules">
+      <thead><tr><th>Tense</th><th>Active</th><th>Passive (be + past participle)</th></tr></thead>
+      <tbody>
+        <tr><td>Present simple</td><td class="act">They clean the office.</td><td class="pas">The office <b>is cleaned</b>.</td></tr>
+        <tr><td>Present continuous</td><td class="act">They are cleaning it.</td><td class="pas">It <b>is being cleaned</b>.</td></tr>
+        <tr><td>Past simple</td><td class="act">They cleaned it.</td><td class="pas">It <b>was cleaned</b>.</td></tr>
+        <tr><td>Present perfect</td><td class="act">They have cleaned it.</td><td class="pas">It <b>has been cleaned</b>.</td></tr>
+        <tr><td>Past perfect</td><td class="act">They had cleaned it.</td><td class="pas">It <b>had been cleaned</b>.</td></tr>
+        <tr><td>Future / modal</td><td class="act">They will / must clean it.</td><td class="pas">It <b>will be / must be cleaned</b>.</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>The gate that stops most errors:</strong> only <em>transitive</em> verbs — ones that take an object — can go passive. “She <em>arrived</em>” has no object, so there is <b>no</b> passive of it (<span class="ex-no">it was arrived</span>). If nothing is being done <em>to</em> something, there’s no passive to build.</p>
+
+    <p><strong>Why a native reaches for the passive</strong> — recognition matters because you’ll want to choose it on purpose:</p>
+    <div class="why">
+      <div class="item"><h4>The doer is unknown or irrelevant</h4><p><em>My bike was stolen.</em> (We don’t know who.)</p></div>
+      <div class="item"><h4>The receiver is the real focus</h4><p><em>The bridge was built in 1890.</em> (The bridge is the point.)</p></div>
+      <div class="item"><h4>Formal, scientific, procedural tone</h4><p><em>The sample was heated to 200°C.</em></p></div>
+      <div class="item"><h4>Tact — no one gets named</h4><p><em>Mistakes were made.</em> (Blame quietly disappears.)</p></div>
+    </div>
+
+    <p style="margin-top:6px">Active is the default and usually the stronger choice. The skill is <em>spotting</em> the passive so you can decide — not sliding into it by accident, and not avoiding it where English expects it.</p>
+
+    <div class="traps">
+      <div class="kicker">The francophone traps — say these out loud</div>
+      <div class="trap-line"><span class="no">It was happened last week.<span class="trap-fr">intransitive → no passive</span></span><span class="arr">→</span><span class="yes">It happened last week.</span></div>
+      <div class="trap-line"><span class="no">On says the meeting is cancelled.<span class="trap-fr">on dit que…</span></span><span class="arr">→</span><span class="yes">It is said (that)… / They say…</span></div>
+      <div class="trap-line"><span class="no">The report was write yesterday.<span class="trap-fr">wrong participle</span></span><span class="arr">→</span><span class="yes">The report was written yesterday.</span></div>
+      <div class="trap-line"><span class="no">This product sells itself very well.<span class="trap-fr">se vendre</span></span><span class="arr">→</span><span class="yes">This product sells very well.</span></div>
+    </div>
+
+    <p><strong>The edges &amp; exceptions:</strong></p>
+    <ul class="exc">
+      <li><b>State, not action.</b> “The door <em>was closed</em>” can be a passive action (someone closed it) <em>or</em> just a description of a state. Add a doer to tell: “The door <em>was closed by the guard</em>” is clearly passive; “The door was closed <em>and locked</em>” is describing how it looked.</li>
+      <li><b>The get-passive.</b> Informal English swaps <em>be</em> for <em>get</em>, often for sudden or unwelcome events: “He <em>got fired</em>,” “She <em>got hurt</em>.” Recognisable, but keep it for speech, not reports.</li>
+      <li><b>Verbs that resist the passive.</b> Some transitive verbs of state won’t passivise: <em>have, resemble, lack, cost, suit, weigh</em>. “The car <em>cost</em> €20,000” has no passive (<span class="ex-no">€20,000 was cost</span>).</li>
+    </ul>
+
+    <div class="model c1-only" style="margin-top:26px">
+      <div class="kicker" style="color:var(--teal)">C1 stretch · the passives that hide</div>
+      <div class="big" style="font-size:20px">Spotting <em>was fixed</em> is B2. Spotting the passives in disguise is C1.</div>
+    </div>
+    <div class="c1-only">
+      <ul class="exc">
+        <li><b>Middle voice</b> — active in form, passive in meaning: “This book <em>reads</em> easily,” “The paint <em>dries</em> fast,” “The car <em>won’t start</em>.” No <em>be + participle</em>, yet the subject isn’t really doing anything.</li>
+        <li><b>Modal-perfect passives</b> — three layers deep: “The email <em>should have been sent</em> yesterday,” “It <em>could have been avoided</em>.” Watch the stack: modal + have + been + participle.</li>
+        <li><b>Reporting passives</b> — the formal way to distance a claim: “He <em>is believed to have left</em> the country,” “It <em>is thought that</em> talks will resume.”</li>
+        <li><b>Causative <em>have / get something done</em></b> — you arrange it, someone else acts: “I <em>had my hair cut</em>,” “We <em>got the roof repaired</em>.” Not a true passive, but easily confused with one — the subject causes the action rather than receiving it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 · EXERCISES -->
+  <section id="exercises">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Prove you own it</h2><span class="badge-time">≈ 15 min</span></div>
+    <p class="instr">Four rounds, rising in difficulty — recognise, transform, judge, then <em>teach it back</em>.</p>
+
+    <!-- 3a spot it -->
+    <div class="sub">Spot the voice <span class="tag">recognise</span></div>
+    <p class="instr">Find the verb, run the “…by someone?” test, then tap active or passive.</p>
+
+    <div class="q" data-answer="passive">
+      <div class="q-text">“The results <span class="blank">will be announced</span> on Monday.”</div>
+      <div class="opts">
+        <button class="opt" data-val="active" data-fb="“will be announced” = <b>be + past participle</b>, and you can add “…by the committee.” That’s <b>passive</b>.">Active</button>
+        <button class="opt" data-val="passive" data-fb="Right — <b>be + past participle</b> (will be announced), doer hidden, “…by someone” fits. Passive.">Passive</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="active">
+      <div class="q-text">“The plane <span class="blank">landed</span> ahead of schedule.”</div>
+      <div class="opts">
+        <button class="opt" data-val="active" data-fb="Right — “land” is intransitive; the plane does the landing itself. No <em>be + participle</em>, no “by someone.” Active.">Active</button>
+        <button class="opt" data-val="passive" data-fb="Careful — there’s no <em>be + past participle</em> and you can’t add “…by someone.” The plane landed itself → <b>active</b>.">Passive</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="passive">
+      <div class="q-text">“Your application <span class="blank">is being reviewed</span> right now.”</div>
+      <div class="opts">
+        <button class="opt" data-val="active" data-fb="“is being reviewed” = be + being + participle. The application receives the action → <b>passive</b> (present continuous).">Active</button>
+        <button class="opt" data-val="passive" data-fb="Right — present continuous passive: <b>is being reviewed</b>. The doer (a team) is hidden.">Passive</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="state">
+      <div class="q-text">“When I got home, the lights <span class="blank">were switched off</span>.”</div>
+      <div class="opts">
+        <button class="opt" data-val="action" data-fb="It could be — but with no doer and “when I got home,” the natural read is a <em>state</em> (that’s how they were), not the action of switching.">passive action (someone switched them)</button>
+        <button class="opt" data-val="state" data-fb="Right — with no doer and a description of how things were, this reads as a <b>state</b>. Add “…by my flatmate” and it flips to a passive action.">a described state (that’s how they were)</button>
+      </div><div class="q-fb"></div>
+    </div>
+
+    <!-- 3b drills -->
+    <div class="sub">Transform &amp; identify <span class="tag">10 items</span></div>
+    <p class="instr">Some ask you to pick the correct passive form; some ask you to name the voice. Instant feedback; watch your score.</p>
+
+    <div class="q" data-answer="b">
+      <div class="q-text">Make it passive: “Someone stole my wallet.” →</div>
+      <div class="opts">
+        <button class="opt" data-val="a" data-fb="“was stole” uses the wrong form — you need the past participle <em>stolen</em>.">My wallet was stole.</button>
+        <button class="opt" data-val="b" data-fb="Right — past simple passive: was + <b>stolen</b> (participle). The doer “someone” is dropped.">My wallet was stolen.</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="b">
+      <div class="q-text">Make it passive: “They are building a new terminal.” →</div>
+      <div class="opts">
+        <button class="opt" data-val="a" data-fb="Missing “being” — present continuous passive needs is + <b>being</b> + built.">A new terminal is built.</button>
+        <button class="opt" data-val="b" data-fb="Right — present continuous passive: is <b>being</b> built.">A new terminal is being built.</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="active">
+      <div class="q-text">Name the voice: “Prices rose sharply last quarter.”</div>
+      <div class="opts">
+        <button class="opt" data-val="passive" data-fb="No <em>be + participle</em>; “rise” is intransitive — prices did it themselves → <b>active</b>.">Passive</button>
+        <button class="opt" data-val="active" data-fb="Right — intransitive verb, no passive possible. Active.">Active</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="b">
+      <div class="q-text">Make it passive: “They have cancelled the flight.” →</div>
+      <div class="opts">
+        <button class="opt" data-val="a" data-fb="Present perfect passive needs <b>has been</b> + participle, not just “is.”">The flight is cancelled by them.</button>
+        <button class="opt" data-val="b" data-fb="Right — present perfect passive: has <b>been</b> cancelled.">The flight has been cancelled.</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="passive">
+      <div class="q-text">Name the voice: “The contract must be signed by both parties.”</div>
+      <div class="opts">
+        <button class="opt" data-val="active" data-fb="“must be signed” = modal + be + participle, with “by both parties.” Passive.">Active</button>
+        <button class="opt" data-val="passive" data-fb="Right — modal passive: must <b>be signed</b>, doer named with <em>by</em>.">Passive</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="a">
+      <div class="q-text">Which is correct English?</div>
+      <div class="opts">
+        <button class="opt" data-val="a" data-fb="Right — “It is said that…” is the English for <em>on dit que</em>.">It is said that the deal is off.</button>
+        <button class="opt" data-val="b" data-fb="“On says” copies French <em>on</em> directly — English uses a passive or “people say.”">On says the deal is off.</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="b">
+      <div class="q-text">Which sentence has <b>no</b> passive (the verb can’t go passive)?</div>
+      <div class="opts">
+        <button class="opt" data-val="a" data-fb="“clean” is transitive → “The room was cleaned” is a fine passive.">The cleaner cleans the room.</button>
+        <button class="opt" data-val="b" data-fb="Right — “happen” is intransitive; there’s no object, so no passive exists.">The accident happened at noon.</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="passive">
+      <div class="q-text">Name the voice: “This bridge was designed by a Portuguese firm.”</div>
+      <div class="opts">
+        <button class="opt" data-val="active" data-fb="“was designed by…” — the classic passive shape with a named doer.">Active</button>
+        <button class="opt" data-val="passive" data-fb="Right — was + <b>designed</b> + by-agent. Passive, focus on the bridge.">Passive</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="b">
+      <div class="q-text">Make it passive (past perfect): “The team had tested the software.” →</div>
+      <div class="opts">
+        <button class="opt" data-val="a" data-fb="Past perfect passive needs had <b>been</b> + participle.">The software had tested.</button>
+        <button class="opt" data-val="b" data-fb="Right — had <b>been</b> tested.">The software had been tested.</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="active">
+      <div class="q-text">Name the voice: “She got promoted after two years.”</div>
+      <div class="opts">
+        <button class="opt" data-val="active" data-fb="Tricky — the <b>get-passive</b> keeps active <em>form</em> in feel, but grammatically it IS passive in meaning. For B2 recognition, treat “got promoted” as a passive.">Active</button>
+        <button class="opt" data-val="passive" data-fb="Right — the <b>get-passive</b>: <em>got</em> + participle = passive meaning (she received the promotion), just more informal than “was promoted.”">Passive (get-passive)</button>
+      </div><div class="q-fb"></div>
+    </div>
+
+    <div class="scorebar">Score <b id="score">0</b> / <span id="total">0</span></div>
+
+    <!-- 3c practice -->
+    <div class="sub">Judge &amp; repair <span class="tag">produce</span></div>
+    <p class="instr">Now the harder skill: is the passive <em>right</em> here, and is it <em>built</em> right? Fix each, then reveal.</p>
+
+    <div class="feynman"><div class="task">1 · <b>“The new policy was decided last month.”</b> — Is this a good use of the passive? Why?</div>
+      <button class="reveal-btn">Show the answer</button>
+      <div class="reveal-body"><strong class="ex-ok">Yes — a strong, natural passive.</strong> Who decided it isn’t the point; the policy is. Naming a doer (“management decided the policy”) would only add clutter. This is exactly what the passive is for: keeping the focus on the receiver.</div></div>
+    <div class="feynman"><div class="task">2 · Fix the form: <b>“Three languages are speak in this office.”</b></div>
+      <button class="reveal-btn">Show the fix</button>
+      <div class="reveal-body"><strong class="ex-ok">“Three languages are spoken in this office.”</strong><br>The participle of <em>speak</em> is <em>spoken</em>, not <em>speak</em>. The recipe is be + <b>past participle</b> — always the third form.</div></div>
+    <div class="feynman"><div class="task">3 · Rewrite the French habit: <b>“On has informed the staff about the change.”</b></div>
+      <button class="reveal-btn">Show a model</button>
+      <div class="reveal-body"><strong class="ex-ok">“The staff have been informed about the change.”</strong><br><em>On</em> doesn’t survive into English. A hidden doer + focus on the receiver → present perfect passive: have <b>been</b> informed.</div></div>
+    <div class="feynman c1-only"><div class="task">4 · <span class="tag" style="margin-left:0">C1</span> Spot the disguised passive and explain it: <b>“The report should have been circulated before the vote.”</b></div>
+      <button class="reveal-btn">Show the answer</button>
+      <div class="reveal-body"><strong class="ex-ok">A modal-perfect passive</strong> stacked four deep: <em>should</em> (modal) + <em>have</em> + <em>been</em> + <em>circulated</em> (participle). It says the circulating didn’t happen but ought to have — regret + hidden doer in one move.</div></div>
+
+    <!-- 3d feynman -->
+    <div class="sub">Teach it back <span class="tag">the Feynman test</span></div>
+    <p class="instr">Explain it as if to a beginner, then check yourself. Teaching it is the proof.</p>
+
+    <div class="feynman"><div class="task"><b>In your own words:</b> what is the difference between active and passive voice, and what is the one clue that tells you a sentence is passive?</div>
+      <textarea placeholder="Active vs passive is about…   The clue that it’s passive is…"></textarea>
+      <button class="reveal-btn">Compare with a model</button>
+      <div class="reveal-body">
+        <p style="margin-bottom:8px"><em>“Active and passive describe the same event — the difference is who leads the sentence. Active puts the <b>doer</b> first (‘The team built it’); passive puts the <b>thing done to</b> first and pushes the doer away or drops it (‘It was built’).”</em></p>
+        <p style="margin-bottom:0"><em>“The clue is the fingerprint: a form of <b>be + a past participle</b> — and you can usually add ‘…by someone’ to the end.”</em></p>
+        <div class="rubric"><strong>Did you capture:</strong><ul>
+          <li>same event, different focus (not different meaning)?</li>
+          <li>passive = the receiver leads, doer hidden or after <em>by</em>?</li>
+          <li>the clue: <b>be + past participle</b> (+ optional “by someone”)?</li></ul></div>
+      </div></div>
+
+    <div class="feynman"><div class="task"><b>Make the choice explicit:</b> write one sentence where the passive is the <em>better</em> choice than the active — then say in a few words <em>why</em>.</div>
+      <textarea placeholder="Passive sentence: …   Why the passive wins here: …"></textarea>
+      <button class="reveal-btn">Self-check points</button>
+      <div class="reveal-body"><div class="rubric" style="margin-top:0"><strong>A good answer shows one of these reasons:</strong><ul>
+        <li>the doer is unknown (<em>My laptop was stolen</em>),</li>
+        <li>the doer is obvious or irrelevant (<em>The bins are emptied on Fridays</em>),</li>
+        <li>the receiver is the real focus (<em>The vaccine was developed in record time</em>),</li>
+        <li>tact / formality (<em>An error was made in the figures</em>).</li></ul>
+        And check the form is clean: <b>be + past participle</b>, correct tense.</div></div></div>
+
+    <!-- key -->
+    <div class="answer-key">
+      <button class="key-toggle">Teacher answer key <span class="badge">Don’t screen-share</span></button>
+      <div class="key-body">
+        <h5>3a · Spot the voice</h5>
+        <ol><li>Passive (future: will be announced)</li><li>Active (intransitive: landed)</li><li>Passive (present continuous: is being reviewed)</li><li>State — reads as description; flips to passive action only with a stated doer</li></ol>
+        <h5>3b · Transform &amp; identify</h5>
+        <ol><li>My wallet <b>was stolen</b>.</li><li>A new terminal <b>is being built</b>.</li><li>Active</li><li>The flight <b>has been cancelled</b>.</li><li>Passive (modal)</li><li>“It is said that…”</li><li>“The accident happened” — intransitive, no passive</li><li>Passive (with by-agent)</li><li>The software <b>had been tested</b>.</li><li>Passive (get-passive)</li></ol>
+        <h5>3c · Judge &amp; repair</h5>
+        <ol><li>Good passive — focus on the policy, doer irrelevant.</li><li>Three languages are <b>spoken</b>.</li><li>The staff <b>have been informed</b> about the change.</li><li>(C1) Modal-perfect passive: should + have + been + circulated.</li></ol>
+        <h5>Teaching notes</h5>
+        <p>Two failure modes to watch, and they’re opposite. (1) <b>Over-avoidance:</b> francophones keep everything active because French does; push them to use the passive in formal writing where English expects it (procedures, reports, news). (2) <b>Mis-formation:</b> the participle collapses to the base form (“was write / are speak”). Drill the third column of irregular verbs as a fixed reflex. The intransitive gate (“it was happened / it was arrived”) is worth a quick standalone check — if a verb can’t take an object, it can’t go passive, full stop.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Built one lesson at a time. <span class="orn">·</span> Active &amp; Passive Voice <span class="orn">·</span> B2 with C1 stretch</footer>
+</div>
+
+<script>
+  document.getElementById('c1').addEventListener('change',function(){document.body.classList.toggle('show-c1',this.checked);});
+
+  let score=0, answered=new Set();
+  const scoreEl=document.getElementById('score'), totalEl=document.getElementById('total');
+  const quizQs=document.querySelectorAll('#exercises .q');
+  if(totalEl) totalEl.textContent=quizQs.length;
+
+  document.querySelectorAll('.q').forEach(q=>{
+    const ans=q.dataset.answer, fb=q.querySelector('.q-fb');
+    q.querySelectorAll('.opt').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(q.classList.contains('locked')) return;
+        q.classList.add('locked');
+        const correct=btn.dataset.val===ans;
+        q.querySelectorAll('.opt').forEach(o=>{o.classList.add('done');if(o.dataset.val===ans)o.classList.add(correct?'correct':'reveal-correct');});
+        if(!correct) btn.classList.add('wrong');
+        if(fb){fb.innerHTML=btn.dataset.fb||'';fb.classList.add('show');}
+        if(correct && !answered.has(q)){answered.add(q);score++;if(scoreEl)scoreEl.textContent=score;}
+      });
+    });
+  });
+
+  document.querySelectorAll('.reveal-btn').forEach(b=>{
+    b.dataset.orig=b.textContent;
+    b.addEventListener('click',()=>{const body=b.nextElementSibling;const open=body.classList.toggle('show');b.textContent=open?'Hide':b.dataset.orig;});
+  });
+
+  document.querySelector('.key-toggle').addEventListener('click',function(){this.nextElementSibling.classList.toggle('show');});
+</script>
+</body>
+</html>

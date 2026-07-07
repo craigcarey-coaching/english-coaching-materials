@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For · Since · During · Over · Ago · By — a time clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4ede0; --paper-deep:#ebe1cf; --ink:#1d2438; --ink-soft:#5a607a;
+    --rust:#a83232; --teal:#2d6a4f; --rule:#c9b896; --shadow:rgba(29,36,56,.08);
+    --rust-wash:rgba(168,50,50,.07); --teal-wash:rgba(45,106,79,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Lora',Georgia,serif;font-size:16px;
+    line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(ellipse at 15% 20%,rgba(168,50,50,.04) 0%,transparent 50%),
+      radial-gradient(ellipse at 85% 80%,rgba(45,106,79,.04) 0%,transparent 50%);}
+  .container{max-width:900px;margin:0 auto;padding:56px 30px 80px}
+
+  header{border-bottom:1px solid var(--rule);padding-bottom:30px;margin-bottom:14px}
+  .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-style:italic;
+     font-size:clamp(38px,7vw,72px);line-height:1;letter-spacing:-.025em;font-variation-settings:"SOFT" 80,"WONK" 1}
+  h1 .b{color:var(--teal)}
+  .subtitle{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,2vw,19px);color:var(--ink-soft);margin-top:18px;max-width:640px}
+
+  .toolbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:22px 0 46px}
+  .c1-switch{display:inline-flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+  .c1-switch .lab{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  .c1-switch .track{width:44px;height:24px;border-radius:14px;background:var(--paper-deep);border:1px solid var(--rule);position:relative;transition:background .2s}
+  .c1-switch .knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--ink-soft);transition:transform .2s,background .2s}
+  body.show-c1 .c1-switch .track{background:var(--teal)}
+  body.show-c1 .c1-switch .knob{transform:translateX(20px);background:var(--paper)}
+  .c1-only{display:none}
+  body.show-c1 .c1-only{display:block;animation:fade .4s ease both}
+
+  section{margin-bottom:56px;scroll-margin-top:20px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:22px;border-bottom:1px solid var(--rule);padding-bottom:12px;flex-wrap:wrap}
+  .sec-num{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--rust)}
+  .sec-title{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(26px,4vw,36px);letter-spacing:-.01em;flex:1;min-width:200px}
+  .badge-time{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;padding:5px 10px;white-space:nowrap}
+  p{margin-bottom:14px}.lead{font-size:18px}strong{font-weight:600}em{font-style:italic}
+
+  .model{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:26px 28px;margin:22px 0}
+  .model .kicker{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .model .big{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(19px,3vw,25px);line-height:1.4;color:var(--ink)}
+  .model .big .r{color:var(--rust)} .model .big .t{color:var(--teal)}
+
+  /* the six-question grid — the signature device */
+  .sixq{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0}
+  .qcard{border:1px solid var(--rule);border-radius:2px;padding:18px 20px;background:var(--paper-deep);border-top:3px solid var(--teal)}
+  .qcard .word{font-family:'Fraunces',serif;font-style:italic;font-size:24px;color:var(--teal);margin-bottom:2px}
+  .qcard .ask{font-size:12px;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;margin-bottom:10px}
+  .qcard .eg{font-size:14px;font-style:italic;color:var(--ink)}
+  .qcard .fr{font-size:11px;color:var(--ink-soft);margin-top:8px}
+
+  table.rules{width:100%;border-collapse:collapse;margin:22px 0;font-size:14px}
+  table.rules th,table.rules td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+  table.rules th{font-family:'Lora',serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  table.rules td:first-child{font-family:'Fraunces',serif;font-style:italic;font-size:17px;color:var(--teal);white-space:nowrap}
+  table.rules .eg{font-style:italic;color:var(--ink)}
+  table.rules tr:last-child td{border-bottom:none}
+
+  .traps{border:1px solid var(--rust);border-radius:2px;background:var(--rust-wash);padding:22px 26px;margin:24px 0}
+  .traps .kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);font-weight:600;margin-bottom:14px}
+  .trap-line{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;padding:10px 0;border-top:1px dashed rgba(168,50,50,.3);font-size:14.5px}
+  .trap-line:first-of-type{border-top:none}
+  .trap-line .no{color:var(--rust);font-style:italic;text-decoration:line-through;text-decoration-color:rgba(168,50,50,.4)}
+  .trap-line .arr{color:var(--ink-soft)} .trap-line .yes{color:var(--teal);font-style:italic}
+  .trap-fr{font-size:11px;color:var(--ink-soft);font-style:normal;margin-top:2px;text-decoration:none;display:block}
+
+  .exc{margin:18px 0}
+  .exc li{list-style:none;padding:12px 0 12px 26px;border-bottom:1px solid rgba(201,184,150,.5);position:relative;font-size:14.5px}
+  .exc li::before{content:"✦";position:absolute;left:0;color:var(--rule)}
+  .exc li:last-child{border-bottom:none}
+  .exc b{font-weight:600}
+  .ex-ok{color:var(--teal)}.ex-no{color:var(--rust);text-decoration:line-through;text-decoration-color:rgba(168,50,50,.4)}
+
+  .sub{font-family:'Fraunces',serif;font-style:italic;font-size:20px;margin:30px 0 6px;color:var(--ink)}
+  .sub .tag{font-family:'Lora',serif;font-style:normal;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;padding:3px 8px;margin-left:10px;vertical-align:middle}
+  .instr{font-size:14px;color:var(--ink-soft);font-style:italic;margin-bottom:16px}
+
+  .q{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:18px 20px;margin-bottom:14px}
+  .q-text{font-size:15.5px;margin-bottom:12px}
+  .q-text .blank{color:var(--rust);font-weight:600;letter-spacing:.06em}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{font-family:'Lora',serif;font-size:14px;padding:8px 16px;background:var(--paper);border:1px solid var(--rule);border-radius:2px;color:var(--ink);cursor:pointer;transition:all .15s}
+  .opt:hover:not(.done){border-color:var(--ink);transform:translateY(-1px)}
+  .opt.correct{background:var(--teal);color:var(--paper);border-color:var(--teal)}
+  .opt.wrong{background:var(--rust);color:var(--paper);border-color:var(--rust)}
+  .opt.reveal-correct{border-color:var(--teal);color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal)}
+  .q-fb{margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--ink-soft);display:none;padding-top:11px;border-top:1px dashed var(--rule)}
+  .q-fb.show{display:block;animation:fade .3s ease both}.q-fb b{color:var(--ink)}
+
+  .scorebar{position:sticky;bottom:14px;display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);padding:9px 18px;border-radius:20px;font-size:13px;letter-spacing:.05em;margin-top:8px;box-shadow:0 8px 24px var(--shadow)}
+  .scorebar b{font-family:'Fraunces',serif;font-style:italic;font-size:16px}
+
+  .reveal-btn,.key-toggle{font-family:'Lora',serif;font-size:13px;letter-spacing:.04em;background:transparent;border:1px solid var(--rule);border-radius:2px;padding:10px 18px;color:var(--ink);cursor:pointer;transition:all .18s}
+  .reveal-btn:hover,.key-toggle:hover{border-color:var(--ink);background:var(--paper-deep)}
+  .reveal-body{display:none;margin-top:14px;padding:18px 20px;background:var(--teal-wash);border-left:3px solid var(--teal);border-radius:2px;font-size:14.5px;line-height:1.6}
+  .reveal-body.show{display:block;animation:fade .3s ease both}
+
+  .feynman{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:24px 26px;margin:16px 0}
+  .feynman .task{font-size:15px;margin-bottom:8px}.feynman .task b{color:var(--rust)}
+  .feynman textarea{width:100%;min-height:90px;margin:12px 0;padding:12px 14px;background:var(--paper);border:1px solid var(--rule);border-radius:2px;font-family:'Lora',serif;font-size:14.5px;color:var(--ink);resize:vertical;line-height:1.5}
+  .feynman textarea:focus{outline:none;border-color:var(--ink)}
+  .rubric{font-size:13px;color:var(--ink-soft);margin-top:10px}.rubric li{margin-left:20px;margin-bottom:4px}
+
+  .answer-key{margin-top:34px;border-top:1px solid var(--rule);padding-top:22px}
+  .key-toggle .badge{background:var(--rust);color:var(--paper);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 7px;border-radius:2px;margin-left:10px;vertical-align:middle}
+  .key-body{display:none;margin-top:16px;padding:20px 22px;background:var(--paper-deep);border:1px dashed var(--rust);border-radius:2px;font-size:13.5px;line-height:1.65}
+  .key-body.show{display:block}
+  .key-body h5{font-family:'Fraunces',serif;font-style:italic;font-size:16px;margin:14px 0 6px;color:var(--rust)}
+  .key-body h5:first-child{margin-top:0}.key-body ol{margin-left:22px}.key-body li{margin-bottom:5px}
+
+  footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--rule);text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-soft)}
+  footer .orn{color:var(--rule);margin:0 10px}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+  @media (max-width:640px){
+    .container{padding:40px 18px 60px}
+    .sixq{grid-template-columns:1fr}
+    .trap-line{grid-template-columns:1fr;gap:3px}.trap-line .arr{display:none}
+    .toolbar{justify-content:flex-start}
+    table.rules,table.rules tbody,table.rules tr,table.rules td{display:block;width:100%}
+    table.rules thead{display:none}
+    table.rules td{border-bottom:none;padding:4px 0}
+    table.rules tr{border-bottom:1px solid var(--rule);padding:12px 0}
+  }
+  @media print{body{background:#fff}.toolbar,.scorebar,footer{display:none}.c1-only{display:block!important}.q-fb,.reveal-body,.key-body{display:block!important}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">A time clinic · B2 · francophone traps flagged</div>
+    <h1>For · Since · During<br>Over · Ago · <span class="b">By</span></h1>
+    <div class="subtitle">Six little words that all translate as <em>depuis</em>, <em>pendant</em> or <em>il y a</em> — until English makes you choose. Learn the choice by feel.</div>
+  </header>
+
+  <div class="toolbar">
+    <label class="c1-switch" for="c1"><span class="lab">C1 stretch</span>
+      <span class="track"><span class="knob"></span></span>
+      <input type="checkbox" id="c1" hidden></label>
+  </div>
+
+  <!-- 1 · HOOK -->
+  <section id="hook">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">The native instinct</h2><span class="badge-time">≈ 5 min</span></div>
+
+    <p class="lead">A native speaker never “learns the rule” for these. They just hear <em>which question the sentence is answering</em> — and each word answers a different one.</p>
+
+    <div class="sixq">
+      <div class="qcard"><div class="word">for</div><div class="ask">How long?</div><div class="eg">for three hours · for years</div><div class="fr">a length of time</div></div>
+      <div class="qcard"><div class="word">since</div><div class="ask">Starting when?</div><div class="eg">since Monday · since I arrived</div><div class="fr">the point you count from</div></div>
+      <div class="qcard"><div class="word">during</div><div class="ask">When / inside what?</div><div class="eg">during the flight · during summer</div><div class="fr">inside a named period</div></div>
+      <div class="qcard"><div class="word">over</div><div class="ask">Across what stretch?</div><div class="eg">over the weekend · over the years</div><div class="fr">spread through a span, often with change</div></div>
+      <div class="qcard"><div class="word">ago</div><div class="ask">How far back?</div><div class="eg">two years ago · a moment ago</div><div class="fr">counts backwards from now</div></div>
+      <div class="qcard"><div class="word">by</div><div class="ask">No later than when?</div><div class="eg">by Friday · by 5 p.m.</div><div class="fr">a deadline you must not cross</div></div>
+    </div>
+
+    <div class="model">
+      <div class="kicker">Picture the shapes</div>
+      <div class="big"><span class="t">for</span> is a stick you measure. <span class="t">since</span> plants a flag and runs a line to <em>now</em>. <span class="t">during</span> sits inside a box. <span class="t">over</span> sweeps across it. <span class="t">ago</span> points backwards. <span class="t">by</span> is a fence.</div>
+    </div>
+
+    <div class="traps" style="margin-top:26px">
+      <div class="kicker">Why French speakers slip here</div>
+      <p style="font-size:14.5px;margin-bottom:8px">French collapses distinctions English keeps:</p>
+      <p style="font-size:14.5px;margin-bottom:0"><em>depuis</em> = <strong class="ex-ok">since</strong> <b>and</b> <strong class="ex-ok">for</strong> · <em>pendant</em> = <strong class="ex-ok">for</strong> <b>and</b> <strong class="ex-ok">during</strong> · <em>il y a</em> = <strong class="ex-ok">ago</strong> · <em>d’ici</em> = <strong class="ex-ok">by</strong>. So “depuis trois heures” pulls you toward <span class="ex-no">since three hours</span> when English wants <em>for</em>. Half the battle is just deciding <em>which half of depuis</em> you mean.</p>
+    </div>
+  </section>
+
+  <!-- 2 · RULE -->
+  <section id="rule">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Rule, structure &amp; the edges</h2><span class="badge-time">≈ 9 min</span></div>
+
+    <p>Each word takes a particular kind of thing after it — and some pull a particular tense with them. Nail the pattern, not just the meaning.</p>
+
+    <table class="rules">
+      <thead><tr><th>Word</th><th>Takes</th><th>Watch for</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>for</td><td>a <b>length</b> of time</td><td>any tense</td><td class="eg">We talked for two hours.</td></tr>
+        <tr><td>since</td><td>a <b>start point</b></td><td>pulls the <b>perfect</b> tense</td><td class="eg">I’ve worked here since 2020.</td></tr>
+        <tr><td>during</td><td>a <b>named period / event</b> (a noun)</td><td>never + a length</td><td class="eg">She called during the meeting.</td></tr>
+        <tr><td>over</td><td>a <b>span</b> you cross</td><td>often signals change / repetition</td><td class="eg">Sales rose over the quarter.</td></tr>
+        <tr><td>ago</td><td>a length + <b>ago</b></td><td>pulls the <b>past simple</b></td><td class="eg">I saw her three days ago.</td></tr>
+        <tr><td>by</td><td>a <b>deadline</b> point</td><td>= at or before; ≠ <em>until</em></td><td class="eg">Send it by Friday.</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>The two splits that do most of the work:</strong></p>
+    <ul class="exc">
+      <li><b>since vs for</b> — <em>since</em> needs a <b>starting point</b> (a clock or calendar moment: <em>since 9 a.m., since Tuesday, since I moved</em>); <em>for</em> needs a <b>length</b> (<em>for 20 minutes, for a decade</em>). When <em>depuis</em> appears, ask: point or length?</li>
+      <li><b>during vs for</b> — <em>during</em> answers <em>when?</em> and takes a <b>noun</b> for a period (<em>during the war</em>); <em>for</em> answers <em>how long?</em> and takes a <b>length</b> (<em>for six years</em>). You can’t say <span class="ex-no">during six years</span>.</li>
+    </ul>
+
+    <div class="traps">
+      <div class="kicker">The five francophone traps — say these out loud</div>
+      <div class="trap-line"><span class="no">I’ve been waiting since twenty minutes.<span class="trap-fr">depuis vingt minutes</span></span><span class="arr">→</span><span class="yes">…waiting for twenty minutes.</span></div>
+      <div class="trap-line"><span class="no">We stayed during three hours.<span class="trap-fr">pendant trois heures</span></span><span class="arr">→</span><span class="yes">We stayed for three hours.</span></div>
+      <div class="trap-line"><span class="no">I have seen him two days ago.<span class="trap-fr">passé composé + il y a</span></span><span class="arr">→</span><span class="yes">I saw him two days ago.</span></div>
+      <div class="trap-line"><span class="no">I work here since 2019.<span class="trap-fr">présent + depuis</span></span><span class="arr">→</span><span class="yes">I’ve worked here since 2019.</span></div>
+      <div class="trap-line"><span class="no">I’ll finish it until Friday.<span class="trap-fr">jusqu’à ≠ d’ici</span></span><span class="arr">→</span><span class="yes">I’ll finish it by Friday.</span></div>
+    </div>
+
+    <p><strong>The edges &amp; exceptions:</strong></p>
+    <ul class="exc">
+      <li><b>during vs over</b> — both sit inside a period, but <em>over</em> stresses the <b>whole stretch</b>: “I read <em>during</em> the flight” = at some point in it; “I read <em>over</em> the flight” = across the whole of it. Change and totals love <em>over</em>.</li>
+      <li><b>for</b> can quietly disappear: “I’ve been here <em>(for)</em> three hours.” Dropping it is natural; adding <em>since</em> instead is not.</li>
+      <li><b>since = because</b> too: “<em>Since</em> you asked, I’ll tell you.” Same word, different job — nothing to do with time.</li>
+      <li><b>in</b> for a <b>future</b> length: “I’ll be back <em>in</em> an hour” (French <em>dans</em>). Not <span class="ex-no">within an hour</span> unless you mean the deadline sense.</li>
+    </ul>
+
+    <div class="model c1-only" style="margin-top:26px">
+      <div class="kicker" style="color:var(--teal)">C1 stretch · register &amp; sequencing</div>
+      <div class="big" style="font-size:20px">B2 picks the right word. C1 controls the tense sequence and the formal register.</div>
+    </div>
+    <div class="c1-only">
+      <ul class="exc">
+        <li><b>as of / as from</b> — a formal start point: “The policy applies <em>as of</em> Monday.” Cleaner than “from” in contracts and notices.</li>
+        <li><b>by the time</b> + clause forces a perfect: “<em>By the time</em> we arrived, the meeting <b>had</b> ended.” Sequence the two past events.</li>
+        <li><b>throughout / across</b> stretch <em>over</em> further: “<em>throughout</em> the crisis” (every part of it), “<em>across</em> three decades” (a measured span).</li>
+        <li><b>negative + for</b>: “I <b>haven’t</b> seen her <em>for</em> years” — the present perfect + <em>for</em> pairing that natives use to mean “and I still haven’t.”</li>
+        <li><b>fronted inversion</b>: “<em>Not since 2008 had markets fallen</em> so sharply.” A high-register way to open with the start point.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 · EXERCISES -->
+  <section id="exercises">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Prove you own it</h2><span class="badge-time">≈ 15 min</span></div>
+    <p class="instr">Four rounds, rising in difficulty. The last asks you to <em>teach the rule back</em> — the real test of mastery.</p>
+
+    <!-- 3a spot it -->
+    <div class="sub">Spot the reasoning <span class="tag">recognise</span></div>
+    <p class="instr">Don’t just pick the word — pick <em>why</em>. Tap the reason the sentence needs.</p>
+
+    <div class="q" data-answer="length">
+      <div class="q-text">“I’ve lived in Nantes <span class="blank">___</span> five years.”</div>
+      <div class="opts">
+        <button class="opt" data-val="point" data-fb="“Five years” is a <b>length</b>, not a start point, so it can’t be <em>since</em>. A length → <b>for</b>.">it’s a start point → since</button>
+        <button class="opt" data-val="length" data-fb="Right — “five years” measures <b>how long</b>, a length → <b>for</b>. (French <em>depuis</em> tempts <em>since</em> here.)">it’s a length → for</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="period">
+      <div class="q-text">“My phone rang <span class="blank">___</span> the presentation.”</div>
+      <div class="opts">
+        <button class="opt" data-val="length" data-fb="“The presentation” isn’t a length of time — it’s a named event. That’s <b>during</b>, not <em>for</em>.">it’s a length → for</button>
+        <button class="opt" data-val="period" data-fb="Right — a named event/period (a noun) that something happens inside → <b>during</b>.">it’s a named period → during</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="pastsimple">
+      <div class="q-text">“They launched the product two months <span class="blank">___</span>.”</div>
+      <div class="opts">
+        <button class="opt" data-val="pastsimple" data-fb="Right — <b>ago</b> counts back from now and pulls the <b>past simple</b> (launched, not have launched).">…ago → past simple</button>
+        <button class="opt" data-val="perfect" data-fb="<em>ago</em> never takes the present perfect. “Two months ago” fixes the event in the past → <b>past simple</b>.">…ago → present perfect</button>
+      </div><div class="q-fb"></div>
+    </div>
+
+    <!-- 3b drills -->
+    <div class="sub">Snap-decision drill <span class="tag">10 items</span></div>
+    <p class="instr">Pick the word. Instant feedback tells you the reasoning; watch your score.</p>
+
+    <div class="q" data-answer="since">
+      <div class="q-text">I haven’t seen the report <span class="blank">___</span> Tuesday.</div>
+      <div class="opts">
+        <button class="opt" data-val="for" data-fb="“Tuesday” is a start point, not a length → <b>since</b>.">for</button>
+        <button class="opt" data-val="since" data-fb="Right — a calendar start point → <b>since</b> (+ perfect: haven’t seen).">since</button>
+        <button class="opt" data-val="during" data-fb="Not a period something happens inside → it’s a start point → <b>since</b>.">during</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="for">
+      <div class="q-text">The machine ran <span class="blank">___</span> six hours without stopping.</div>
+      <div class="opts">
+        <button class="opt" data-val="since" data-fb="“Six hours” is a length, not a start point → <b>for</b>.">since</button>
+        <button class="opt" data-val="for" data-fb="Right — a measured length → <b>for</b>.">for</button>
+        <button class="opt" data-val="during" data-fb="You can’t say “during six hours” — a length needs <b>for</b>.">during</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="during">
+      <div class="q-text">Nobody spoke <span class="blank">___</span> the safety briefing.</div>
+      <div class="opts">
+        <button class="opt" data-val="for" data-fb="“The briefing” is a named event, not a length → <b>during</b>.">for</button>
+        <button class="opt" data-val="during" data-fb="Right — inside a named event → <b>during</b>.">during</button>
+        <button class="opt" data-val="over" data-fb="Possible, but the natural read here is “at some point inside it” → <b>during</b>.">over</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="ago">
+      <div class="q-text">We signed the contract three weeks <span class="blank">___</span>.</div>
+      <div class="opts">
+        <button class="opt" data-val="since" data-fb="After a length looking backwards from now, you need <b>ago</b>, not since.">since</button>
+        <button class="opt" data-val="ago" data-fb="Right — length + <b>ago</b>, and the verb is past simple (signed).">ago</button>
+        <button class="opt" data-val="before" data-fb="“Before” needs a reference point; from <em>now</em>, use <b>ago</b>.">before</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="by">
+      <div class="q-text">Please confirm your attendance <span class="blank">___</span> Thursday.</div>
+      <div class="opts">
+        <button class="opt" data-val="until" data-fb="“Until Thursday” = right up to Thursday continuously. A deadline is <b>by</b>.">until</button>
+        <button class="opt" data-val="by" data-fb="Right — a deadline (at or before that point) → <b>by</b>.">by</button>
+        <button class="opt" data-val="for" data-fb="Not a length → this is a deadline → <b>by</b>.">for</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="over">
+      <div class="q-text">The team’s output doubled <span class="blank">___</span> the past year.</div>
+      <div class="opts">
+        <button class="opt" data-val="during" data-fb="Possible, but “doubled” is a change spread across the whole span → <b>over</b> is stronger.">during</button>
+        <button class="opt" data-val="over" data-fb="Right — change spread across a whole span → <b>over</b> the past year.">over</button>
+        <button class="opt" data-val="since" data-fb="“The past year” is a span, not a single start point → <b>over</b>.">since</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="for">
+      <div class="q-text">She’s been in a meeting <span class="blank">___</span> most of the morning.</div>
+      <div class="opts">
+        <button class="opt" data-val="since" data-fb="“Most of the morning” reads as a duration, not a fixed start point → <b>for</b>.">since</button>
+        <button class="opt" data-val="for" data-fb="Right — a stretch of duration → <b>for</b> most of the morning.">for</button>
+        <button class="opt" data-val="during" data-fb="Not a single named event she’s inside → duration → <b>for</b>.">during</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="since">
+      <div class="q-text">Everything has changed <span class="blank">___</span> the new director arrived.</div>
+      <div class="opts">
+        <button class="opt" data-val="for" data-fb="“The new director arrived” is a start-point clause, not a length → <b>since</b>.">for</button>
+        <button class="opt" data-val="since" data-fb="Right — <b>since</b> + a start-point clause, with a perfect main verb (has changed).">since</button>
+        <button class="opt" data-val="during" data-fb="It marks the moment things started → <b>since</b>.">during</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="by">
+      <div class="q-text">The renovations should be finished <span class="blank">___</span> the end of March.</div>
+      <div class="opts">
+        <button class="opt" data-val="until" data-fb="Not “continuously up to March” — it’s a completion deadline → <b>by</b>.">until</button>
+        <button class="opt" data-val="by" data-fb="Right — completion at or before a point → <b>by</b> the end of March.">by</button>
+        <button class="opt" data-val="in" data-fb="“In March” loses the deadline sense; “by the end of March” is the point → <b>by</b>.">in</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="during">
+      <div class="q-text">He fell asleep twice <span class="blank">___</span> the film.</div>
+      <div class="opts">
+        <button class="opt" data-val="for" data-fb="“The film” is a named event, not a length → <b>during</b>.">for</button>
+        <button class="opt" data-val="during" data-fb="Right — at points inside a named event → <b>during</b>.">during</button>
+        <button class="opt" data-val="since" data-fb="No start point being counted from → <b>during</b>.">since</button>
+      </div><div class="q-fb"></div>
+    </div>
+
+    <div class="scorebar">Score <b id="score">0</b> / <span id="total">0</span></div>
+
+    <!-- 3c practice -->
+    <div class="sub">Repair the francophone slips <span class="tag">produce</span></div>
+    <p class="instr">One error per line, each a real French-speaker habit. Correct it, then reveal the fix and the reason.</p>
+
+    <div class="feynman"><div class="task">1 · <b>“I’m learning English since three years.”</b></div>
+      <button class="reveal-btn">Show the fix</button>
+      <div class="reveal-body"><strong class="ex-ok">“I’ve been learning English for three years.”</strong><br>“Three years” is a length → <em>for</em>; and <em>depuis</em> here needs a perfect tense (I’ve been learning), not the present.</div></div>
+    <div class="feynman"><div class="task">2 · <b>“We discussed it during two hours.”</b></div>
+      <button class="reveal-btn">Show the fix</button>
+      <div class="reveal-body"><strong class="ex-ok">“We discussed it for two hours.”</strong><br>A length can never follow <em>during</em>. <em>during</em> takes a named period; a measured length takes <em>for</em>.</div></div>
+    <div class="feynman"><div class="task">3 · <b>“I have visited Paris a month ago.”</b></div>
+      <button class="reveal-btn">Show the fix</button>
+      <div class="reveal-body"><strong class="ex-ok">“I visited Paris a month ago.”</strong><br><em>ago</em> fixes the event in the past → past simple, never the present perfect.</div></div>
+    <div class="feynman c1-only"><div class="task">4 · <span class="tag" style="margin-left:0">C1</span> Sequence the tenses: <b>“When we arrived, the train already left.”</b></div>
+      <button class="reveal-btn">Show a model</button>
+      <div class="reveal-body"><strong class="ex-ok">“By the time we arrived, the train had already left.”</strong><br><em>By the time</em> + past pulls the earlier event into the <b>past perfect</b> (had left) to show it happened first.</div></div>
+
+    <!-- 3d feynman -->
+    <div class="sub">Teach it back <span class="tag">the Feynman test</span></div>
+    <p class="instr">Explain it plainly, then check yourself. If you can teach it, you own it.</p>
+
+    <div class="feynman"><div class="task"><b>In one sentence each,</b> tell a beginner the difference between <em>for</em>, <em>since</em> and <em>during</em>.</div>
+      <textarea placeholder="for = …   since = …   during = …"></textarea>
+      <button class="reveal-btn">Compare with a model</button>
+      <div class="reveal-body">
+        <p style="margin-bottom:6px"><em>“Use <b>for</b> when you say <b>how long</b> — a length: for two hours.”</em></p>
+        <p style="margin-bottom:6px"><em>“Use <b>since</b> when you name the <b>start point</b> you count from, and pair it with a perfect tense: I’ve worked here since May.”</em></p>
+        <p style="margin-bottom:0"><em>“Use <b>during</b> when you name the <b>period or event</b> something happens inside: during the meeting.”</em></p>
+        <div class="rubric"><strong>Did you capture:</strong><ul>
+          <li>for = a length (how long)?</li>
+          <li>since = a start point (+ perfect tense)?</li>
+          <li>during = a named period, never a length?</li></ul></div>
+      </div></div>
+
+    <div class="feynman"><div class="task"><b>The <em>depuis</em> decision:</b> a French speaker says “<em>depuis</em>.” What single question do you ask yourself to choose between <em>since</em> and <em>for</em> — and give one example of each.</div>
+      <textarea placeholder="The question I ask: …   since → …   for → …"></textarea>
+      <button class="reveal-btn">Self-check</button>
+      <div class="reveal-body"><strong>The question: “Is this a point in time, or a length of time?”</strong> Point → <em>since</em> (<em>since Monday</em>). Length → <em>for</em> (<em>for three days</em>). If you can’t put a clock or calendar moment on it, it’s a length → <em>for</em>.</div></div>
+
+    <!-- key -->
+    <div class="answer-key">
+      <button class="key-toggle">Teacher answer key <span class="badge">Don’t screen-share</span></button>
+      <div class="key-body">
+        <h5>3a · Spot the reasoning</h5>
+        <ol><li>for (length)</li><li>during (named period)</li><li>ago → past simple</li></ol>
+        <h5>3b · Snap-decision drill</h5>
+        <ol><li>since</li><li>for</li><li>during</li><li>ago</li><li>by</li><li>over</li><li>for</li><li>since</li><li>by</li><li>during</li></ol>
+        <h5>3c · Repair</h5>
+        <ol><li>I’ve been learning English <b>for</b> three years.</li><li>We discussed it <b>for</b> two hours.</li><li>I <b>visited</b> Paris a month <b>ago</b>.</li><li>(C1) <b>By the time</b> we arrived, the train <b>had</b> already left.</li></ol>
+        <h5>Teaching note</h5>
+        <p>Every error on this page traces back to one of three French words: <em>depuis</em> (since/for), <em>pendant</em> (for/during), <em>il y a</em> (ago + tense). When a student slips, name the French word behind the slip before giving the English fix — it’s faster than re-teaching the whole grid. The <em>since → perfect tense</em> link is the one students under-notice: drill “I’ve worked / I’ve lived / I’ve known … since …” as a fixed frame.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>Built one lesson at a time. <span class="orn">·</span> Time prepositions <span class="orn">·</span> B2 with C1 stretch</footer>
+</div>
+
+<script>
+  document.getElementById('c1').addEventListener('change',function(){document.body.classList.toggle('show-c1',this.checked);});
+
+  let score=0, answered=new Set();
+  const scoreEl=document.getElementById('score'), totalEl=document.getElementById('total');
+  const quizQs=document.querySelectorAll('#exercises .q');
+  if(totalEl) totalEl.textContent=quizQs.length;
+
+  document.querySelectorAll('.q').forEach(q=>{
+    const ans=q.dataset.answer, fb=q.querySelector('.q-fb');
+    q.querySelectorAll('.opt').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(q.classList.contains('locked')) return;
+        q.classList.add('locked');
+        const correct=btn.dataset.val===ans;
+        q.querySelectorAll('.opt').forEach(o=>{o.classList.add('done');if(o.dataset.val===ans)o.classList.add(correct?'correct':'reveal-correct');});
+        if(!correct) btn.classList.add('wrong');
+        if(fb){fb.innerHTML=btn.dataset.fb||'';fb.classList.add('show');}
+        if(correct && !answered.has(q)){answered.add(q);score++;if(scoreEl)scoreEl.textContent=score;}
+      });
+    });
+  });
+
+  document.querySelectorAll('.reveal-btn').forEach(b=>{
+    b.dataset.orig=b.textContent;
+    b.addEventListener('click',()=>{const body=b.nextElementSibling;const open=body.classList.toggle('show');b.textContent=open?'Hide':b.dataset.orig;});
+  });
+
+  document.querySelector('.key-toggle').addEventListener('click',function(){this.nextElementSibling.classList.toggle('show');});
+</script>
+</body>
+</html>

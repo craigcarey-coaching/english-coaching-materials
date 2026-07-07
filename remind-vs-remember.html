@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remind or Remember — a working clinic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4ede0; --paper-deep:#ebe1cf; --ink:#1d2438; --ink-soft:#5a607a;
+    --rust:#a83232; --teal:#2d6a4f; --rule:#c9b896; --shadow:rgba(29,36,56,.08);
+    --rust-wash:rgba(168,50,50,.07); --teal-wash:rgba(45,106,79,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Lora',Georgia,serif; font-size:16px; line-height:1.6; min-height:100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 20%,rgba(168,50,50,.04) 0%,transparent 50%),
+      radial-gradient(ellipse at 85% 80%,rgba(45,106,79,.04) 0%,transparent 50%);
+    -webkit-font-smoothing:antialiased;
+  }
+  .container{max-width:900px;margin:0 auto;padding:56px 30px 80px}
+
+  /* ---------- header ---------- */
+  header{border-bottom:1px solid var(--rule);padding-bottom:30px;margin-bottom:14px}
+  .eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:14px}
+  h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-style:italic;
+     font-size:clamp(46px,9vw,88px);line-height:.95;letter-spacing:-.025em;
+     font-variation-settings:"SOFT" 80,"WONK" 1}
+  h1 .a{color:var(--rust)} h1 .b{color:var(--teal)}
+  .subtitle{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,2vw,19px);
+     color:var(--ink-soft);margin-top:18px;max-width:620px}
+
+  /* ---------- C1 toggle ---------- */
+  .toolbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:22px 0 46px}
+  .c1-switch{display:inline-flex;align-items:center;gap:11px;cursor:pointer;user-select:none}
+  .c1-switch .lab{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+  .c1-switch .track{width:44px;height:24px;border-radius:14px;background:var(--paper-deep);
+     border:1px solid var(--rule);position:relative;transition:background .2s}
+  .c1-switch .knob{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+     background:var(--ink-soft);transition:transform .2s,background .2s}
+  body.show-c1 .c1-switch .track{background:var(--teal)}
+  body.show-c1 .c1-switch .knob{transform:translateX(20px);background:var(--paper)}
+  .c1-only{display:none}
+  body.show-c1 .c1-only{display:block;animation:fade .4s ease both}
+
+  /* ---------- sections ---------- */
+  section{margin-bottom:56px;scroll-margin-top:20px}
+  .sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:22px;
+     border-bottom:1px solid var(--rule);padding-bottom:12px;flex-wrap:wrap}
+  .sec-num{font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--rust)}
+  .sec-title{font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:clamp(26px,4vw,36px);
+     letter-spacing:-.01em;flex:1;min-width:200px}
+  .badge-time{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);
+     border:1px solid var(--rule);border-radius:2px;padding:5px 10px;white-space:nowrap}
+  p{margin-bottom:14px}
+  .lead{font-size:18px}
+  strong{font-weight:600}
+  em{font-style:italic}
+
+  /* mental-model panel */
+  .model{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;
+     padding:26px 28px;margin:22px 0}
+  .model .kicker{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .model .big{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(20px,3vw,26px);line-height:1.35;color:var(--ink)}
+  .model .big .r{color:var(--rust)} .model .big .t{color:var(--teal)}
+
+  /* two-column split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0}
+  .col{border:1px solid var(--rule);border-radius:2px;padding:22px 24px;background:var(--paper-deep)}
+  .col.mine{border-left:3px solid var(--teal)}
+  .col.other{border-left:3px solid var(--rust)}
+  .col h4{font-family:'Fraunces',serif;font-style:italic;font-size:21px;margin-bottom:6px}
+  .col.mine h4{color:var(--teal)} .col.other h4{color:var(--rust)}
+  .col .gloss{font-size:12px;color:var(--ink-soft);font-style:italic;margin-bottom:14px}
+  .patt{font-size:14px;margin-bottom:9px;padding-left:14px;position:relative}
+  .patt::before{content:"›";position:absolute;left:0;color:var(--rule)}
+  .patt b{font-weight:600}
+  .ex-ok{color:var(--teal)} .ex-no{color:var(--rust);text-decoration:line-through;text-decoration-color:rgba(168,50,50,.4)}
+
+  /* trap box */
+  .traps{border:1px solid var(--rust);border-radius:2px;background:var(--rust-wash);padding:22px 26px;margin:24px 0}
+  .traps .kicker{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);font-weight:600;margin-bottom:14px}
+  .trap-line{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;
+     padding:10px 0;border-top:1px dashed rgba(168,50,50,.3);font-size:14.5px}
+  .trap-line:first-of-type{border-top:none}
+  .trap-line .no{color:var(--rust);font-style:italic;text-decoration:line-through;text-decoration-color:rgba(168,50,50,.4)}
+  .trap-line .arr{color:var(--ink-soft)}
+  .trap-line .yes{color:var(--teal);font-style:italic}
+  .trap-fr{font-size:11px;color:var(--ink-soft);font-style:normal;margin-top:2px}
+
+  /* exceptions list */
+  .exc{margin:18px 0}
+  .exc li{list-style:none;padding:12px 0 12px 26px;border-bottom:1px solid rgba(201,184,150,.5);position:relative;font-size:14.5px}
+  .exc li::before{content:"✦";position:absolute;left:0;color:var(--rule)}
+  .exc li:last-child{border-bottom:none}
+
+  /* ---------- exercises ---------- */
+  .drill{margin:14px 0 8px}
+  .sub{font-family:'Fraunces',serif;font-style:italic;font-size:20px;margin:30px 0 6px;color:var(--ink)}
+  .sub .tag{font-family:'Lora',serif;font-style:normal;font-size:10px;letter-spacing:.2em;
+     text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;padding:3px 8px;margin-left:10px;vertical-align:middle}
+  .instr{font-size:14px;color:var(--ink-soft);font-style:italic;margin-bottom:16px}
+
+  .q{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:18px 20px;margin-bottom:14px}
+  .q-text{font-size:15.5px;margin-bottom:12px}
+  .q-text .blank{color:var(--rust);font-weight:600;letter-spacing:.06em}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{font-family:'Lora',serif;font-size:14px;padding:8px 16px;background:var(--paper);
+     border:1px solid var(--rule);border-radius:2px;color:var(--ink);cursor:pointer;transition:all .15s}
+  .opt:hover:not(.done){border-color:var(--ink);transform:translateY(-1px)}
+  .opt.correct{background:var(--teal);color:var(--paper);border-color:var(--teal)}
+  .opt.wrong{background:var(--rust);color:var(--paper);border-color:var(--rust)}
+  .opt.reveal-correct{border-color:var(--teal);color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal)}
+  .q-fb{margin-top:12px;font-size:13.5px;line-height:1.5;color:var(--ink-soft);display:none;
+     padding-top:11px;border-top:1px dashed var(--rule)}
+  .q-fb.show{display:block;animation:fade .3s ease both}
+  .q-fb b{color:var(--ink)}
+
+  .scorebar{position:sticky;bottom:14px;display:inline-flex;align-items:center;gap:10px;
+     background:var(--ink);color:var(--paper);padding:9px 18px;border-radius:20px;font-size:13px;
+     letter-spacing:.05em;margin-top:8px;box-shadow:0 8px 24px var(--shadow)}
+  .scorebar b{font-family:'Fraunces',serif;font-style:italic;font-size:16px}
+
+  /* reveal / feynman */
+  .reveal-btn,.key-toggle{font-family:'Lora',serif;font-size:13px;letter-spacing:.04em;
+     background:transparent;border:1px solid var(--rule);border-radius:2px;padding:10px 18px;
+     color:var(--ink);cursor:pointer;transition:all .18s}
+  .reveal-btn:hover,.key-toggle:hover{border-color:var(--ink);background:var(--paper-deep)}
+  .reveal-body{display:none;margin-top:14px;padding:18px 20px;background:var(--teal-wash);
+     border-left:3px solid var(--teal);border-radius:2px;font-size:14.5px;line-height:1.6}
+  .reveal-body.show{display:block;animation:fade .3s ease both}
+
+  .feynman{background:var(--paper-deep);border:1px solid var(--rule);border-radius:2px;padding:24px 26px;margin:16px 0}
+  .feynman .task{font-size:15px;margin-bottom:8px}
+  .feynman .task b{color:var(--rust)}
+  .feynman textarea{width:100%;min-height:90px;margin:12px 0;padding:12px 14px;background:var(--paper);
+     border:1px solid var(--rule);border-radius:2px;font-family:'Lora',serif;font-size:14.5px;color:var(--ink);
+     resize:vertical;line-height:1.5}
+  .feynman textarea:focus{outline:none;border-color:var(--ink)}
+  .rubric{font-size:13px;color:var(--ink-soft);margin-top:10px}
+  .rubric li{margin-left:20px;margin-bottom:4px}
+
+  /* answer key */
+  .answer-key{margin-top:34px;border-top:1px solid var(--rule);padding-top:22px}
+  .key-toggle .badge{background:var(--rust);color:var(--paper);font-size:9px;letter-spacing:.14em;
+     text-transform:uppercase;padding:3px 7px;border-radius:2px;margin-left:10px;vertical-align:middle}
+  .key-body{display:none;margin-top:16px;padding:20px 22px;background:var(--paper-deep);
+     border:1px dashed var(--rust);border-radius:2px;font-size:13.5px;line-height:1.65}
+  .key-body.show{display:block}
+  .key-body h5{font-family:'Fraunces',serif;font-style:italic;font-size:16px;margin:14px 0 6px;color:var(--rust)}
+  .key-body h5:first-child{margin-top:0}
+  .key-body ol{margin-left:22px} .key-body li{margin-bottom:5px}
+
+  footer{margin-top:70px;padding-top:26px;border-top:1px solid var(--rule);text-align:center;
+     font-family:'Fraunces',serif;font-style:italic;font-size:13px;color:var(--ink-soft)}
+  footer .orn{color:var(--rule);margin:0 10px}
+
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+  @media (max-width:640px){
+    .container{padding:40px 18px 60px}
+    .split{grid-template-columns:1fr}
+    .trap-line{grid-template-columns:1fr;gap:3px}
+    .trap-line .arr{display:none}
+    .toolbar{justify-content:flex-start}
+  }
+  @media print{
+    body{background:#fff} .toolbar,.scorebar,footer{display:none}
+    .c1-only{display:block!important} .q-fb,.reveal-body,.key-body{display:block!important}
+    section{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">A grammar clinic · B2 · francophone traps flagged</div>
+    <h1><span class="a">Remind</span> or <span class="b">Remember</span></h1>
+    <div class="subtitle">Two verbs, one French shadow. Learn to feel which one a native reaches for — and never say <em>“it remembers me”</em> again.</div>
+  </header>
+
+  <div class="toolbar">
+    <label class="c1-switch" for="c1"><span class="lab">C1 stretch</span>
+      <span class="track"><span class="knob"></span></span>
+      <input type="checkbox" id="c1" hidden>
+    </label>
+  </div>
+
+  <!-- 1 · HOOK -->
+  <section id="hook">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">The native instinct</h2>
+      <span class="badge-time">≈ 5 min</span>
+    </div>
+
+    <p class="lead">Forget the dictionary for a second. Here’s how a native brain actually splits these two:</p>
+
+    <div class="model">
+      <div class="kicker">The one rule under everything</div>
+      <div class="big"><span class="t">Remembering</span> happens <em>inside your own head</em>. <span class="r">Reminding</span> is something the outside world does <em>to</em> you.</div>
+    </div>
+
+    <p>You <strong>remember</strong> all by yourself — no one and nothing has to trigger it. But you get <strong>reminded</strong>: an alarm, a photo, a person, a smell nudges the memory back for you. So <em>remind</em> always has a doer on the outside and a person on the receiving end. <em>Remember</em> never needs one.</p>
+
+    <div class="model">
+      <div class="kicker">The two-second native test</div>
+      <div class="big">Can you add <span class="t">“…all by myself, in my own head”</span>? → <b>remember</b>.<br>
+      Is something <span class="r">outside</span> doing the nudging? → <b>remind</b>.</div>
+    </div>
+
+    <p><em>“I <b>remember</b> her name”</em> — I hold it in my own head. <em>“Her voice <b>reminds</b> me of my sister”</em> — her voice, on the outside, does the nudging. The moment there’s an external trigger and a person being nudged, you’re in <em>remind</em> territory.</p>
+
+    <div class="traps" style="margin-top:26px">
+      <div class="kicker">Why French speakers slip here</div>
+      <p style="font-size:14.5px;margin-bottom:0"><em>Se souvenir de</em> and <em>se rappeler</em> both land on English <strong class="ex-ok">remember</strong>. But <em>rappeler à quelqu’un</em> and <em>faire penser à</em> land on <strong class="ex-ok">remind</strong>. French keeps the same root <em>rappel-</em> for both jobs, so English forces a choice French never makes — and the reflex is to reach for the wrong one.</p>
+    </div>
+  </section>
+
+  <!-- 2 · RULE -->
+  <section id="rule">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Rule, structure &amp; the edges</h2>
+      <span class="badge-time">≈ 8 min</span>
+    </div>
+
+    <p>The clearest difference isn’t meaning — it’s <strong>who and what each verb needs around it</strong>. Learn the shapes and the errors mostly disappear.</p>
+
+    <div class="split">
+      <div class="col mine">
+        <h4>remember</h4>
+        <div class="gloss">to hold or call something back in your own mind · no outside doer, no person-object</div>
+        <div class="patt"><b>remember</b> + <b>noun</b> — <span class="ex-ok">I remember the meeting.</span></div>
+        <div class="patt"><b>remember</b> + <b>that</b>… — <span class="ex-ok">I remember that we met in Lyon.</span></div>
+        <div class="patt"><b>remember</b> + <b>to</b> + verb — <span class="ex-ok">Remember to lock the door.</span> <span style="color:var(--ink-soft)">(don’t forget — future)</span></div>
+        <div class="patt"><b>remember</b> + <b>-ing</b> — <span class="ex-ok">I remember locking the door.</span> <span style="color:var(--ink-soft)">(a memory — past)</span></div>
+        <div class="patt" style="color:var(--rust)">✗ never takes a person as the thing that “makes” you remember: <span class="ex-no">remember me to buy milk</span></div>
+      </div>
+      <div class="col other">
+        <h4>remind</h4>
+        <div class="gloss">to make someone remember · always transitive · always needs a person</div>
+        <div class="patt"><b>remind</b> + <b>someone</b> — <span class="ex-ok">The alarm reminds me.</span></div>
+        <div class="patt"><b>remind</b> + sb + <b>to</b> + verb — <span class="ex-ok">Remind me to call her.</span></div>
+        <div class="patt"><b>remind</b> + sb + <b>of</b> + noun — <span class="ex-ok">You remind me of my brother.</span> <span style="color:var(--ink-soft)">(resemblance)</span></div>
+        <div class="patt"><b>remind</b> + sb + <b>about</b> + noun — <span class="ex-ok">Remind me about the invoice.</span> <span style="color:var(--ink-soft)">(prompt to act)</span></div>
+        <div class="patt"><b>remind</b> + sb + <b>that</b>… — <span class="ex-ok">Remind him that it’s due Friday.</span></div>
+      </div>
+    </div>
+
+    <p><strong>The one distinction inside <em>remind</em> worth owning:</strong> <em>remind someone <b>of</b></em> = it <em>resembles</em> / evokes (“this street reminds me of Rome”). <em>remind someone <b>about / to</b></em> = it <em>prompts you to act</em> (“remind me about the deadline”). French <em>rappeler</em> covers both — English splits them by preposition.</p>
+
+    <div class="traps">
+      <div class="kicker">The four francophone traps — say these out loud</div>
+      <div class="trap-line">
+        <span class="no">It remembers me of my childhood.<span class="trap-fr">ça me rappelle…</span></span>
+        <span class="arr">→</span>
+        <span class="yes">It reminds me of my childhood.</span>
+      </div>
+      <div class="trap-line">
+        <span class="no">Remember me to buy milk.<span class="trap-fr">rappelle-moi de…</span></span>
+        <span class="arr">→</span>
+        <span class="yes">Remind me to buy milk.</span>
+      </div>
+      <div class="trap-line">
+        <span class="no">I remind my first holiday.<span class="trap-fr">je me rappelle…</span></span>
+        <span class="arr">→</span>
+        <span class="yes">I remember my first holiday.</span>
+      </div>
+      <div class="trap-line">
+        <span class="no">Can you remember me the time?<span class="trap-fr">tu peux me rappeler…</span></span>
+        <span class="arr">→</span>
+        <span class="yes">Can you remind me of the time?</span>
+      </div>
+    </div>
+
+    <p><strong>The edges &amp; exceptions:</strong></p>
+    <ul class="exc">
+      <li><b>“Remember me to your mother.”</b> — a fixed, slightly old-fashioned idiom meaning <em>pass on my greetings</em>. It’s the one place <em>remember + person</em> is correct, so don’t let it confuse the rule — treat it as a frozen phrase.</li>
+      <li><b>reminder</b> (noun) = the thing that prompts you (“a calendar reminder”). Don’t confuse with <b>remembrance</b> = the act of commemorating (“a day of remembrance”).</li>
+      <li><b>“Do you remember me?”</b> is correct English (= do you have a memory of me?). If you mean <em>do I look familiar / like someone else</em>, that’s <em>“Do I remind you of anyone?”</em></li>
+    </ul>
+
+    <div class="model c1-only" style="margin-top:26px">
+      <div class="kicker" style="color:var(--teal)">C1 stretch · register &amp; nuance</div>
+      <div class="big" style="font-size:20px">Reaching for the verb is B2. Reaching for its register is C1.</div>
+    </div>
+    <div class="c1-only">
+      <ul class="exc">
+        <li><b>Softened prompts:</b> “<em>May I remind you that…</em>” / “<em>Might I remind you…</em>” carry polite pressure in professional English — a controlled way to correct or push back.</li>
+        <li><b>Impersonal reminding:</b> “<em>It bears reminding that…</em>” / “<em>a timely reminder that…</em>” lets you flag a point without naming who forgot.</li>
+        <li><b>remember, upgraded:</b> in careful speech, <em>as I recall</em>, <em>if memory serves</em>, and <em>to the best of my recollection</em> replace a flat “I remember” and hedge your certainty.</li>
+        <li><b>Literary <em>remind of</em>:</b> “<em>put someone in mind of</em>” = a bookish synonym for <em>remind of</em> (“the harbour put her in mind of Marseille”).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3 · EXERCISES -->
+  <section id="exercises">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Prove you own it</h2>
+      <span class="badge-time">≈ 15 min</span>
+    </div>
+    <p class="instr">Four rounds, each harder than the last. The last one asks you to <em>teach the rule back</em> — if you can explain it plainly, you’ve got it.</p>
+
+    <!-- 3a spot it -->
+    <div class="sub">Spot it in action <span class="tag">recognise</span></div>
+    <p class="instr">Same verb family, different jobs. For each line, tap what the verb is doing.</p>
+
+    <div class="q" data-answer="remind">
+      <div class="q-text">“That smell <span class="blank">___</span> me of my grandmother’s kitchen.”</div>
+      <div class="opts">
+        <button class="opt" data-val="remember" data-fb="An outside trigger (a smell) is nudging the memory, and there’s a person on the receiving end (<b>me</b>). That’s <b>remind</b>, not remember.">a memory inside my head → remember</button>
+        <button class="opt" data-val="remind" data-fb="Correct — an external trigger (the smell) acts on a person (me). Outside doer + person-object = <b>remind</b>, and because it’s resemblance, the preposition is <b>of</b>.">an outside trigger nudging me → remind</button>
+      </div>
+      <div class="q-fb"></div>
+    </div>
+
+    <div class="q" data-answer="remember">
+      <div class="q-text">“I <span class="blank">___</span> exactly where I left the keys.”</div>
+      <div class="opts">
+        <button class="opt" data-val="remember" data-fb="Correct — no outside trigger, no person being nudged. The knowledge sits in your own head. That’s <b>remember</b>.">I hold it myself → remember</button>
+        <button class="opt" data-val="remind" data-fb="Nothing external is doing the nudging and there’s no person-object being prompted. It’s all inside your head → <b>remember</b>.">something nudged me → remind</button>
+      </div>
+      <div class="q-fb"></div>
+    </div>
+
+    <div class="q" data-answer="prompt">
+      <div class="q-text">“Could you <span class="blank">___</span> me <span class="blank">___</span> the report before you leave?”</div>
+      <div class="opts">
+        <button class="opt" data-val="resemble" data-fb="This isn’t resemblance — you’re asking to be <em>prompted to act</em>. That takes <b>remind me about</b> (or <b>remind me to send</b>), not <b>of</b>.">remind me of (resemblance)</button>
+        <button class="opt" data-val="prompt" data-fb="Correct — you want a nudge to act, so it’s <b>remind me about the report</b> (or <b>remind me to send it</b>). <b>about/to</b> = prompt; <b>of</b> = resemblance.">remind me about (prompt to act)</button>
+      </div>
+      <div class="q-fb"></div>
+    </div>
+
+    <!-- 3b drills -->
+    <div class="sub">Snap-decision drill <span class="tag">10 items</span></div>
+    <p class="instr">Choose the correct verb <em>and</em> feel why. Instant feedback; watch your score climb.</p>
+
+    <div class="q" data-answer="remind">
+      <div class="q-text">Please <span class="blank">___</span> me to renew my passport.</div>
+      <div class="opts">
+        <button class="opt" data-val="remember" data-fb="You’re asking someone else to prompt you → <b>remind me to</b>.">remember</button>
+        <button class="opt" data-val="remind" data-fb="Right — a person is asked to prompt you: <b>remind me to renew</b>.">remind</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="remember">
+      <div class="q-text">Do you <span class="blank">___</span> the name of that café in Nantes?</div>
+      <div class="opts">
+        <button class="opt" data-val="remember" data-fb="Right — it’s knowledge in your own head, no external nudge: <b>remember</b>.">remember</button>
+        <button class="opt" data-val="remind" data-fb="No outside trigger, no person being prompted → <b>remember</b>.">remind</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="reminds">
+      <div class="q-text">This song always <span class="blank">___</span> me <em>of</em> summer.</div>
+      <div class="opts">
+        <button class="opt" data-val="remembers" data-fb="“It remembers me” is the classic slip. The song (outside) nudges you (person) → <b>reminds me of</b>.">remembers</button>
+        <button class="opt" data-val="reminds" data-fb="Right — external trigger + person + resemblance = <b>reminds me of</b>.">reminds</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="of">
+      <div class="q-text">You <span class="blank">___</span> me <span class="blank">___</span> my old boss — same laugh!</div>
+      <div class="opts">
+        <button class="opt" data-val="about" data-fb="This is resemblance, not a prompt to act → <b>remind me of</b>.">remind me about</button>
+        <button class="opt" data-val="of" data-fb="Right — resemblance takes <b>of</b>: you remind me <b>of</b> my old boss.">remind me of</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="remember">
+      <div class="q-text">I don’t <span class="blank">___</span> ever meeting him before.</div>
+      <div class="opts">
+        <button class="opt" data-val="remember" data-fb="Right — a memory in your own head → <b>remember</b> (+ -ing: remember meeting).">remember</button>
+        <button class="opt" data-val="remind" data-fb="No external trigger, no person-object → <b>remember</b>.">remind</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="remind">
+      <div class="q-text">A calendar alert will <span class="blank">___</span> you about the call.</div>
+      <div class="opts">
+        <button class="opt" data-val="remember" data-fb="The alert (outside) prompts you (person) → <b>remind you about</b>.">remember</button>
+        <button class="opt" data-val="remind" data-fb="Right — external prompt acting on a person: <b>remind you about</b>.">remind</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="Remember">
+      <div class="q-text"><span class="blank">___</span> to bring your ID tomorrow.</div>
+      <div class="opts">
+        <button class="opt" data-val="Remind" data-fb="No person-object here — it’s a note to yourself not to forget → <b>Remember to bring</b>.">Remind</button>
+        <button class="opt" data-val="Remember" data-fb="Right — “don’t forget (in future)” = <b>remember to</b> + verb.">Remember</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="reminded">
+      <div class="q-text">Seeing the photos <span class="blank">___</span> her of the trip.</div>
+      <div class="opts">
+        <button class="opt" data-val="remembered" data-fb="The photos (outside) nudge her (person) → <b>reminded her of</b>.">remembered</button>
+        <button class="opt" data-val="reminded" data-fb="Right — external trigger + person + resemblance/evocation = <b>reminded her of</b>.">reminded</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="remember">
+      <div class="q-text">Can you <span class="blank">___</span> what she said in the meeting?</div>
+      <div class="opts">
+        <button class="opt" data-val="remember" data-fb="Right — recalling from your own head → <b>remember</b>.">remember</button>
+        <button class="opt" data-val="remind" data-fb="No external trigger, no person prompted → <b>remember</b>.">remind</button>
+      </div><div class="q-fb"></div>
+    </div>
+    <div class="q" data-answer="remind">
+      <div class="q-text">Let me <span class="blank">___</span> you that the deadline hasn’t moved.</div>
+      <div class="opts">
+        <button class="opt" data-val="remember" data-fb="You’re prompting another person (you) → <b>remind you that</b>.">remember</button>
+        <button class="opt" data-val="remind" data-fb="Right — prompting a person of a fact: <b>remind you that</b>.">remind</button>
+      </div><div class="q-fb"></div>
+    </div>
+
+    <div class="scorebar">Score <b id="score">0</b> / <span id="total">0</span></div>
+
+    <!-- 3c practice -->
+    <div class="sub">Repair the francophone slips <span class="tag">produce</span></div>
+    <p class="instr">Each sentence has one error a French speaker would make. Fix it in your head, then reveal the correction and the reason.</p>
+
+    <div class="feynman">
+      <div class="task">1 · <b>“The music remembered me my wedding day.”</b></div>
+      <button class="reveal-btn">Show the fix</button>
+      <div class="reveal-body"><strong class="ex-ok">“The music reminded me of my wedding day.”</strong><br>External trigger (music) + person (me) + resemblance → <em>remind … of</em>. “Remembered me” is the signature error.</div>
+    </div>
+    <div class="feynman">
+      <div class="task">2 · <b>“Please remember me to send the invoice tonight.”</b></div>
+      <button class="reveal-btn">Show the fix</button>
+      <div class="reveal-body"><strong class="ex-ok">“Please remind me to send the invoice tonight.”</strong><br>You’re asking to be <em>prompted</em> → <em>remind me to</em>. (“Remember me to…” only survives in the greetings idiom.)</div>
+    </div>
+    <div class="feynman">
+      <div class="task">3 · <b>“I don’t remind his surname, sorry.”</b></div>
+      <button class="reveal-btn">Show the fix</button>
+      <div class="reveal-body"><strong class="ex-ok">“I don’t remember his surname, sorry.”</strong><br>No outside nudge, no person being prompted — it’s recall in your own head → <em>remember</em>.</div>
+    </div>
+    <div class="feynman c1-only">
+      <div class="task">4 · <span class="tag" style="margin-left:0">C1</span> Rewrite firmly but politely: <b>“You forgot again that the report is late.”</b></div>
+      <button class="reveal-btn">Show a model</button>
+      <div class="reveal-body"><strong class="ex-ok">“May I remind you that the report is still outstanding.”</strong><br>The C1 move is <em>“May I remind you that…”</em> — it corrects and applies pressure without naming the failure directly.</div>
+    </div>
+
+    <!-- 3d feynman test -->
+    <div class="sub">Teach it back <span class="tag">the Feynman test</span></div>
+    <p class="instr">You only truly know it when you can explain it simply. Write your answers, then check against a model. No peeking first.</p>
+
+    <div class="feynman">
+      <div class="task"><b>Explain to a beginner, in one sentence each:</b> when do I use <em>remember</em>, and when do I use <em>remind</em>?</div>
+      <textarea placeholder="Write it as if teaching someone who has never seen the rule…"></textarea>
+      <button class="reveal-btn">Compare with a model</button>
+      <div class="reveal-body">
+        <p style="margin-bottom:8px"><strong>A clear model:</strong></p>
+        <p style="margin-bottom:8px">“Use <em>remember</em> when the memory is happening inside your own head, with nothing and nobody triggering it — <em>I remember her name.</em>”</p>
+        <p style="margin-bottom:0">“Use <em>remind</em> when something on the outside nudges a person’s memory — it always needs that person: <em>the alarm reminds me; you remind me of my brother.</em>”</p>
+        <div class="rubric"><strong>Did your explanation capture:</strong>
+          <ul><li>remember = inside your own head, no trigger needed?</li>
+          <li>remind = an outside trigger acting <em>on a person</em>?</li>
+          <li>remind always needs a person-object?</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="feynman">
+      <div class="task"><b>Your own examples:</b> write one true sentence with <em>remember</em>, and one with <em>remind … of</em> and one with <em>remind … to</em>.</div>
+      <textarea placeholder="1) remember —  2) remind of —  3) remind to —"></textarea>
+      <button class="reveal-btn">Self-check points</button>
+      <div class="reveal-body">
+        <div class="rubric" style="margin-top:0"><strong>Check each one:</strong>
+          <ul>
+            <li><em>remember</em>: is there genuinely <b>no</b> external trigger and <b>no</b> person being nudged?</li>
+            <li><em>remind of</em>: is it a <b>resemblance/evocation</b> (X is like Y)?</li>
+            <li><em>remind to</em>: is it a <b>prompt to act</b>, with a clear person as object?</li>
+            <li>Did “remind” always keep its person-object? If any is missing, it’s wrong.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- teacher key -->
+    <div class="answer-key">
+      <button class="key-toggle">Teacher answer key <span class="badge">Don’t screen-share</span></button>
+      <div class="key-body">
+        <h5>3a · Spot it</h5>
+        <ol>
+          <li>reminds (of) — external trigger + person + resemblance</li>
+          <li>remember — internal recall, no trigger</li>
+          <li>remind me about / remind me to send — prompt to act (not “of”)</li>
+        </ol>
+        <h5>3b · Snap-decision drill</h5>
+        <ol>
+          <li>remind (me to renew)</li>
+          <li>remember (the name)</li>
+          <li>reminds (me of summer)</li>
+          <li>remind me <b>of</b> (resemblance)</li>
+          <li>remember (meeting)</li>
+          <li>remind (you about)</li>
+          <li>Remember (to bring)</li>
+          <li>reminded (her of)</li>
+          <li>remember (what she said)</li>
+          <li>remind (you that)</li>
+        </ol>
+        <h5>3c · Repair</h5>
+        <ol>
+          <li>The music <b>reminded me of</b> my wedding day.</li>
+          <li>Please <b>remind me to</b> send the invoice tonight.</li>
+          <li>I don’t <b>remember</b> his surname.</li>
+          <li>(C1) <b>May I remind you that</b> the report is still outstanding.</li>
+        </ol>
+        <h5>Teaching note</h5>
+        <p>The single highest-value correction is killing “it remembers me (of)”. If a student produces it, don’t just supply “reminds” — make them state <em>who is the trigger</em> and <em>who is being nudged</em>. Naming the external doer fixes the reflex faster than the rule does.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Built one lesson at a time. <span class="orn">·</span> Remind vs Remember <span class="orn">·</span> B2 with C1 stretch
+  </footer>
+</div>
+
+<script>
+  // C1 toggle
+  document.getElementById('c1').addEventListener('change',function(){
+    document.body.classList.toggle('show-c1',this.checked);
+  });
+
+  // scoring across quiz questions
+  let score=0, answered=new Set();
+  const scoreEl=document.getElementById('score');
+  const totalEl=document.getElementById('total');
+  const quizQs=document.querySelectorAll('#exercises .q');
+  if(totalEl) totalEl.textContent=quizQs.length;
+
+  document.querySelectorAll('.q').forEach(q=>{
+    const ans=q.dataset.answer;
+    const fb=q.querySelector('.q-fb');
+    q.querySelectorAll('.opt').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(q.classList.contains('locked')) return;
+        q.classList.add('locked');
+        const correct=btn.dataset.val===ans;
+        q.querySelectorAll('.opt').forEach(o=>{
+          o.classList.add('done');
+          if(o.dataset.val===ans) o.classList.add(correct?'correct':'reveal-correct');
+        });
+        if(!correct) btn.classList.add('wrong');
+        if(fb){ fb.innerHTML=btn.dataset.fb||''; fb.classList.add('show'); }
+        if(correct && !answered.has(q) && totalEl){ answered.add(q); score++; if(scoreEl) scoreEl.textContent=score; }
+      });
+    });
+  });
+
+  // reveal buttons
+  document.querySelectorAll('.reveal-btn').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const body=b.nextElementSibling;
+      const open=body.classList.toggle('show');
+      b.textContent=open?b.textContent.replace(/^Show|^Compare|^Self-check/,m=>({'Show':'Hide','Compare':'Hide','Self-check':'Hide'}[m])):b.dataset.orig||b.textContent;
+      if(open && !b.dataset.orig) b.dataset.orig=b.textContent;
+    });
+  });
+
+  // answer key
+  document.querySelector('.key-toggle').addEventListener('click',function(){
+    const body=this.nextElementSibling;
+    body.classList.toggle('show');
+  });
+</script>
+</body>
+</html>
