@@ -20,7 +20,6 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -36,224 +35,90 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  .container {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 64px 32px 80px;
-  }
+  .container { max-width: 1120px; margin: 0 auto; padding: 64px 32px 80px; }
 
-  header {
-    border-bottom: 1px solid var(--rule);
-    padding-bottom: 36px;
-    margin-bottom: 40px;
-  }
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 36px; margin-bottom: 40px; }
 
   .eyebrow {
-    font-family: 'Lora', serif;
-    font-size: 11px;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    margin-bottom: 14px;
+    font-family: 'Lora', serif; font-size: 11px; letter-spacing: 0.32em;
+    text-transform: uppercase; color: var(--ink-soft); margin-bottom: 14px;
   }
 
   h1 {
-    font-family: 'Fraunces', Georgia, serif;
-    font-weight: 400;
-    font-style: italic;
-    font-size: clamp(48px, 9vw, 88px);
-    line-height: 0.95;
-    letter-spacing: -0.025em;
-    color: var(--ink);
-    font-variation-settings: "SOFT" 80, "WONK" 1;
+    font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-style: italic;
+    font-size: clamp(48px, 9vw, 88px); line-height: 0.95; letter-spacing: -0.025em;
+    color: var(--ink); font-variation-settings: "SOFT" 80, "WONK" 1;
   }
-
   h1 .accent { color: var(--rust); }
 
   .subtitle {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: clamp(16px, 2vw, 19px);
-    color: var(--ink-soft);
-    margin-top: 18px;
-    max-width: 620px;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(16px, 2vw, 19px);
+    color: var(--ink-soft); margin-top: 18px; max-width: 620px;
   }
 
-  .controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    align-items: center;
-    margin-bottom: 44px;
-  }
+  .controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; margin-bottom: 44px; }
 
   .search {
-    flex: 1;
-    min-width: 240px;
-    padding: 13px 18px;
-    background: var(--paper-deep);
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    font-family: 'Lora', serif;
-    font-size: 15px;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.2s;
+    flex: 1; min-width: 240px; padding: 13px 18px; background: var(--paper-deep);
+    border: 1px solid var(--rule); border-radius: 2px; font-family: 'Lora', serif;
+    font-size: 15px; color: var(--ink); outline: none; transition: border-color 0.2s;
   }
-
   .search:focus { border-color: var(--ink); }
   .search::placeholder { color: var(--ink-soft); font-style: italic; }
 
-  .counter {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    color: var(--ink-soft);
-    font-size: 14px;
-    padding-left: 4px;
-  }
-
-  .counter strong {
-    color: var(--ink);
-    font-weight: 500;
-    font-size: 17px;
-    font-style: normal;
-    margin-right: 4px;
-  }
+  .counter { font-family: 'Fraunces', serif; font-style: italic; color: var(--ink-soft); font-size: 14px; padding-left: 4px; }
+  .counter strong { color: var(--ink); font-weight: 500; font-size: 17px; font-style: normal; margin-right: 4px; }
 
   .section { margin-bottom: 46px; }
   .section.hidden { display: none; }
 
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    margin-bottom: 20px;
-  }
-
+  .section-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; }
   .section-title {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 28px;
-    color: var(--ink);
-    letter-spacing: -0.01em;
-    font-variation-settings: "SOFT" 80;
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 28px;
+    color: var(--ink); letter-spacing: -0.01em; font-variation-settings: "SOFT" 80;
   }
+  .section-rule { flex: 1; height: 1px; background: var(--rule); }
+  .section-count { font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
 
-  .section-rule {
-    flex: 1;
-    height: 1px;
-    background: var(--rule);
-  }
-
-  .section-count {
-    font-family: 'Lora', serif;
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 18px;
-  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
 
   .lesson {
-    display: block;
-    text-decoration: none;
-    background: var(--paper-deep);
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    padding: 22px 24px;
-    position: relative;
+    display: block; text-decoration: none; background: var(--paper-deep);
+    border: 1px solid var(--rule); border-radius: 2px; padding: 22px 24px; position: relative;
     transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
     animation: fadeIn 0.4s ease both;
   }
-
   .lesson.hidden { display: none; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .lesson:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 14px 34px var(--shadow);
-    border-color: var(--ink-soft);
-  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .lesson:hover { transform: translateY(-2px); box-shadow: 0 14px 34px var(--shadow); border-color: var(--ink-soft); }
 
   .lesson-title {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 1.25;
-    color: var(--ink);
-    margin-bottom: 14px;
-    padding-right: 14px;
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 20px;
+    line-height: 1.25; color: var(--ink); margin-bottom: 14px; padding-right: 14px;
     font-variation-settings: "SOFT" 80;
   }
-
-  .lesson-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-  }
-
+  .lesson-meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; min-height: 10px; }
   .pill {
-    font-family: 'Lora', serif;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    border: 1px solid var(--rule);
-    border-radius: 2px;
-    padding: 3px 8px;
+    font-family: 'Lora', serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-soft); border: 1px solid var(--rule); border-radius: 2px; padding: 3px 8px;
   }
-
-  .pill.level { color: var(--teal); border-color: rgba(45, 106, 79, 0.4); }
-
   .arrow {
-    position: absolute;
-    bottom: 20px;
-    right: 22px;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    color: var(--rust);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 0.22s ease, transform 0.22s ease;
+    position: absolute; bottom: 20px; right: 22px; font-family: 'Fraunces', serif; font-style: italic;
+    color: var(--rust); opacity: 0; transform: translateX(-4px); transition: opacity 0.22s ease, transform 0.22s ease;
   }
-
   .lesson:hover .arrow { opacity: 1; transform: translateX(0); }
 
-  .empty-state {
-    text-align: center;
-    padding: 80px 20px;
-    color: var(--ink-soft);
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 17px;
-    display: none;
+  .status {
+    text-align: center; padding: 70px 20px; color: var(--ink-soft);
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 17px;
   }
-
-  .empty-state.show { display: block; }
+  .status .small { display: block; font-family: 'Lora', serif; font-style: normal; font-size: 13px; margin-top: 10px; }
+  .status.hidden { display: none; }
 
   footer {
-    margin-top: 80px;
-    padding-top: 28px;
-    border-top: 1px solid var(--rule);
-    text-align: center;
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 13px;
-    color: var(--ink-soft);
+    margin-top: 80px; padding-top: 28px; border-top: 1px solid var(--rule); text-align: center;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: var(--ink-soft);
   }
-
   footer .ornament { color: var(--rule); margin: 0 10px; }
 
   @media (max-width: 640px) {
@@ -262,7 +127,6 @@
     .grid { grid-template-columns: 1fr; gap: 14px; }
     .counter { text-align: center; }
   }
-
   @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
     html { scroll-behavior: auto; }
@@ -279,109 +143,183 @@
 
   <div class="controls">
     <input type="search" class="search" id="search" placeholder="Search a lesson, topic or student…" aria-label="Search lessons" />
-    <div class="counter"><strong id="count">0</strong>lessons</div>
+    <div class="counter"><strong id="count">—</strong>lessons</div>
   </div>
 
+  <div class="status" id="status">Gathering the lessons…</div>
   <div id="sections"></div>
-  <div class="empty-state" id="empty">Nothing matches that search.</div>
 
   <footer>
-    Built one lesson at a time. <span class="ornament">·</span> Last updated 7 July 2026
+    Built one lesson at a time. <span class="ornament">·</span> This page updates itself from the repository.
   </footer>
 </div>
 
 <script>
-// ── Add new lessons here. group determines the section; keep hrefs relative. ──
-const lessons = [
-  // Laura — aviation English
-  { title: "A Flight, Gate to Gate", href: "laura/flight-gate-to-gate.html", group: "Laura", tag: "Aviation" },
-  { title: "Boeing 737 MAX — Listening", href: "laura/boeing-737-max-listening.html", group: "Laura", tag: "Listening" },
-  { title: "How a Flight Gets onto the Schedule", href: "laura/how-a-flight-gets-scheduled.html", group: "Laura", tag: "Aviation" },
-  { title: "Faux Amis — Aviation Glossary", href: "laura/faux-amis-aviation.html", group: "Laura", tag: "Vocabulary" },
+/* ────────────────────────────────────────────────────────────────────────
+   CONFIG — the only part you might ever touch.
 
-  // Valérie — general business English
-  { title: "Listening · Blue Zones", href: "valerie/listening-blue-zones.html", group: "Valérie", tag: "Listening" },
-  { title: "Pick a Pair", href: "valerie/pick-a-pair.html", group: "Valérie", tag: "Collocations" },
+   • folderNames  : how each folder is labelled on the page.
+   • sectionOrder : the order sections appear in (any extra folders follow).
+   • titleOverrides : hand-written titles. Key = "folder/filename" WITHOUT
+     ".html", lowercase. Anything not listed here gets an automatic title
+     from its filename. To perfect a future lesson's title, add one line here.
+   ──────────────────────────────────────────────────────────────────────── */
+const REPO = { owner: "craigcarey-coaching", name: "english-coaching-materials", branch: "main" };
 
-  // Corinne — CFO / TOEIC
-  { title: "Faux Amis — Working Glossary", href: "corinne/faux-amis.html", group: "Corinne", tag: "Vocabulary" },
+const folderNames = {
+  laura: "Laura",
+  valerie: "Valérie",
+  corinne: "Corinne",
+  resources: "Resources"
+};
 
-  // Resources — reusable
-  { title: "English Prepositions — An Introduction", href: "resources/prepositions-introduction.html", group: "Resources", tag: "Grammar" },
-  { title: "Phrasal Verbs — The Particle Workshop", href: "resources/phrasal-verbs-particle-workshop.html", group: "Resources", tag: "Vocabulary" },
-  { title: "Grammar Recall — Future Tenses", href: "resources/grammar-recall-future-tenses.html", group: "Resources", tag: "Grammar" },
-  { title: "Counting the Cost", href: "resources/counting-the-cost-reading-vocab.html", group: "Resources", tag: "Reading", level: "B2" },
-  { title: "Listening · AI — Benefits & Harms", href: "resources/listening-ai-benefits-harms.html", group: "Resources", tag: "Listening" },
-  { title: "Listening · The Parents of Claude", href: "resources/listening-parents-of-claude.html", group: "Resources", tag: "Listening" },
-  { title: "Listening — Why One Person Can't…", href: "resources/listening-why-one-person.html", group: "Resources", tag: "Listening" }
+const sectionOrder = ["Laura", "Valérie", "Corinne", "Resources"];
+
+const titleOverrides = {
+  "corinne/the-12-tenses": "The 12 Tenses",
+
+  "laura/737max-crisis": "Boeing 737 MAX — The Crisis",
+  "laura/aviation-faux-amis": "Faux Amis — Aviation Glossary",
+  "laura/from-gate-to-flight": "From Gate to Flight",
+  "laura/how-a-flight-gets-scheduled": "How a Flight Gets Scheduled",
+
+  "valerie/half-way-point-revision": "Half-Way Point Revision",
+  "valerie/listening-blue-zones": "Listening · Blue Zones",
+  "valerie/pick-a-pair": "Pick a Pair",
+
+  "resources/brexit-counting-the-cost-nyt": "Counting the Cost — Brexit",
+  "resources/future-tense-recall": "Grammar Recall — Future Tenses",
+  "resources/introduction-to-prepositions": "English Prepositions — An Introduction",
+  "resources/james-slavery-literature": "Slavery in Literature",
+  "resources/listening-ai-benefits-harms": "Listening · AI — Benefits & Harms",
+  "resources/listening-parents-of-claude": "Listening · The Parents of Claude",
+  "resources/phrasal-verbs-particle-workshop": "Phrasal Verbs — The Particle Workshop",
+  "resources/podcast-perel-oneperson": "Listening · Why One Person Can't Be Everything",
+  "resources/questions": "The Question Engine",
+  "resources/time-prepositions-mental-model": "Prepositions of Time — A Mental Model"
+};
+
+/* Small helpers for auto-titling files that aren't in the overrides above. */
+const SMALL_WORDS = new Set(["a","an","and","the","of","or","to","in","on","for","vs","with","by","at","from"]);
+const ACRONYMS = new Set(["AI","NYT","WFH","TOEIC","UK","US","EU","HR","CFO","MAX"]);
+const TAG_RULES = [
+  [/listening|podcast|perel/i, "Listening"],
+  [/faux-amis|phrasal|pair|vocab/i, "Vocabulary"],
+  [/tense|grammar|preposition|particle/i, "Grammar"],
+  [/reading|counting|cost|literature|slavery/i, "Reading"],
+  [/question/i, "Practice"]
 ];
 
-// Section order. Add "Rayane", "MBA" here when those folders exist.
-const groupOrder = ["Laura", "Valérie", "Corinne", "Resources"];
+function autoTitle(slug) {
+  return slug.split(/[-_]/).map((w, i) => {
+    if (ACRONYMS.has(w.toUpperCase())) return w.toUpperCase();
+    if (i > 0 && SMALL_WORDS.has(w.toLowerCase())) return w.toLowerCase();
+    return w.charAt(0).toUpperCase() + w.slice(1);
+  }).join(" ");
+}
 
+function titleFor(folder, slug) {
+  const key = (folder + "/" + slug).toLowerCase();
+  return titleOverrides[key] || autoTitle(slug);
+}
+
+function tagFor(slug) {
+  for (const [re, label] of TAG_RULES) if (re.test(slug)) return label;
+  return null;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+const statusEl = document.getElementById('status');
 const sectionsEl = document.getElementById('sections');
 const searchEl = document.getElementById('search');
 const countEl = document.getElementById('count');
-const emptyEl = document.getElementById('empty');
 
-function escapeHtml(s) {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+function showStatus(main, small) {
+  statusEl.classList.remove('hidden');
+  statusEl.innerHTML = escapeHtml(main) + (small ? `<span class="small">${escapeHtml(small)}</span>` : '');
 }
 
-function build() {
+function render(items) {
+  statusEl.classList.add('hidden');
   sectionsEl.innerHTML = '';
-  groupOrder.forEach(group => {
-    const items = lessons.filter(l => l.group === group);
-    if (!items.length) return;
+  countEl.textContent = items.length;
 
-    const section = document.createElement('section');
-    section.className = 'section';
-    section.dataset.group = group;
+  // group by folder
+  const byFolder = {};
+  items.forEach(it => { (byFolder[it.folder] = byFolder[it.folder] || []).push(it); });
 
-    const cards = items.map(l => {
-      const levelPill = l.level ? `<span class="pill level">${escapeHtml(l.level)}</span>` : '';
-      const tagPill = l.tag ? `<span class="pill">${escapeHtml(l.tag)}</span>` : '';
-      const hay = (l.title + ' ' + l.group + ' ' + (l.tag || '') + ' ' + (l.level || '')).toLowerCase();
-      return `
-        <a class="lesson" href="${escapeHtml(l.href)}" data-hay="${escapeHtml(hay)}">
-          <div class="lesson-title">${escapeHtml(l.title)}</div>
-          <div class="lesson-meta">${levelPill}${tagPill}</div>
+  // order: known sections first (via sectionOrder), then any extras alphabetically
+  const displayed = Object.keys(byFolder).map(f => folderNames[f] || (f.charAt(0).toUpperCase()+f.slice(1)));
+  const ordered = [...sectionOrder.filter(s => displayed.includes(s)),
+                   ...displayed.filter(s => !sectionOrder.includes(s)).sort()];
+
+  ordered.forEach(displayName => {
+    const folderKey = Object.keys(byFolder).find(f => (folderNames[f] || (f.charAt(0).toUpperCase()+f.slice(1))) === displayName);
+    const list = byFolder[folderKey].sort((a,b) => a.title.localeCompare(b.title));
+
+    const cards = list.map(it => {
+      const tag = it.tag ? `<span class="pill">${escapeHtml(it.tag)}</span>` : '';
+      const hay = (it.title + ' ' + displayName + ' ' + (it.tag||'')).toLowerCase();
+      return `<a class="lesson" href="${escapeHtml(it.path)}" data-hay="${escapeHtml(hay)}">
+          <div class="lesson-title">${escapeHtml(it.title)}</div>
+          <div class="lesson-meta">${tag}</div>
           <span class="arrow">→</span>
         </a>`;
     }).join('');
 
-    section.innerHTML = `
-      <div class="section-head">
-        <div class="section-title">${escapeHtml(group)}</div>
+    const section = document.createElement('section');
+    section.className = 'section';
+    section.innerHTML = `<div class="section-head">
+        <div class="section-title">${escapeHtml(displayName)}</div>
         <div class="section-rule"></div>
-        <div class="section-count">${items.length} lesson${items.length === 1 ? '' : 's'}</div>
-      </div>
-      <div class="grid">${cards}</div>`;
+        <div class="section-count">${list.length} lesson${list.length===1?'':'s'}</div>
+      </div><div class="grid">${cards}</div>`;
     sectionsEl.appendChild(section);
   });
-  countEl.textContent = lessons.length;
 }
 
 function filter() {
   const q = searchEl.value.toLowerCase().trim();
   let visible = 0;
-
   document.querySelectorAll('.section').forEach(section => {
-    let sectionVisible = 0;
+    let n = 0;
     section.querySelectorAll('.lesson').forEach(card => {
       const match = !q || card.dataset.hay.includes(q);
       card.classList.toggle('hidden', !match);
-      if (match) { sectionVisible++; visible++; }
+      if (match) { n++; visible++; }
     });
-    section.classList.toggle('hidden', sectionVisible === 0);
+    section.classList.toggle('hidden', n === 0);
   });
-
   countEl.textContent = visible;
-  emptyEl.classList.toggle('show', visible === 0);
 }
-
 searchEl.addEventListener('input', filter);
-build();
+
+async function load() {
+  const url = `https://api.github.com/repos/${REPO.owner}/${REPO.name}/git/trees/${REPO.branch}?recursive=1`;
+  try {
+    const res = await fetch(url, { headers: { Accept: "application/vnd.github+json" } });
+    if (res.status === 403) { showStatus("GitHub is briefly rate-limited.", "Give it a minute, then refresh this page."); return; }
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+
+    const items = (data.tree || [])
+      .filter(n => n.type === "blob" && /^[^/]+\/[^/]+\.html$/i.test(n.path))
+      .map(n => {
+        const [folder, file] = n.path.split("/");
+        const slug = file.replace(/\.html$/i, "");
+        return { path: n.path, folder, slug, title: titleFor(folder, slug), tag: tagFor(slug) };
+      });
+
+    if (!items.length) { showStatus("No lessons found yet.", "Add an .html lesson to a folder and refresh."); return; }
+    render(items);
+  } catch (e) {
+    showStatus("Couldn't reach GitHub just now.", "Check your connection and refresh.");
+  }
+}
+load();
 </script>
 </body>
 </html>
