@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case File · Chess, Carley & Co. — Titan, p.254</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E0D0;
+    --paper-2:#F1ECDF;
+    --paper-3:#EDE6D6;
+    --ink:#211E1A;
+    --ink-soft:#4A443B;
+    --oxblood:#7C2D2A;
+    --brass:#A9772F;
+    --teal:#2E6B66;
+    --rule:#C9BFA8;
+    --rule-strong:#A89C80;
+    --shadow:rgba(33,30,26,.12);
+    --display:'Fraunces',Georgia,serif;
+    --ui:'IBM Plex Sans',system-ui,sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(169,119,47,.05), transparent 38%),
+      radial-gradient(circle at 82% 88%, rgba(124,45,42,.05), transparent 42%);
+    color:var(--ink);
+    font-family:var(--ui);
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:28px 22px 80px;}
+
+  /* ---- Masthead ---- */
+  header.masthead{
+    border:1.5px solid var(--ink);
+    background:var(--paper-2);
+    box-shadow:6px 6px 0 var(--shadow);
+    padding:20px 24px 18px;
+    position:relative;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--brass);
+    margin:0 0 10px;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .eyebrow .stamp{
+    color:var(--oxblood);
+    border:1.5px solid var(--oxblood);
+    padding:3px 8px;
+    border-radius:2px;
+    transform:rotate(-3deg);
+    font-weight:600;
+    letter-spacing:.14em;
+  }
+  h1{
+    font-family:var(--display);
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(28px,6vw,44px);
+    line-height:1.04;
+    letter-spacing:-.01em;
+    margin:.1em 0 .15em;
+  }
+  h1 .sub{display:block;font-size:.42em;font-weight:500;color:var(--ink-soft);letter-spacing:.02em;margin-top:.5em;font-style:italic;}
+  .meta-row{
+    font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);
+    letter-spacing:.04em;margin-top:12px;border-top:1px dotted var(--rule-strong);padding-top:10px;
+    display:flex;gap:18px;flex-wrap:wrap;
+  }
+  .meta-row b{color:var(--ink);font-weight:600;}
+
+  /* ---- Nav ---- */
+  nav.tabs{
+    display:flex;gap:0;margin:22px 0 0;flex-wrap:wrap;
+    border-bottom:1.5px solid var(--ink);
+  }
+  .tab{
+    font-family:var(--mono);
+    font-size:12.5px;letter-spacing:.06em;
+    text-transform:uppercase;
+    background:transparent;border:1.5px solid transparent;border-bottom:none;
+    padding:11px 15px;cursor:pointer;color:var(--ink-soft);
+    position:relative;top:1.5px;
+    transition:color .15s,background .15s;
+  }
+  .tab .n{color:var(--brass);margin-right:7px;font-weight:600;}
+  .tab:hover{color:var(--ink);}
+  .tab[aria-selected="true"]{
+    background:var(--paper-2);
+    border-color:var(--ink);
+    color:var(--ink);font-weight:600;
+  }
+  .tab[aria-selected="true"] .n{color:var(--oxblood);}
+
+  .panel{display:none;padding-top:26px;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+
+  .lead{font-family:var(--ui);color:var(--ink-soft);font-size:15px;margin:0 0 20px;max-width:62ch;}
+
+  /* ---- Passage ---- */
+  .passage-toolbar{
+    display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+    margin-bottom:18px;padding-bottom:16px;border-bottom:1px dotted var(--rule-strong);
+  }
+  .ctrl{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;
+    background:var(--paper-2);border:1.4px solid var(--ink);border-radius:2px;
+    padding:7px 12px;cursor:pointer;color:var(--ink);
+    box-shadow:2px 2px 0 var(--shadow);transition:transform .1s,background .15s;
+  }
+  .ctrl:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--shadow);}
+  .ctrl:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--shadow);}
+  .ctrl[aria-pressed="true"]{background:var(--teal);color:#F4EFE3;border-color:var(--teal);}
+  .ctrl.sizebtn{padding:7px 13px;font-size:13px;}
+  .ctrl-label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-right:2px;}
+
+  textarea#raw{
+    width:100%;min-height:220px;resize:vertical;
+    font-family:var(--display);font-size:17px;line-height:1.6;color:var(--ink);
+    background:var(--paper-2);border:1.5px solid var(--rule-strong);border-radius:3px;
+    padding:16px 18px;
+  }
+  textarea#raw:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal);}
+  .editor-actions{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .btn-primary{
+    font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+    background:var(--ink);color:var(--paper);border:1.5px solid var(--ink);border-radius:2px;
+    padding:10px 18px;cursor:pointer;box-shadow:3px 3px 0 var(--shadow);transition:transform .1s;
+  }
+  .btn-primary:hover{transform:translate(-1px,-1px);}
+  .btn-primary:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--shadow);}
+  .hint{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.03em;}
+
+  .reading{
+    background:var(--paper-2);
+    border:1.5px solid var(--ink);
+    box-shadow:6px 6px 0 var(--shadow);
+    padding:30px 34px;
+    font-family:var(--display);
+    font-optical-sizing:auto;
+    font-size:var(--read-size,19px);
+    line-height:1.72;
+    color:var(--ink);
+    position:relative;
+  }
+  .reading::before{
+    content:"EXHIBIT A";
+    position:absolute;top:-11px;left:22px;
+    background:var(--oxblood);color:#F4EFE3;
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+    padding:3px 9px;border-radius:2px;
+  }
+  .reading p{margin:0 0 1.1em;}
+  .reading p:last-child{margin-bottom:0;}
+  /* sense-group mode */
+  .reading.grouped p{margin-bottom:1.4em;}
+  .reading.grouped .grp{display:block;padding-left:14px;border-left:2px solid transparent;margin:.12em 0;}
+  .reading.grouped .grp:hover{border-left-color:var(--brass);}
+  /* focus mode */
+  .reading.focus p{opacity:.32;transition:opacity .25s;}
+  .reading.focus p:hover,.reading.focus p.lit{opacity:1;}
+  mark.vocab{
+    background:linear-gradient(transparent 58%, rgba(169,119,47,.42) 58%);
+    color:inherit;cursor:pointer;padding:0 1px;border-radius:1px;
+  }
+  mark.vocab:hover{background:linear-gradient(transparent 0%, rgba(169,119,47,.32) 0%);}
+
+  .empty-note{
+    font-family:var(--ui);font-size:14px;color:var(--ink-soft);font-style:normal;
+    border:1.4px dashed var(--rule-strong);border-radius:3px;padding:16px 18px;background:var(--paper-3);
+  }
+
+  /* ---- Cards (Say It Simply / Syn-Ant) ---- */
+  .card{
+    background:var(--paper-2);
+    border:1.5px solid var(--ink);
+    box-shadow:5px 5px 0 var(--shadow);
+    padding:20px 22px;margin-bottom:22px;
+    position:relative;
+  }
+  .card .tag{
+    position:absolute;top:-11px;left:18px;
+    background:var(--ink);color:var(--paper);
+    font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+    padding:3px 9px;border-radius:2px;text-transform:uppercase;
+  }
+  .card .tag.teal{background:var(--teal);}
+  .card .tag.ox{background:var(--oxblood);}
+  .cue{
+    font-family:var(--display);font-size:20px;line-height:1.3;font-weight:500;
+    margin:6px 0 4px;
+  }
+  .cue .q{color:var(--oxblood);font-style:italic;}
+  .task{font-size:14.5px;color:var(--ink-soft);margin:8px 0 14px;}
+  .task b{color:var(--ink);font-weight:600;}
+
+  .reg-note{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--ink-soft);
+    border-top:1px dotted var(--rule-strong);padding-top:10px;margin-top:14px;
+  }
+  .reg-note b{color:var(--brass);}
+
+  /* word block */
+  .word-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:2px;}
+  .word{font-family:var(--display);font-size:26px;font-weight:600;letter-spacing:-.01em;}
+  .pos{font-family:var(--mono);font-size:11px;color:var(--ink-soft);font-style:italic;}
+  .reg-pill{
+    font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    border:1.3px solid var(--brass);color:var(--brass);border-radius:2px;padding:2px 7px;
+  }
+  .gloss{font-size:14.5px;color:var(--ink-soft);margin:6px 0 14px;}
+  .sa-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:4px;}
+  .sa-col{flex:1;min-width:200px;}
+  .sa-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
+  .sa-label.syn{color:var(--teal);}
+  .sa-label.ant{color:var(--oxblood);}
+
+  /* ---- Redaction reveal ---- */
+  .redact{
+    cursor:pointer;border-radius:2px;
+    background:var(--ink);color:transparent;
+    padding:2px 6px;transition:background .35s,color .35s;
+    user-select:none;position:relative;display:inline;
+    box-decoration-break:clone;-webkit-box-decoration-break:clone;
+  }
+  .redact::after{
+    content:"▸ reveal";position:absolute;right:6px;top:50%;transform:translateY(-50%);
+    font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:rgba(244,239,227,.85);
+    pointer-events:none;
+  }
+  .redact.long::after{content:"";}
+  .redact.shown{background:transparent;color:var(--ink);user-select:text;}
+  .redact.shown::after{content:"";}
+  .redact:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+  .model{font-family:var(--display);font-size:17.5px;line-height:1.5;}
+
+  /* ---- React ---- */
+  .react-item{
+    border-left:3px solid var(--rule-strong);
+    padding:6px 0 6px 18px;margin-bottom:24px;
+  }
+  .react-item .num{font-family:var(--mono);font-size:12px;color:var(--brass);font-weight:600;letter-spacing:.06em;}
+  .react-q{font-family:var(--display);font-size:20px;line-height:1.34;margin:5px 0 0;font-weight:500;}
+  .field-flag{
+    display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--oxblood);border:1.2px solid var(--oxblood);border-radius:2px;padding:2px 7px;margin-left:8px;
+    vertical-align:middle;transform:translateY(-2px);
+  }
+  .react-item.field{border-left-color:var(--oxblood);}
+  .starter{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-top:9px;letter-spacing:.01em;}
+  .starter b{color:var(--ink);}
+
+  details.notes{
+    margin-top:30px;border:1.5px solid var(--rule-strong);border-radius:3px;background:var(--paper-3);
+  }
+  details.notes summary{
+    cursor:pointer;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    padding:13px 18px;color:var(--ink);font-weight:600;
+  }
+  details.notes summary::marker{color:var(--brass);}
+  details.notes .body{padding:0 20px 18px;}
+  details.notes .body p{font-size:14.5px;margin:0 0 12px;}
+  details.notes .body b{color:var(--teal);}
+  details.notes .body code{font-family:var(--mono);font-size:13px;background:var(--paper-2);padding:1px 5px;border-radius:2px;}
+
+  footer{
+    margin-top:46px;border-top:1px dotted var(--rule-strong);padding-top:16px;
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--ink-soft);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  @media (max-width:560px){
+    body{font-size:16px;}
+    .wrap{padding:18px 14px 60px;}
+    .reading{padding:24px 20px;}
+    .tab{padding:10px 11px;font-size:11.5px;}
+    .reading::before,.card .tag{left:14px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">
+      <span>Confidential File · Standard Oil Investigations</span>
+      <span class="stamp">Exhibit A</span>
+    </p>
+    <h1>Chess, Carley &amp; Co.
+      <span class="sub">A study in “pitiless methods” — from <em>Titan</em>, p.&nbsp;254</span>
+    </h1>
+    <div class="meta-row">
+      <span><b>Read for:</b> pace · register · vocabulary</span>
+      <span><b>Subject:</b> J. D. Rockefeller, R. Chernow</span>
+      <span><b>Part:</b> 1 of 2</span>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Lesson sections">
+    <button class="tab" role="tab" aria-selected="true"  data-target="p-read"  id="t-read"><span class="n">I</span>The Passage</button>
+    <button class="tab" role="tab" aria-selected="false" data-target="p-plain" id="t-plain"><span class="n">II</span>Say It Simply</button>
+    <button class="tab" role="tab" aria-selected="false" data-target="p-words" id="t-words"><span class="n">III</span>Words</button>
+    <button class="tab" role="tab" aria-selected="false" data-target="p-react" id="t-react"><span class="n">IV</span>React</button>
+  </nav>
+
+  <!-- ===== I · PASSAGE ===== -->
+  <section class="panel active" id="p-read" role="tabpanel" aria-labelledby="t-read">
+    <p class="lead">Drop the page-254 extract in below and press <b>Set passage</b>. It stays saved on this device, so you only do it once. Then read at your own pace — switch on <b>Sense groups</b> to break the long sentences into smaller breaths, or <b>Focus</b> to dim everything but the paragraph in hand. Highlighted words are tackled in <b>Words</b>.</p>
+
+    <div id="editor-block">
+      <textarea id="raw" spellcheck="false" aria-label="Passage text">Paste the page-254 extract here, then press Set passage. (This sentence is only a placeholder — replace it. With Sense groups switched on, a long, winding sentence is split into smaller pieces, which makes a dense paragraph far easier to read aloud at a calm, steady pace.)</textarea>
+      <div class="editor-actions">
+        <button class="btn-primary" id="setBtn">Set passage</button>
+        <span class="hint" id="saveHint">Saved on this device only.</span>
+      </div>
+    </div>
+
+    <div class="passage-toolbar" id="toolbar" style="display:none;">
+      <button class="ctrl" id="editBtn">Edit text</button>
+      <button class="ctrl" id="groupBtn" aria-pressed="false">Sense groups</button>
+      <button class="ctrl" id="focusBtn" aria-pressed="false">Focus</button>
+      <span style="flex:1 1 auto;"></span>
+      <span class="ctrl-label">Size</span>
+      <button class="ctrl sizebtn" id="smaller" aria-label="Smaller text">A−</button>
+      <button class="ctrl sizebtn" id="bigger" aria-label="Larger text">A+</button>
+    </div>
+
+    <article class="reading" id="reading" style="display:none;"></article>
+  </section>
+
+  <!-- ===== II · SAY IT SIMPLY ===== -->
+  <section class="panel" id="p-plain" role="tabpanel" aria-labelledby="t-plain">
+    <p class="lead">Chernow writes in a high, ornate register. Find each line in the passage, read it as written, then <b>say it simply</b> — the way you'd explain it to a friend over coffee. Say yours out loud first; only then lift the bar to compare. There's no single right answer — the bar just shows one plain version.</p>
+
+    <div class="card">
+      <span class="tag">Target 1</span>
+      <p class="cue">He <span class="q">“feigned ignorance”</span> and <span class="q">“disclaimed responsibility.”</span></p>
+      <p class="task"><b>Say it simply.</b> What did Rockefeller actually do here?</p>
+      <p class="model"><span class="redact" tabindex="0">He pretended he didn't know, and said it wasn't his fault.</span></p>
+      <p class="reg-note"><b>Why it sounds elevated:</b> two Latinate verbs (<i>feign</i>, <i>disclaim</i>) doing the work of plain ones (<i>fake</i>, <i>deny</i>). Swapping Latinate → Anglo-Saxon is the fastest way down the register ladder.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Target 2</span>
+      <p class="cue">An <span class="q">“inveterate gambler”</span> who went straight from board meetings to his bookie's office.</p>
+      <p class="task"><b>Say it simply.</b> Describe this man in everyday words.</p>
+      <p class="model"><span class="redact" tabindex="0">He gambled non-stop — he'd walk out of a meeting and go straight to place a bet.</span></p>
+      <p class="reg-note"><b>Notice:</b> <i>inveterate</i> = a habit so old it's fixed. Plain swaps: <i>hardened, lifelong, can't-stop.</i></p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Target 3</span>
+      <p class="cue">Rockefeller referred <span class="q">euphemistically</span> to Carley's <span class="q">“want of balance.”</span></p>
+      <p class="task"><b>Say it simply.</b> What was he really talking about — and what's he doing by phrasing it that way?</p>
+      <p class="model"><span class="redact" tabindex="0">He used a polite phrase to avoid saying out loud that Carley had a gambling problem.</span></p>
+      <p class="reg-note"><b>Register insight:</b> <i>want of</i> is a formal way to say <i>lack of</i>. And a <i>euphemism</i> is exactly this — a soft phrase standing in for a blunt truth. A whole register move in two words.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Target 4</span>
+      <p class="cue">The firm had become <span class="q">“a byword for vicious tactics.”</span></p>
+      <p class="task"><b>Say it simply.</b> What does it mean to be a <i>byword</i> for something?</p>
+      <p class="model"><span class="redact" tabindex="0">When people wanted an example of brutal business, this was the name they reached for.</span></p>
+      <p class="reg-note"><b>Useful frame:</b> “X is a byword for Y” = X is so known for Y it stands as the example. Try building one about your own field.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Target 5</span>
+      <p class="cue">These were <span class="q">“anticompetitive practices”</span> that <span class="q">“shaped future antitrust legislation.”</span></p>
+      <p class="task"><b>Say it simply.</b> What's the cause-and-effect being claimed?</p>
+      <p class="model"><span class="redact" tabindex="0">These were unfair tricks — and later laws were written specifically to ban them.</span></p>
+      <p class="reg-note"><b>Your turf:</b> this is the sentence where a biography of an oilman quietly becomes a story about <i>your</i> profession. Worth a pause.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Target 6</span>
+      <p class="cue"><span class="q">“Notwithstanding the public uproar,”</span> Rockefeller claimed to be unaware.</p>
+      <p class="task"><b>Say it simply.</b> Then: what plainer words could replace <i>notwithstanding</i>?</p>
+      <p class="model"><span class="redact" tabindex="0">Even though people were angry in public, Rockefeller said he knew nothing about it. — Notwithstanding ≈ despite / even though / in spite of.</span></p>
+      <p class="reg-note"><b>Callback:</b> <i>notwithstanding</i> is a fronted concession — same job as the <i>although / whereas</i> connectors we worked on. Just a dressier suit.</p>
+    </div>
+
+    <details class="notes">
+      <summary>Three quiet grammar notes (optional)</summary>
+      <div class="body">
+        <p><b>Causative <i>have</i>.</b> Carley “<i>had an underling dash off</i> a letter.” The pattern <code>have + person + base verb</code> means you make/arrange for someone else to do it. Compare: <i>I had my assistant send it.</i></p>
+        <p><b><i>Want of</i> = lack of.</b> An old, formal construction. <i>For want of a better word…</i> still survives in careful speech.</p>
+        <p><b>Participial openers.</b> “<i>No bluffer</i>, Carley set up a store…” The sentence front-loads a verdict before the subject even arrives. It's a hallmark of this elevated style — and a tool you can borrow when you want to sound assured.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===== III · WORDS ===== -->
+  <section class="panel" id="p-words" role="tabpanel" aria-labelledby="t-words">
+    <p class="lead">Each word is pulled from the passage. First, <b>say a synonym and an antonym yourself</b> — guess, even if you're unsure. Then lift the bars to check and to collect a few you didn't have. The register pill tells you how formal the word feels.</p>
+
+    <div class="card" id="w-pitiless">
+      <span class="tag ox">Word 1</span>
+      <div class="word-head"><span class="word">pitiless</span><span class="pos">adjective</span><span class="reg-pill">literary</span></div>
+      <p class="gloss">showing no mercy or compassion at all.</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">merciless · ruthless · remorseless · unsparing</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">merciful · compassionate · lenient · humane</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="w-lucrative">
+      <span class="tag teal">Word 2</span>
+      <div class="word-head"><span class="word">lucrative</span><span class="pos">adjective</span><span class="reg-pill">neutral–formal</span></div>
+      <p class="gloss">producing a great deal of money; very profitable.</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">profitable · moneymaking · remunerative · well-paid</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">unprofitable · loss-making · worthless</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="w-inveterate">
+      <span class="tag ox">Word 3</span>
+      <div class="word-head"><span class="word">inveterate</span><span class="pos">adjective</span><span class="reg-pill">literary</span></div>
+      <p class="gloss">having a long-established and unlikely-to-change habit.</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">habitual · confirmed · hardened · dyed-in-the-wool · chronic</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">occasional · reformed · casual</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="w-circumspect">
+      <span class="tag teal">Word 4</span>
+      <div class="word-head"><span class="word">circumspect</span><span class="pos">adjective</span><span class="reg-pill">formal</span></div>
+      <p class="gloss">careful to consider all consequences before acting; wary.</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">cautious · guarded · wary · prudent · discreet</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">reckless · rash · incautious · impulsive</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="w-peremptory">
+      <span class="tag ox">Word 5</span>
+      <div class="word-head"><span class="word">peremptory</span><span class="pos">adjective</span><span class="reg-pill">literary</span></div>
+      <p class="gloss">insisting on obedience; abrupt and allowing no refusal.</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">commanding · imperious · brusque · curt · dictatorial</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">tentative · deferential · accommodating · meek</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="w-surreptitious">
+      <span class="tag teal">Word 6</span>
+      <div class="word-head"><span class="word">surreptitious</span><span class="pos">adjective</span><span class="reg-pill">formal</span></div>
+      <p class="gloss">done secretly, to escape notice.</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">covert · stealthy · clandestine · furtive · sneaky</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">open · overt · aboveboard · transparent</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="w-scant">
+      <span class="tag ox">Word 7</span>
+      <div class="word-head"><span class="word">scant</span><span class="pos">adjective</span><span class="reg-pill">formal</span></div>
+      <p class="gloss">barely sufficient; very little. (Here: a <i>scant</i> seventy barrels.)</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">meagre · scarce · slight · minimal · paltry</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">ample · abundant · plentiful · generous</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="w-feigned">
+      <span class="tag teal">Word 8</span>
+      <div class="word-head"><span class="word">feign</span><span class="pos">verb</span><span class="reg-pill">formal</span></div>
+      <p class="gloss">to pretend to feel or have something you don't.</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">fake · simulate · affect · put on · sham</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">reveal · admit · show genuinely</span></div>
+      </div>
+    </div>
+
+    <div class="card" id="w-unambiguous">
+      <span class="tag ox">Word 9</span>
+      <div class="word-head"><span class="word">unambiguous</span><span class="pos">adjective</span><span class="reg-pill">formal</span></div>
+      <p class="gloss">leaving no doubt; perfectly clear in meaning.</p>
+      <div class="sa-row">
+        <div class="sa-col"><div class="sa-label syn">Synonyms</div><span class="redact long" tabindex="0">explicit · unequivocal · plain · clear-cut</span></div>
+        <div class="sa-col"><div class="sa-label ant">Antonyms</div><span class="redact long" tabindex="0">vague · ambiguous · equivocal · murky</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== IV · REACT ===== -->
+  <section class="panel" id="p-react" role="tabpanel" aria-labelledby="t-react">
+    <p class="lead">No right answers here — these are for talking. Take your time; a slow, considered answer is the whole point. Two carry a <span class="field-flag" style="margin:0 4px;">your field</span> flag — only because they sit close to your work, never as a demand.</p>
+
+    <div class="react-item">
+      <span class="num">№ 1</span>
+      <p class="react-q">Carley's entire instruction to the freight agent was four words: <em>“Please turn the screw.”</em> Why do you think such a tiny phrase caused a national scandal when it surfaced years later?</p>
+    </div>
+
+    <div class="react-item">
+      <span class="num">№ 2</span>
+      <p class="react-q">Rockefeller said he knew nothing of Carley's methods — yet kept the profits. Do you believe him? And why might a powerful person <em>prefer</em> not to know?</p>
+      <p class="starter"><b>Stretch it:</b> try answering once bluntly, then once diplomatically — same opinion, two registers.</p>
+    </div>
+
+    <div class="react-item field">
+      <span class="num">№ 3</span>
+      <p class="react-q">Carley gave grocers a 5% discount if they sold <em>only</em> Standard's oil. Clever business, or unfair? Where would you draw the line? <span class="field-flag">your field</span></p>
+    </div>
+
+    <div class="react-item field">
+      <span class="num">№ 4</span>
+      <p class="react-q">The grocery-store trick — selling everything below cost to bankrupt one rival — is illegal now. In your own words, why do you think the law eventually decided to step in? <span class="field-flag">your field</span></p>
+    </div>
+
+    <div class="react-item">
+      <span class="num">№ 5</span>
+      <p class="react-q">Chernow calls Carley “a charming scoundrel.” Have you met that combination — charming <em>and</em> dishonest? How does charm let someone get away with it?</p>
+    </div>
+
+    <div class="react-item">
+      <span class="num">№ 6</span>
+      <p class="react-q">Defend Carley in one sentence. Now attack him in one sentence.</p>
+      <p class="starter"><b>The drill:</b> one sentence as his lawyer, one as his prosecutor. Notice how your word choice shifts.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span>Titan · Ron Chernow · p.254 — “The Puppeteer”</span>
+    <span>Reading engine · Part 1 of 2</span>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY="pawel_titan_v1";
+
+  // ---- vocab targets for auto-highlight (base + simple variants) ----
+  var TARGETS=["pitiless","lucrative","inveterate","circumspect","circumspectly",
+    "euphemistically","euphemism","peremptory","surreptitious","scant","feigned","feign",
+    "unambiguous","vicious","byword","notwithstanding"];
+  var WORDMAP={ // highlighted word -> card id to jump to
+    pitiless:"w-pitiless", lucrative:"w-lucrative", inveterate:"w-inveterate",
+    circumspect:"w-circumspect", peremptory:"w-peremptory", surreptitious:"w-surreptitious",
+    scant:"w-scant", feigned:"w-feigned", feign:"w-feigned", unambiguous:"w-unambiguous"
+  };
+
+  function $(id){return document.getElementById(id);}
+  function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+  // ---------- Tabs ----------
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  function selectTab(btn){
+    tabs.forEach(function(t){
+      var on=(t===btn);
+      t.setAttribute('aria-selected',on?'true':'false');
+      var p=$(t.getAttribute('data-target'));
+      if(p) p.classList.toggle('active',on);
+    });
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){selectTab(t);});
+    t.addEventListener('keydown',function(e){
+      var i=tabs.indexOf(t);
+      if(e.key==='ArrowRight'){e.preventDefault();tabs[(i+1)%tabs.length].focus();selectTab(tabs[(i+1)%tabs.length]);}
+      if(e.key==='ArrowLeft'){e.preventDefault();tabs[(i-1+tabs.length)%tabs.length].focus();selectTab(tabs[(i-1+tabs.length)%tabs.length]);}
+    });
+  });
+
+  // ---------- Redaction reveal ----------
+  function wireRedactions(scope){
+    (scope||document).querySelectorAll('.redact').forEach(function(r){
+      if(r.dataset.wired) return; r.dataset.wired="1";
+      function show(){r.classList.add('shown');}
+      r.addEventListener('click',show);
+      r.addEventListener('keydown',function(e){
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();show();}
+      });
+    });
+  }
+  wireRedactions(document);
+
+  // ---------- Passage ----------
+  var raw=$('raw'), reading=$('reading'), toolbar=$('toolbar'),
+      editorBlock=$('editor-block'), setBtn=$('setBtn'), editBtn=$('editBtn'),
+      groupBtn=$('groupBtn'), focusBtn=$('focusBtn'),
+      smaller=$('smaller'), bigger=$('bigger'), saveHint=$('saveHint');
+  var size=19;
+
+  // sentence/sense-group splitter — gentle, punctuation + a few subordinators
+  function senseGroups(paragraph){
+    // protect "Mr." style dots minimally; split on , ; : — – and . plus subordinators
+    var parts=paragraph.split(/(?<=[,;:])\s+|(?<=[.!?])\s+|\s+(?=(?:who|which|when|while|whereas|although|because|though)\b)/i);
+    var out=[],buf="";
+    parts.forEach(function(seg){
+      seg=seg.trim(); if(!seg) return;
+      // merge very short fragments onto previous
+      if(seg.split(/\s+/).length<=2 && out.length){
+        out[out.length-1]+=" "+seg;
+      } else {
+        out.push(seg);
+      }
+    });
+    return out.length?out:[paragraph];
+  }
+
+  function highlight(text){
+    var safe=esc(text);
+    // build one regex of targets, longest first
+    var sorted=TARGETS.slice().sort(function(a,b){return b.length-a.length;});
+    var re=new RegExp("\\b("+sorted.join("|")+")\\b","gi");
+    return safe.replace(re,function(m){
+      var base=m.toLowerCase();
+      var id=WORDMAP[base]||"";
+      return '<mark class="vocab" data-card="'+id+'">'+m+'</mark>';
+    });
+  }
+
+  function render(){
+    var text=(raw.value||"").trim();
+    var paras=text.split(/\n\s*\n|\n/).map(function(p){return p.trim();}).filter(Boolean);
+    if(!paras.length){ paras=["(No text yet — press Edit text to add the passage.)"]; }
+    var grouped=reading.classList.contains('grouped');
+    var html=paras.map(function(p){
+      if(grouped){
+        var gs=senseGroups(p).map(function(g){return '<span class="grp">'+highlight(g)+'</span>';}).join("");
+        return '<p>'+gs+'</p>';
+      }
+      return '<p>'+highlight(p)+'</p>';
+    }).join("");
+    reading.innerHTML=html;
+    // wire highlighted words -> jump to word card
+    reading.querySelectorAll('mark.vocab').forEach(function(m){
+      m.addEventListener('click',function(){
+        var id=m.getAttribute('data-card'); if(!id) return;
+        selectTab($('t-words'));
+        var card=$(id);
+        if(card){
+          card.scrollIntoView({behavior:'smooth',block:'center'});
+          card.style.boxShadow='5px 5px 0 rgba(46,107,102,.45)';
+          setTimeout(function(){card.style.boxShadow='';},1400);
+        }
+      });
+    });
+    // focus-mode click-to-light
+    reading.querySelectorAll('p').forEach(function(p){
+      p.addEventListener('click',function(){
+        if(!reading.classList.contains('focus'))return;
+        reading.querySelectorAll('p').forEach(function(x){x.classList.remove('lit');});
+        p.classList.add('lit');
+      });
+    });
+  }
+
+  function showReading(){
+    editorBlock.style.display='none';
+    toolbar.style.display='flex';
+    reading.style.display='block';
+    reading.style.setProperty('--read-size',size+'px');
+    render();
+  }
+  function showEditor(){
+    editorBlock.style.display='block';
+    toolbar.style.display='none';
+    reading.style.display='none';
+    raw.focus();
+  }
+
+  function save(){
+    try{ localStorage.setItem(KEY,JSON.stringify({text:raw.value,size:size})); }
+    catch(e){ saveHint.textContent="(Saving unavailable in this view — text still works for now.)"; }
+  }
+  function load(){
+    try{
+      var d=JSON.parse(localStorage.getItem(KEY)||"null");
+      if(d&&typeof d.text==='string'&&d.text.trim()&&d.text.indexOf("Paste the page-254 extract")!==0){
+        raw.value=d.text;
+        if(d.size) size=d.size;
+        return true;
+      }
+    }catch(e){}
+    return false;
+  }
+
+  setBtn.addEventListener('click',function(){ save(); showReading(); });
+  editBtn.addEventListener('click',showEditor);
+  groupBtn.addEventListener('click',function(){
+    var on=reading.classList.toggle('grouped');
+    groupBtn.setAttribute('aria-pressed',on?'true':'false');
+    render();
+  });
+  focusBtn.addEventListener('click',function(){
+    var on=reading.classList.toggle('focus');
+    focusBtn.setAttribute('aria-pressed',on?'true':'false');
+  });
+  smaller.addEventListener('click',function(){ size=Math.max(15,size-1); reading.style.setProperty('--read-size',size+'px'); save(); });
+  bigger.addEventListener('click',function(){ size=Math.min(28,size+1); reading.style.setProperty('--read-size',size+'px'); save(); });
+
+  // init
+  if(load()){ showReading(); }
+})();
+</script>
+</body>
+</html>
