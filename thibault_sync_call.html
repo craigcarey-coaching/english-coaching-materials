@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Sync Call — Speaking Toolkit</title>
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6F1E7;
+    --paper:#FCFAF4;
+    --ink:#2B2622;
+    --burgundy:#7A2E38;
+    --burgundy-soft:#B7737C;
+    --sage:#7C8C6F;
+    --sage-soft:#DDE3D6;
+    --rule:#DAD1C0;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--cream);
+    background-image:repeating-linear-gradient(transparent,transparent 31px,rgba(122,46,56,.06) 32px);
+    color:var(--ink);
+    font-family:Gelasio,Georgia,serif;
+    line-height:1.55;
+    padding:32px 18px 90px;
+  }
+  .sheet{max-width:880px;margin:0 auto}
+  header{border-bottom:2px solid var(--burgundy);padding-bottom:14px;margin-bottom:26px}
+  .eyebrow{
+    font-family:Inter,sans-serif;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--sage);font-weight:600;margin:0 0 6px;
+  }
+  h1{font-size:34px;line-height:1.15;margin:0;font-weight:700}
+  h1 em{color:var(--burgundy);font-style:italic}
+  .sub{font-size:15px;color:#5E564E;margin:8px 0 0;max-width:52ch}
+
+  .beats{
+    display:flex;gap:10px;flex-wrap:wrap;
+    background:var(--paper);border:1px solid var(--rule);border-radius:4px;
+    padding:14px 16px;margin-bottom:30px;
+  }
+  .beat{
+    font-family:Inter,sans-serif;font-size:12px;font-weight:600;
+    color:var(--ink);display:flex;align-items:center;gap:8px;
+  }
+  .beat span{
+    width:20px;height:20px;border-radius:50%;background:var(--burgundy);color:#fff;
+    display:inline-flex;align-items:center;justify-content:center;font-size:11px;
+  }
+  .beat .arrow{color:var(--burgundy-soft);font-size:14px}
+
+  .move{margin-bottom:28px}
+  .move h2{
+    font-size:20px;margin:0 0 2px;font-weight:600;
+    display:flex;align-items:baseline;gap:10px;
+  }
+  .move h2 .n{
+    font-family:Inter,sans-serif;font-size:11px;font-weight:600;color:var(--burgundy);
+    letter-spacing:.1em;
+  }
+  .move .job{font-family:Inter,sans-serif;font-size:12.5px;color:#6B635A;margin:0 0 12px}
+  ul.phrases{list-style:none;padding:0;margin:0;display:grid;gap:7px}
+  ul.phrases li{
+    background:var(--paper);border:1px solid var(--rule);border-left:3px solid var(--sage);
+    border-radius:3px;padding:10px 13px;font-size:15.5px;cursor:pointer;
+    transition:border-color .15s,background .15s,transform .1s;
+  }
+  ul.phrases li:hover,ul.phrases li:focus-visible{
+    border-left-color:var(--burgundy);background:#fff;outline:none;transform:translateX(2px);
+  }
+  ul.phrases li.picked{border-left-color:var(--burgundy);background:#F3E9E9}
+
+  .builder{
+    position:sticky;bottom:0;margin-top:34px;
+    background:var(--paper);border:1px solid var(--burgundy);border-radius:5px;
+    padding:16px 18px;box-shadow:0 -6px 18px rgba(43,38,34,.08);
+  }
+  .builder h3{font-family:Inter,sans-serif;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--burgundy);margin:0 0 10px;font-weight:600}
+  .slots{display:grid;gap:6px;margin-bottom:12px}
+  .slot{
+    border:1px dashed var(--rule);border-radius:3px;padding:9px 11px;
+    font-size:15px;min-height:40px;color:#9A9187;
+  }
+  .slot.filled{border-style:solid;border-color:var(--sage);color:var(--ink);background:#fff}
+  .row{display:flex;gap:8px;flex-wrap:wrap}
+  button{
+    font-family:Inter,sans-serif;font-size:13px;font-weight:600;cursor:pointer;
+    border-radius:3px;padding:8px 14px;border:1px solid var(--burgundy);
+    background:var(--burgundy);color:#fff;
+  }
+  button.ghost{background:transparent;color:var(--burgundy)}
+  button:focus-visible{outline:2px solid var(--sage);outline-offset:2px}
+
+  .saved{margin-top:14px}
+  .saved h4{font-family:Inter,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--sage);margin:0 0 6px;font-weight:600}
+  .saved ol{margin:0;padding-left:20px;font-size:14.5px}
+  .saved li{margin-bottom:5px}
+
+  .cold{margin-top:38px;border-top:2px solid var(--burgundy);padding-top:18px}
+  .cold ol{padding-left:20px;margin:10px 0 0;font-size:15.5px}
+  .cold li{margin-bottom:8px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header>
+    <p class="eyebrow">Label · Sync · DSP release call</p>
+    <h1>Three beats, <em>every time</em></h1>
+    <p class="sub">When you don't have an answer ready, you don't need one. You need a shape. Hold the floor, say your <em>yes—but</em>, then hand the talking back.</p>
+  </header>
+
+  <div class="beats">
+    <div class="beat"><span>1</span> Hold the floor</div><div class="beat arrow">→</div>
+    <div class="beat"><span>2</span> Yes — but</div><div class="beat arrow">→</div>
+    <div class="beat"><span>3</span> Hand it back</div>
+  </div>
+
+  <section class="move" data-move="hold">
+    <h2><span class="n">BEAT 1</span> Hold the floor</h2>
+    <p class="job">Buys you four seconds and sounds engaged, not stuck.</p>
+    <ul class="phrases" id="hold"></ul>
+  </section>
+
+  <section class="move" data-move="table">
+    <h2><span class="n">ANY TIME</span> Put it on the table</h2>
+    <p class="job">Opens a topic, or protects one you don't want lost.</p>
+    <ul class="phrases" id="table"></ul>
+  </section>
+
+  <section class="move" data-move="yesbut">
+    <h2><span class="n">BEAT 2</span> Yes — but</h2>
+    <p class="job">Agree with the person, disagree with the plan.</p>
+    <ul class="phrases" id="yesbut"></ul>
+  </section>
+
+  <section class="move" data-move="back">
+    <h2><span class="n">BEAT 3</span> Hand it back</h2>
+    <p class="job">A curious question. Now they talk, and you listen.</p>
+    <ul class="phrases" id="back"></ul>
+  </section>
+
+  <div class="builder">
+    <h3>Build your line</h3>
+    <div class="slots">
+      <div class="slot" id="slot-hold" data-slot="hold">1 — Hold the floor</div>
+      <div class="slot" id="slot-yesbut" data-slot="yesbut">2 — Yes, but</div>
+      <div class="slot" id="slot-back" data-slot="back">3 — Hand it back</div>
+    </div>
+    <div class="row">
+      <button id="save">Save this line</button>
+      <button class="ghost" id="clear">Clear</button>
+    </div>
+    <div class="saved" id="savedWrap" hidden>
+      <h4>My lines</h4>
+      <ol id="savedList"></ol>
+    </div>
+  </div>
+
+  <section class="cold">
+    <p class="eyebrow">Rehearsal</p>
+    <h2 style="font-size:20px;margin:0">Questions they will actually ask</h2>
+    <p class="sub">Record a voice memo. One three-beat line for each. No script.</p>
+    <ol>
+      <li>When can we have the mastered version?</li>
+      <li>Is the artwork approved by the brand yet?</li>
+      <li>The perfume campaign goes live on the 20th — can you move the release forward?</li>
+      <li>Who is clearing the sample with the original artist's estate?</li>
+      <li>What are we pitching to Spotify editorial, exactly?</li>
+      <li>Do you have social assets ready, or are we building them?</li>
+      <li>What happens if the brand rejects the artwork next week?</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "thibault_syncall_v1";
+
+  // CRAIG — phrase banks. Paste items from the concession/contrast page into `yesbut`.
+  var PHRASES = {
+    hold: [
+      "Let me make sure I've got that right — you're asking about the master?",
+      "Good question. Give me a second on that.",
+      "Off the top of my head I'd say mid-March, but let me confirm.",
+      "I'd rather give you an accurate date than a fast one.",
+      "Can I come back to you on that by Friday?",
+      "My instinct is yes — though I'd want to check with the artist first."
+    ],
+    table: [
+      "Can I pick up on the artwork for a second?",
+      "Before we move on, there's one thing I'd like to flag.",
+      "Just so we're all aligned — the release date is still the 14th?",
+      "Where are we on the mastered version?",
+      "I want to come back to the brand approval, because it affects everything else.",
+      "Can we park that and come back to it at the end?"
+    ],
+    yesbut: [
+      "That works in principle, but the brand still has to sign off.",
+      "I take your point. That said, the master won't be ready before the 3rd.",
+      "I'd love to, although the campaign locks our timing.",
+      "Even though the artwork is late, we can still start the pitch.",
+      "Fair enough — having said that, the clearance is the bigger risk.",
+      "In theory yes. In practice, we're waiting on the label."
+    ],
+    back: [
+      "How does that usually work on your side?",
+      "What would you need from us to make that happen?",
+      "What deadline are you working back from?",
+      "Talk me through the pitch process.",
+      "What's your read on the sync angle?",
+      "What's the risk if we're a week late?",
+      "Is there anything that would make this easier for you?"
+    ]
+  };
+
+  var line = { hold:"", yesbut:"", back:"" };
+  var saved = [];
+
+  function render(bank){
+    var ul = document.getElementById(bank);
+    if(!ul) return;
+    PHRASES[bank].forEach(function(text){
+      var li = document.createElement("li");
+      li.textContent = text;
+      li.tabIndex = 0;
+      li.setAttribute("role","button");
+      li.dataset.bank = bank;
+      li.addEventListener("click", function(){ pick(bank, text, li); });
+      li.addEventListener("keydown", function(e){
+        if(e.key === "Enter" || e.key === " "){ e.preventDefault(); pick(bank, text, li); }
+      });
+      ul.appendChild(li);
+    });
+  }
+
+  function pick(bank, text, li){
+    if(bank === "table"){ // not a slot — flourish only
+      li.classList.toggle("picked");
+      return;
+    }
+    line[bank] = text;
+    var ul = document.getElementById(bank);
+    Array.prototype.forEach.call(ul.children, function(c){ c.classList.remove("picked"); });
+    li.classList.add("picked");
+    paintSlot(bank);
+  }
+
+  function paintSlot(bank){
+    var slot = document.getElementById("slot-" + bank);
+    if(!slot) return;
+    if(line[bank]){
+      slot.textContent = line[bank];
+      slot.classList.add("filled");
+    } else {
+      slot.textContent = slot.dataset.slot === "hold" ? "1 — Hold the floor"
+        : slot.dataset.slot === "yesbut" ? "2 — Yes, but" : "3 — Hand it back";
+      slot.classList.remove("filled");
+    }
+  }
+
+  function fullLine(){
+    return ["hold","yesbut","back"].map(function(k){ return line[k]; })
+      .filter(Boolean).join(" ");
+  }
+
+  function drawSaved(){
+    var wrap = document.getElementById("savedWrap");
+    var list = document.getElementById("savedList");
+    list.innerHTML = "";
+    saved.forEach(function(t){
+      var li = document.createElement("li");
+      li.textContent = t;
+      list.appendChild(li);
+    });
+    wrap.hidden = saved.length === 0;
+  }
+
+  function load(){
+    try{
+      var raw = window.localStorage.getItem(KEY);
+      if(raw){ var p = JSON.parse(raw); if(Array.isArray(p)) saved = p; }
+    }catch(e){ saved = []; }
+    drawSaved();
+  }
+
+  function persist(){
+    try{ window.localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){}
+  }
+
+  function clearLine(){
+    line = { hold:"", yesbut:"", back:"" };
+    ["hold","yesbut","back"].forEach(function(b){
+      paintSlot(b);
+      var ul = document.getElementById(b);
+      Array.prototype.forEach.call(ul.children, function(c){ c.classList.remove("picked"); });
+    });
+  }
+
+  ["hold","table","yesbut","back"].forEach(render);
+  load();
+
+  document.getElementById("save").addEventListener("click", function(){
+    var t = fullLine();
+    if(!t) return;
+    saved.push(t);
+    persist();
+    drawSaved();
+    clearLine();
+  });
+  document.getElementById("clear").addEventListener("click", clearLine);
+
+  window.__sync = { pick:pick, fullLine:fullLine, clearLine:clearLine,
+                    getSaved:function(){ return saved; }, KEY:KEY, PHRASES:PHRASES };
+})();
+</script>
+</body>
+</html>
