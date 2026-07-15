@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reading Aloud — Landing the Content Word</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream:   #F6EFE1;
+    --paper:   #FCF8F0;
+    --ink:     #29241F;
+    --ink-soft:#6C6357;
+    --teal:    #2E6E6A;
+    --teal-dk: #235450;
+    --clay:    #C0623C;
+    --sage:    #8FA07C;
+    --mark:    #F2C879;
+    --line:    #E4DAC6;
+    --radius:  14px;
+    --shadow:  0 1px 0 rgba(41,36,31,.04), 0 8px 24px -14px rgba(41,36,31,.28);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1100px 520px at 82% -8%, #FBF4E6 0%, transparent 60%),
+      var(--cream);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    line-height: 1.55;
+    padding: clamp(20px, 4vw, 56px) clamp(16px, 4vw, 40px);
+  }
+
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  /* ---- Header ---- */
+  .eyebrow {
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--teal);
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 5.2vw, 2.7rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+  }
+
+  h1 em { font-style: italic; color: var(--clay); }
+
+  .lede {
+    font-size: 1.02rem;
+    color: var(--ink-soft);
+    max-width: 58ch;
+    margin: 0 0 26px;
+  }
+
+  /* ---- How-to strip ---- */
+  .howto {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px 6px;
+    margin: 0 0 34px;
+    box-shadow: var(--shadow);
+  }
+  .howto h2 {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: .74rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .steps li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .steps li:last-child { border-bottom: 0; }
+  .steps .n {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    color: var(--teal);
+    font-size: 1.05rem;
+    min-width: 1.1em;
+  }
+  .steps .t { font-size: .96rem; }
+  .steps .t b { font-weight: 600; }
+
+  /* ---- Passage cards ---- */
+  .passage {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px clamp(18px, 3vw, 30px) 20px;
+    margin: 0 0 20px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  .p-num {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    color: var(--teal);
+    font-size: .95rem;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  .p-num::before { content: ""; }
+
+  .text {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(1.3rem, 3.4vw, 1.55rem);
+    line-height: 1.5;
+    margin: 0 0 18px;
+    color: var(--ink);
+  }
+
+  /* the star of the show: a word that "lands" on reveal */
+  .stress {
+    position: relative;
+    font-weight: 400;
+    transition: color .25s ease, font-weight .25s ease;
+    padding: 0 .04em;
+  }
+  .stress::after {
+    content: "";
+    position: absolute;
+    left: -.06em; right: -.06em;
+    bottom: .04em;
+    height: .46em;
+    background: var(--mark);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform .34s cubic-bezier(.22,.61,.36,1);
+    z-index: -1;
+    opacity: .9;
+  }
+  .revealed .stress {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .revealed .stress::after { transform: scaleX(1); }
+  /* stagger successive marks so they land like beats */
+  .revealed .stress:nth-of-type(2)::after { transition-delay: .10s; }
+  .revealed .stress:nth-of-type(3)::after { transition-delay: .20s; }
+  .revealed .stress:nth-of-type(4)::after { transition-delay: .30s; }
+  .revealed .stress:nth-of-type(5)::after { transition-delay: .40s; }
+
+  .controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+  .reveal-btn {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: .9rem;
+    font-weight: 600;
+    letter-spacing: .01em;
+    color: #fff;
+    background: var(--teal);
+    border: 1px solid var(--teal-dk);
+    border-radius: 999px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: background .18s ease, transform .08s ease;
+  }
+  .reveal-btn:hover { background: var(--teal-dk); }
+  .reveal-btn:active { transform: translateY(1px); }
+  .reveal-btn:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; }
+  .revealed .reveal-btn { background: var(--paper); color: var(--teal); }
+  .revealed .reveal-btn:hover { background: #F1E9D6; }
+
+  .why {
+    font-size: .95rem;
+    color: var(--ink-soft);
+    max-width: 60ch;
+    margin: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .35s ease, opacity .3s ease, margin .3s ease;
+    border-left: 3px solid var(--clay);
+    padding-left: 0;
+  }
+  .revealed .why {
+    max-height: 260px;
+    opacity: 1;
+    margin: 16px 0 0;
+    padding-left: 14px;
+  }
+  .why em { color: var(--clay); font-style: italic; font-weight: 500; }
+
+  /* ---- Footer ---- */
+  footer {
+    margin-top: 30px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .source { font-size: .82rem; color: var(--ink-soft); font-style: italic; margin: 0; }
+  .reset {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: .82rem;
+    color: var(--ink-soft);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 14px;
+    cursor: pointer;
+  }
+  .reset:hover { border-color: var(--sage); color: var(--ink); }
+  .reset:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+    .revealed .stress::after { transform: scaleX(1); }
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .reveal-btn, .reset { display: none; }
+    .passage, .howto { box-shadow: none; break-inside: avoid; }
+    .stress { color: var(--ink); font-weight: 600; }
+    .stress::after { transform: scaleX(1); }
+    .why { max-height: none; opacity: 1; margin: 16px 0 0; padding-left: 14px; }
+  }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">Reading aloud</p>
+    <h1>Landing the <em>content word</em></h1>
+    <p class="lede">English doesn't give every syllable equal weight. The meaning rides on a few strong words; everything around them gets swallowed. Your job isn't to read every word evenly — it's to decide which word has to <strong>land</strong>.</p>
+
+    <section class="howto" aria-label="How to use this sheet">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><span class="n">1</span><span class="t">Read the line aloud, naturally, once.</span></li>
+        <li><span class="n">2</span><span class="t">Choose the <b>one or two words</b> that carry the meaning.</span></li>
+        <li><span class="n">3</span><span class="t">Read it again — <b>hit those words hard</b>, let the rest go light and quick.</span></li>
+        <li><span class="n">4</span><span class="t">Reveal the suggestion and compare. There's rarely only one right answer.</span></li>
+      </ol>
+    </section>
+
+    <div id="passages"></div>
+
+    <footer>
+      <p class="source" id="source"></p>
+      <button class="reset" id="reset">Reset all</button>
+    </footer>
+  </main>
+
+<script>
+  /* =========================================================
+     REUSABLE CONTENT BLOCK
+     Swap the items below for any lesson. Wrap the word(s) you
+     want stressed in {curly braces}. Everything else is optional.
+     `source` is a small caption at the foot of the sheet.
+     ========================================================= */
+  const SOURCE = 'Lines from Roddy Doyle\u2019s review of \u201CSay Nothing\u201D by Patrick Radden Keefe.';
+
+  const PASSAGES = [
+    {
+      text: 'She disappears \u2014 she {is} {disappeared}.',
+      why: 'The weight on <em>is</em> turns \u201Cdisappeared\u201D from something that happened into something done <em>to</em> her. The grammar itself carries the violence \u2014 let the pause before it do the work.'
+    },
+    {
+      text: '\u201CBlue Velvet,\u201D with none of the {velvet}.',
+      why: 'Contrast stress. The two \u201Cvelvets\u201D must sound different: the first names the film, the second takes it away. Land the second one and let the first stay flat.'
+    },
+    {
+      text: 'Gerry Adams, Bobby Sands, Bloody Sunday, Margaret Thatcher, Ian Paisley \u2014 names that can still {silence} a room or {start a fight}.',
+      why: 'A list climbs \u2014 give each name its own small beat, voice rising slightly through the series. Then everything drops onto the payoff: <em>silence a room</em>, <em>start a fight</em>. The landing is the point of the climb.'
+    },
+    {
+      text: 'There will be trouble, and there might also be {Troubles}.',
+      why: 'Two almost-identical words that must mean different things \u2014 using weight alone. \u201CTroubles\u201D (capital T) is the whole history, so give it more weight and a small pause before it. The stress does what the capital letter can\u2019t say aloud.'
+    }
+  ];
+
+  /* ---- render ---- */
+  function escapeHTML(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function markup(s) {
+    // escape first, then convert {word} -> highlighted span
+    return escapeHTML(s).replace(/\{([^}]+)\}/g, '<span class="stress">$1</span>');
+  }
+
+  const container = document.getElementById('passages');
+  PASSAGES.forEach(function (p, i) {
+    const card = document.createElement('section');
+    card.className = 'passage';
+    card.innerHTML =
+      '<span class="p-num">Line ' + (i + 1) + '</span>' +
+      '<p class="text">' + markup(p.text) + '</p>' +
+      '<div class="controls">' +
+        '<button class="reveal-btn" type="button" aria-expanded="false">Reveal the stress</button>' +
+      '</div>' +
+      (p.why ? '<p class="why">' + p.why + '</p>' : '');
+
+    const btn = card.querySelector('.reveal-btn');
+    btn.addEventListener('click', function () {
+      const on = card.classList.toggle('revealed');
+      btn.textContent = on ? 'Hide' : 'Reveal the stress';
+      btn.setAttribute('aria-expanded', on ? 'true' : 'false');
+    });
+    container.appendChild(card);
+  });
+
+  document.getElementById('source').textContent = SOURCE || '';
+
+  document.getElementById('reset').addEventListener('click', function () {
+    document.querySelectorAll('.passage.revealed').forEach(function (c) {
+      c.classList.remove('revealed');
+      const b = c.querySelector('.reveal-btn');
+      b.textContent = 'Reveal the stress';
+      b.setAttribute('aria-expanded', 'false');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
