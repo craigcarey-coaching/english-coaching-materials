@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mira and the Whole Wide World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#8ECAE6;
+    --sunny:#FFD166;
+    --coral:#FF8FA3;
+    --mint:#8AE0AE;
+    --grape:#C3AED6;
+    --cream:#FFF8EE;
+    --paper:#FFFFFF;
+    --ink:#4A4063;
+    --ink-soft:#7A7090;
+    --shadow:rgba(74,64,99,.18);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Nunito',system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 500px at 15% -5%, #FFE9C7 0%, transparent 60%),
+      radial-gradient(1000px 500px at 100% 0%, #D8F0FA 0%, transparent 55%),
+      radial-gradient(900px 600px at 50% 120%, #FBDDE6 0%, transparent 55%),
+      var(--cream);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:860px; margin:0 auto; padding:18px 20px 60px; }
+
+  /* ---------- Journey path ---------- */
+  .journey{ display:flex; align-items:center; justify-content:center; gap:6px; margin:6px 0 22px; flex-wrap:wrap; }
+  .stop{ display:flex; flex-direction:column; align-items:center; gap:4px; width:74px; }
+  .stop .bubble{
+    width:52px;height:52px;border-radius:50%;
+    display:grid;place-items:center; font-size:24px;
+    background:var(--paper); border:3px solid #EADFF1;
+    box-shadow:0 4px 0 var(--shadow);
+    transition:transform .25s ease, background .25s ease, border-color .25s ease;
+  }
+  .stop .label{ font-size:.72rem; font-weight:800; color:var(--ink-soft); text-align:center; }
+  .stop.active .bubble{ transform:scale(1.12); background:var(--sunny); border-color:#F6B93B; box-shadow:0 0 0 6px rgba(255,209,102,.35), 0 4px 0 var(--shadow); }
+  .stop.active .label{ color:var(--ink); }
+  .stop.done .bubble{ background:var(--mint); border-color:#5FC98A; color:#1f5e3a; }
+  .dash{ width:26px; height:4px; border-radius:4px; background:#EADFF1; }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--paper); border-radius:26px; padding:28px 26px;
+    box-shadow:0 10px 0 var(--shadow), 0 18px 40px rgba(74,64,99,.12);
+    border:2px solid #F2EAF7;
+  }
+  .eyebrow{ font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:var(--coral); font-size:.82rem; margin:0 0 4px; }
+  h1{ font-family:'Caprasimo',cursive; font-weight:400; font-size:2.5rem; line-height:1.05; margin:.1em 0 .35em; color:var(--ink); }
+  h2{ font-family:'Caprasimo',cursive; font-weight:400; font-size:1.9rem; margin:.1em 0 .3em; color:var(--ink); }
+  .sub{ color:var(--ink-soft); font-weight:700; margin:0 0 18px; }
+
+  /* story text */
+  .story p{ font-size:1.5rem; line-height:1.75; margin:0 0 1.1em; }
+  .word{
+    font:inherit; cursor:pointer; border:none;
+    background:linear-gradient(180deg,#FFF2C2,#FFE49B);
+    color:#7a5a12; padding:.02em .3em; border-radius:.5em;
+    box-shadow:0 2px 0 rgba(246,185,59,.5); font-weight:800;
+  }
+  .word.tapped{ background:linear-gradient(180deg,#C6F1D6,#9BE5B7); color:#1f5e3a; box-shadow:0 2px 0 rgba(95,201,138,.6); }
+
+  /* buttons */
+  .btn{
+    font-family:'Nunito',sans-serif; font-weight:800; font-size:1.05rem;
+    border:none; cursor:pointer; color:#fff; padding:14px 22px; border-radius:16px;
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  .btn:active{ transform:translateY(3px); }
+  .btn.coral{ background:var(--coral); box-shadow:0 5px 0 #E56A82; }
+  .btn.coral:active{ box-shadow:0 2px 0 #E56A82; }
+  .btn.sky{ background:var(--sky); box-shadow:0 5px 0 #5EA9C9; }
+  .btn.sky:active{ box-shadow:0 2px 0 #5EA9C9; }
+  .btn.grape{ background:var(--grape); box-shadow:0 5px 0 #A488BF; }
+  .btn.grape:active{ box-shadow:0 2px 0 #A488BF; }
+  .btn.ghost{ background:#F0E9F7; color:var(--ink); box-shadow:0 5px 0 #DBCDE9; }
+  .btn.ghost:active{ box-shadow:0 2px 0 #DBCDE9; }
+
+  .footer{ display:flex; align-items:center; justify-content:space-between; margin-top:22px; gap:12px; }
+
+  /* option grid */
+  .opts{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:8px 0 4px; }
+  @media(max-width:560px){ .opts{ grid-template-columns:1fr; } .story p{ font-size:1.28rem; } h1{ font-size:2rem; } }
+  .opt{
+    background:var(--cream); border:3px solid #EADFF1; border-radius:20px;
+    padding:20px 12px; cursor:pointer; text-align:center; font-weight:800; font-size:1.05rem;
+    color:var(--ink); box-shadow:0 5px 0 var(--shadow); transition:transform .1s ease;
+  }
+  .opt .emo{ display:block; font-size:2.4rem; margin-bottom:8px; }
+  .opt:active{ transform:translateY(3px); box-shadow:0 2px 0 var(--shadow); }
+  .opt.right{ background:#D9F7E4; border-color:#5FC98A; }
+  .opt.wrong{ background:#FCE0E6; border-color:#E56A82; opacity:.7; }
+
+  /* verb time machine */
+  .verbrow{ display:flex; flex-wrap:wrap; gap:14px; margin:14px 0; }
+  .verbchip{
+    font-family:'Nunito',sans-serif; font-weight:800; font-size:1.25rem;
+    padding:16px 22px; border-radius:18px; cursor:pointer; border:3px solid #EADFF1;
+    background:var(--paper); color:var(--ink); box-shadow:0 5px 0 var(--shadow);
+    position:relative; transition:transform .18s ease, background .25s ease;
+  }
+  .verbchip:active{ transform:translateY(3px); box-shadow:0 2px 0 var(--shadow); }
+  .verbchip.flipped{ background:linear-gradient(180deg,#E7DBF6,#D3BFF0); border-color:#A488BF; transform:rotateX(8deg) scale(1.04); }
+  .verbchip .past{ display:block; font-size:.85rem; color:#6b4a99; margin-top:2px; min-height:1em; }
+
+  /* treasure */
+  .chest{ text-align:center; }
+  .gems{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:16px 0; }
+  .gem{ background:linear-gradient(180deg,#FFF2C2,#FFD166); color:#7a5a12; font-weight:800; padding:10px 16px; border-radius:14px; box-shadow:0 3px 0 rgba(246,185,59,.6); }
+  .empty{ color:var(--ink-soft); font-weight:700; }
+
+  .note{
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(120%);
+    background:var(--ink); color:#fff; font-weight:800; padding:12px 20px; border-radius:14px;
+    box-shadow:0 8px 24px rgba(0,0,0,.2); transition:transform .3s ease; z-index:50; max-width:90vw; text-align:center;
+  }
+  .note.show{ transform:translateX(-50%) translateY(0); }
+
+  .tinybar{ display:flex; justify-content:flex-end; gap:8px; margin-bottom:8px; }
+  .tinybar button{ font-size:.72rem; font-weight:800; color:var(--ink-soft); background:none; border:none; cursor:pointer; text-decoration:underline; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="tinybar">
+      <button id="exportBtn">save words</button>
+      <button id="resetBtn">start over</button>
+    </div>
+    <div class="journey" id="journey"></div>
+    <div id="stage"></div>
+  </div>
+  <div class="note" id="note"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "emilie_journey_v1";
+  var state = { words: [] };
+  try{ var raw = localStorage.getItem(KEY); if(raw){ state = JSON.parse(raw) || state; if(!state.words) state.words=[]; } }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+
+  var journeyEl = document.getElementById("journey");
+  var stageEl = document.getElementById("stage");
+  var noteEl = document.getElementById("note");
+  var noteTimer = null;
+  function pingNote(msg){
+    noteEl.textContent = msg; noteEl.classList.add("show");
+    if(noteTimer) clearTimeout(noteTimer);
+    noteTimer = setTimeout(function(){ noteEl.classList.remove("show"); }, 2200);
+  }
+
+  function collect(text, kind){
+    if(state.words.some(function(x){ return x.text.toLowerCase()===text.toLowerCase(); })) return;
+    state.words.push({ text:text, kind:kind||"word" }); save();
+  }
+
+  var STAGES = [
+    { emo:"\uD83D\uDCD6", label:"Story" },
+    { emo:"\uD83D\uDD0D", label:"Mystery" },
+    { emo:"\u23F3", label:"Time Machine" },
+    { emo:"\uD83D\uDC8E", label:"Treasure" }
+  ];
+  var current = 0;
+
+  function renderJourney(){
+    journeyEl.innerHTML = "";
+    STAGES.forEach(function(s,i){
+      var stop = document.createElement("div");
+      stop.className = "stop" + (i===current?" active":"") + (i<current?" done":"");
+      var b = document.createElement("div"); b.className="bubble"; b.textContent = i<current ? "\u2713" : s.emo;
+      var l = document.createElement("div"); l.className="label"; l.textContent = s.label;
+      stop.appendChild(b); stop.appendChild(l);
+      journeyEl.appendChild(stop);
+      if(i < STAGES.length-1){ var d=document.createElement("div"); d.className="dash"; journeyEl.appendChild(d); }
+    });
+  }
+
+  function go(i){ current = i; renderJourney(); render(); if(typeof window!=="undefined" && window.scrollTo) window.scrollTo({top:0,behavior:"smooth"}); }
+  function next(){ if(current < STAGES.length-1) go(current+1); }
+
+  function footer(leftLabel, rightLabel, rightFn, rightClass){
+    var f = document.createElement("div"); f.className="footer";
+    var left = document.createElement("span");
+    left.style.color="var(--ink-soft)"; left.style.fontWeight="800"; left.textContent = leftLabel || "";
+    f.appendChild(left);
+    if(rightLabel){
+      var b = document.createElement("button");
+      b.className = "btn " + (rightClass||"coral"); b.textContent = rightLabel; b.onclick = rightFn;
+      f.appendChild(b);
+    }
+    return f;
+  }
+
+  // ============ STAGE 0 : STORY ============
+  function renderStory(){
+    var c = document.createElement("div"); c.className="card story";
+    c.innerHTML =
+      '<p class="eyebrow">Read it out loud</p>'+
+      '<h1>Mira and the Whole&nbsp;Wide World</h1>'+
+      '<p class="sub">Tap a glowing word if you want to keep it. Then read every line out loud!</p>';
+
+    var paras = [
+      ['Mira loved to travel. She went to busy cities and small ',['village','villages'],', and she talked to everyone she met. On a train, she chatted with an old man who sold the warm, round thing you eat for breakfast. In a ',['market','market'],', she spoke with a woman who sold the colourful thing you open when it rains. Mira smiled, asked questions, and made new friends in every place she visited.'],
+      ['One day, a boy watched her in surprise. "How do you speak to all these people?" he asked. "I only know one language!" Mira stopped and thought. She never knew this was special. To her, talking was as easy as walking. But now she saw that not everyone could do what she did so ',['naturally','naturally'],'.'],
+      ['That night, Mira understood something important. Her words were like a key that opened every door. She could share stories with a farmer, an artist, a ',['sailor','sailor'],' \u2014 with anyone, anywhere. Her special power was not magic. It was simply this: she could talk to all people, from all ',['walks of life','walks of life'],', and make the whole wide world feel like home.']
+    ];
+
+    paras.forEach(function(parts){
+      var p = document.createElement("p");
+      parts.forEach(function(seg){
+        if(typeof seg === "string"){ p.appendChild(document.createTextNode(seg)); }
+        else {
+          var key = seg[0], shown = seg[1];
+          var w = document.createElement("button");
+          w.className="word"; w.type="button"; w.textContent = shown;
+          if(state.words.some(function(x){return x.text.toLowerCase()===key.toLowerCase();})) w.classList.add("tapped");
+          w.onclick = function(){ collect(key,"noun"); w.classList.add("tapped"); pingNote('"'+key+'" added to your treasure!'); };
+          p.appendChild(w);
+        }
+      });
+      c.appendChild(p);
+    });
+
+    c.appendChild(footer("Stop 1 of 4", "I read it! Next \u2192", next, "coral"));
+    stageEl.innerHTML=""; stageEl.appendChild(c);
+    pingNote("Read the whole story out loud, then tap Next.");
+  }
+
+  // ============ STAGE 1 : MYSTERY (circumlocution) ============
+  var riddles = [
+    { q:"The warm, round thing you eat in the morning.", answer:"a bread roll",
+      opts:[{e:"\uD83E\uDD50",t:"a bread roll",ok:true},{e:"\uD83D\uDC5F",t:"a shoe"},{e:"\u2601\uFE0F",t:"a cloud"}] },
+    { q:"The colourful thing you open when it rains.", answer:"an umbrella",
+      opts:[{e:"\uD83D\uDCD6",t:"a book"},{e:"\u2602\uFE0F",t:"an umbrella",ok:true},{e:"\uD83C\uDFA9",t:"a hat"}] },
+    { q:"The bright thing in the sky that gives us daytime.", answer:"the sun",
+      opts:[{e:"\u2B50",t:"a star"},{e:"\uD83C\uDF19",t:"the moon"},{e:"\u2600\uFE0F",t:"the sun",ok:true}] }
+  ];
+  var produceSet = [
+    {e:"\uD83C\uDF4C",t:"banana"},{e:"\uD83E\uDE91",t:"chair"},{e:"\uD83D\uDD11",t:"key"},
+    {e:"\uD83D\uDC18",t:"elephant"},{e:"\uD83C\uDF55",t:"pizza"},{e:"\uD83D\uDEB2",t:"bicycle"}
+  ];
+  var rIndex = 0, producing = false, produceIdx = 0;
+
+  function renderMystery(){
+    var c = document.createElement("div"); c.className="card";
+    if(!producing){
+      var r = riddles[rIndex];
+      c.innerHTML =
+        '<p class="eyebrow">Mystery things</p>'+
+        '<h2>Guess what Mira means</h2>'+
+        '<p class="sub">She describes things without naming them. Which one is it?</p>'+
+        '<p style="font-size:1.35rem;font-weight:800;line-height:1.5;margin:0 0 6px;">\u201C'+r.q+'\u201D</p>';
+      var grid = document.createElement("div"); grid.className="opts";
+      r.opts.forEach(function(o){
+        var d = document.createElement("div"); d.className="opt";
+        d.innerHTML = '<span class="emo">'+o.e+'</span>'+o.t;
+        d.onclick = function(){
+          if(d.classList.contains("right")||d.classList.contains("wrong")) return;
+          if(o.ok){
+            d.classList.add("right"); pingNote("Yes! " + r.answer + " \uD83C\uDF89");
+            setTimeout(function(){
+              rIndex++;
+              if(rIndex >= riddles.length){ producing = true; produceIdx = 0; }
+              render();
+            }, 900);
+          } else { d.classList.add("wrong"); pingNote("Good try \u2014 listen again!"); }
+        };
+        grid.appendChild(d);
+      });
+      c.appendChild(grid);
+      c.appendChild(footer("Riddle "+(rIndex+1)+" of "+riddles.length, null));
+    } else {
+      var item = produceSet[produceIdx];
+      c.innerHTML =
+        '<p class="eyebrow">Your turn</p>'+
+        '<h2>Now you describe it!</h2>'+
+        '<p class="sub">Don\u2019t say the word. Tell Craig what it is \u2014 what you do with it, what it looks like.</p>'+
+        '<div style="font-size:5rem;text-align:center;margin:10px 0;">'+item.e+'</div>';
+      var row = document.createElement("div"); row.className="footer";
+      var give = document.createElement("button");
+      give.className="btn ghost"; give.textContent="\uD83C\uDFB2 New thing";
+      give.onclick = function(){ produceIdx = (produceIdx+1) % produceSet.length; render(); };
+      row.appendChild(give);
+      var nx = document.createElement("button");
+      nx.className="btn coral"; nx.textContent="To the Time Machine \u2192"; nx.onclick = next;
+      row.appendChild(nx);
+      c.appendChild(row);
+    }
+    stageEl.innerHTML=""; stageEl.appendChild(c);
+  }
+
+  // ============ STAGE 2 : VERB TIME MACHINE ============
+  var verbs = [
+    { present:"talk", past:"talked" }, { present:"smile", past:"smiled" },
+    { present:"ask", past:"asked" }, { present:"watch", past:"watched" },
+    { present:"go", past:"went" }, { present:"speak", past:"spoke" },
+    { present:"make", past:"made" }, { present:"know", past:"knew" }
+  ];
+  function renderTime(){
+    var c = document.createElement("div"); c.className="card";
+    c.innerHTML =
+      '<p class="eyebrow">Verb time machine</p>'+
+      '<h2>Send the words to yesterday</h2>'+
+      '<p class="sub">Tap a word to travel it back in time. What changed? Read both out loud!</p>';
+    var row = document.createElement("div"); row.className="verbrow";
+    verbs.forEach(function(v){
+      var chip = document.createElement("button");
+      chip.className="verbchip"; chip.type="button";
+      chip.innerHTML = v.present + '<span class="past"></span>';
+      chip.onclick = function(){
+        if(chip.classList.contains("flipped")) return;
+        chip.classList.add("flipped");
+        chip.querySelector(".past").textContent = "\u2192 " + v.past;
+        collect(v.past,"verb");
+        pingNote('"'+v.present+'" became "'+v.past+'"');
+      };
+      row.appendChild(chip);
+    });
+    c.appendChild(row);
+    c.appendChild(footer("Stop 3 of 4", "Open the treasure \u2192", next, "grape"));
+    stageEl.innerHTML=""; stageEl.appendChild(c);
+  }
+
+  // ============ STAGE 3 : TREASURE ============
+  function renderChest(){
+    var c = document.createElement("div"); c.className="card chest";
+    c.innerHTML =
+      '<div style="font-size:4rem;">\uD83D\uDC8E</div>'+
+      '<p class="eyebrow">Your treasure</p>'+
+      '<h2>Look what you collected!</h2>';
+    var gems = document.createElement("div"); gems.className="gems";
+    if(state.words.length === 0){
+      var e = document.createElement("p"); e.className="empty"; e.textContent="Go back and tap some words to fill your chest!";
+      gems.appendChild(e);
+    } else {
+      state.words.forEach(function(w){
+        var g = document.createElement("span"); g.className="gem"; g.textContent = w.text; gems.appendChild(g);
+      });
+    }
+    c.appendChild(gems);
+    var p = document.createElement("p"); p.className="sub"; p.style.marginTop="12px";
+    p.textContent = state.words.length + " word" + (state.words.length===1?"":"s") + " saved. Read them all out loud one more time!";
+    c.appendChild(p);
+    var row = document.createElement("div"); row.className="footer";
+    var again = document.createElement("button");
+    again.className="btn ghost"; again.textContent="\u2190 Back to the start"; again.onclick = function(){ go(0); };
+    row.appendChild(again);
+    var done = document.createElement("button");
+    done.className="btn mint"; done.style.background="var(--mint)"; done.style.boxShadow="0 5px 0 #5FC98A"; done.style.color="#1f5e3a";
+    done.textContent="Great job! \uD83C\uDF1F"; done.onclick = function(){ pingNote("You spoke to the whole wide world today! \uD83C\uDF0D"); };
+    row.appendChild(done);
+    c.appendChild(row);
+    stageEl.innerHTML=""; stageEl.appendChild(c);
+  }
+
+  function render(){
+    renderJourney();
+    if(current===0) renderStory();
+    else if(current===1) renderMystery();
+    else if(current===2) renderTime();
+    else renderChest();
+  }
+
+  document.getElementById("resetBtn").onclick = function(){
+    state = { words: [] }; save(); rIndex=0; producing=false; produceIdx=0; go(0); pingNote("Fresh start!");
+  };
+  document.getElementById("exportBtn").onclick = function(){
+    var text = state.words.map(function(w){ return w.text; }).join(", ");
+    pingNote(state.words.length ? ("Words: " + text) : "No words yet \u2014 tap some!");
+  };
+
+  render();
+})();
+</script>
+</body>
+</html>
