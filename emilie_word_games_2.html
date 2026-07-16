@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Emilie's Word Games</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#8ECAE6; --sunny:#FFD166; --coral:#FF8FA3; --mint:#8AE0AE; --grape:#C3AED6;
+    --cream:#FFF8EE; --paper:#FFFFFF; --ink:#4A4063; --ink-soft:#7A7090; --shadow:rgba(74,64,99,.18);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+    background:
+      radial-gradient(1200px 500px at 15% -5%, #FFE9C7 0%, transparent 60%),
+      radial-gradient(1000px 500px at 100% 0%, #D8F0FA 0%, transparent 55%),
+      radial-gradient(900px 600px at 50% 120%, #FBDDE6 0%, transparent 55%),
+      var(--cream);
+    min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ max-width:820px; margin:0 auto; padding:16px 18px 60px; }
+  header{ text-align:center; margin:6px 0 12px; }
+  header h1{ font-family:'Caprasimo',cursive; font-weight:400; font-size:2.3rem; margin:0; color:var(--ink); }
+  header .sub{ color:var(--ink-soft); font-weight:700; margin:4px 0 0; }
+
+  .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin:10px 0 20px; flex-wrap:wrap; }
+  .toggle{ display:inline-flex; background:var(--paper); border-radius:16px; padding:5px; box-shadow:0 4px 0 var(--shadow); border:2px solid #F2EAF7; }
+  .toggle button{
+    font:inherit; font-weight:800; border:none; cursor:pointer; padding:10px 16px; border-radius:12px;
+    background:transparent; color:var(--ink-soft);
+  }
+  .toggle button.on{ background:var(--sunny); color:#7a5a12; box-shadow:0 3px 0 rgba(246,185,59,.5); }
+  .wordsbtn{
+    font:inherit; font-weight:800; border:none; cursor:pointer; padding:11px 18px; border-radius:14px;
+    background:var(--coral); color:#fff; box-shadow:0 5px 0 #E56A82;
+  }
+  .wordsbtn:active{ transform:translateY(3px); box-shadow:0 2px 0 #E56A82; }
+
+  .menu{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  @media(max-width:560px){ .menu{ grid-template-columns:1fr; } }
+  .gamecard{
+    font:inherit; cursor:pointer; border:none; text-align:left;
+    display:flex; flex-direction:column; gap:2px; padding:22px 20px; border-radius:22px; color:#fff;
+    box-shadow:0 8px 0 var(--shadow); transition:transform .1s ease;
+  }
+  .gamecard:active{ transform:translateY(4px); box-shadow:0 4px 0 var(--shadow); }
+  .gamecard .ic{ font-size:2.4rem; }
+  .gamecard .gt{ font-family:'Caprasimo',cursive; font-weight:400; font-size:1.5rem; }
+  .gamecard .gd{ font-weight:700; opacity:.92; }
+  .c1{ background:var(--coral); box-shadow:0 8px 0 #E56A82; }
+  .c2{ background:var(--sky); box-shadow:0 8px 0 #5EA9C9; }
+  .c3{ background:var(--grape); box-shadow:0 8px 0 #A488BF; }
+  .c4{ background:var(--mint); box-shadow:0 8px 0 #5FC98A; color:#1f5e3a; }
+
+  .panel{ display:none; background:var(--paper); border-radius:24px; padding:24px 22px; box-shadow:0 10px 0 var(--shadow), 0 18px 40px rgba(74,64,99,.12); border:2px solid #F2EAF7; }
+  .panel.open{ display:block; }
+  .ptop{ display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .ptitle{ font-family:'Caprasimo',cursive; font-weight:400; font-size:1.6rem; }
+  .back{ font:inherit; font-weight:800; border:none; cursor:pointer; padding:9px 16px; border-radius:12px; background:#F0E9F7; color:var(--ink); box-shadow:0 4px 0 #DBCDE9; }
+  .back:active{ transform:translateY(2px); box-shadow:0 2px 0 #DBCDE9; }
+
+  .btn{ font:inherit; font-weight:800; border:none; cursor:pointer; color:#fff; padding:12px 20px; border-radius:14px; }
+  .btn:active{ transform:translateY(3px); }
+  .btn-coral{ background:var(--coral); box-shadow:0 5px 0 #E56A82; }
+  .btn-sky{ background:var(--sky); box-shadow:0 5px 0 #5EA9C9; }
+  .btn-sun{ background:var(--sunny); color:#7a5a12; box-shadow:0 5px 0 #F6B93B; }
+  .btn-star{ background:#F0E9F7; color:var(--ink); box-shadow:0 5px 0 #DBCDE9; }
+  .row{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px; }
+
+  /* hangman */
+  .blanks{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; font-size:2.2rem; font-weight:800; letter-spacing:.05em; margin:8px 0 6px; }
+  .blanks span{ min-width:1.1em; border-bottom:5px solid #EADFF1; text-align:center; padding:0 .05em; }
+  .keys{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin:10px 0; }
+  .key{ font:inherit; font-weight:800; width:44px; height:48px; border:none; border-radius:12px; cursor:pointer; background:var(--cream); color:var(--ink); box-shadow:0 3px 0 var(--shadow); }
+  .key.used{ opacity:.35; }
+  .key.hit{ background:var(--mint); color:#1f5e3a; }
+  .key.miss{ background:#FCE0E6; color:#a33; }
+  .life{ font-size:1.6rem; text-align:center; margin:2px 0; letter-spacing:.15em; }
+  .hintbox{ text-align:center; color:var(--ink-soft); font-weight:700; min-height:1.4em; margin-top:6px; }
+
+  /* scramble */
+  .scram{ text-align:center; }
+  .tiles{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:14px 0; }
+  .tile{ font:inherit; font-weight:800; font-size:1.6rem; width:56px; height:60px; border:none; border-radius:14px; cursor:pointer; background:var(--sky); color:#fff; box-shadow:0 5px 0 #5EA9C9; }
+  .tile:active{ transform:translateY(3px); box-shadow:0 2px 0 #5EA9C9; }
+  .answerbox{ font-size:2rem; font-weight:800; letter-spacing:.12em; min-height:2.4rem; text-align:center; color:var(--ink); }
+
+  /* memory */
+  .grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+  @media(max-width:560px){ .grid{ grid-template-columns:repeat(3,1fr); } }
+  .mcard{ aspect-ratio:3/4; border:none; cursor:pointer; border-radius:16px; background:var(--grape); color:transparent; font-weight:800; font-size:1rem; box-shadow:0 5px 0 #A488BF; display:grid; place-items:center; padding:6px; text-align:center; }
+  .mcard.flip{ background:var(--paper); color:var(--ink); border:3px solid #EADFF1; box-shadow:0 3px 0 var(--shadow); }
+  .mcard.matched{ background:#D9F7E4; color:#1f5e3a; border:3px solid #5FC98A; box-shadow:none; cursor:default; }
+
+  /* odd one out */
+  .odds{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin:8px 0; }
+  .odd{ font:inherit; font-weight:800; font-size:1.2rem; border:3px solid #EADFF1; background:var(--cream); border-radius:18px; padding:22px 12px; cursor:pointer; color:var(--ink); box-shadow:0 5px 0 var(--shadow); }
+  .odd:active{ transform:translateY(3px); box-shadow:0 2px 0 var(--shadow); }
+  .odd.right{ background:#D9F7E4; border-color:#5FC98A; }
+  .odd.wrong{ background:#FCE0E6; border-color:#E56A82; opacity:.75; }
+
+  .feedback{ text-align:center; font-weight:800; min-height:1.6em; margin-top:12px; font-size:1.1rem; }
+
+  /* words drawer */
+  .drawer{ position:fixed; inset:0; background:rgba(74,64,99,.4); display:none; align-items:flex-end; z-index:60; }
+  .drawer.open{ display:flex; }
+  .drawer-inner{ background:var(--paper); width:100%; max-width:820px; margin:0 auto; border-radius:24px 24px 0 0; padding:22px; max-height:75vh; overflow:auto; }
+  .drawer h2{ font-family:'Caprasimo',cursive; font-weight:400; margin:0 0 12px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{ background:linear-gradient(180deg,#FFF2C2,#FFD166); color:#7a5a12; font-weight:800; padding:9px 14px; border-radius:14px; box-shadow:0 3px 0 rgba(246,185,59,.6); }
+  .empty{ color:var(--ink-soft); font-weight:700; }
+
+  .note{ position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(140%); background:var(--ink); color:#fff; font-weight:800; padding:12px 20px; border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,.2); transition:transform .3s ease; z-index:80; max-width:90vw; text-align:center; }
+  .note.show{ transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Word Games ✨</h1>
+      <p class="sub">Pick a game. Say every word out loud!</p>
+    </header>
+
+    <div class="topbar">
+      <div class="toggle" id="toggle">
+        <button data-cat="fantasy" class="on">🐉 Fantasy</button>
+        <button data-cat="everyday">🌍 Everyday</button>
+      </div>
+      <button class="wordsbtn" id="openWords">⭐ My Words (<span id="wcount">0</span>)</button>
+    </div>
+
+    <div class="menu" id="menu">
+      <button class="gamecard c1" data-game="hangman"><span class="ic">🎈</span><span class="gt">Hangman</span><span class="gd">Guess the letters</span></button>
+      <button class="gamecard c2" data-game="scramble"><span class="ic">🔤</span><span class="gt">Scramble</span><span class="gd">Fix the mixed-up word</span></button>
+      <button class="gamecard c3" data-game="memory"><span class="ic">🧠</span><span class="gt">Memory Match</span><span class="gd">Match word to meaning</span></button>
+      <button class="gamecard c4" data-game="odd"><span class="ic">🕵️</span><span class="gt">Odd One Out</span><span class="gd">Spot the different one</span></button>
+    </div>
+
+    <!-- HANGMAN -->
+    <div class="panel" id="p-hangman">
+      <div class="ptop"><span class="ptitle">🎈 Hangman</span><button class="back">← Menu</button></div>
+      <div class="life" id="hm-life"></div>
+      <div class="blanks" id="hm-blanks"></div>
+      <div class="keys" id="hm-keys"></div>
+      <div class="hintbox" id="hm-hint"></div>
+      <div class="feedback" id="hm-fb"></div>
+      <div class="row">
+        <button class="btn btn-sun" id="hm-hintbtn">💡 Hint</button>
+        <button class="btn btn-star" id="hm-star">⭐ Keep word</button>
+        <button class="btn btn-coral" id="hm-next">🔁 New word</button>
+      </div>
+    </div>
+
+    <!-- SCRAMBLE -->
+    <div class="panel" id="p-scramble">
+      <div class="ptop"><span class="ptitle">🔤 Scramble</span><button class="back">← Menu</button></div>
+      <div class="scram">
+        <div class="answerbox" id="sc-answer"></div>
+        <div class="tiles" id="sc-tiles"></div>
+        <div class="hintbox" id="sc-hint"></div>
+        <div class="feedback" id="sc-fb"></div>
+      </div>
+      <div class="row">
+        <button class="btn btn-sun" id="sc-hintbtn">💡 Hint</button>
+        <button class="btn btn-sky" id="sc-clear">↺ Clear</button>
+        <button class="btn btn-star" id="sc-star">⭐ Keep word</button>
+        <button class="btn btn-coral" id="sc-next">🔁 New word</button>
+      </div>
+    </div>
+
+    <!-- MEMORY -->
+    <div class="panel" id="p-memory">
+      <div class="ptop"><span class="ptitle">🧠 Memory Match</span><button class="back">← Menu</button></div>
+      <div class="grid" id="mm-grid"></div>
+      <div class="feedback" id="mm-fb"></div>
+      <div class="row"><button class="btn btn-coral" id="mm-next">🔁 New board</button></div>
+    </div>
+
+    <!-- ODD ONE OUT -->
+    <div class="panel" id="p-odd">
+      <div class="ptop"><span class="ptitle">🕵️ Odd One Out</span><button class="back">← Menu</button></div>
+      <p class="hintbox" id="od-prompt">Which word does not belong? Tap it, then tell Craig why.</p>
+      <div class="odds" id="od-grid"></div>
+      <div class="feedback" id="od-fb"></div>
+      <div class="row"><button class="btn btn-coral" id="od-next">🔁 Next set</button></div>
+    </div>
+  </div>
+
+  <!-- WORDS DRAWER -->
+  <div class="drawer" id="drawer">
+    <div class="drawer-inner">
+      <div class="ptop"><h2>⭐ My Words</h2><button class="back" id="closeWords">Close</button></div>
+      <div class="chips" id="wordChips"></div>
+      <div class="row"><button class="btn btn-star" id="clearWords">Clear all</button></div>
+    </div>
+  </div>
+
+  <div class="note" id="note"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "emilie_games_v1";
+  var saved = { words: [] };
+  try{ var raw = localStorage.getItem(KEY); if(raw){ saved = JSON.parse(raw) || saved; if(!saved.words) saved.words=[]; } }catch(e){}
+  function persist(){ try{ localStorage.setItem(KEY, JSON.stringify(saved)); }catch(e){} }
+
+  // ---------- word data ----------
+  var DATA = {
+    fantasy: {
+      words: [
+        {w:"dragon", hint:"a huge fire-breathing beast"},
+        {w:"wizard", hint:"a person who does magic"},
+        {w:"potion", hint:"a magic drink"},
+        {w:"treasure", hint:"gold and shiny jewels"},
+        {w:"soar", hint:"to fly up very high"},
+        {w:"vanish", hint:"to disappear"},
+        {w:"gallop", hint:"to run fast like a horse"},
+        {w:"glimmer", hint:"to shine with a soft light"}
+      ],
+      pairs: [
+        {w:"soar", m:"fly up high"}, {w:"vanish", m:"disappear"},
+        {w:"gallop", m:"run like a horse"}, {w:"potion", m:"a magic drink"},
+        {w:"knight", m:"a soldier in armour"}, {w:"treasure", m:"gold and jewels"}
+      ],
+      odds: [
+        {items:["dragon","fairy","wizard","bicycle"], odd:"bicycle", why:"the others are magic"},
+        {items:["soar","gallop","sneak","castle"], odd:"castle", why:"the others are actions"},
+        {items:["crown","sword","potion","whisper"], odd:"whisper", why:"the others are things you can hold"}
+      ]
+    },
+    everyday: {
+      words: [
+        {w:"umbrella", hint:"it keeps the rain off you"},
+        {w:"bicycle", hint:"you ride it with two wheels"},
+        {w:"market", hint:"a place to buy food"},
+        {w:"mirror", hint:"you see yourself in it"},
+        {w:"stride", hint:"to walk with big steps"},
+        {w:"whisper", hint:"to talk very quietly"},
+        {w:"munch", hint:"to eat something crunchy"},
+        {w:"wander", hint:"to walk with no plan"}
+      ],
+      pairs: [
+        {w:"stride", m:"walk with big steps"}, {w:"whisper", m:"talk very quietly"},
+        {w:"rush", m:"go very fast"}, {w:"umbrella", m:"keeps rain off you"},
+        {w:"market", m:"place to buy food"}, {w:"mirror", m:"you see yourself in it"}
+      ],
+      odds: [
+        {items:["stride","rush","wander","umbrella"], odd:"umbrella", why:"the others are ways of walking"},
+        {items:["kitchen","garden","market","dragon"], odd:"dragon", why:"the others are real places"},
+        {items:["munch","giggle","whisper","mirror"], odd:"mirror", why:"the others are actions"}
+      ]
+    }
+  };
+
+  var cat = "fantasy";
+  function pool(){ return DATA[cat]; }
+  function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+  // ---------- shared helpers ----------
+  var noteEl = document.getElementById("note"); var noteTimer=null;
+  function ping(msg){ noteEl.textContent=msg; noteEl.classList.add("show"); if(noteTimer) clearTimeout(noteTimer); noteTimer=setTimeout(function(){ noteEl.classList.remove("show"); }, 2000); }
+  function keepWord(word){
+    if(saved.words.some(function(x){ return x.toLowerCase()===word.toLowerCase(); })){ ping('"'+word+'" is already saved'); return; }
+    saved.words.push(word); persist(); renderCount(); ping('\u2B50 "'+word+'" saved!');
+  }
+  function renderCount(){ document.getElementById("wcount").textContent = saved.words.length; }
+
+  // ---------- navigation ----------
+  var panels = { hangman:"p-hangman", scramble:"p-scramble", memory:"p-memory", odd:"p-odd" };
+  var menu = document.getElementById("menu");
+  function openGame(g){
+    menu.style.display="none";
+    Object.keys(panels).forEach(function(k){ document.getElementById(panels[k]).classList.remove("open"); });
+    document.getElementById(panels[g]).classList.add("open");
+    if(g==="hangman") newHangman();
+    else if(g==="scramble") newScramble();
+    else if(g==="memory") newMemory();
+    else newOdd();
+  }
+  function toMenu(){
+    Object.keys(panels).forEach(function(k){ document.getElementById(panels[k]).classList.remove("open"); });
+    menu.style.display="";
+  }
+  [].forEach.call(document.querySelectorAll(".gamecard"), function(b){ b.onclick=function(){ openGame(b.getAttribute("data-game")); }; });
+  [].forEach.call(document.querySelectorAll(".back"), function(b){ if(b.id!=="closeWords") b.onclick=toMenu; });
+
+  // toggle
+  [].forEach.call(document.querySelectorAll("#toggle button"), function(b){
+    b.onclick=function(){
+      [].forEach.call(document.querySelectorAll("#toggle button"), function(x){ x.classList.remove("on"); });
+      b.classList.add("on"); cat=b.getAttribute("data-cat");
+      // re-seed whichever panel is open
+      if(document.getElementById("p-hangman").classList.contains("open")) newHangman();
+      else if(document.getElementById("p-scramble").classList.contains("open")) newScramble();
+      else if(document.getElementById("p-memory").classList.contains("open")) newMemory();
+      else if(document.getElementById("p-odd").classList.contains("open")) newOdd();
+      ping(cat==="fantasy" ? "\uD83D\uDC09 Fantasy words" : "\uD83C\uDF0D Everyday words");
+    };
+  });
+
+  // ---------- HANGMAN ----------
+  var hm = {};
+  function newHangman(){
+    var item = pick(pool().words);
+    hm = { word:item.w.toUpperCase(), hint:item.hint, guessed:[], lives:6, hintShown:false, over:false };
+    document.getElementById("hm-hint").textContent="";
+    document.getElementById("hm-fb").textContent="";
+    drawHangman();
+  }
+  function drawHangman(){
+    var life = document.getElementById("hm-life");
+    life.textContent = "\u2764\uFE0F".repeat(hm.lives) + "\uD83E\uDD0D".repeat(6-hm.lives);
+    var blanks = document.getElementById("hm-blanks"); blanks.innerHTML="";
+    hm.word.split("").forEach(function(ch){
+      var s=document.createElement("span");
+      s.textContent = (ch===" ") ? " " : (hm.guessed.indexOf(ch)>=0 || hm.over ? ch : "");
+      if(ch===" "){ s.style.borderBottom="none"; }
+      blanks.appendChild(s);
+    });
+    var keys=document.getElementById("hm-keys"); keys.innerHTML="";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(function(L){
+      var k=document.createElement("button"); k.className="key"; k.textContent=L;
+      if(hm.guessed.indexOf(L)>=0){ k.classList.add("used"); k.classList.add(hm.word.indexOf(L)>=0?"hit":"miss"); }
+      if(hm.over) k.classList.add("used");
+      k.onclick=function(){ guessHM(L); };
+      keys.appendChild(k);
+    });
+    checkHM();
+  }
+  function guessHM(L){
+    if(hm.over || hm.guessed.indexOf(L)>=0) return;
+    hm.guessed.push(L);
+    if(hm.word.indexOf(L)<0) hm.lives--;
+    drawHangman();
+  }
+  function checkHM(){
+    var won = hm.word.split("").every(function(ch){ return ch===" " || hm.guessed.indexOf(ch)>=0; });
+    var fb=document.getElementById("hm-fb");
+    if(won && !hm.over){ hm.over=true; fb.textContent="\uD83C\uDF89 You got it! Say it out loud!"; fb.style.color="#1f8a4d"; }
+    else if(hm.lives<=0 && !hm.over){ hm.over=true; fb.textContent="The word was "+hm.word+". Read it together!"; fb.style.color="#c0446b"; drawHangman(); }
+  }
+  document.getElementById("hm-hintbtn").onclick=function(){ document.getElementById("hm-hint").textContent="\uD83D\uDCA1 "+hm.hint; };
+  document.getElementById("hm-star").onclick=function(){ keepWord(hm.word.toLowerCase()); };
+  document.getElementById("hm-next").onclick=newHangman;
+
+  // ---------- SCRAMBLE ----------
+  var sc={};
+  function scramble(w){
+    var a=w.split(""), s;
+    do{ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } s=a.join(""); }while(s===w && w.length>1);
+    return a;
+  }
+  function newScramble(){
+    var item=pick(pool().words);
+    sc={ word:item.w.toUpperCase(), hint:item.hint, letters:scramble(item.w.toUpperCase()), used:[], answer:[] };
+    document.getElementById("sc-hint").textContent="";
+    document.getElementById("sc-fb").textContent="";
+    drawScramble();
+  }
+  function drawScramble(){
+    document.getElementById("sc-answer").textContent = sc.answer.join("") || "\u00A0";
+    var tiles=document.getElementById("sc-tiles"); tiles.innerHTML="";
+    sc.letters.forEach(function(L,idx){
+      var t=document.createElement("button"); t.className="tile"; t.textContent=L;
+      if(sc.used.indexOf(idx)>=0){ t.style.visibility="hidden"; }
+      t.onclick=function(){ if(sc.used.indexOf(idx)>=0) return; sc.used.push(idx); sc.answer.push(L); drawScramble(); checkSC(); };
+      tiles.appendChild(t);
+    });
+  }
+  function checkSC(){
+    var fb=document.getElementById("sc-fb");
+    if(sc.answer.length===sc.word.length){
+      if(sc.answer.join("")===sc.word){ fb.textContent="\uD83C\uDF89 Perfect! Say it out loud!"; fb.style.color="#1f8a4d"; }
+      else{ fb.textContent="Not quite \u2014 tap Clear and try again!"; fb.style.color="#c0446b"; }
+    } else { fb.textContent=""; }
+  }
+  document.getElementById("sc-clear").onclick=function(){ sc.used=[]; sc.answer=[]; document.getElementById("sc-fb").textContent=""; drawScramble(); };
+  document.getElementById("sc-hintbtn").onclick=function(){ document.getElementById("sc-hint").textContent="\uD83D\uDCA1 "+sc.hint; };
+  document.getElementById("sc-star").onclick=function(){ keepWord(sc.word.toLowerCase()); };
+  document.getElementById("sc-next").onclick=newScramble;
+
+  // ---------- MEMORY MATCH ----------
+  var mm={};
+  function newMemory(){
+    var pairs = pool().pairs.slice();
+    // shuffle and take 6 pairs (all)
+    var cards=[];
+    pairs.forEach(function(p){ cards.push({id:p.w,text:p.w,type:"word"}); cards.push({id:p.w,text:p.m,type:"mean"}); });
+    for(var i=cards.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=cards[i]; cards[i]=cards[j]; cards[j]=t; }
+    mm={ cards:cards, flipped:[], matched:[], lock:false };
+    document.getElementById("mm-fb").textContent="";
+    drawMemory();
+  }
+  function drawMemory(){
+    var g=document.getElementById("mm-grid"); g.innerHTML="";
+    mm.cards.forEach(function(c,idx){
+      var b=document.createElement("button"); b.className="mcard";
+      var isUp = mm.flipped.indexOf(idx)>=0 || mm.matched.indexOf(c.id)>=0;
+      if(isUp){ b.classList.add("flip"); b.textContent=c.text; }
+      if(mm.matched.indexOf(c.id)>=0){ b.classList.add("matched"); }
+      else if(!isUp){ b.textContent="?"; }
+      b.onclick=function(){ flipMem(idx); };
+      g.appendChild(b);
+    });
+  }
+  function flipMem(idx){
+    if(mm.lock) return;
+    var c=mm.cards[idx];
+    if(mm.matched.indexOf(c.id)>=0 || mm.flipped.indexOf(idx)>=0) return;
+    mm.flipped.push(idx); drawMemory();
+    if(mm.flipped.length===2){
+      var a=mm.cards[mm.flipped[0]], b=mm.cards[mm.flipped[1]];
+      if(a.id===b.id && mm.flipped[0]!==mm.flipped[1]){
+        mm.matched.push(a.id); mm.flipped=[]; drawMemory();
+        ping("\u2B50 " + a.id + " \u2014 keep it? Tap it in My Words!");
+        if(mm.matched.length===pool().pairs.length){ document.getElementById("mm-fb").textContent="\uD83C\uDF89 All matched! Read every pair out loud!"; document.getElementById("mm-fb").style.color="#1f8a4d"; }
+      } else {
+        mm.lock=true;
+        setTimeout(function(){ mm.flipped=[]; mm.lock=false; drawMemory(); }, 850);
+      }
+    }
+  }
+  document.getElementById("mm-next").onclick=newMemory;
+
+  // ---------- ODD ONE OUT ----------
+  var od={};
+  function newOdd(){
+    var set=pick(pool().odds);
+    var items=set.items.slice();
+    for(var i=items.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=items[i]; items[i]=items[j]; items[j]=t; }
+    od={ items:items, odd:set.odd, why:set.why, done:false };
+    document.getElementById("od-fb").textContent="";
+    drawOdd();
+  }
+  function drawOdd(){
+    var g=document.getElementById("od-grid"); g.innerHTML="";
+    od.items.forEach(function(w){
+      var b=document.createElement("button"); b.className="odd"; b.textContent=w;
+      b.onclick=function(){
+        if(od.done) return;
+        if(w===od.odd){ b.classList.add("right"); od.done=true;
+          document.getElementById("od-fb").textContent="\uD83C\uDF89 Yes! Now tell Craig why."; document.getElementById("od-fb").style.color="#1f8a4d";
+          ping("Because " + od.why + ".");
+        } else { b.classList.add("wrong"); document.getElementById("od-fb").textContent="Good try \u2014 look again!"; document.getElementById("od-fb").style.color="#c0446b"; }
+      };
+      g.appendChild(b);
+    });
+  }
+  document.getElementById("od-next").onclick=newOdd;
+
+  // ---------- WORDS DRAWER ----------
+  var drawer=document.getElementById("drawer");
+  function renderChips(){
+    var c=document.getElementById("wordChips"); c.innerHTML="";
+    if(saved.words.length===0){ var e=document.createElement("p"); e.className="empty"; e.textContent="No words yet \u2014 star some as you play!"; c.appendChild(e); return; }
+    saved.words.forEach(function(w){ var s=document.createElement("span"); s.className="chip"; s.textContent=w; c.appendChild(s); });
+  }
+  document.getElementById("openWords").onclick=function(){ renderChips(); drawer.classList.add("open"); };
+  document.getElementById("closeWords").onclick=function(){ drawer.classList.remove("open"); };
+  drawer.onclick=function(e){ if(e.target===drawer) drawer.classList.remove("open"); };
+  document.getElementById("clearWords").onclick=function(){ saved.words=[]; persist(); renderCount(); renderChips(); ping("Cleared!"); };
+
+  renderCount();
+})();
+</script>
+</body>
+</html>
