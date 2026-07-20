@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Safety to People — Language Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.55;
+    background-image:
+      radial-gradient(ellipse at 12% 20%, rgba(45, 106, 79, 0.045) 0%, transparent 52%),
+      radial-gradient(ellipse at 88% 80%, rgba(168, 50, 50, 0.035) 0%, transparent 52%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 52px 34px 64px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 24px;
+    margin-bottom: 28px;
+  }
+
+  .eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(40px, 7vw, 68px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+
+  h1 .accent { color: var(--truth); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    max-width: 620px;
+  }
+
+  .task-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+
+  .task-card {
+    flex: 1;
+    min-width: 230px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--truth);
+    border-radius: 2px;
+    padding: 14px 18px;
+  }
+
+  .task-card .step {
+    font-size: 9.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--truth);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .task-card .what {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .cols {
+    column-count: 2;
+    column-gap: 30px;
+  }
+
+  section {
+    break-inside: avoid;
+    margin-bottom: 24px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 21px;
+    color: var(--trap);
+    margin-bottom: 3px;
+    letter-spacing: -0.01em;
+  }
+
+  .gloss {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-bottom: 11px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  ul { list-style: none; }
+
+  li {
+    margin-bottom: 7px;
+    padding-left: 15px;
+    position: relative;
+    font-size: 14.2px;
+    line-height: 1.5;
+  }
+
+  li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 5px;
+    height: 5px;
+    border: 1px solid var(--rule);
+    background: transparent;
+  }
+
+  .phrase { font-weight: 600; }
+  .eg {
+    display: block;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 13px;
+    margin-top: 1px;
+  }
+
+  .word-bank {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 14px 17px;
+  }
+
+  .word-bank .bank-line {
+    font-size: 14px;
+    line-height: 1.85;
+  }
+
+  .word-bank .bank-label {
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .word-bank .bank-group { margin-bottom: 11px; }
+  .word-bank .bank-group:last-child { margin-bottom: 0; }
+
+  .sep { color: var(--rule); margin: 0 5px; }
+
+  .watch {
+    border-left: 3px solid var(--trap);
+    background: rgba(168, 50, 50, 0.05);
+    padding: 13px 16px;
+    border-radius: 2px;
+  }
+
+  .watch li::before { border-color: var(--trap); }
+  .watch .no {
+    color: var(--trap);
+    text-decoration: line-through;
+    text-decoration-color: rgba(168, 50, 50, 0.5);
+  }
+  .watch .yes { color: var(--truth); font-weight: 600; }
+
+  footer {
+    margin-top: 34px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  footer .ornament { color: var(--rule); margin: 0 9px; }
+
+  @media (max-width: 760px) {
+    .sheet { padding: 36px 20px 48px; }
+    .cols { column-count: 1; }
+  }
+
+  @media print {
+    @page { margin: 12mm; }
+    body { background: white; background-image: none; font-size: 10.2pt; }
+    .sheet { padding: 0; max-width: none; }
+    h1 { font-size: 34pt; }
+    .subtitle { font-size: 11pt; margin-top: 8px; }
+    header { padding-bottom: 14px; margin-bottom: 16px; }
+    .task-strip { margin-bottom: 16px; }
+    .cols { column-gap: 22px; }
+    section { margin-bottom: 15px; }
+    li { margin-bottom: 4px; font-size: 9.6pt; }
+    .eg { font-size: 9pt; }
+    footer { margin-top: 18px; padding-top: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="eyebrow">Working sheet · Valérie · Session 2</div>
+    <h1>From safety<br>to <span class="accent">people</span></h1>
+    <div class="subtitle">The language for saying what you did — and what it makes you good at now.</div>
+  </header>
+
+  <div class="task-strip">
+    <div class="task-card">
+      <div class="step">First — you write</div>
+      <div class="what">150–200 words. What you were responsible for in safety, and how those strengths carry into HR.</div>
+    </div>
+    <div class="task-card">
+      <div class="step">Then — you talk</div>
+      <div class="what">Walk me through what you wrote. Don't read it aloud — speak from it.</div>
+    </div>
+  </div>
+
+  <div class="cols">
+
+    <section>
+      <h2>Saying what you were responsible for</h2>
+      <div class="gloss">The past — a closed chapter. Past simple.</div>
+      <ul>
+        <li><span class="phrase">I was responsible for</span> + noun / -ing
+          <span class="eg">I was responsible for inspecting the cylinders.</span></li>
+        <li><span class="phrase">I was in charge of</span> + noun / -ing
+          <span class="eg">I was in charge of the safety checks on site.</span></li>
+        <li><span class="phrase">I dealt with</span> + noun
+          <span class="eg">I dealt with strict regulations every day.</span></li>
+        <li><span class="phrase">My role involved</span> + -ing
+          <span class="eg">My role involved training new operators.</span></li>
+        <li><span class="phrase">I made sure (that)</span> + clause
+          <span class="eg">I made sure that every procedure was followed.</span></li>
+        <li><span class="phrase">I reported to</span> + person
+          <span class="eg">I reported to the site safety manager.</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Naming the strength</h2>
+      <div class="gloss">Not the task — the quality behind it.</div>
+      <div class="word-bank">
+        <div class="bank-group">
+          <span class="bank-label">Qualities</span>
+          <div class="bank-line">attention to detail <span class="sep">·</span> risk awareness <span class="sep">·</span> rigour <span class="sep">·</span> reliability <span class="sep">·</span> problem-solving <span class="sep">·</span> decision-making <span class="sep">·</span> staying calm under pressure</div>
+        </div>
+        <div class="bank-group">
+          <span class="bank-label">Working with rules</span>
+          <div class="bank-line">compliance <span class="sep">·</span> a procedure <span class="sep">·</span> a standard <span class="sep">·</span> a requirement <span class="sep">·</span> to follow / apply / enforce a rule <span class="sep">·</span> to keep records</div>
+        </div>
+        <div class="bank-group">
+          <span class="bank-label">Working with people</span>
+          <div class="bank-line">to train <span class="sep">·</span> to advise <span class="sep">·</span> to support <span class="sep">·</span> to listen <span class="sep">·</span> to raise awareness <span class="sep">·</span> to build trust <span class="sep">·</span> to handle a difficult conversation</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Making the bridge</h2>
+      <div class="gloss">The heart of the task: old skill → new use.</div>
+      <ul>
+        <li><span class="phrase">This carries over to</span> + noun
+          <span class="eg">This attention to detail carries over to HR work.</span></li>
+        <li><span class="phrase">The same applies to</span> + noun
+          <span class="eg">The same applies to employee records.</span></li>
+        <li><span class="phrase">It's useful in HR because</span> + clause
+          <span class="eg">It's useful in HR because you deal with rules every day.</span></li>
+        <li><span class="phrase">In safety I …, and in HR I will …</span>
+          <span class="eg">In safety I protected people physically; in HR I will protect them differently.</span></li>
+        <li><span class="phrase">What I learned there helps me</span> + verb
+          <span class="eg">What I learned there helps me stay objective.</span></li>
+        <li><span class="phrase">Both roles require</span> + noun
+          <span class="eg">Both roles require discretion and clear communication.</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Where you're heading</h2>
+      <div class="gloss">The open chapter — still going. Present perfect &amp; present continuous.</div>
+      <ul>
+        <li><span class="phrase">I have been training in</span> …
+          <span class="eg">I have been training in human resources since last year.</span></li>
+        <li><span class="phrase">I am moving into</span> …
+          <span class="eg">I am moving into a people-focused role.</span></li>
+        <li><span class="phrase">I have learned that</span> …
+          <span class="eg">I have learned that many of my strengths carry across.</span></li>
+        <li><span class="phrase">I would like to</span> …
+          <span class="eg">I would like to work on wellbeing and safety culture.</span></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Walking me through it</h2>
+      <div class="gloss">For the spoken part. Signpost, don't recite.</div>
+      <ul>
+        <li><span class="phrase">I'd like to start with</span> …</li>
+        <li><span class="phrase">The main point is that</span> …</li>
+        <li><span class="phrase">Let me give you an example.</span></li>
+        <li><span class="phrase">That's linked to what I said about</span> …</li>
+        <li><span class="phrase">What I mean by that is</span> …</li>
+        <li><span class="phrase">To sum up,</span> …</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Watch these</h2>
+      <div class="gloss">French words in English costumes.</div>
+      <div class="watch">
+        <ul>
+          <li><span class="no">a formation</span> → <span class="yes">training / a course</span>
+            <span class="eg">I did a training course in employment law.</span></li>
+          <li><span class="no">to assist a meeting</span> → <span class="yes">to attend</span>
+            <span class="eg">I attended the safety meeting every Monday.</span></li>
+          <li><span class="no">to control the valves</span> → <span class="yes">to check / inspect</span>
+            <span class="eg">We checked the valves before filling.</span></li>
+          <li><span class="no">actually</span> → <span class="yes">currently / at the moment</span>
+            <span class="eg">I am currently training in HR.</span></li>
+          <li><span class="no">my experiences</span> → <span class="yes">my experience</span>
+            <span class="eg">My experience in safety is useful here. <em>(uncountable)</em></span></li>
+          <li><span class="no">I work there since 2015</span> → <span class="yes">I worked there from 2015 to 2024</span>
+            <span class="eg">Finished job = past simple.</span></li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    Built one lesson at a time. <span class="ornament">·</span> ESG Langues
+  </footer>
+
+</div>
+</body>
+</html>
