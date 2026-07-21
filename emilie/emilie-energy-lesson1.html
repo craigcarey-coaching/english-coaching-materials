@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clean Energy Heroes · Lesson 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sun:#FFD93D; --sun-dk:#E8B90F;
+    --leaf:#7ED37E; --leaf-dk:#4FA94F;
+    --sky:#6EC6FF; --sky-dk:#3D9BE0;
+    --coral:#FF8FA3; --coral-dk:#E05C77;
+    --grape:#C39BE8; --grape-dk:#9A6CC9;
+    --cream:#FFF8E7; --card:#FFFFFF;
+    --ink:#3A3245; --ink-soft:#6B6178;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0;}
+  body{
+    font-family:'Nunito',sans-serif; font-weight:700; color:var(--ink);
+    background:var(--cream);
+    background-image:radial-gradient(#ffe9a8 12%, transparent 13%), radial-gradient(#d6f0ff 12%, transparent 13%);
+    background-size:70px 70px; background-position:0 0, 35px 35px;
+    min-height:100vh; padding:16px 12px 60px;
+  }
+  .wrap{max-width:760px; margin:0 auto;}
+  h1,h2,h3,.display{font-family:'Caprasimo',cursive; font-weight:400; letter-spacing:.5px;}
+
+  /* top bar */
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px;}
+  .starchip{
+    background:var(--card); border:3px solid var(--ink); border-radius:999px;
+    padding:6px 16px; font-size:20px; font-weight:900; box-shadow:0 4px 0 var(--ink);
+  }
+  .homebtn{font-size:15px; padding:8px 14px;}
+
+  /* chunky buttons */
+  .btn{
+    font-family:'Nunito',sans-serif; font-weight:900; color:var(--ink);
+    border:3px solid var(--ink); border-radius:18px; cursor:pointer;
+    padding:14px 20px; font-size:18px; background:var(--card);
+    box-shadow:0 6px 0 var(--ink); transition:transform .08s, box-shadow .08s;
+    display:inline-flex; align-items:center; gap:10px; justify-content:center;
+  }
+  .btn:active{transform:translateY(5px); box-shadow:0 1px 0 var(--ink);}
+  .btn:focus-visible{outline:4px solid var(--sky); outline-offset:2px;}
+  .btn.sun{background:var(--sun); box-shadow:0 6px 0 var(--sun-dk);}
+  .btn.sun:active{box-shadow:0 1px 0 var(--sun-dk);}
+  .btn.leaf{background:var(--leaf); box-shadow:0 6px 0 var(--leaf-dk);}
+  .btn.leaf:active{box-shadow:0 1px 0 var(--leaf-dk);}
+  .btn.sky{background:var(--sky); box-shadow:0 6px 0 var(--sky-dk);}
+  .btn.sky:active{box-shadow:0 1px 0 var(--sky-dk);}
+  .btn.coral{background:var(--coral); box-shadow:0 6px 0 var(--coral-dk);}
+  .btn.coral:active{box-shadow:0 1px 0 var(--coral-dk);}
+  .btn.grape{background:var(--grape); box-shadow:0 6px 0 var(--grape-dk);}
+  .btn.grape:active{box-shadow:0 1px 0 var(--grape-dk);}
+  .btn.big{width:100%; font-size:22px; padding:20px; border-radius:22px;}
+  .btn .em{font-size:30px;}
+
+  .screen{display:none; animation:pop .25s ease;}
+  .screen.on{display:block;}
+  @keyframes pop{from{opacity:0; transform:scale(.97);} to{opacity:1; transform:scale(1);}}
+
+  .card{
+    background:var(--card); border:3px solid var(--ink); border-radius:24px;
+    box-shadow:0 8px 0 rgba(58,50,69,.15); padding:22px; margin-bottom:18px;
+  }
+  .hero{text-align:center; padding:26px 18px;}
+  .hero h1{font-size:34px; margin:6px 0 4px;}
+  .hero .sub{color:var(--ink-soft); font-size:17px; font-weight:800;}
+  .hero .big-em{font-size:60px;}
+
+  .menu{display:grid; gap:14px; grid-template-columns:1fr 1fr;}
+  @media(max-width:560px){.menu{grid-template-columns:1fr;}}
+
+  .story p{font-size:19px; line-height:1.65; font-weight:700;}
+  .story .kw{background:var(--sun); border-radius:8px; padding:0 6px; border:2px solid var(--ink); white-space:nowrap;}
+  .storytag{display:inline-block; background:var(--sky); border:3px solid var(--ink); border-radius:999px; padding:4px 14px; font-weight:900; font-size:14px; box-shadow:0 3px 0 var(--ink); margin-bottom:8px;}
+  h2{font-size:26px; margin:8px 0 10px;}
+  h3{font-size:21px; margin:6px 0 10px;}
+
+  .quiz-q{font-size:19px; font-weight:900; margin-bottom:12px;}
+  .opts{display:grid; gap:10px;}
+  .opt{width:100%; text-align:left; font-size:18px;}
+  .opt.right{background:var(--leaf); box-shadow:0 6px 0 var(--leaf-dk);}
+  .opt.wrong{animation:shake .35s;}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-7px);}75%{transform:translateX(7px);}}
+
+  /* vocab flip cards */
+  .vgrid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:560px){.vgrid{grid-template-columns:1fr 1fr;}}
+  .vcard{perspective:800px; cursor:pointer; min-height:150px;}
+  .vinner{position:relative; width:100%; height:100%; min-height:150px; transition:transform .45s; transform-style:preserve-3d;}
+  .vcard.flip .vinner{transform:rotateY(180deg);}
+  .vface{
+    position:absolute; inset:0; backface-visibility:hidden; border:3px solid var(--ink);
+    border-radius:20px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:6px; padding:12px; text-align:center;
+  }
+  .vfront{background:var(--card); box-shadow:0 5px 0 var(--ink);}
+  .vfront .em{font-size:42px;}
+  .vfront .w{font-family:'Caprasimo',cursive; font-size:22px;}
+  .vback{background:var(--sun); transform:rotateY(180deg); font-size:15px; font-weight:800; line-height:1.4;}
+
+  /* tap-to-build rows */
+  .buildzone{min-height:64px; background:#F2ECFB; border:3px dashed var(--grape-dk); border-radius:18px; padding:10px; display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;}
+  .bank{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .tile{
+    font-family:'Nunito',sans-serif; font-weight:900; font-size:18px; color:var(--ink);
+    background:var(--card); border:3px solid var(--ink); border-radius:14px;
+    padding:10px 14px; cursor:pointer; box-shadow:0 4px 0 var(--ink); transition:transform .08s;
+  }
+  .tile:active{transform:translateY(3px); box-shadow:0 1px 0 var(--ink);}
+  .tile.helper{background:var(--coral);}
+  .tile.ltr{font-size:24px; padding:10px 16px; background:var(--sky);}
+  .feedback{font-size:20px; font-weight:900; min-height:28px; margin-bottom:8px;}
+  .feedback.yes{color:var(--leaf-dk);}
+  .feedback.no{color:var(--coral-dk);}
+
+  /* question machine demo */
+  .machine{background:#EFF8FF; border:3px solid var(--ink); border-radius:20px; padding:18px; text-align:center; margin-bottom:14px;}
+  .m-sentence{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; min-height:52px; align-items:center;}
+  .m-word{background:var(--card); border:3px solid var(--ink); border-radius:12px; padding:8px 12px; font-weight:900; font-size:18px;}
+  .m-word.helper{background:var(--coral); position:relative;}
+  .jumping{animation:jumpfront .8s ease;}
+  @keyframes jumpfront{
+    0%{transform:translateY(0);}
+    35%{transform:translateY(-46px) rotate(-8deg);}
+    70%{transform:translateY(-46px) rotate(6deg);}
+    100%{transform:translateY(0);}
+  }
+  .rulebox{background:var(--sun); border:3px solid var(--ink); border-radius:18px; padding:14px 16px; font-size:18px; font-weight:900; box-shadow:0 5px 0 var(--sun-dk); margin-bottom:14px;}
+
+  .askcard{background:var(--card); border:3px solid var(--ink); border-radius:20px; padding:22px; text-align:center; box-shadow:0 6px 0 var(--ink); margin-bottom:14px;}
+  .askcard .frame{font-family:'Caprasimo',cursive; font-size:30px;}
+
+  .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+  .grow{flex:1;}
+  .progress-dots{display:flex; gap:8px; justify-content:center; margin:10px 0;}
+  .dot{width:16px; height:16px; border-radius:50%; border:3px solid var(--ink); background:var(--card);}
+  .dot.done{background:var(--leaf);}
+
+  .burst{position:fixed; font-size:34px; pointer-events:none; animation:rise 1s ease forwards; z-index:50;}
+  @keyframes rise{to{transform:translateY(-120px) scale(1.4); opacity:0;}}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <button class="btn homebtn" data-go="home">🏠 Home</button>
+    <div class="starchip">⭐ <span id="starCount">0</span></div>
+  </div>
+
+  <!-- HOME -->
+  <section class="screen on" id="scr-home">
+    <div class="card hero">
+      <div class="big-em">🐼☀️🐑</div>
+      <h1>Clean Energy Heroes</h1>
+      <div class="sub">Lesson 1 · Animals love clean energy!</div>
+    </div>
+    <div class="menu">
+      <button class="btn sun big" data-go="read1"><span class="em">📰</span> Read the News</button>
+      <button class="btn leaf big" data-go="words"><span class="em">💬</span> Word Power</button>
+      <button class="btn sky big" data-go="qm-rule"><span class="em">🤖</span> Question Machine</button>
+      <button class="btn coral big" data-go="scramble"><span class="em">🎮</span> Games</button>
+    </div>
+  </section>
+
+  <!-- READ: STORY 1 -->
+  <section class="screen" id="scr-read1">
+    <div class="card story">
+      <span class="storytag">🇨🇳 CHINA</span>
+      <h2>The Panda Made of Sunshine</h2>
+      <p>In Datong, China, engineers built a solar farm with a big surprise. From the sky, it looks like a giant panda! 🐼</p>
+      <p>Thousands of <span class="kw">solar panels</span> make the picture — <span class="kw">dark</span> panels for the panda's ears and eyes, <span class="kw">bright</span> panels for its face.</p>
+      <p>The farm turns sunshine into <span class="kw">clean</span> <span class="kw">energy</span> for thousands of homes. Clean energy is important because it does not make the air <span class="kw">dirty</span>.</p>
+    </div>
+    <div class="card">
+      <div class="quiz-q">🧠 What does the solar farm look like?</div>
+      <div class="opts" id="q1a">
+        <button class="btn opt" data-ok="0">🐘 An elephant</button>
+        <button class="btn opt" data-ok="1">🐼 A giant panda</button>
+        <button class="btn opt" data-ok="0">🚗 A car</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="quiz-q">🧠 Clean energy does not make the air…</div>
+      <div class="opts" id="q1b">
+        <button class="btn opt" data-ok="1">💨 dirty</button>
+        <button class="btn opt" data-ok="0">🍦 cold</button>
+        <button class="btn opt" data-ok="0">🎵 loud</button>
+      </div>
+    </div>
+    <button class="btn sun big" data-go="read2">Next story ➡️</button>
+  </section>
+
+  <!-- READ: STORY 2 -->
+  <section class="screen" id="scr-read2">
+    <div class="card story">
+      <span class="storytag">🇦🇺 AUSTRALIA</span>
+      <h2>Solar Sheep!</h2>
+      <p>In Australia, <span class="kw">huge</span> solar farms cover the land — and sheep live there too! 🐑</p>
+      <p>Grass grows under the panels, and the sheep eat it all day. The sheep help the farm because they keep the grass short.</p>
+      <p>The panels help the sheep too: they give cool shade on hot days. The farmers say their sheep are <span class="kw">safe</span> and happy. Everybody wins! 🏆</p>
+    </div>
+    <div class="card">
+      <div class="quiz-q">🧠 How do the sheep help the farm?</div>
+      <div class="opts" id="q2a">
+        <button class="btn opt" data-ok="0">They clean the panels</button>
+        <button class="btn opt" data-ok="1">They eat the grass</button>
+        <button class="btn opt" data-ok="0">They make energy</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="quiz-q">🧠 What do the panels give the sheep?</div>
+      <div class="opts" id="q2b">
+        <button class="btn opt" data-ok="0">🍕 Pizza</button>
+        <button class="btn opt" data-ok="0">🌧️ Rain</button>
+        <button class="btn opt" data-ok="1">😎 Cool shade</button>
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn grow" data-go="read1">⬅️ Back</button>
+      <button class="btn leaf grow" data-go="words">Word Power ➡️</button>
+    </div>
+  </section>
+
+  <!-- WORDS -->
+  <section class="screen" id="scr-words">
+    <div class="card">
+      <h2>💬 Word Power</h2>
+      <p style="font-weight:800; color:var(--ink-soft); margin-top:0;">Tap a card to flip it!</p>
+      <div class="vgrid" id="vgrid"></div>
+    </div>
+    <div class="card">
+      <h3>🔁 Opposite Pop!</h3>
+      <p style="font-weight:800; color:var(--ink-soft); margin-top:0;">Every word has an opposite. Pop the right one!</p>
+      <div class="progress-dots" id="oppDots"></div>
+      <div class="quiz-q" id="oppPrompt"></div>
+      <div class="opts" id="oppOpts"></div>
+      <div class="feedback" id="oppFb"></div>
+    </div>
+    <button class="btn sky big" data-go="qm-rule">🤖 To the Question Machine ➡️</button>
+  </section>
+
+  <!-- QUESTION MACHINE: RULE -->
+  <section class="screen" id="scr-qm-rule">
+    <div class="card" style="text-align:center;">
+      <h2>🤖 The Question Machine</h2>
+      <div class="rulebox">Little words like <b>is · are · can · do · does</b> are <u>helper verbs</u>.<br>To make a question, the helper <b>JUMPS to the front!</b> 🦘</div>
+      <div class="machine">
+        <div class="m-sentence" id="demoRow"></div>
+        <div style="margin-top:14px;">
+          <button class="btn coral" id="demoBtn">🦘 Make it jump!</button>
+        </div>
+      </div>
+      <div class="feedback yes" id="demoOut" style="font-size:22px;"></div>
+    </div>
+    <button class="btn sky big" data-go="qm-build">🔧 Build questions ➡️</button>
+  </section>
+
+  <!-- QUESTION MACHINE: BUILD -->
+  <section class="screen" id="scr-qm-build">
+    <div class="card">
+      <h2>🔧 Build the Question</h2>
+      <p style="font-weight:800; color:var(--ink-soft); margin-top:0;">Tap the pieces in the right order. Helper first!</p>
+      <div class="progress-dots" id="qbDots"></div>
+      <div class="quiz-q" id="qbHint"></div>
+      <div class="buildzone" id="qbZone"></div>
+      <div class="bank" id="qbBank"></div>
+      <div class="feedback" id="qbFb"></div>
+      <div class="row">
+        <button class="btn leaf grow" id="qbCheck">✅ Check</button>
+        <button class="btn grow" id="qbReset">🔄 Again</button>
+      </div>
+    </div>
+    <button class="btn coral big" data-go="qm-ask">🎤 Ask Craig! ➡️</button>
+  </section>
+
+  <!-- QUESTION MACHINE: ASK CRAIG -->
+  <section class="screen" id="scr-qm-ask">
+    <div class="card" style="text-align:center;">
+      <h2>🎤 Ask Craig!</h2>
+      <p style="font-weight:800; color:var(--ink-soft);">Tap the card. Use the helper to ask Craig a REAL question. He must answer!</p>
+      <div class="askcard">
+        <div class="frame" id="askFrame">Do you… ?</div>
+      </div>
+      <div class="row">
+        <button class="btn sun grow" id="askNext">🃏 New card</button>
+        <button class="btn leaf grow" id="askDone">⭐ I asked!</button>
+      </div>
+    </div>
+    <button class="btn coral big" data-go="scramble">🎮 Game time ➡️</button>
+  </section>
+
+  <!-- GAMES: SCRAMBLE -->
+  <section class="screen" id="scr-scramble">
+    <div class="card">
+      <h2>🎮 Word Scramble</h2>
+      <p style="font-weight:800; color:var(--ink-soft); margin-top:0;">The letters are mixed up! Tap them in the right order.</p>
+      <div class="progress-dots" id="scDots"></div>
+      <div style="text-align:center; font-size:52px;" id="scHint"></div>
+      <div class="buildzone" id="scZone" style="justify-content:center;"></div>
+      <div class="bank" id="scBank" style="justify-content:center;"></div>
+      <div class="feedback" id="scFb" style="text-align:center;"></div>
+      <div class="row">
+        <button class="btn leaf grow" id="scCheck">✅ Check</button>
+        <button class="btn grow" id="scReset">🔄 Mix again</button>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <h3>🏁 Great work today!</h3>
+      <p style="font-weight:800;">Total stars: <span id="starEnd">0</span> ⭐</p>
+      <button class="btn sun big" data-go="home">🏠 Back home</button>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "emilie_energy1_v1";
+  var state = { stars: 0 };
+  try {
+    var raw = localStorage.getItem(KEY);
+    if (raw) { var p = JSON.parse(raw); if (p && typeof p.stars === "number") state.stars = p.stars; }
+  } catch(e) {}
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e) {} }
+
+  function $(id){ return document.getElementById(id); }
+  function starEls(){ $("starCount").textContent = state.stars; $("starEnd").textContent = state.stars; }
+  function addStar(n){ state.stars += (n||1); save(); starEls(); burst("⭐"); }
+  function burst(em){
+    try {
+      var b = document.createElement("div");
+      b.className = "burst"; b.textContent = em;
+      b.style.left = (20 + Math.random()*60) + "%";
+      b.style.top = "55%";
+      document.body.appendChild(b);
+      setTimeout(function(){ if (b.parentNode) b.parentNode.removeChild(b); }, 1000);
+    } catch(e) {}
+  }
+
+  /* router */
+  function go(name){
+    var scrs = document.querySelectorAll(".screen");
+    for (var i=0;i<scrs.length;i++) scrs[i].classList.remove("on");
+    var t = $("scr-"+name);
+    if (t) t.classList.add("on");
+    window.scrollTo(0,0);
+  }
+  document.addEventListener("click", function(ev){
+    var el = ev.target.closest ? ev.target.closest("[data-go]") : null;
+    if (el) go(el.getAttribute("data-go"));
+  });
+
+  /* reading MCQs */
+  function wireQuiz(id){
+    var box = $(id);
+    if (!box) return;
+    var done = false;
+    box.addEventListener("click", function(ev){
+      var b = ev.target.closest ? ev.target.closest(".opt") : null;
+      if (!b || done) return;
+      if (b.getAttribute("data-ok") === "1"){
+        done = true; b.classList.add("right"); addStar(1);
+      } else {
+        b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong");
+      }
+    });
+  }
+  ["q1a","q1b","q2a","q2b"].forEach(wireQuiz);
+
+  /* vocab flip cards */
+  var vocab = [
+    {w:"clean",  em:"🫧", m:"Not dirty. Clean energy keeps the air fresh."},
+    {w:"dirty",  em:"🐷", m:"Not clean. Smoke makes the air dirty."},
+    {w:"bright", em:"☀️", m:"Full of light. The panda's face is bright."},
+    {w:"dark",   em:"🌑", m:"Not bright. The panda's ears are dark."},
+    {w:"huge",   em:"🐘", m:"Very, very big. The solar farm is huge!"},
+    {w:"tiny",   em:"🐜", m:"Very, very small. An ant is tiny."},
+    {w:"safe",   em:"🏡", m:"No danger. The sheep are safe on the farm."},
+    {w:"dangerous", em:"⚠️", m:"Not safe. Fire is dangerous."}
+  ];
+  var vg = $("vgrid");
+  vocab.forEach(function(v){
+    var c = document.createElement("div");
+    c.className = "vcard";
+    c.innerHTML = '<div class="vinner"><div class="vface vfront"><div class="em">'+v.em+'</div><div class="w">'+v.w+'</div></div><div class="vface vback">'+v.m+'</div></div>';
+    c.addEventListener("click", function(){ c.classList.toggle("flip"); });
+    vg.appendChild(c);
+  });
+
+  /* Opposite Pop */
+  var oppQs = [
+    {p:"clean 🫧", a:"dirty", opts:["dirty","bright","tiny"]},
+    {p:"huge 🐘", a:"tiny", opts:["dark","tiny","safe"]},
+    {p:"bright ☀️", a:"dark", opts:["clean","dangerous","dark"]},
+    {p:"safe 🏡", a:"dangerous", opts:["dangerous","huge","dirty"]}
+  ];
+  var oppI = 0;
+  function dots(el, total, done){
+    var box = $(el); box.innerHTML = "";
+    for (var i=0;i<total;i++){
+      var d = document.createElement("div");
+      d.className = "dot" + (i < done ? " done" : "");
+      box.appendChild(d);
+    }
+  }
+  function renderOpp(){
+    dots("oppDots", oppQs.length, oppI);
+    var fb = $("oppFb"); fb.textContent = ""; fb.className = "feedback";
+    if (oppI >= oppQs.length){
+      $("oppPrompt").textContent = "🎉 All opposites popped!";
+      $("oppOpts").innerHTML = "";
+      return;
+    }
+    var q = oppQs[oppI];
+    $("oppPrompt").textContent = "The opposite of " + q.p + " is…";
+    var box = $("oppOpts"); box.innerHTML = "";
+    q.opts.forEach(function(o){
+      var b = document.createElement("button");
+      b.className = "btn opt"; b.textContent = o;
+      b.addEventListener("click", function(){
+        if (o === q.a){
+          b.classList.add("right"); addStar(1); oppI++;
+          setTimeout(renderOpp, 700);
+        } else {
+          b.classList.remove("wrong"); void b.offsetWidth; b.classList.add("wrong");
+        }
+      });
+      box.appendChild(b);
+    });
+  }
+  renderOpp();
+
+  /* Question Machine demo */
+  var demos = [
+    {before:["The","farm","IS","huge","."], hIdx:2, after:"Is the farm huge?"},
+    {before:["Sheep","CAN","eat","grass","."], hIdx:1, after:"Can sheep eat grass?"},
+    {before:["Pandas","DO","eat","bamboo","."], hIdx:1, after:"Do pandas eat bamboo?"}
+  ];
+  var demoI = 0, demoBusy = false;
+  function renderDemo(){
+    var d = demos[demoI % demos.length];
+    var row = $("demoRow"); row.innerHTML = "";
+    d.before.forEach(function(w, i){
+      var s = document.createElement("div");
+      s.className = "m-word" + (i === d.hIdx ? " helper" : "");
+      s.textContent = w;
+      row.appendChild(s);
+    });
+    $("demoOut").textContent = "";
+  }
+  $("demoBtn").addEventListener("click", function(){
+    if (demoBusy) return;
+    demoBusy = true;
+    var d = demos[demoI % demos.length];
+    var row = $("demoRow");
+    var helper = row.children[d.hIdx];
+    if (helper) helper.classList.add("jumping");
+    setTimeout(function(){
+      if (helper) { row.insertBefore(helper, row.firstChild); helper.classList.remove("jumping"); }
+      $("demoOut").textContent = "➡️  " + d.after;
+      burst("🦘");
+      demoI++; demoBusy = false;
+      setTimeout(renderDemo, 1600);
+    }, 800);
+  });
+  renderDemo();
+
+  /* generic tap-to-build */
+  function makeBuilder(cfg){
+    var items = [], placed = [];
+    function shuffle(a){
+      var arr = a.slice();
+      for (var i = arr.length - 1; i > 0; i--){
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+      }
+      return arr;
+    }
+    function render(){
+      var zone = $(cfg.zone), bank = $(cfg.bank);
+      zone.innerHTML = ""; bank.innerHTML = "";
+      placed.forEach(function(it, idx){
+        var t = document.createElement("button");
+        t.className = "tile" + (cfg.letter ? " ltr" : "") + (it.helper ? " helper" : "");
+        t.textContent = it.txt;
+        t.addEventListener("click", function(){
+          placed.splice(idx, 1); items.push(it); render();
+        });
+        zone.appendChild(t);
+      });
+      items.forEach(function(it, idx){
+        var t = document.createElement("button");
+        t.className = "tile" + (cfg.letter ? " ltr" : "") + (it.helper ? " helper" : "");
+        t.textContent = it.txt;
+        t.addEventListener("click", function(){
+          items.splice(idx, 1); placed.push(it); render();
+        });
+        bank.appendChild(t);
+      });
+    }
+    return {
+      load: function(pieces){
+        placed = [];
+        items = shuffle(pieces.map(function(p){ return typeof p === "string" ? {txt:p} : p; }));
+        // ensure it never starts already solved
+        var same = items.length && items.every(function(it, i){ return it.txt === pieces[i] || (pieces[i] && it.txt === pieces[i].txt); });
+        if (same && items.length > 1){ items.push(items.shift()); }
+        render();
+      },
+      answer: function(){ return placed.map(function(it){ return it.txt; }).join(cfg.joiner); },
+      reset: function(){ items = items.concat(placed); placed = []; items = items.slice(); this.load(items.map(function(i){return i;})); }
+    };
+  }
+
+  /* Build the Question */
+  var qb = makeBuilder({ zone:"qbZone", bank:"qbBank", joiner:" " });
+  var qbQs = [
+    {hint:"Ask about the panda 🐼 (it is huge!)", pieces:[{txt:"Is",helper:true},{txt:"the panda"},{txt:"huge"},{txt:"?"}], ans:"Is the panda huge ?"},
+    {hint:"Ask about the sheep 🐑 (they are safe!)", pieces:[{txt:"Are",helper:true},{txt:"the sheep"},{txt:"safe"},{txt:"?"}], ans:"Are the sheep safe ?"},
+    {hint:"Ask what sheep can do 🌱", pieces:[{txt:"Can",helper:true},{txt:"sheep"},{txt:"eat grass"},{txt:"?"}], ans:"Can sheep eat grass ?"},
+    {hint:"Ask about pandas and bamboo 🎋", pieces:[{txt:"Do",helper:true},{txt:"pandas"},{txt:"eat bamboo"},{txt:"?"}], ans:"Do pandas eat bamboo ?"},
+    {hint:"Ask about the farm and energy ⚡", pieces:[{txt:"Does",helper:true},{txt:"the farm"},{txt:"make energy"},{txt:"?"}], ans:"Does the farm make energy ?"}
+  ];
+  var qbI = 0;
+  function loadQb(){
+    dots("qbDots", qbQs.length, qbI);
+    var fb = $("qbFb"); fb.textContent = ""; fb.className = "feedback";
+    if (qbI >= qbQs.length){
+      $("qbHint").textContent = "🎉 Question Machine complete!";
+      $("qbZone").innerHTML = ""; $("qbBank").innerHTML = "";
+      return;
+    }
+    var q = qbQs[qbI];
+    $("qbHint").textContent = q.hint;
+    qb.load(q.pieces);
+  }
+  $("qbCheck").addEventListener("click", function(){
+    if (qbI >= qbQs.length) return;
+    var q = qbQs[qbI], fb = $("qbFb");
+    if (qb.answer() === q.ans){
+      fb.textContent = "🎉 Yes! " + q.ans.replace(" ?","?");
+      fb.className = "feedback yes";
+      addStar(1); qbI++;
+      setTimeout(loadQb, 1100);
+    } else {
+      fb.textContent = "🤔 Not yet — where does the helper go?";
+      fb.className = "feedback no";
+    }
+  });
+  $("qbReset").addEventListener("click", function(){
+    if (qbI < qbQs.length) qb.load(qbQs[qbI].pieces);
+    var fb = $("qbFb"); fb.textContent = ""; fb.className = "feedback";
+  });
+  loadQb();
+
+  /* Ask Craig */
+  var frames = ["Do you… ?","Can you… ?","Are you… ?","Is your… ?","Do you like… ?","Can you make… ?"];
+  var fI = 0;
+  $("askNext").addEventListener("click", function(){
+    fI = (fI + 1) % frames.length;
+    $("askFrame").textContent = frames[fI];
+  });
+  $("askDone").addEventListener("click", function(){ addStar(1); burst("🎤"); });
+
+  /* Word Scramble */
+  var sc = makeBuilder({ zone:"scZone", bank:"scBank", joiner:"", letter:true });
+  var scWords = [
+    {w:"PANDA", em:"🐼"},
+    {w:"SOLAR", em:"☀️"},
+    {w:"SHEEP", em:"🐑"},
+    {w:"PANEL", em:"🟦"},
+    {w:"ENERGY", em:"⚡"}
+  ];
+  var scI = 0;
+  function loadSc(){
+    dots("scDots", scWords.length, scI);
+    var fb = $("scFb"); fb.textContent = ""; fb.className = "feedback";
+    if (scI >= scWords.length){
+      $("scHint").textContent = "🏆";
+      $("scZone").innerHTML = ""; $("scBank").innerHTML = "";
+      fb.textContent = "🎉 All words unscrambled!"; fb.className = "feedback yes";
+      return;
+    }
+    var w = scWords[scI];
+    $("scHint").textContent = w.em;
+    sc.load(w.w.split(""));
+  }
+  $("scCheck").addEventListener("click", function(){
+    if (scI >= scWords.length) return;
+    var w = scWords[scI], fb = $("scFb");
+    if (sc.answer() === w.w){
+      fb.textContent = "🎉 " + w.w + "!"; fb.className = "feedback yes";
+      addStar(1); scI++;
+      setTimeout(loadSc, 1000);
+    } else {
+      fb.textContent = "🤔 Try again!"; fb.className = "feedback no";
+    }
+  });
+  $("scReset").addEventListener("click", function(){
+    if (scI < scWords.length) sc.load(scWords[scI].w.split(""));
+    var fb = $("scFb"); fb.textContent = ""; fb.className = "feedback";
+  });
+  loadSc();
+
+  starEls();
+})();
+</script>
+</body>
+</html>
