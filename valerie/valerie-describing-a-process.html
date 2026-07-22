@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Describing a Process — Working Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.55;
+    background-image:
+      radial-gradient(ellipse at 12% 18%, rgba(45,106,79,0.045) 0%, transparent 52%),
+      radial-gradient(ellipse at 88% 82%, rgba(168,50,50,0.035) 0%, transparent 52%);
+    -webkit-font-smoothing: antialiased;
+  }
+  .sheet { max-width: 1080px; margin: 0 auto; padding: 52px 34px 64px; }
+
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 22px; margin-bottom: 22px; }
+  .eyebrow { font-size: 10.5px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px; }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-style: italic;
+    font-size: clamp(40px, 7vw, 66px); line-height: 0.98; letter-spacing: -0.025em;
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  h1 .accent { color: var(--truth); }
+  .subtitle { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--ink-soft); margin-top: 13px; max-width: 640px; }
+
+  .say-note {
+    background: rgba(45,106,79,0.07);
+    border-left: 3px solid var(--truth);
+    border-radius: 2px;
+    padding: 14px 18px;
+    margin-bottom: 26px;
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  .say-note strong { color: var(--truth); }
+
+  .task-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .task-card {
+    flex: 1; min-width: 220px; background: var(--paper-deep);
+    border: 1px solid var(--rule); border-left: 3px solid var(--truth);
+    border-radius: 2px; padding: 13px 17px;
+  }
+  .task-card .step { font-size: 9.5px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--truth); font-weight: 600; margin-bottom: 4px; }
+  .task-card .what { font-size: 13.5px; line-height: 1.45; }
+
+  h2 {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+    font-size: 23px; color: var(--trap); margin-bottom: 4px; letter-spacing: -0.01em;
+  }
+  .gloss { font-size: 11.5px; color: var(--ink-soft); font-style: italic; margin-bottom: 12px; padding-bottom: 9px; border-bottom: 1px solid var(--rule); }
+
+  .model {
+    background: var(--paper-deep); border: 1px solid var(--rule);
+    border-radius: 2px; padding: 20px 24px; margin-bottom: 28px;
+  }
+  .model .model-title { font-family: 'Fraunces', serif; font-style: italic; font-size: 18px; color: var(--ink); margin-bottom: 10px; }
+  .model p { font-size: 14.5px; line-height: 1.65; }
+  .model .pv { color: var(--truth); font-weight: 600; }
+  .model .sq { color: var(--trap); font-weight: 600; font-style: italic; }
+  .model .legend { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--rule); font-size: 12px; color: var(--ink-soft); font-style: italic; }
+  .model .legend .pv, .model .legend .sq { font-style: normal; }
+
+  .two-col { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 26px; }
+  .ref-box {
+    flex: 1; min-width: 280px; background: var(--paper-deep);
+    border: 1px solid var(--rule); border-radius: 2px; padding: 16px 19px;
+  }
+  .ref-box .bank-label { font-size: 9.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; display: block; margin-bottom: 4px; }
+  .ref-box .bank-group { margin-bottom: 11px; }
+  .ref-box .bank-group:last-child { margin-bottom: 0; }
+  .ref-box .bank-line { font-size: 14px; line-height: 1.75; }
+  .ref-box .pattern { font-family: 'Fraunces', serif; font-style: italic; font-size: 16px; color: var(--truth); margin-bottom: 8px; }
+  .ref-box .pattern b { font-style: normal; color: var(--ink); }
+  .ref-box .eg { font-style: italic; color: var(--ink-soft); font-size: 13px; display: block; margin-top: 2px; }
+  .sep { color: var(--rule); margin: 0 5px; }
+
+  .block {
+    border: 1px solid var(--rule); border-top: 3px solid var(--truth);
+    border-radius: 2px; padding: 20px 24px; margin-bottom: 22px;
+    background: rgba(255,255,255,0.25);
+  }
+  .block .btag { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--truth); font-weight: 600; margin-bottom: 6px; }
+  .block .instr { font-size: 14.5px; line-height: 1.6; margin-bottom: 14px; }
+  .frames { list-style: none; }
+  .frames li {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 15.5px;
+    color: var(--ink); margin-bottom: 8px; padding-left: 15px; position: relative;
+  }
+  .frames li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 5px; height: 5px; border: 1px solid var(--rule); }
+  .frames .fill { color: var(--ink-soft); border-bottom: 1px dashed var(--ink-soft); padding: 0 22px; }
+
+  ul.plain { list-style: none; }
+  ul.plain li { margin-bottom: 7px; padding-left: 15px; position: relative; font-size: 14.2px; line-height: 1.5; }
+  ul.plain li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 5px; height: 5px; border: 1px solid var(--rule); }
+  .phrase { font-weight: 600; }
+
+  .watch { border-left: 3px solid var(--trap); background: rgba(168,50,50,0.05); padding: 14px 17px; border-radius: 2px; margin-bottom: 26px; }
+  .watch .bank-label { font-size: 9.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--trap); font-weight: 600; display: block; margin-bottom: 8px; }
+  .watch li { list-style: none; margin-bottom: 6px; font-size: 14px; }
+  .watch .no { color: var(--trap); text-decoration: line-through; text-decoration-color: rgba(168,50,50,0.5); }
+  .watch .yes { color: var(--truth); font-weight: 600; }
+
+  footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--rule); text-align: center; font-family: 'Fraunces', serif; font-style: italic; font-size: 12.5px; color: var(--ink-soft); }
+  footer .ornament { color: var(--rule); margin: 0 9px; }
+
+  @media (max-width: 760px) {
+    .sheet { padding: 36px 20px 48px; }
+    .two-col { flex-direction: column; }
+  }
+  @media print {
+    @page { margin: 11mm; }
+    body { background: white; background-image: none; font-size: 10pt; }
+    .sheet { padding: 0; max-width: none; }
+    h1 { font-size: 32pt; }
+    .subtitle { font-size: 10.5pt; margin-top: 7px; }
+    header { padding-bottom: 12px; margin-bottom: 14px; }
+    .say-note, .task-strip, .two-col, .watch { margin-bottom: 14px; }
+    .block { margin-bottom: 14px; break-inside: avoid; }
+    .model { margin-bottom: 16px; break-inside: avoid; }
+    h2 { font-size: 17pt; }
+    li, .bank-line, .instr { font-size: 9.4pt; }
+    footer { margin-top: 16px; padding-top: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="eyebrow">Working sheet · Valérie · Session 3</div>
+    <h1>How it's <span class="accent">done</span></h1>
+    <div class="subtitle">Describing a process, step by step — you know the work; today you put it into English.</div>
+  </header>
+
+  <div class="say-note">
+    <strong>Write in full sentences — and say each one out loud before you write it.</strong>
+    A complete sentence is not slow, and it is not cheating. It is the thing you are learning. Speaking it aloud first is how it stops being a rule on a page and becomes yours.
+  </div>
+
+  <div class="task-strip">
+    <div class="task-card">
+      <div class="step">Block A — get it down</div>
+      <div class="what">Write the steps of a process you know well, each as one full sentence in the passive. Order doesn't matter yet.</div>
+    </div>
+    <div class="task-card">
+      <div class="step">Block B — put it in order</div>
+      <div class="what">Number the steps into a clean procedure. Add sequencing words so it flows.</div>
+    </div>
+    <div class="task-card">
+      <div class="step">Then — talk me through it</div>
+      <div class="what">Present it aloud, as if training a new colleague. You keep your writing — I just listen and take notes.</div>
+    </div>
+  </div>
+
+  <div class="model">
+    <div class="model-title">A model — how a delivery is checked into a warehouse</div>
+    <p><span class="sq">First</span>, the lorry <span class="pv">is unloaded</span> and the boxes <span class="pv">are placed</span> on a pallet. Each box <span class="sq">then</span> <span class="pv">is scanned</span>, and the contents <span class="pv">are checked</span> against the order. <span class="sq">If</span> a box <span class="pv">is found</span> to be damaged, it <span class="pv">is set aside</span> and a note <span class="pv">is made</span>. <span class="sq">Once</span> everything <span class="pv">has been checked</span>, the goods <span class="pv">are moved</span> into storage. <span class="sq">Finally</span>, the delivery <span class="pv">is signed for</span> and the record <span class="pv">is updated</span>.</p>
+    <div class="legend"><span class="pv">green</span> = passive verbs (the step matters, not who does it) <span class="sep">·</span> <span class="sq">rust</span> = sequencing words (they carry the order)</div>
+  </div>
+
+  <div class="two-col">
+    <div class="ref-box">
+      <span class="bank-label">The passive — a reminder</span>
+      <div class="pattern"><b>the thing</b> + is / are + <b>past participle</b></div>
+      <div class="bank-line" style="font-size:13.5px;line-height:1.6;">
+        We inspect the cylinder <span style="color:var(--ink-soft)">→</span> The cylinder <span class="pv" style="color:var(--truth);font-weight:600">is inspected</span>.
+        <span class="eg">Use it when the action matters more than who does it — which is most of a procedure.</span>
+        <span class="eg" style="margin-top:6px">For a standard procedure, present passive (<span style="color:var(--truth)">is filled, are checked</span>) is what you want.</span>
+      </div>
+    </div>
+    <div class="ref-box">
+      <span class="bank-label">Sequencing — the order words</span>
+      <div class="bank-group"><span class="bank-label">To start</span><div class="bank-line">First <span class="sep">·</span> To begin <span class="sep">·</span> The first step is</div></div>
+      <div class="bank-group"><span class="bank-label">To continue</span><div class="bank-line">Then <span class="sep">·</span> Next <span class="sep">·</span> After that <span class="sep">·</span> Once (… is done)</div></div>
+      <div class="bank-group"><span class="bank-label">Timing &amp; conditions</span><div class="bank-line">Before <span class="sep">·</span> After <span class="sep">·</span> As soon as <span class="sep">·</span> If <span class="sep">·</span> When</div></div>
+      <div class="bank-group" style="margin-bottom:0"><span class="bank-label">To finish</span><div class="bank-line">Finally <span class="sep">·</span> Lastly</div></div>
+    </div>
+  </div>
+
+  <div class="ref-box" style="margin-bottom:26px">
+    <span class="bank-label">Passive verbs for a process — reach for these</span>
+    <div class="bank-group"><span class="bank-label">Checks &amp; inspection</span><div class="bank-line">is inspected <span class="sep">·</span> is checked <span class="sep">·</span> is tested <span class="sep">·</span> is examined <span class="sep">·</span> is measured <span class="sep">·</span> is recorded</div></div>
+    <div class="bank-group"><span class="bank-label">Actions on the object</span><div class="bank-line">is filled <span class="sep">·</span> is emptied <span class="sep">·</span> is sealed <span class="sep">·</span> is opened <span class="sep">·</span> is closed <span class="sep">·</span> is connected <span class="sep">·</span> is removed <span class="sep">·</span> is replaced <span class="sep">·</span> is tightened <span class="sep">·</span> is cleaned</div></div>
+    <div class="bank-group" style="margin-bottom:0"><span class="bank-label">Decisions &amp; sign-off</span><div class="bank-line">is approved <span class="sep">·</span> is rejected <span class="sep">·</span> is set aside <span class="sep">·</span> is labelled <span class="sep">·</span> is signed off <span class="sep">·</span> is released</div></div>
+  </div>
+
+  <div class="block">
+    <div class="btag">Block A · get every step down</div>
+    <div class="instr">Choose a process you know well — a safety check, an inspection, or how something is prepared, filled or sealed. Write each step as <b>one complete sentence</b>, using the passive. Say each sentence aloud <b>before</b> you write it. Don't worry about the order yet — just get every step down. Aim for one clean sentence per step, not notes.</div>
+    <ul class="frames">
+      <li>First, the <span class="fill">&nbsp;</span> is <span class="fill">&nbsp;</span>.</li>
+      <li>The <span class="fill">&nbsp;</span> is <span class="fill">&nbsp;</span> before it is <span class="fill">&nbsp;</span>.</li>
+      <li>Once the <span class="fill">&nbsp;</span> is <span class="fill">&nbsp;</span>, the <span class="fill">&nbsp;</span> is <span class="fill">&nbsp;</span>.</li>
+      <li>If <span class="fill">&nbsp;</span>, the <span class="fill">&nbsp;</span> is <span class="fill">&nbsp;</span>.</li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="btag">Block B · put it in order</div>
+    <div class="instr">Now number your steps into the right order — a clean procedure someone could follow. Tighten each sentence and add the sequencing words (<i>first, then, once, before, after, finally</i>) so it flows from one step to the next. When it's numbered, read the whole thing aloud once. If a step sounds wrong, that's your ear working — fix it.</div>
+  </div>
+
+  <div class="block">
+    <div class="btag">Then · talk me through it</div>
+    <div class="instr">Walk me through your procedure, step by step, as if you were explaining it to a new colleague on their first day. <b>You don't need to show me what you wrote — that's yours.</b> Just speak it. Saying your sentences out loud is the whole point of today: it's how they become yours. Use these to signpost as you go:</div>
+    <ul class="plain">
+      <li><span class="phrase">To start with,</span> …</li>
+      <li><span class="phrase">The first thing that is done is</span> …</li>
+      <li><span class="phrase">Once that's done,</span> … <span class="sep">/</span> <span class="phrase">After that,</span> …</li>
+      <li><span class="phrase">Before that,</span> … <span class="phrase">is done.</span></li>
+      <li><span class="phrase">The reason for this step is</span> …</li>
+      <li><span class="phrase">Finally,</span> …</li>
+    </ul>
+  </div>
+
+  <div class="watch">
+    <span class="bank-label">Watch these — the passive slips</span>
+    <ul>
+      <li><span class="no">the valve checked</span> → <span class="yes">the valve is checked</span> &nbsp;<span style="color:var(--ink-soft);font-style:italic;font-size:12.5px">(don't drop</span> <span style="color:var(--ink-soft);font-size:12.5px">is / are)</span></li>
+      <li><span class="no">the cylinder is inspect</span> → <span class="yes">the cylinder is inspected</span> &nbsp;<span style="color:var(--ink-soft);font-style:italic;font-size:12.5px">(use the -ed participle)</span></li>
+      <li><span class="no">the tank is fill</span> → <span class="yes">the tank is filled</span></li>
+      <li><span class="no">the seal is putted</span> → <span class="yes">the seal is put in place</span> &nbsp;<span style="color:var(--ink-soft);font-style:italic;font-size:12.5px">(a few are irregular:</span> <span style="color:var(--ink-soft);font-size:12.5px">put, written, done)</span></li>
+    </ul>
+  </div>
+
+  <footer>
+    Built one lesson at a time. <span class="ornament">·</span> ESG Langues
+  </footer>
+
+</div>
+</body>
+</html>
