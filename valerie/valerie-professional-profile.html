@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Professional Profile — Valérie · Capstone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;      /* required / not yet landed */
+    --truth: #2d6a4f;     /* landed / interactive success */
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.62;
+    min-height: 100vh;
+    padding-bottom: 76px; /* clear sticky bar */
+    background-image:
+      radial-gradient(ellipse at 15% 18%, rgba(45, 106, 79, 0.05) 0%, transparent 52%),
+      radial-gradient(ellipse at 85% 82%, rgba(168, 50, 50, 0.035) 0%, transparent 52%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 60px 32px 40px; }
+
+  /* ---------- Header ---------- */
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 34px; margin-bottom: 30px; }
+  .eyebrow {
+    font-family: 'Lora', serif; font-size: 11px; letter-spacing: 0.32em;
+    text-transform: uppercase; color: var(--ink-soft); margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-style: italic;
+    font-size: clamp(46px, 8.5vw, 84px); line-height: 0.96; letter-spacing: -0.025em;
+    color: var(--ink); font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  h1 .accent { color: var(--truth); }
+  .subtitle {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: clamp(16px, 2vw, 20px); color: var(--ink-soft);
+    margin-top: 18px; max-width: 640px; line-height: 1.4;
+  }
+
+  /* ---------- How it works ---------- */
+  .how {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 24px 28px; margin-bottom: 34px;
+  }
+  .how p { font-size: 15.5px; color: var(--ink); }
+  .how p + p { margin-top: 10px; }
+  .how strong { font-weight: 600; }
+  .how .quiet { color: var(--ink-soft); font-style: italic; font-size: 14.5px; }
+
+  /* ---------- Must-use tracker ---------- */
+  .tracker { margin-bottom: 40px; }
+  .tracker-head {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid rgba(201,184,150,0.55);
+  }
+  .tracker-head h2 {
+    font-family: 'Fraunces', serif; font-weight: 400; font-style: italic;
+    font-size: clamp(22px, 3.4vw, 30px); color: var(--ink); font-variation-settings: "SOFT" 60;
+  }
+  .tracker-head .badge {
+    font-family: 'Lora', serif; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    font-weight: 600; color: var(--trap); border: 1px solid var(--trap);
+    border-radius: 40px; padding: 3px 12px;
+  }
+  .track-grid { display: grid; gap: 14px; }
+
+  .track-item {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-left: 3px solid var(--trap);
+    border-radius: 2px; padding: 18px 22px; cursor: pointer; transition: border-color .2s, background .2s;
+    display: grid; grid-template-columns: 26px 1fr; gap: 16px; align-items: start;
+  }
+  .track-item:hover { border-color: var(--ink-soft); }
+  .track-item.done { border-left-color: var(--truth); background: rgba(45,106,79,0.07); }
+
+  .track-check {
+    width: 22px; height: 22px; border: 1.5px solid var(--ink-soft); border-radius: 3px;
+    margin-top: 2px; position: relative; transition: all .2s; flex-shrink: 0;
+  }
+  .track-item.done .track-check { border-color: var(--truth); background: var(--truth); }
+  .track-item.done .track-check::after {
+    content: "✓"; position: absolute; inset: 0; color: var(--paper);
+    font-size: 14px; display: flex; align-items: center; justify-content: center; font-family: 'Lora', serif;
+  }
+
+  .track-tag {
+    font-family: 'Lora', serif; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;
+    color: var(--ink); display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .track-tag .lands {
+    font-weight: 400; font-style: italic; font-size: 12px; color: var(--ink-soft); letter-spacing: 0;
+  }
+  .track-desc { font-size: 14px; color: var(--ink-soft); margin-top: 5px; line-height: 1.5; }
+  .track-model {
+    font-family: 'Lora', serif; font-style: italic; font-size: 14px; color: var(--truth);
+    margin-top: 8px; padding-left: 12px; border-left: 2px solid rgba(45,106,79,0.35);
+  }
+  .track-spot {
+    margin-top: 9px; font-size: 12px; letter-spacing: 0.04em; color: var(--ink-soft); min-height: 16px;
+  }
+  .track-spot b { color: var(--truth); font-weight: 600; font-style: normal; }
+
+  /* ---------- Drafting blocks ---------- */
+  .block { margin-bottom: 26px; }
+  .block-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+  .block-num { font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: var(--ink-soft); }
+  .block-head h3 {
+    font-family: 'Fraunces', serif; font-weight: 400; font-style: italic;
+    font-size: clamp(21px, 3.2vw, 27px); color: var(--ink); font-variation-settings: "SOFT" 60;
+  }
+  .anchor-badge {
+    font-family: 'Lora', serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    font-weight: 600; color: var(--trap); border: 1px solid rgba(168,50,50,0.5); border-radius: 40px;
+    padding: 2px 11px; white-space: nowrap;
+  }
+  .anchor-badge.landed { color: var(--truth); border-color: rgba(45,106,79,0.55); }
+  .block-purpose { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 10px; max-width: 640px; }
+  .starters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .starter {
+    font-family: 'Lora', serif; font-style: italic; font-size: 13px; color: var(--ink);
+    background: rgba(201,184,150,0.28); border: 1px dashed var(--rule); border-radius: 2px;
+    padding: 5px 11px; cursor: pointer; transition: background .18s;
+  }
+  .starter:hover { background: rgba(201,184,150,0.5); }
+
+  textarea {
+    width: 100%; min-height: 78px; resize: vertical; background: var(--paper-deep);
+    border: 1px solid var(--rule); border-radius: 2px; padding: 14px 16px;
+    font-family: 'Lora', serif; font-size: 15.5px; line-height: 1.55; color: var(--ink); outline: none;
+    transition: border-color .2s;
+  }
+  textarea:focus { border-color: var(--ink); }
+  textarea::placeholder { color: var(--ink-soft); font-style: italic; opacity: .8; }
+
+  /* ---------- Assembled preview ---------- */
+  .preview {
+    margin: 40px 0 8px; background: #fbf6ec; border: 1px solid var(--rule);
+    border-radius: 2px; padding: 30px 34px; position: relative;
+  }
+  .preview::before {
+    content: "Your profile, assembled"; position: absolute; top: -10px; left: 24px;
+    background: var(--paper); padding: 0 10px; font-family: 'Lora', serif; font-size: 10px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .preview-body { font-size: 16.5px; line-height: 1.72; color: var(--ink); }
+  .preview-body p { margin-bottom: 12px; }
+  .preview-body p:last-child { margin-bottom: 0; }
+  .preview-empty { color: var(--ink-soft); font-style: italic; }
+  .preview-foot {
+    margin-top: 18px; padding-top: 14px; border-top: 1px dashed var(--rule);
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 13.5px; color: var(--ink-soft);
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  .preview-foot .aloud { color: var(--truth); }
+
+  /* ---------- Walk-through ---------- */
+  .walk {
+    margin: 34px 0 8px; border: 1px solid rgba(45,106,79,0.3);
+    background: rgba(45,106,79,0.05); border-radius: 2px; padding: 26px 30px;
+  }
+  .walk h2 {
+    font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: 24px;
+    color: var(--ink); margin-bottom: 6px;
+  }
+  .walk .lead { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 16px; }
+  .walk ol { list-style: none; counter-reset: w; display: grid; gap: 11px; }
+  .walk li {
+    counter-increment: w; padding-left: 34px; position: relative; font-size: 15px; line-height: 1.5;
+  }
+  .walk li::before {
+    content: counter(w); position: absolute; left: 0; top: 0;
+    width: 22px; height: 22px; border-radius: 50%; background: var(--truth); color: var(--paper);
+    font-family: 'Fraunces', serif; font-size: 12px; display: flex; align-items: center; justify-content: center;
+  }
+  .walk li em { font-style: italic; color: var(--ink-soft); }
+
+  /* ---------- C1 stretch ---------- */
+  .c1-bar { margin: 36px 0 0; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .c1-btn {
+    display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px;
+    background: transparent; border: 1px solid var(--ink); border-radius: 2px;
+    font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink); cursor: pointer; transition: all .2s;
+  }
+  .c1-btn:hover, .c1-btn[aria-expanded="true"] { background: var(--ink); color: var(--paper); }
+  .c1-btn .chev { transition: transform .25s; font-size: 10px; }
+  .c1-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+  .c1-hint { font-family: 'Fraunces', serif; font-style: italic; font-size: 13.5px; color: var(--ink-soft); }
+  #c1 { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+  #c1.open { max-height: 900px; }
+  .c1-inner {
+    padding-top: 22px; display: grid; gap: 14px;
+  }
+  .c1-card {
+    background: var(--paper-deep); border: 1px dashed var(--rule); border-radius: 2px; padding: 18px 22px;
+  }
+  .c1-card .h { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; color: var(--ink); margin-bottom: 6px; }
+  .c1-card .eg { font-style: italic; font-size: 14.5px; color: var(--truth); }
+  .c1-card .g { font-size: 13.5px; color: var(--ink-soft); margin-top: 4px; }
+
+  /* ---------- Footer + utility ---------- */
+  footer {
+    margin-top: 60px; padding-top: 26px; border-top: 1px solid var(--rule); text-align: center;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: var(--ink-soft);
+  }
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+  .reset {
+    display: block; margin: 22px auto 0; background: none; border: none; cursor: pointer;
+    font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.1em; color: var(--ink-soft);
+    text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px;
+  }
+  .reset:hover { color: var(--trap); }
+
+  /* ---------- Sticky bar ---------- */
+  .sticky {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 20;
+    background: var(--ink); color: var(--paper);
+    display: flex; align-items: center; justify-content: center; gap: 22px; flex-wrap: wrap;
+    padding: 13px 24px; font-family: 'Lora', serif; font-size: 13.5px;
+    box-shadow: 0 -6px 22px rgba(29,36,56,0.14);
+  }
+  .sticky .diamond { color: var(--rule); }
+  .sticky b { font-weight: 600; }
+  .sticky .done-count.full b { color: #8fd3b3; }
+  .sticky .sep { color: rgba(244,237,224,0.35); }
+  .sticky .cue { font-style: italic; color: rgba(244,237,224,0.75); }
+
+  @media (max-width: 680px) {
+    .container { padding: 42px 20px 30px; }
+    .track-item { grid-template-columns: 22px 1fr; gap: 12px; padding: 16px 18px; }
+    .preview { padding: 26px 22px; }
+    .sticky { gap: 12px; font-size: 12.5px; padding: 11px 16px; }
+    .sticky .cue { display: none; }
+  }
+
+  @media print {
+    body { background: white; background-image: none; padding-bottom: 0; }
+    .tracker, .starters, .c1-bar, #c1, .sticky, .reset, .walk { break-inside: avoid; }
+    .sticky, .c1-bar, .reset { display: none; }
+    #c1 { max-height: none !important; }
+    textarea { border: 1px solid #ccc; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Capstone · Valérie · 28 hours</div>
+    <h1>My professional <span class="accent">profile</span></h1>
+    <div class="subtitle">Where you've been, and where you're heading — in your own words, built one block at a time.</div>
+  </header>
+
+  <div class="how">
+    <p>Five short parts. You don't have to write them in order, and no single part needs to be long. Write a little in each, and the whole thing assembles itself below.</p>
+    <p>There are <strong>three structures to land</strong> — tick each one when you spot it in your writing. That's the target: not "was it good enough", just <strong>"did I use all three?"</strong> Land the three and the profile is complete.</p>
+    <p class="quiet">Say each sentence out loud before you type it. It comes out better that way — it always does.</p>
+  </div>
+
+  <!-- ============ MUST-USE TRACKER ============ -->
+  <div class="tracker">
+    <div class="tracker-head">
+      <h2>Three to land</h2>
+      <span class="badge">Must use</span>
+    </div>
+    <div class="track-grid" id="trackGrid">
+
+      <div class="track-item" data-struct="perf" role="button" tabindex="0" aria-pressed="false">
+        <div class="track-check" aria-hidden="true"></div>
+        <div>
+          <div class="track-tag">Present perfect · since / for <span class="lands">— lands in Part 1</span></div>
+          <div class="track-desc">How long you've done what you do. The bridge between your past and now.</div>
+          <div class="track-model">"I've worked in health-and-safety compliance for over twenty years."</div>
+          <div class="track-spot" data-spot="perf"></div>
+        </div>
+      </div>
+
+      <div class="track-item" data-struct="past" role="button" tabindex="0" aria-pressed="false">
+        <div class="track-check" aria-hidden="true"></div>
+        <div>
+          <div class="track-tag">Past simple + past perfect <span class="lands">— lands in Part 2</span></div>
+          <div class="track-desc">What you did, and what you had already built before you moved on.</div>
+          <div class="track-model">"I led the site audits. By the time I left, I <b style="color:var(--truth);font-style:normal">had built</b> a system the team relied on."</div>
+          <div class="track-spot" data-spot="past"></div>
+        </div>
+      </div>
+
+      <div class="track-item" data-struct="conc" role="button" tabindex="0" aria-pressed="false">
+        <div class="track-check" aria-hidden="true"></div>
+        <div>
+          <div class="track-tag">Concession / contrast <span class="lands">— lands in Part 3</span></div>
+          <div class="track-desc">The turn. You honour where you came from and still point forward.</div>
+          <div class="track-model">"Although my background is in compliance, I'm moving toward the people side of the work."</div>
+          <div class="track-spot" data-spot="conc"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ DRAFTING BLOCKS ============ -->
+  <div id="blocks"></div>
+
+  <!-- ============ ASSEMBLED PREVIEW ============ -->
+  <div class="preview">
+    <div class="preview-body" id="previewBody">
+      <span class="preview-empty">Your profile will assemble here as you write — read it as one piece when you're done.</span>
+    </div>
+    <div class="preview-foot">
+      <span id="previewWords">0 words</span>
+      <span class="aloud">Read it aloud, start to finish, before you walk it through.</span>
+    </div>
+  </div>
+
+  <!-- ============ WALK-THROUGH ============ -->
+  <div class="walk">
+    <h2>Walk it through</h2>
+    <p class="lead">When you present it, don't read it twice — point to the parts.</p>
+    <ol>
+      <li>Read the whole profile aloud, once, without stopping.</li>
+      <li>Point to your <strong>since / for</strong> — how long have you done your work?</li>
+      <li>Point to your <strong>past perfect</strong> — what had you built before you left?</li>
+      <li>Point to your <strong>concession</strong> — where does the direction turn?</li>
+      <li>One line you'd like to make stronger next time. <em>(Just one — and only what you'd add, not what's wrong.)</em></li>
+    </ol>
+  </div>
+
+  <!-- ============ C1 STRETCH ============ -->
+  <div class="c1-bar">
+    <button class="c1-btn" id="c1btn" type="button" aria-expanded="false" aria-controls="c1">
+      C1 stretch <span class="chev">▾</span>
+    </button>
+    <span class="c1-hint">For when the three feel easy — sharper ways to make the turn.</span>
+  </div>
+  <div id="c1">
+    <div class="c1-inner">
+      <div class="c1-card">
+        <div class="h">Front the concession for weight</div>
+        <div class="eg">"Compliance-trained though I am, I've come to care more about the people than the paperwork."</div>
+        <div class="g">Moving <em>though</em> to the front makes the contrast land harder than a plain "although".</div>
+      </div>
+      <div class="c1-card">
+        <div class="h">Concede a whole clause, then pivot</div>
+        <div class="eg">"For all the years I spent enforcing rules, what I'll miss least is the enforcing."</div>
+        <div class="g">"For all (that)…" concedes generously before the turn — confident, not defensive.</div>
+      </div>
+      <div class="c1-card">
+        <div class="h">Contrast your two selves</div>
+        <div class="eg">"Where I once measured risk, I now want to reduce it for the people carrying it."</div>
+        <div class="g">"Where I once…, I now…" makes the before/after the sentence's own shape.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Built one lesson at a time <span class="ornament">·</span> ESG Langues
+    <button class="reset" id="reset" type="button">Clear this draft and start fresh</button>
+  </footer>
+
+</div>
+
+<div class="sticky" id="sticky">
+  <span><span class="diamond">◆</span> <span class="done-count" id="doneWrap"><b id="doneCount">0</b> / 3 structures landed</span></span>
+  <span class="sep">·</span>
+  <span><b id="wordCount">0</b> words</span>
+  <span class="sep">·</span>
+  <span class="cue" id="cue">say it, then type it</span>
+</div>
+
+<script>
+(function () {
+  var STORE = 'valerie_profile_v1';
+
+  var blocks = [
+    {
+      id: 'b1', num: '01', title: 'Where I come from', anchor: 'perf',
+      purpose: 'Your field, and how long it has been yours.',
+      starters: ["I've worked in ______ for / since ______.", "My field has always been ______."],
+      ph: 'e.g. I\u2019ve worked in health-and-safety compliance for over twenty years\u2026'
+    },
+    {
+      id: 'b2', num: '02', title: 'What I was responsible for', anchor: 'past',
+      purpose: 'Your role, and what you had built or managed by the time you moved on.',
+      starters: ["In my last role, I ______.", "By the time I left, I had ______."],
+      ph: 'e.g. In my last role, I led the site audits. By the time I left, I had built\u2026'
+    },
+    {
+      id: 'b3', num: '03', title: 'The turn', anchor: 'conc',
+      purpose: 'Why you are changing direction \u2014 said with confidence, not apology.',
+      starters: ["Although my background is in ______, I'm moving toward ______.", "While I ______, I realised ______."],
+      ph: 'e.g. Although my background is in compliance, I\u2019m moving toward\u2026'
+    },
+    {
+      id: 'b4', num: '04', title: 'What I carry forward', anchor: null,
+      purpose: 'The skills that travel with you into whatever comes next.',
+      starters: ["The skills that travel with me are ______.", "What I've learned to do well is ______."],
+      ph: 'e.g. The skills that travel with me are\u2026'
+    },
+    {
+      id: 'b5', num: '05', title: 'Where I\u2019m heading', anchor: null,
+      purpose: 'What you are looking for now. End on the road ahead.',
+      starters: ["What I'm looking for now is ______.", "I want to ______."],
+      ph: 'e.g. What I\u2019m looking for now is\u2026'
+    }
+  ];
+
+  var anchorLabel = {
+    perf: 'must use · since/for',
+    past: 'must use · past perfect',
+    conc: 'must use · concession'
+  };
+
+  // concession/contrast connectors to spot as a live hint
+  var connectors = ['although','though','even though','whereas','while','despite','in spite of','however','nonetheless','nevertheless','on the other hand','yet','whilst'];
+
+  var state = { text: {}, struct: { perf: false, past: false, conc: false } };
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORE) || '{}');
+    if (saved.text) state.text = saved.text;
+    if (saved.struct) state.struct = Object.assign(state.struct, saved.struct);
+  } catch (e) {}
+
+  function save() {
+    try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {}
+  }
+
+  // ---- build blocks ----
+  var wrap = document.getElementById('blocks');
+  blocks.forEach(function (b) {
+    var el = document.createElement('div');
+    el.className = 'block';
+    var badge = b.anchor
+      ? '<span class="anchor-badge" data-badge="' + b.anchor + '">' + anchorLabel[b.anchor] + '</span>'
+      : '';
+    var starters = b.starters.map(function (s) {
+      return '<span class="starter" data-fill="' + s.replace(/"/g, '&quot;') + '">' + s + '</span>';
+    }).join('');
+    el.innerHTML =
+      '<div class="block-head"><span class="block-num">Part ' + b.num + '</span>' +
+      '<h3>' + b.title + '</h3>' + badge + '</div>' +
+      '<div class="block-purpose">' + b.purpose + '</div>' +
+      '<div class="starters">' + starters + '</div>' +
+      '<textarea id="' + b.id + '" placeholder="' + b.ph + '"></textarea>';
+    wrap.appendChild(el);
+
+    var ta = el.querySelector('textarea');
+    ta.value = state.text[b.id] || '';
+    ta.addEventListener('input', function () {
+      state.text[b.id] = ta.value;
+      save(); update();
+    });
+
+    el.querySelectorAll('.starter').forEach(function (s) {
+      s.addEventListener('click', function () {
+        var stub = s.getAttribute('data-fill').replace(/_+/g, '').replace(/\s+/g, ' ').trim();
+        if (ta.value && !/\s$/.test(ta.value)) ta.value += ' ';
+        ta.value += stub;
+        ta.focus();
+        state.text[b.id] = ta.value; save(); update();
+      });
+    });
+  });
+
+  // ---- structure ticking ----
+  document.querySelectorAll('.track-item').forEach(function (item) {
+    var key = item.getAttribute('data-struct');
+    function set(v) {
+      state.struct[key] = v;
+      item.classList.toggle('done', v);
+      item.setAttribute('aria-pressed', v ? 'true' : 'false');
+      save(); update();
+    }
+    item.addEventListener('click', function () { set(!state.struct[key]); });
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(!state.struct[key]); }
+    });
+    item.classList.toggle('done', !!state.struct[key]);
+    item.setAttribute('aria-pressed', state.struct[key] ? 'true' : 'false');
+  });
+
+  function allText() {
+    return blocks.map(function (b) { return state.text[b.id] || ''; }).join('\n');
+  }
+
+  function wordCount() {
+    var m = allText().trim().match(/\S+/g);
+    return m ? m.length : 0;
+  }
+
+  function spotConnectors() {
+    var hay = ' ' + allText().toLowerCase().replace(/[^a-z\s]/g, ' ') + ' ';
+    var found = [];
+    connectors.forEach(function (c) {
+      if (hay.indexOf(' ' + c + ' ') !== -1) found.push(c);
+    });
+    return found;
+  }
+
+  function update() {
+    // preview
+    var pb = document.getElementById('previewBody');
+    var paras = blocks.map(function (b) { return (state.text[b.id] || '').trim(); }).filter(Boolean);
+    if (paras.length === 0) {
+      pb.innerHTML = '<span class="preview-empty">Your profile will assemble here as you write — read it as one piece when you\u2019re done.</span>';
+    } else {
+      pb.innerHTML = paras.map(function (p) {
+        return '<p>' + p.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p>';
+      }).join('');
+    }
+
+    // counts
+    var wc = wordCount();
+    document.getElementById('wordCount').textContent = wc;
+    document.getElementById('previewWords').textContent = wc + (wc === 1 ? ' word' : ' words');
+
+    var landed = ['perf','past','conc'].filter(function (k) { return state.struct[k]; }).length;
+    document.getElementById('doneCount').textContent = landed;
+    var dw = document.getElementById('doneWrap');
+    dw.classList.toggle('full', landed === 3);
+    var cue = document.getElementById('cue');
+    cue.textContent = landed === 3 ? 'all three landed — that\u2019s a complete profile' : 'say it, then type it';
+
+    // anchor badges reflect landed
+    document.querySelectorAll('.anchor-badge').forEach(function (bd) {
+      var k = bd.getAttribute('data-badge');
+      bd.classList.toggle('landed', !!state.struct[k]);
+    });
+
+    // concession spotter hint
+    var spot = document.querySelector('[data-spot="conc"]');
+    if (spot) {
+      var f = spotConnectors();
+      spot.innerHTML = f.length
+        ? 'Spotted in your writing: <b>' + f.slice(0,4).join(', ') + '</b>'
+        : 'Tip: try <i>although</i>, <i>while</i>, or <i>whereas</i> to make the turn.';
+    }
+  }
+
+  // ---- C1 toggle ----
+  var c1btn = document.getElementById('c1btn'), c1 = document.getElementById('c1');
+  c1btn.addEventListener('click', function () {
+    var open = c1.classList.toggle('open');
+    c1btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  // ---- reset ----
+  document.getElementById('reset').addEventListener('click', function () {
+    if (!confirm('Clear the whole draft and the three ticks? This can\u2019t be undone.')) return;
+    state = { text: {}, struct: { perf: false, past: false, conc: false } };
+    save();
+    blocks.forEach(function (b) { var t = document.getElementById(b.id); if (t) t.value = ''; });
+    document.querySelectorAll('.track-item').forEach(function (i) {
+      i.classList.remove('done'); i.setAttribute('aria-pressed', 'false');
+    });
+    update();
+  });
+
+  update();
+})();
+</script>
+</body>
+</html>
