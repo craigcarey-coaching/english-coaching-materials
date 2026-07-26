@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing a Concise Issue Email — B2 Craft Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;      /* bloat / cut this */
+    --truth: #2d6a4f;     /* tight / keep this */
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.62;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 15% 20%, rgba(168, 50, 50, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 80%, rgba(45, 106, 79, 0.04) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 38px;
+    margin-bottom: 12px;
+  }
+
+  .eyebrow {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(48px, 9vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+
+  h1 .accent { color: var(--trap); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--ink-soft);
+    margin-top: 20px;
+    max-width: 620px;
+    line-height: 1.4;
+  }
+
+  /* ---------- Thesis / lede ---------- */
+  .lede {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    line-height: 1.7;
+    padding: 36px 0 8px;
+    max-width: 680px;
+  }
+  .lede p { margin-bottom: 16px; }
+  .lede strong { font-weight: 600; color: var(--ink); }
+  .lede .pull {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--truth);
+    line-height: 1.35;
+    padding: 4px 0 4px 20px;
+    border-left: 3px solid var(--truth);
+    margin: 6px 0 22px;
+  }
+
+  /* ---------- Section scaffolding ---------- */
+  section { padding: 46px 0 8px; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 8px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(201, 184, 150, 0.55);
+  }
+
+  .sec-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    font-variation-settings: "SOFT" 60;
+  }
+
+  .sec-intro {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    max-width: 660px;
+    margin: 16px 0 24px;
+  }
+
+  /* ---------- Anatomy list ---------- */
+  .anatomy { display: grid; gap: 14px; }
+
+  .part {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .part-label {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+  }
+  .part-label .purpose {
+    display: block;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    letter-spacing: 0;
+  }
+  .part-model {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--truth);
+    line-height: 1.5;
+  }
+  .part-model .plain {
+    font-style: normal;
+    color: var(--ink-soft);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  /* ---------- Structural signature (chips) ---------- */
+  .signature {
+    background: rgba(45, 106, 79, 0.06);
+    border: 1px solid rgba(45, 106, 79, 0.25);
+    border-radius: 2px;
+    padding: 26px 28px;
+  }
+  .sig-list { display: grid; gap: 16px; margin-top: 6px; }
+  .sig-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .sig-tag {
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--truth);
+    white-space: nowrap;
+  }
+  .sig-item .sig-eg {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .sig-note {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(45, 106, 79, 0.2);
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  .sig-note strong { color: var(--truth); font-weight: 600; }
+
+  /* ---------- Moves ---------- */
+  .moves { display: grid; gap: 16px; counter-reset: move; }
+  .move {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 22px 26px;
+  }
+  .move-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .move-title::before {
+    counter-increment: move;
+    content: counter(move, decimal-leading-zero);
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: normal;
+    letter-spacing: 0.05em;
+  }
+  .move-gloss {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    max-width: 620px;
+  }
+  .ba { display: grid; gap: 8px; }
+  .ba-row {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 12px;
+    align-items: start;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14.5px;
+    line-height: 1.45;
+  }
+  .ba-mark { font-style: normal; font-weight: 700; font-size: 15px; }
+  .ba-row.cut .ba-mark { color: var(--trap); }
+  .ba-row.cut .ba-text { color: var(--trap); opacity: 0.82; }
+  .ba-row.keep .ba-mark { color: var(--truth); }
+  .ba-row.keep .ba-text { color: var(--ink); }
+
+  /* ---------- Before / after showpiece ---------- */
+  .showpiece { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .email {
+    border-radius: 2px;
+    padding: 24px 26px;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .email.before {
+    background: rgba(168, 50, 50, 0.05);
+    border: 1px solid rgba(168, 50, 50, 0.3);
+  }
+  .email.after {
+    background: rgba(45, 106, 79, 0.06);
+    border: 1px solid rgba(45, 106, 79, 0.3);
+  }
+  .email-tag {
+    font-family: 'Lora', serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .email.before .email-tag { color: var(--trap); }
+  .email.after .email-tag { color: var(--truth); }
+  .wordcount {
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    font-size: 12px;
+    opacity: 0.85;
+  }
+  .email .subj {
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .email .subj span {
+    display: block;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .email p { margin-bottom: 10px; }
+  .email.before p { color: #7a3b3b; }
+
+  .changed {
+    margin-top: 18px;
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 20px 24px;
+  }
+  .changed h3 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .changed ul { list-style: none; display: grid; gap: 9px; }
+  .changed li {
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding-left: 22px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .changed li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--truth);
+    font-weight: 700;
+  }
+  .changed li strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Phrase bank ---------- */
+  .bank { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bank-card {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 20px 24px;
+  }
+  .bank-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .bank-card ul { list-style: none; display: grid; gap: 8px; }
+  .bank-card li {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.4;
+    padding-left: 16px;
+    position: relative;
+  }
+  .bank-card li::before {
+    content: "·";
+    position: absolute;
+    left: 3px;
+    color: var(--rule);
+    font-style: normal;
+    font-weight: 700;
+  }
+  .bank-card.link { border-color: rgba(45, 106, 79, 0.35); }
+  .bank-card.link h3 { color: var(--truth); }
+
+  /* ---------- Checklist ---------- */
+  .checklist {
+    background: var(--paper-deep);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 28px 30px;
+  }
+  .checklist ul { list-style: none; display: grid; gap: 14px; }
+  .checklist li {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 14px;
+    align-items: start;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .checklist .box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--truth);
+    border-radius: 2px;
+    margin-top: 3px;
+  }
+  .checklist li strong { color: var(--ink); font-weight: 600; }
+  .checklist li span { color: var(--ink-soft); }
+
+  /* ---------- C1 toggle ---------- */
+  .c1-bar {
+    margin: 46px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .c1-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: transparent;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .c1-btn:hover { background: var(--ink); color: var(--paper); }
+  .c1-btn[aria-expanded="true"] { background: var(--ink); color: var(--paper); }
+  .c1-btn .chev { transition: transform 0.25s; font-size: 10px; }
+  .c1-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+  .c1-hint {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+
+  #c1 {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  #c1.open { max-height: 1600px; }
+  .c1-inner { padding-top: 30px; }
+  .c1-inner .move { border-style: dashed; }
+  .c1-inner .move-title { color: var(--ink); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    margin-top: 76px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 720px) {
+    .container { padding: 44px 20px 60px; }
+    .part { grid-template-columns: 1fr; gap: 8px; }
+    .showpiece { grid-template-columns: 1fr; }
+    .bank { grid-template-columns: 1fr; }
+    .sig-item { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  @media print {
+    body { background: white; background-image: none; }
+    .c1-bar, footer { display: none; }
+    #c1 { max-height: none !important; overflow: visible; }
+    .part, .move, .email, .bank-card, .checklist, .signature { break-inside: avoid; box-shadow: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">A writing craft page · Any student · B2</div>
+    <h1>The issue <span class="accent">email</span></h1>
+    <div class="subtitle">How to report a problem in English so it gets read, understood, and acted on — in as few words as it takes.</div>
+  </header>
+
+  <div class="lede">
+    <p>An issue email has one job: to get a problem <strong>understood</strong> and <strong>acted on</strong>, fast. The obstacle is rarely the reader's goodwill — it's their attention. Concision is how you protect it.</p>
+    <div class="pull">Concision is not brevity. It is making every word earn its place.</div>
+    <p>A concise issue email is read in one pass, understood without effort, and answered without a follow-up. This page shows how to write one.</p>
+  </div>
+
+  <!-- ============ 01 ANATOMY ============ -->
+  <section id="anatomy">
+    <div class="sec-head">
+      <span class="sec-num">§ 01</span>
+      <h2>The anatomy</h2>
+    </div>
+    <p class="sec-intro">A good issue email is not shorter because it leaves things out — it is shorter because everything is in the right order. Six parts, top to bottom. Each one does a single job.</p>
+
+    <div class="anatomy">
+      <div class="part">
+        <div class="part-label">Subject line<span class="purpose">so it is found and prioritised</span></div>
+        <div class="part-model"><span class="plain">Model</span>Monthly figures still missing — blocking Thursday's review</div>
+      </div>
+      <div class="part">
+        <div class="part-label">Opening line<span class="purpose">the issue, stated once</span></div>
+        <div class="part-model"><span class="plain">Model</span>The figures we agreed for Thursday's review haven't come through yet.</div>
+      </div>
+      <div class="part">
+        <div class="part-label">What happened<span class="purpose">the minimum context needed</span></div>
+        <div class="part-model"><span class="plain">Model</span>They were due yesterday and aren't in the shared folder.</div>
+      </div>
+      <div class="part">
+        <div class="part-label">Impact<span class="purpose">why it matters</span></div>
+        <div class="part-model"><span class="plain">Model</span>Without them, the team can't prepare in time for the meeting.</div>
+      </div>
+      <div class="part">
+        <div class="part-label">The request<span class="purpose">who does what, by when</span></div>
+        <div class="part-model"><span class="plain">Model</span>Could you send them today, or let me know if there's a delay?</div>
+      </div>
+      <div class="part">
+        <div class="part-label">Close<span class="purpose">brief and courteous</span></div>
+        <div class="part-model"><span class="plain">Model</span>Happy to help pull them together if that's useful. Thanks.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 STRUCTURAL SIGNATURE ============ -->
+  <section id="signature">
+    <div class="sec-head">
+      <span class="sec-num">§ 02</span>
+      <h2>The structural signature</h2>
+    </div>
+    <p class="sec-intro">Beyond the shape, a strong issue email carries a recognisable grammar. Name these before you write — they are your <em>must-use structures</em>. Aim to place each one deliberately, not by accident.</p>
+
+    <div class="signature">
+      <div class="sig-list">
+        <div class="sig-item">
+          <span class="sig-tag">Past tense · what happened</span>
+          <span class="sig-eg">"The figures <em>didn't arrive</em> yesterday as agreed."</span>
+        </div>
+        <div class="sig-item">
+          <span class="sig-tag">A passive · neutral report</span>
+          <span class="sig-eg">"The file <em>was saved</em> to the wrong folder." — when who did it doesn't matter.</span>
+        </div>
+        <div class="sig-item">
+          <span class="sig-tag">An impact link · so what</span>
+          <span class="sig-eg">"<em>As a result</em>, the team can't prepare."</span>
+        </div>
+        <div class="sig-item">
+          <span class="sig-tag">A concession · fairness</span>
+          <span class="sig-eg">"<em>Although</em> the deadline was tight, the delay wasn't flagged."</span>
+        </div>
+        <div class="sig-item">
+          <span class="sig-tag">A modal request · the ask</span>
+          <span class="sig-eg">"<em>Could you</em> send them by end of day?"</span>
+        </div>
+      </div>
+      <p class="sig-note">Name the ones you'll use <em>before</em> you start, then tick them off <em>after</em>. It's how you know a draft is actually finished — not just long. A short, fixed list is easier to hit than a vague aim to "write well".</p>
+    </div>
+  </section>
+
+  <!-- ============ 03 SEVEN MOVES ============ -->
+  <section id="moves">
+    <div class="sec-head">
+      <span class="sec-num">§ 03</span>
+      <h2>Seven moves for concision</h2>
+    </div>
+    <p class="sec-intro">Concision is not a single act of cutting — it is a handful of repeatable decisions. Learn the moves and they become reflex.</p>
+
+    <div class="moves">
+      <div class="move">
+        <div class="move-title">Lead with the point, not the runway</div>
+        <div class="move-gloss">Cut the throat-clearing opener. The first sentence is for the issue itself, not for arriving at it.</div>
+        <div class="ba">
+          <div class="ba-row cut"><span class="ba-mark">✗</span><span class="ba-text">I am writing to inform you that there seems to be an issue with the report.</span></div>
+          <div class="ba-row keep"><span class="ba-mark">✓</span><span class="ba-text">The report is missing two figures.</span></div>
+        </div>
+      </div>
+
+      <div class="move">
+        <div class="move-title">State the request early and plainly</div>
+        <div class="move-gloss">Make the ask impossible to miss. Use a clear modal — and say who, what, and by when.</div>
+        <div class="ba">
+          <div class="ba-row cut"><span class="ba-mark">✗</span><span class="ba-text">It would be greatly appreciated if the file could perhaps be sent at some point.</span></div>
+          <div class="ba-row keep"><span class="ba-mark">✓</span><span class="ba-text">Could you send the file by 5pm today?</span></div>
+        </div>
+      </div>
+
+      <div class="move">
+        <div class="move-title">One idea per sentence</div>
+        <div class="move-gloss">Long chains joined by "and… and… which… because…" bury the point. Split them so each lands.</div>
+        <div class="ba">
+          <div class="ba-row cut"><span class="ba-mark">✗</span><span class="ba-text">The system crashed and we lost the data and now the client is waiting which is a problem.</span></div>
+          <div class="ba-row keep"><span class="ba-mark">✓</span><span class="ba-text">The system crashed and we lost the data. The client is now waiting.</span></div>
+        </div>
+      </div>
+
+      <div class="move">
+        <div class="move-title">Turn nouns back into verbs</div>
+        <div class="move-gloss">Nominal style is heavy. "Make a decision" is just "decide" wearing a coat. This is the single biggest win for French speakers.</div>
+        <div class="ba">
+          <div class="ba-row cut"><span class="ba-mark">✗</span><span class="ba-text">We need to make a decision and provide confirmation of the change.</span></div>
+          <div class="ba-row keep"><span class="ba-mark">✓</span><span class="ba-text">We need to decide and confirm the change.</span></div>
+        </div>
+      </div>
+
+      <div class="move">
+        <div class="move-title">Cut the empty words</div>
+        <div class="move-gloss">"Just", "really", "very", "actually", "basically" dilute rather than strengthen. If the fact is urgent, the word "urgent" carries it.</div>
+        <div class="ba">
+          <div class="ba-row cut"><span class="ba-mark">✗</span><span class="ba-text">I just wanted to say that it's actually really quite very urgent.</span></div>
+          <div class="ba-row keep"><span class="ba-mark">✓</span><span class="ba-text">This is urgent.</span></div>
+        </div>
+      </div>
+
+      <div class="move">
+        <div class="move-title">Active for people, passive for process</div>
+        <div class="move-gloss">Use the active voice to say what people do and to own a request. Keep the passive for when the doer is irrelevant — not to hide it.</div>
+        <div class="ba">
+          <div class="ba-row cut"><span class="ba-mark">✗</span><span class="ba-text">A mistake was made and it will be looked into by someone.</span></div>
+          <div class="ba-row keep"><span class="ba-mark">✓</span><span class="ba-text">We made a mistake. I'll look into it today. <em>(But: "The order was cancelled" — fine, the who doesn't matter.)</em></span></div>
+        </div>
+      </div>
+
+      <div class="move">
+        <div class="move-title">One email, one purpose</div>
+        <div class="move-gloss">Three unrelated problems in one wall of text get one partial answer. Send one issue — or list them clearly and numbered.</div>
+        <div class="ba">
+          <div class="ba-row cut"><span class="ba-mark">✗</span><span class="ba-text">A paragraph that drifts from the printer to the parking to next week's agenda.</span></div>
+          <div class="ba-row keep"><span class="ba-mark">✓</span><span class="ba-text">One issue per email — or a short numbered list if they truly belong together.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 BEFORE / AFTER ============ -->
+  <section id="showpiece">
+    <div class="sec-head">
+      <span class="sec-num">§ 04</span>
+      <h2>The same email, twice</h2>
+    </div>
+    <p class="sec-intro">Same facts, same courtesy, same person sending it. The only difference is discipline. Read both aloud — the second one you can hear the reader answering.</p>
+
+    <div class="showpiece">
+      <div class="email before">
+        <div class="email-tag">Before <span class="wordcount">≈ 150 words</span></div>
+        <div class="subj"><span>Subject</span>A small question</div>
+        <p>Dear Sir or Madam,</p>
+        <p>I hope this email finds you well. I am writing to you today because I wanted to inform you that I have noticed that there seems to be a bit of a problem regarding the monthly figures we were expecting for the review meeting on Thursday, which as you know is quite an important meeting for the whole team.</p>
+        <p>Basically, what I have observed is that the figures have not yet arrived in the shared folder, and this means it is not really possible for us to begin our preparation, and I think that maybe this could potentially become a problem as the meeting is approaching quite fast.</p>
+        <p>I would be very grateful if it would be possible for someone to maybe send them across when you have a moment. Thank you very much in advance for your kind attention to this matter.</p>
+        <p>Best regards,</p>
+      </div>
+
+      <div class="email after">
+        <div class="email-tag">After <span class="wordcount">≈ 60 words</span></div>
+        <div class="subj"><span>Subject</span>Monthly figures still missing — blocking Thursday's review</div>
+        <p>Hi Marc,</p>
+        <p>The figures we agreed for Thursday's review haven't reached the shared folder yet.</p>
+        <p>Without them, the team can't start preparing — and the meeting is close.</p>
+        <p>Could you send them today, or let me know if there's a delay? Happy to help pull them together if that's useful.</p>
+        <p>Thanks,<br>Léa</p>
+      </div>
+    </div>
+
+    <div class="changed">
+      <h3>What changed — and what didn't</h3>
+      <ul>
+        <li><strong>The subject went from decorative to useful.</strong> "A small question" tells the reader nothing; the rewrite names the problem, the deadline, and the stakes.</li>
+        <li><strong>The issue moved to sentence one.</strong> Three lines of "I hope… I am writing… I wanted to inform you" were runway, not message.</li>
+        <li><strong>The impact became concrete.</strong> "Could potentially become a problem" is a shrug; "the team can't start preparing" is a reason to act.</li>
+        <li><strong>The request became a request.</strong> "If it would be possible for someone to maybe send them" is a wish. "Could you send them today?" is answerable.</li>
+        <li><strong>The courtesy stayed.</strong> Concise is not cold — the offer to help and the thanks are still there. It's warmth without padding.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 05 PHRASE BANK ============ -->
+  <section id="bank">
+    <div class="sec-head">
+      <span class="sec-num">§ 05</span>
+      <h2>A phrase bank</h2>
+    </div>
+    <p class="sec-intro">Reusable, register-neutral building blocks — professional without being stiff. Pick one from each row you need and the email almost writes itself.</p>
+
+    <div class="bank">
+      <div class="bank-card">
+        <h3>Open · state the issue</h3>
+        <ul>
+          <li>I want to flag an issue with…</li>
+          <li>There's a problem with…</li>
+          <li>[X] hasn't arrived / didn't happen.</li>
+          <li>Quick heads-up: …</li>
+        </ul>
+      </div>
+      <div class="bank-card">
+        <h3>Give the context</h3>
+        <ul>
+          <li>This happened when…</li>
+          <li>As of this morning, …</li>
+          <li>The report shows that…</li>
+          <li>To give you the background: …</li>
+        </ul>
+      </div>
+      <div class="bank-card link">
+        <h3>State the impact</h3>
+        <ul>
+          <li>As a result, …</li>
+          <li>This means (that)…</li>
+          <li>The knock-on effect is…</li>
+          <li>If this isn't resolved, …</li>
+        </ul>
+      </div>
+      <div class="bank-card link">
+        <h3>Concede &amp; contrast</h3>
+        <ul>
+          <li>Although / Even though…, …</li>
+          <li>While I understand…, we still need…</li>
+          <li>Despite the delay, …</li>
+          <li>…, whereas previously…</li>
+        </ul>
+      </div>
+      <div class="bank-card">
+        <h3>Make the request</h3>
+        <ul>
+          <li>Could you… by [time]?</li>
+          <li>Please could you…?</li>
+          <li>Would you be able to…?</li>
+          <li>I'd need… before…</li>
+        </ul>
+      </div>
+      <div class="bank-card">
+        <h3>Close</h3>
+        <ul>
+          <li>Happy to discuss.</li>
+          <li>Let me know if you need more detail.</li>
+          <li>Thanks in advance.</li>
+          <li>I'll follow up on Thursday if I don't hear back.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 CHECKLIST ============ -->
+  <section id="checklist">
+    <div class="sec-head">
+      <span class="sec-num">§ 06</span>
+      <h2>Before you send</h2>
+    </div>
+    <p class="sec-intro">Sixty seconds of self-audit. If any answer is "no", the email isn't finished.</p>
+
+    <div class="checklist">
+      <ul>
+        <li><span class="box"></span><span><strong>Is the issue in the first sentence?</strong> Not the third paragraph.</span></li>
+        <li><span class="box"></span><span><strong>Is the request clear — who, what, by when?</strong> A reader should know exactly what to do.</span></li>
+        <li><span class="box"></span><span><strong>Have I cut the runway?</strong> No "I am writing to inform you that…"</span></li>
+        <li><span class="box"></span><span><strong>One idea per sentence?</strong> Read it aloud; if you run out of breath, split it.</span></li>
+        <li><span class="box"></span><span><strong>Any nouns hiding verbs?</strong> "Make a decision" → "decide".</span></li>
+        <li><span class="box"></span><span><strong>Any empty words to cut?</strong> Just, really, very, basically, actually.</span></li>
+        <li><span class="box"></span><span><strong>Would a busy reader get it in one pass?</strong> If not, tighten once more.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ C1 STRETCH ============ -->
+  <div class="c1-bar">
+    <button class="c1-btn" id="c1-btn" type="button" aria-expanded="false" aria-controls="c1">
+      C1 stretch <span class="chev">▾</span>
+    </button>
+    <span class="c1-hint">Concision is a rule you eventually learn to break on purpose.</span>
+  </div>
+
+  <div id="c1">
+    <div class="c1-inner">
+      <div class="moves">
+        <div class="move">
+          <div class="move-title" style="font-style:italic">Choose your directness deliberately</div>
+          <div class="move-gloss">At C1, softening is a tool, not a habit. Decide how direct to be by reading the relationship and the stakes — then commit.</div>
+          <div class="ba">
+            <div class="ba-row keep"><span class="ba-mark">›</span><span class="ba-text">Direct: "This needs clearing today."</span></div>
+            <div class="ba-row keep"><span class="ba-mark">›</span><span class="ba-text">Softer: "It would help to have this cleared today." — same fact, calibrated tone.</span></div>
+          </div>
+        </div>
+        <div class="move">
+          <div class="move-title" style="font-style:italic">Use the passive as a diplomatic instrument</div>
+          <div class="move-gloss">Sometimes the neutral report <em>is</em> the tactful choice — it reports the fault without pointing at the person.</div>
+          <div class="ba">
+            <div class="ba-row keep"><span class="ba-mark">›</span><span class="ba-text">"You missed the deadline" → "The deadline was missed." — the second de-escalates.</span></div>
+          </div>
+        </div>
+        <div class="move">
+          <div class="move-title" style="font-style:italic">Put the ask in the stressed position</div>
+          <div class="move-gloss">English gives weight to the end of a sentence. Land the request where it will be remembered.</div>
+          <div class="ba">
+            <div class="ba-row cut"><span class="ba-mark">›</span><span class="ba-text">"By Friday, if you could send it, that would be great."</span></div>
+            <div class="ba-row keep"><span class="ba-mark">›</span><span class="ba-text">"Could you send it by Friday?" — the deadline holds the stress.</span></div>
+          </div>
+        </div>
+        <div class="move">
+          <div class="move-title" style="font-style:italic">Signpost a multi-point issue</div>
+          <div class="move-gloss">When two or three things genuinely belong together, number them and give each its own request. Structure is itself a form of concision.</div>
+          <div class="ba">
+            <div class="ba-row keep"><span class="ba-mark">›</span><span class="ba-text">"Two things need a decision: (1) the vendor, and (2) the deadline. On (1)…"</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Built one lesson at a time <span class="ornament">·</span> ESG Langues
+  </footer>
+
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('c1-btn');
+    var panel = document.getElementById('c1');
+    if (!btn || !panel) return;
+    btn.addEventListener('click', function () {
+      var open = panel.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  })();
+</script>
+</body>
+</html>
