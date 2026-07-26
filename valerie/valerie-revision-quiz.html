@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twenty-Eight Hours — A Revision Lap · Valérie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: 'Lora', Georgia, serif; font-size: 16px; line-height: 1.62;
+    min-height: 100vh; padding-bottom: 78px;
+    background-image:
+      radial-gradient(ellipse at 12% 16%, rgba(45,106,79,0.05) 0%, transparent 52%),
+      radial-gradient(ellipse at 88% 84%, rgba(168,50,50,0.035) 0%, transparent 52%);
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 820px; margin: 0 auto; padding: 60px 32px 40px; }
+
+  /* Header */
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 32px; margin-bottom: 28px; }
+  .eyebrow { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 16px; }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-style: italic;
+    font-size: clamp(44px, 8vw, 82px); line-height: 0.96; letter-spacing: -0.025em;
+    color: var(--ink); font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  h1 .accent { color: var(--truth); }
+  .subtitle { font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(16px, 2vw, 20px); color: var(--ink-soft); margin-top: 18px; max-width: 620px; line-height: 1.4; }
+
+  .intro { background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px; padding: 22px 26px; margin-bottom: 36px; }
+  .intro p { font-size: 15.5px; } .intro p + p { margin-top: 9px; }
+  .intro strong { font-weight: 600; }
+  .intro .quiet { color: var(--ink-soft); font-style: italic; font-size: 14.5px; }
+
+  /* Section */
+  .sec { margin-bottom: 34px; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; padding-bottom: 11px; border-bottom: 1px solid rgba(201,184,150,0.55); }
+  .sec-num { font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: var(--ink-soft); }
+  .sec-head h2 { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: clamp(21px, 3.3vw, 29px); color: var(--ink); font-variation-settings: "SOFT" 60; flex: 1; min-width: 180px; }
+  .time-badge { font-family: 'Lora', serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); border: 1px solid var(--rule); border-radius: 40px; padding: 3px 11px; white-space: nowrap; }
+
+  /* Question */
+  .q { margin-bottom: 20px; }
+  .q-prompt { font-size: 16px; margin-bottom: 10px; }
+  .q-prompt .n { font-family: 'Fraunces', serif; font-style: italic; color: var(--ink-soft); font-size: 14px; margin-right: 8px; }
+  .q-prompt .gap { color: var(--trap); font-weight: 600; letter-spacing: 0.04em; }
+  .opts { display: flex; flex-wrap: wrap; gap: 9px; }
+  .opt {
+    font-family: 'Lora', serif; font-size: 14.5px; color: var(--ink);
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 9px 16px; cursor: pointer; transition: all .16s; text-align: left;
+  }
+  .opt:hover:not(.locked) { border-color: var(--ink-soft); }
+  .opt.sel { border-color: var(--ink); background: rgba(29,36,56,0.06); box-shadow: inset 0 0 0 1px var(--ink); }
+  .opt.locked { cursor: default; }
+  .opt.correct { border-color: var(--truth); background: rgba(45,106,79,0.12); color: var(--truth); box-shadow: inset 0 0 0 1px var(--truth); }
+  .opt.correct::after { content: " ✓"; font-weight: 700; }
+  .opt.wrongpick { border-color: rgba(168,50,50,0.5); background: rgba(168,50,50,0.06); color: var(--trap); opacity: .82; text-decoration: line-through; text-decoration-color: rgba(168,50,50,0.4); }
+
+  /* Score button */
+  .score-zone { text-align: center; margin: 40px 0 8px; }
+  .score-btn {
+    font-family: 'Lora', serif; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase;
+    background: var(--truth); color: var(--paper); border: none; border-radius: 2px;
+    padding: 15px 40px; cursor: pointer; transition: opacity .2s;
+  }
+  .score-btn:hover { opacity: .9; }
+  .score-btn:disabled { background: var(--rule); color: var(--ink-soft); cursor: default; }
+  .score-msg {
+    margin-top: 18px; font-family: 'Fraunces', serif; font-style: italic; font-size: 18px;
+    color: var(--ink); line-height: 1.4; max-width: 560px; margin-left: auto; margin-right: auto; display: none;
+  }
+  .score-msg.show { display: block; }
+  .score-msg .big { color: var(--truth); font-style: normal; font-weight: 500; }
+
+  /* Teacher key */
+  .key { margin: 30px 0 8px; border: 1px solid var(--rule); border-radius: 2px; background: rgba(168,50,50,0.035); }
+  .key summary {
+    cursor: pointer; padding: 15px 22px; font-family: 'Lora', serif; font-size: 12px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--trap); font-weight: 600; list-style: none;
+  }
+  .key summary::-webkit-details-marker { display: none; }
+  .key summary::before { content: "🔒 "; }
+  .key[open] summary { border-bottom: 1px solid var(--rule); }
+  .key-body { padding: 18px 24px 22px; }
+  .key-body ol { list-style: none; counter-reset: k; display: grid; gap: 7px; }
+  .key-body li { counter-increment: k; font-size: 13.5px; color: var(--ink-soft); padding-left: 30px; position: relative; line-height: 1.5; }
+  .key-body li::before { content: counter(k); position: absolute; left: 0; font-family: 'Fraunces', serif; font-style: italic; color: var(--trap); }
+  .key-body li b { color: var(--ink); font-weight: 600; }
+
+  /* Reflection */
+  .reflect { margin: 44px 0 8px; border: 1px solid rgba(45,106,79,0.3); background: rgba(45,106,79,0.05); border-radius: 2px; padding: 30px 34px; }
+  .reflect h2 { font-family: 'Fraunces', serif; font-weight: 400; font-style: italic; font-size: 27px; color: var(--ink); }
+  .reflect .lead { color: var(--ink-soft); font-size: 15px; margin: 8px 0 22px; max-width: 560px; }
+  .reflect .r { margin-bottom: 20px; }
+  .reflect label { display: block; font-family: 'Fraunces', serif; font-style: italic; font-size: 16.5px; color: var(--ink); margin-bottom: 8px; }
+  .reflect textarea {
+    width: 100%; min-height: 62px; resize: vertical; background: #fbf6ec; border: 1px solid var(--rule);
+    border-radius: 2px; padding: 12px 15px; font-family: 'Lora', serif; font-size: 15px; line-height: 1.55; color: var(--ink); outline: none; transition: border-color .2s;
+  }
+  .reflect textarea:focus { border-color: var(--truth); }
+  .reflect textarea::placeholder { color: var(--ink-soft); font-style: italic; opacity: .75; }
+  .reflect .note { margin-top: 6px; font-size: 13px; color: var(--ink-soft); font-style: italic; }
+
+  /* C1 */
+  .c1-bar { margin: 40px 0 0; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .c1-btn { display: inline-flex; align-items: center; gap: 10px; padding: 11px 20px; background: transparent; border: 1px solid var(--ink); border-radius: 2px; font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); cursor: pointer; transition: all .2s; }
+  .c1-btn:hover, .c1-btn[aria-expanded="true"] { background: var(--ink); color: var(--paper); }
+  .c1-btn .chev { transition: transform .25s; font-size: 10px; }
+  .c1-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+  .c1-hint { font-family: 'Fraunces', serif; font-style: italic; font-size: 13.5px; color: var(--ink-soft); }
+  #c1 { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+  #c1.open { max-height: 900px; }
+  .c1-inner { padding-top: 22px; display: grid; gap: 14px; }
+  .c1-card { background: var(--paper-deep); border: 1px dashed var(--rule); border-radius: 2px; padding: 18px 22px; }
+  .c1-card .cq { font-size: 15px; margin-bottom: 12px; }
+  .c1-card .cq .tag { font-family: 'Lora', serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-bottom: 5px; }
+  .c1-reveal { font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; background: none; border: 1px solid var(--rule); border-radius: 2px; padding: 6px 14px; cursor: pointer; color: var(--ink-soft); }
+  .c1-reveal:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .c1-ans { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--rule); font-style: italic; font-size: 14.5px; color: var(--truth); }
+  .c1-ans.show { display: block; }
+
+  footer { margin-top: 58px; padding-top: 26px; border-top: 1px solid var(--rule); text-align: center; font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: var(--ink-soft); }
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+  .reset { display: block; margin: 22px auto 0; background: none; border: none; cursor: pointer; font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.1em; color: var(--ink-soft); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
+  .reset:hover { color: var(--trap); }
+
+  /* Sticky */
+  .sticky { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; background: var(--ink); color: var(--paper); display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; padding: 13px 24px; font-family: 'Lora', serif; font-size: 13.5px; box-shadow: 0 -6px 22px rgba(29,36,56,0.14); }
+  .sticky .diamond { color: var(--rule); }
+  .sticky b { font-weight: 600; }
+  .sticky.scored b { color: #8fd3b3; }
+  .sticky .sep { color: rgba(244,237,224,0.35); }
+  .sticky .cue { font-style: italic; color: rgba(244,237,224,0.75); }
+
+  @media (max-width: 680px) {
+    .container { padding: 42px 20px 30px; }
+    .reflect { padding: 26px 22px; }
+    .sticky { gap: 12px; font-size: 12.5px; padding: 11px 16px; }
+    .sticky .cue { display: none; }
+  }
+  @media print { body { background: #fff; background-image: none; padding-bottom: 0; } .sticky, .c1-bar, #c1, .reset, .score-zone { display: none; } .key[open] .key-body { display: block; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Revision · Valérie · the whole 28 hours</div>
+    <h1>A lap of <span class="accent">honour</span></h1>
+    <div class="subtitle">Twenty-eight hours, gathered into one short round. Everything here is something you've already met.</div>
+  </header>
+
+  <div class="intro">
+    <p>This isn't a test — it's a revisit. Every item comes from a lesson we've done together, so you've seen it all before.</p>
+    <p>Tap the answer you think fits. Nothing is marked until <strong>you</strong> choose to score it, so take your time and change your mind freely.</p>
+    <p class="quiet">Say each answer out loud before you tap — it's the same move that always makes it come out better.</p>
+  </div>
+
+  <div id="quiz"></div>
+
+  <div class="score-zone">
+    <button class="score-btn" id="scoreBtn" type="button">Score my lap</button>
+    <div class="score-msg" id="scoreMsg"></div>
+  </div>
+
+  <details class="key">
+    <summary>Teacher key · please don't screen-share</summary>
+    <div class="key-body">
+      <ol id="keyList"></ol>
+    </div>
+  </details>
+
+  <!-- Reflection -->
+  <div class="reflect">
+    <h2>And now — forward</h2>
+    <p class="lead">No score here, and nothing to look back on. Just you, pointing at what's next. A line each is plenty.</p>
+    <div class="r">
+      <label>One thing you'd like to be able to do in English six months from now.</label>
+      <textarea id="r1" placeholder="e.g. run a whole meeting in English without switching to French…"></textarea>
+    </div>
+    <div class="r">
+      <label>A moment where you'd like to feel more at ease in English.</label>
+      <textarea id="r2" placeholder="e.g. the first few minutes of a call, before I warm up…"></textarea>
+    </div>
+    <div class="r">
+      <label>One habit you'll keep, to keep it growing.</label>
+      <textarea id="r3" placeholder="e.g. one article a week, or the podcast on my Monday walk…"></textarea>
+      <div class="note">Kept on this device — come back to it whenever you like.</div>
+    </div>
+  </div>
+
+  <!-- C1 -->
+  <div class="c1-bar">
+    <button class="c1-btn" id="c1btn" type="button" aria-expanded="false" aria-controls="c1">C1 stretch <span class="chev">▾</span></button>
+    <span class="c1-hint">Two bonus turns — not scored, just for the fun of the reach.</span>
+  </div>
+  <div id="c1">
+    <div class="c1-inner">
+      <div class="c1-card">
+        <div class="cq"><span class="tag">Rewrite · fronted concession</span>Turn this into a fronted concession: "Although I trained in compliance, I prefer working with people."</div>
+        <button class="c1-reveal" type="button">Reveal a strong version</button>
+        <div class="c1-ans">"Compliance-trained though I am, I prefer working with people." — moving <em>though</em> forward makes the contrast land harder.</div>
+      </div>
+      <div class="c1-card">
+        <div class="cq"><span class="tag">Register · Blue Zones</span>Which sounds more like the documentary register? (a) "People there live a long time." (b) "In these places, longevity is woven into everyday life."</div>
+        <button class="c1-reveal" type="button">Reveal</button>
+        <div class="c1-ans">(b) — "woven into everyday life" carries the reflective, essayistic tone of that TED talk.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Built one lesson at a time <span class="ornament">·</span> ESG Langues
+    <button class="reset" id="reset" type="button">Clear my answers and start fresh</button>
+  </footer>
+
+</div>
+
+<div class="sticky" id="sticky">
+  <span><span class="diamond">◆</span> <span id="stickyMain">Answered <b id="answered">0</b> / <b id="total">0</b></span></span>
+  <span class="sep">·</span>
+  <span class="cue" id="cue">say it, then tap it</span>
+</div>
+
+<script>
+(function () {
+  var STORE = 'valerie_quiz_v1';
+
+  var quiz = [
+    { num: '01', title: 'Make or do', time: '4 min', qs: [
+      { p: 'You have to ___ a decision by Friday.', o: ['make','do'], a: 0, why: '<b>make a decision</b> — fixed collocation.' },
+      { p: 'Could you ___ the washing-up tonight?', o: ['make','do'], a: 1, why: '<b>do</b> the chores/tasks.' },
+      { p: 'She always ___ an effort to speak English at work.', o: ['makes','does'], a: 0, why: '<b>make an effort</b>.' },
+      { p: 'We ___ business with several suppliers abroad.', o: ['make','do'], a: 1, why: '<b>do business</b>.' }
+    ]},
+    { num: '02', title: 'Tenses & time', time: '7 min', qs: [
+      { p: 'When I arrived, the meeting ___.', o: ['had already started','already started','has already started'], a: 0, why: '<b>had started</b> — the earlier of two past events.' },
+      { p: "I've worked in this field ___ 2003.", o: ['since','for'], a: 0, why: '<b>since</b> + a point in time.' },
+      { p: "I've known the team ___ almost ten years.", o: ['since','for'], a: 1, why: '<b>for</b> + a length of time.' },
+      { p: 'By the time I left, I ___ a strong team.', o: ['had built','built','have built'], a: 0, why: '<b>had built</b> — completed before another past moment.' },
+      { p: 'Yesterday I ___ three reports before lunch.', o: ['finished','had finished','have finished'], a: 0, why: '<b>finished</b> — a plain finished past, no earlier-past anchor.' }
+    ]},
+    { num: '03', title: 'Active & passive', time: '5 min', qs: [
+      { p: 'The report ___ to the whole team yesterday.', o: ['was sent','sent','sends'], a: 0, why: '<b>was sent</b> — passive: was + past participle.' },
+      { p: 'The rainwater ___ from the roof and stored in a tank.', o: ['is collected','collects','collect'], a: 0, why: '<b>is collected</b> — passive suits a neutral process.' },
+      { p: 'Which reports a fault most neutrally?', o: ['The order was cancelled.','Someone somewhere cancelled the order.','You cancelled the order.'], a: 0, why: 'The <b>passive</b> stays neutral when who did it doesn\u2019t matter.' }
+    ]},
+    { num: '04', title: 'Faux amis & word choice', time: '6 min', qs: [
+      { p: 'I visited a large industry ___ full of company stands.', o: ['trade fair','exhibition'], a: 0, why: '<b>trade fair</b> — "exhibition" is usually art.' },
+      { p: "I couldn't ___ the meeting, so a colleague went instead.", o: ['attend','assist'], a: 0, why: '<b>attend</b> (assister à). "Assist" = help.' },
+      { p: 'This file is ___ \u2014 please keep it confidential.', o: ['sensitive','sensible'], a: 0, why: '<b>sensitive</b> = delicate. "Sensible" = reasonable.' },
+      { p: "I'm ___ working on three projects at once.", o: ['currently','actually'], a: 0, why: '<b>currently</b> (actuellement). "Actually" = in fact.' }
+    ]},
+    { num: '05', title: 'Vocabulary from the journey', time: '6 min', qs: [
+      { p: 'After the vote, the markets were in complete ___.', o: ['turmoil','harmony','comfort'], a: 0, why: '<b>turmoil</b> = confusion and upheaval.' },
+      { p: 'It took me ages to ___ the confusing instructions.', o: ['untangle','tangle','tighten'], a: 0, why: '<b>untangle</b> = make clear, separate out.' },
+      { p: 'The accident came down to pure ___ \u2014 no one was watching.', o: ['carelessness','carefulness','caution'], a: 0, why: '<b>carelessness</b> = lack of attention.' },
+      { p: 'Fresh from the ground, the oil was thick and ___.', o: ['crude','refined','polished'], a: 0, why: '<b>crude</b> = raw, unrefined.' }
+    ]},
+    { num: '06', title: 'The turn', time: '4 min', qs: [
+      { p: '___ my background is in compliance, I\u2019m moving toward HR.', o: ['Although','Because','Therefore'], a: 0, why: '<b>Although</b> concedes, then contrasts.' },
+      { p: 'I enjoyed the technical work; ___, I want more contact with people now.', o: ['however','therefore','so'], a: 0, why: '<b>however</b> signals a contrast.' },
+      { p: '___ the tight deadline, we delivered on time.', o: ['Despite','Thanks to','Because of'], a: 0, why: '<b>Despite</b> + noun = concession.' }
+    ]}
+  ];
+
+  // flatten with ids
+  var flat = [];
+  quiz.forEach(function (s) { s.qs.forEach(function (q) { q.id = 'q' + flat.length; flat.push(q); }); });
+  var TOTAL = flat.length;
+
+  var state = { ans: {}, reflect: {}, scored: false };
+  try {
+    var saved = JSON.parse(localStorage.getItem(STORE) || '{}');
+    if (saved.ans) state.ans = saved.ans;
+    if (saved.reflect) state.reflect = saved.reflect;
+  } catch (e) {}
+  function save() { try { localStorage.setItem(STORE, JSON.stringify({ ans: state.ans, reflect: state.reflect })); } catch (e) {} }
+
+  function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function promptHTML(p) { return esc(p).replace('___', '<span class="gap">_____</span>'); }
+
+  // render
+  var root = document.getElementById('quiz');
+  var n = 0;
+  quiz.forEach(function (s) {
+    var sec = document.createElement('div');
+    sec.className = 'sec';
+    sec.innerHTML = '<div class="sec-head"><span class="sec-num">\u00a7 ' + s.num + '</span><h2>' + s.title + '</h2><span class="time-badge">' + s.time + '</span></div>';
+    s.qs.forEach(function (q) {
+      n++;
+      var qd = document.createElement('div');
+      qd.className = 'q'; qd.dataset.id = q.id;
+      var opts = q.o.map(function (o, i) {
+        return '<button class="opt" type="button" data-i="' + i + '">' + esc(o) + '</button>';
+      }).join('');
+      qd.innerHTML = '<div class="q-prompt"><span class="n">' + n + '.</span>' + promptHTML(q.p) + '</div><div class="opts">' + opts + '</div>';
+      sec.appendChild(qd);
+
+      qd.querySelectorAll('.opt').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (state.scored) return;
+          var i = +btn.dataset.i;
+          state.ans[q.id] = i;
+          qd.querySelectorAll('.opt').forEach(function (b) { b.classList.toggle('sel', +b.dataset.i === i); });
+          save(); updateSticky();
+        });
+      });
+    });
+    root.appendChild(sec);
+  });
+
+  // restore selections
+  flat.forEach(function (q) {
+    if (state.ans[q.id] != null) {
+      var qd = root.querySelector('[data-id="' + q.id + '"]');
+      var b = qd && qd.querySelector('.opt[data-i="' + state.ans[q.id] + '"]');
+      if (b) b.classList.add('sel');
+    }
+  });
+
+  // reflection
+  ['r1','r2','r3'].forEach(function (id) {
+    var ta = document.getElementById(id);
+    ta.value = state.reflect[id] || '';
+    ta.addEventListener('input', function () { state.reflect[id] = ta.value; save(); });
+  });
+
+  // teacher key
+  document.getElementById('keyList').innerHTML = flat.map(function (q) {
+    return '<li><b>' + esc(q.o[q.a]) + '</b> — ' + q.why + '</li>';
+  }).join('');
+
+  // sticky
+  document.getElementById('total').textContent = TOTAL;
+  function answeredCount() { return Object.keys(state.ans).length; }
+  function updateSticky() {
+    var el = document.getElementById('answered');
+    if (el) el.textContent = answeredCount();
+  }
+  updateSticky();
+
+  // score
+  var scoreBtn = document.getElementById('scoreBtn');
+  scoreBtn.addEventListener('click', function () {
+    if (state.scored) return;
+    state.scored = true;
+    var correct = 0;
+    flat.forEach(function (q) {
+      var qd = root.querySelector('[data-id="' + q.id + '"]');
+      var chosen = state.ans[q.id];
+      qd.querySelectorAll('.opt').forEach(function (b) {
+        b.classList.add('locked');
+        var i = +b.dataset.i;
+        if (i === q.a) b.classList.add('correct');
+        else if (i === chosen) b.classList.add('wrongpick');
+        b.classList.remove('sel');
+      });
+      if (chosen === q.a) correct++;
+    });
+    var msg = document.getElementById('scoreMsg');
+    msg.innerHTML = '<span class="big">' + correct + ' / ' + TOTAL + '</span><br>That\u2019s your lap done. Every one of these is something you\u2019ve met before \u2014 let\u2019s look together at any you\u2019d like to revisit.';
+    msg.classList.add('show');
+    scoreBtn.disabled = true; scoreBtn.textContent = 'Scored';
+    var sticky = document.getElementById('sticky');
+    sticky.classList.add('scored');
+    document.getElementById('stickyMain').innerHTML = 'Lap complete \u00b7 <b>' + correct + '</b> / <b>' + TOTAL + '</b>';
+    var cue = document.getElementById('cue'); if (cue) cue.textContent = 'now: forward';
+    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  // C1
+  var c1btn = document.getElementById('c1btn'), c1 = document.getElementById('c1');
+  c1btn.addEventListener('click', function () {
+    var open = c1.classList.toggle('open');
+    c1btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.querySelectorAll('.c1-reveal').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var ans = b.parentElement.querySelector('.c1-ans');
+      ans.classList.toggle('show');
+      b.textContent = ans.classList.contains('show') ? 'Hide' : 'Reveal';
+    });
+  });
+
+  // reset
+  document.getElementById('reset').addEventListener('click', function () {
+    if (!confirm('Clear all answers and your forward notes? This can\u2019t be undone.')) return;
+    try { localStorage.removeItem(STORE); } catch (e) {}
+    location.reload();
+  });
+})();
+</script>
+</body>
+</html>
