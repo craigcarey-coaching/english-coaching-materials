@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freefall — Industry English · Laura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --teal: #2a6f74;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 12% 18%, rgba(168, 50, 50, 0.045) 0%, transparent 52%),
+      radial-gradient(ellipse at 88% 82%, rgba(42, 111, 116, 0.05) 0%, transparent 52%);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container { max-width: 1120px; margin: 0 auto; padding: 60px 32px 80px; }
+
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 34px; margin-bottom: 14px; }
+
+  .eyebrow {
+    font-family: 'Lora', serif; font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--ink-soft); margin-bottom: 16px;
+  }
+
+  h1 {
+    font-family: 'Fraunces', Georgia, serif; font-weight: 400; font-style: italic;
+    font-size: clamp(52px, 9vw, 96px); line-height: 0.94; letter-spacing: -0.025em;
+    color: var(--ink); font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  h1 .fall { color: var(--trap); }
+
+  .subtitle {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: clamp(16px, 2vw, 19px); color: var(--ink-soft);
+    margin-top: 18px; max-width: 640px;
+  }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+  .badge {
+    font-family: 'Lora', serif; font-size: 11px; letter-spacing: 0.06em;
+    color: var(--ink-soft); background: var(--paper-deep);
+    border: 1px solid var(--rule); border-radius: 2px; padding: 6px 11px;
+  }
+  .badge b { color: var(--teal); font-weight: 600; font-style: normal; margin-right: 6px; }
+
+  .toolbar {
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center;
+    justify-content: space-between; margin: 30px 0 8px;
+  }
+  .c1-toggle { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-soft); }
+  .c1-toggle input { width: 17px; height: 17px; accent-color: var(--teal); cursor: pointer; }
+  .c1-toggle label { cursor: pointer; font-style: italic; font-family: 'Fraunces', serif; }
+
+  section { margin-top: 54px; scroll-margin-top: 20px; }
+
+  .section-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 8px; }
+  .section-kicker {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 13px;
+    color: var(--teal); white-space: nowrap;
+  }
+  h2 {
+    font-family: 'Fraunces', serif; font-weight: 400; font-style: italic;
+    font-size: clamp(28px, 4vw, 40px); line-height: 1.05; color: var(--ink);
+    letter-spacing: -0.015em; font-variation-settings: "SOFT" 60;
+  }
+  .section-intro {
+    font-family: 'Lora', serif; font-size: 15px; color: var(--ink-soft);
+    max-width: 680px; margin-top: 10px; margin-bottom: 26px;
+  }
+
+  /* Story spine */
+  .spine {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 30px 34px; font-size: 16.5px; line-height: 1.72; max-width: 760px;
+  }
+  .spine .lede { font-family: 'Fraunces', serif; font-style: italic; }
+  .spine .clip {
+    display: inline-block; margin-top: 18px; font-family: 'Lora', serif;
+    font-size: 13px; font-style: italic; color: var(--teal);
+    border-top: 1px dashed var(--rule); padding-top: 14px;
+  }
+  mark {
+    background: rgba(42, 111, 116, 0.14); color: inherit;
+    padding: 0 2px; border-radius: 2px;
+  }
+
+  /* Vocab families */
+  .family { margin-bottom: 34px; }
+  .family-title {
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 21px;
+    color: var(--ink); margin-bottom: 4px;
+  }
+  .family-sub { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.04em; margin-bottom: 16px; }
+  .terms { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+
+  .term {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 17px 20px 16px; position: relative;
+  }
+  .term.trap { border-left: 3px solid var(--trap); }
+  .term-word { font-family: 'Fraunces', serif; font-weight: 500; font-size: 18px; color: var(--ink); }
+  .term.trap .term-word { color: var(--trap); }
+  .term-gloss { font-size: 14px; color: var(--ink); margin-top: 4px; }
+  .term-eg { font-size: 13.5px; font-style: italic; color: var(--ink-soft); margin-top: 8px; font-family: 'Lora', serif; }
+  .trap-flag {
+    display: inline-block; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--trap); font-weight: 600; margin-bottom: 6px;
+  }
+  .trap-flag::before { content: "⚠ faux ami · "; }
+
+  .c1 { display: none; }
+  .c1-on .c1 { display: block; }
+  .terms .c1.term { display: none; }
+  .c1-on .terms .c1.term { display: block; }
+  .c1-badge {
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal);
+    font-weight: 700; position: absolute; top: 14px; right: 16px;
+  }
+
+  /* Drills */
+  .drill {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 26px 30px 24px; margin-top: 18px;
+  }
+  .drill h3 {
+    font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+    font-size: 20px; color: var(--ink); margin-bottom: 4px;
+  }
+  .drill .how { font-size: 13px; color: var(--ink-soft); font-style: italic; margin-bottom: 20px; }
+
+  .colloc-row {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 11px 0; border-bottom: 1px solid rgba(201, 184, 150, 0.5);
+  }
+  .colloc-row:last-of-type { border-bottom: none; }
+  .colloc-verb { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; min-width: 150px; color: var(--ink); }
+  .colloc-row select {
+    flex: 1; min-width: 200px; padding: 9px 12px; background: var(--paper);
+    border: 1px solid var(--rule); border-radius: 2px; font-family: 'Lora', serif;
+    font-size: 14px; color: var(--ink); cursor: pointer;
+  }
+  .colloc-row.correct select { border-color: var(--truth); background: rgba(45,106,79,0.06); }
+  .colloc-row.wrong select { border-color: var(--trap); background: rgba(168,50,50,0.05); }
+  .mark { font-family: 'Fraunces', serif; font-style: italic; width: 22px; text-align: center; }
+  .mark.correct { color: var(--truth); }
+  .mark.wrong { color: var(--trap); }
+
+  .repair-item { padding: 15px 0; border-bottom: 1px solid rgba(201, 184, 150, 0.5); }
+  .repair-item:last-child { border-bottom: none; }
+  .repair-wrong { font-family: 'Lora', serif; font-style: italic; color: var(--trap); font-size: 15px; }
+  .repair-wrong::before { content: "✗ "; font-style: normal; }
+  .repair-item input.fix {
+    width: 100%; margin-top: 9px; padding: 10px 13px; background: var(--paper);
+    border: 1px solid var(--rule); border-radius: 2px; font-family: 'Lora', serif;
+    font-size: 14.5px; color: var(--ink); outline: none;
+  }
+  .repair-item input.fix:focus { border-color: var(--ink); }
+  .repair-reveal {
+    margin-top: 9px; font-size: 13.5px; color: var(--truth); font-family: 'Lora', serif;
+    display: none;
+  }
+  .repair-reveal.show { display: block; }
+  .repair-reveal::before { content: "✓ "; font-weight: 700; }
+
+  .btn {
+    font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+    background: var(--ink); color: var(--paper); border: none; border-radius: 2px;
+    padding: 11px 20px; cursor: pointer; transition: opacity 0.2s; margin-top: 18px; margin-right: 10px;
+  }
+  .btn:hover { opacity: 0.88; }
+  .btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--rule); }
+  .drill-score {
+    font-family: 'Fraunces', serif; font-style: italic; color: var(--ink-soft);
+    font-size: 15px; margin-left: 6px;
+  }
+  .drill-score b { color: var(--truth); font-style: normal; }
+
+  /* Writing */
+  .prompts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .prompt {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 20px 22px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .prompt:hover { box-shadow: 0 10px 26px var(--shadow); }
+  .prompt.chosen { border-color: var(--teal); border-left: 3px solid var(--teal); }
+  .prompt .tag { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); font-weight: 600; }
+  .prompt .q { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; margin-top: 8px; line-height: 1.35; }
+  .prompt .len { font-size: 12px; color: var(--ink-soft); margin-top: 10px; }
+
+  .contract {
+    background: rgba(42, 111, 116, 0.06); border: 1px solid var(--rule);
+    border-left: 3px solid var(--teal); border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+  }
+  .contract .lbl {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal);
+    font-weight: 600; margin-bottom: 12px;
+  }
+  .check-line { display: flex; align-items: flex-start; gap: 11px; padding: 6px 0; font-size: 14.5px; }
+  .check-line input { width: 17px; height: 17px; margin-top: 3px; accent-color: var(--teal); cursor: pointer; flex-shrink: 0; }
+  .check-line label { cursor: pointer; }
+  .check-line .eg { color: var(--ink-soft); font-style: italic; }
+
+  textarea.writing {
+    width: 100%; min-height: 260px; padding: 20px 22px; background: var(--paper-deep);
+    border: 1px solid var(--rule); border-radius: 2px; font-family: 'Lora', serif;
+    font-size: 16px; line-height: 1.7; color: var(--ink); outline: none; resize: vertical;
+  }
+  textarea.writing:focus { border-color: var(--ink); }
+  .wc { font-family: 'Fraunces', serif; font-style: italic; font-size: 14px; color: var(--ink-soft); margin-top: 10px; }
+  .wc b { color: var(--ink); font-style: normal; font-weight: 500; }
+  .wc .target { color: var(--teal); }
+
+  /* Teacher key */
+  details.key {
+    margin-top: 40px; background: #23283b; color: #e8e3d6;
+    border-radius: 2px; padding: 0; overflow: hidden;
+  }
+  details.key summary {
+    padding: 18px 26px; cursor: pointer; font-family: 'Lora', serif;
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #cdbf9a;
+    list-style: none; user-select: none;
+  }
+  details.key summary::-webkit-details-marker { display: none; }
+  details.key summary::before { content: "🔒  "; }
+  details.key summary::after { content: " — don't screen-share"; color: #8a8398; }
+  details.key .key-body { padding: 4px 30px 30px; font-size: 14px; line-height: 1.7; }
+  details.key h4 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 500; font-size: 17px; color: #f0d9a8; margin: 22px 0 8px; }
+  details.key ul { margin: 0 0 4px 20px; }
+  details.key li { margin-bottom: 5px; }
+  details.key .ans { color: #9ed8b6; }
+  details.key em { color: #e6b7b7; font-style: italic; }
+
+  footer {
+    margin-top: 80px; padding-top: 28px; border-top: 1px solid var(--rule);
+    text-align: center; font-family: 'Fraunces', serif; font-style: italic;
+    font-size: 13px; color: var(--ink-soft);
+  }
+  footer .ornament { color: var(--rule); margin: 0 10px; }
+
+  @media (max-width: 700px) {
+    .container { padding: 42px 20px 60px; }
+    .prompts { grid-template-columns: 1fr; }
+    .terms { grid-template-columns: 1fr; }
+    .colloc-verb { min-width: 100%; }
+  }
+  @media print {
+    body { background: white; }
+    .toolbar, .btn, footer { display: none; }
+    .term, .drill, .spine, .prompt { break-inside: avoid; box-shadow: none; }
+    details.key { background: var(--paper-deep); color: #000; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">Direct lesson 1 of 5 · Laura · Air France prep</div>
+    <h1>Free<span class="fall">fall</span></h1>
+    <div class="subtitle">The language of a safety failure — industry vocabulary through Boeing's Dreamliner story, then you write your own analysis.</div>
+    <div class="badges">
+      <span class="badge"><b>Input</b>the story &amp; the lexicon</span>
+      <span class="badge"><b>Drill</b>collocations &amp; false friends</span>
+      <span class="badge"><b>Produce</b>a written piece, 150–220 words</span>
+      <span class="badge"><b>Audit</b>your own must-use checklist</span>
+    </div>
+  </header>
+
+  <div class="toolbar">
+    <div style="font-size:13px;color:var(--ink-soft);font-style:italic;font-family:'Fraunces',serif;">
+      Freefall: A Reckoning for Boeing — Rory Kennedy, Netflix 2026.
+    </div>
+    <div class="c1-toggle">
+      <input type="checkbox" id="c1">
+      <label for="c1">Show C1 stretch language</label>
+    </div>
+  </div>
+
+  <!-- STORY SPINE -->
+  <section id="input">
+    <div class="section-head">
+      <span class="section-kicker">10:10 · input</span>
+      <h2>The story, in one breath</h2>
+    </div>
+    <p class="section-intro">Read this first. Then underline eight to ten words you'd call <em>industry</em> words — before we sort them into families together.</p>
+    <div class="spine">
+      <span class="lede">In 2009, Boeing opened a plant in North Charleston to build its new 787 "Dreamliner" faster and more cheaply.</span>
+      Much of the aircraft's structure was <mark>outsourced</mark> to suppliers around the world and joined together on site. <em>Freefall</em> follows the quality inspectors who <mark>raised the alarm</mark>. Chief among them was John Barnett, who spent 32 years at Boeing before <mark>reporting</mark> to the <mark>regulator</mark> that production was too flawed to be safe — gaps forced shut, metal shavings left near wiring, emergency oxygen systems that failed in testing. He accused the company of <mark>retaliation</mark> and died in 2024. The film argues that a management culture obsessed with <mark>shareholder value</mark> put profit ahead of safety, and traces the same logic from the Dreamliner to the 737 MAX and the door plug that blew out of an Alaska Airlines jet in January 2024.
+      <span class="clip">▶ Warm-up option: the 2m19s trailer works as a listening clip before you read.</span>
+    </div>
+  </section>
+
+  <!-- VOCAB -->
+  <section id="lexicon">
+    <div class="section-head">
+      <span class="section-kicker">the lexicon</span>
+      <h2>Five families of industry English</h2>
+    </div>
+    <p class="section-intro">Not a list to memorise — collocations and register. The <span style="color:var(--trap)">red-edged cards</span> are false friends: the word looks English but means something else in French.</p>
+
+    <div class="family">
+      <div class="family-title">1 · Airframe &amp; manufacturing</div>
+      <div class="family-sub">You may know these better than I do — teach me.</div>
+      <div class="terms">
+        <div class="term"><div class="term-word">fuselage</div><div class="term-gloss">the main body of the aircraft — the tube.</div><div class="term-eg">"holes in the aft <b>fuselage</b> sections"</div></div>
+        <div class="term"><div class="term-word">aft / forward</div><div class="term-gloss">toward the rear / toward the nose.</div><div class="term-eg">"the <b>aft</b> section" (not "back section")</div></div>
+        <div class="term"><div class="term-word">airframe</div><div class="term-gloss">the mechanical structure — everything but the engines.</div><div class="term-eg">"<b>airframe</b> integrity"</div></div>
+        <div class="term"><div class="term-word">tolerances</div><div class="term-gloss">the permitted margin of error in a part.</div><div class="term-eg">"parts must <b>meet</b> tight <b>tolerances</b>"</div></div>
+        <div class="term"><div class="term-word">to shim / a gap</div><div class="term-gloss">a thin spacer used to fill a gap between parts.</div><div class="term-eg">"gaps were <b>shimmed</b> to hide them"</div></div>
+        <div class="term"><div class="term-word">structural integrity</div><div class="term-gloss">how sound and reliable the structure is.</div><div class="term-eg">"it threatened the <b>structural integrity</b>"</div></div>
+      </div>
+    </div>
+
+    <div class="family">
+      <div class="family-title">2 · Quality &amp; oversight</div>
+      <div class="terms">
+        <div class="term"><div class="term-word">quality control / assurance</div><div class="term-gloss">checking the output (QC) vs building quality into the process (QA).</div><div class="term-eg">"a <b>quality inspector</b> on the line"</div></div>
+        <div class="term"><div class="term-word">to conduct an audit</div><div class="term-gloss">a formal, systematic check.</div><div class="term-eg">"the FAA <b>conducted an audit</b> of the plant"</div></div>
+        <div class="term"><div class="term-word">oversight</div><div class="term-gloss">supervision / monitoring by an authority.</div><div class="term-eg">"regulatory <b>oversight</b> was too light"</div></div>
+        <div class="term"><div class="term-word">airworthiness / to certify</div><div class="term-gloss">officially cleared as safe to fly.</div><div class="term-eg">"the type was <b>certified</b> as airworthy"</div></div>
+        <div class="term trap"><span class="trap-flag"></span><div class="term-word">control</div><div class="term-gloss"><em>un contrôle</em> = a check / an inspection. English "control" = command or power.</div><div class="term-eg">✗ "I did a control" → ✓ "I <b>ran a check</b> / carried out an inspection"</div></div>
+        <div class="term trap"><span class="trap-flag"></span><div class="term-word">assurance</div><div class="term-gloss">only "self-assurance" or "quality assurance". <em>assurance</em> (money) = <b>insurance</b>.</div><div class="term-eg">✗ "an assurance policy" → ✓ "an <b>insurance</b> policy"</div></div>
+      </div>
+    </div>
+
+    <div class="family">
+      <div class="family-title">3 · Safety &amp; failure</div>
+      <div class="terms">
+        <div class="term trap"><span class="trap-flag"></span><div class="term-word">safety vs security</div><div class="term-gloss"><em>sécurité</em> is both. <b>Safety</b> = preventing accidents. <b>Security</b> = preventing threats/attacks.</div><div class="term-eg">"a <b>safety</b> failure" (not a security failure)</div></div>
+        <div class="term"><div class="term-word">defect · flaw · fault</div><div class="term-gloss">a fault in a part or design.</div><div class="term-eg">"a manufacturing <b>defect</b>"</div></div>
+        <div class="term"><div class="term-word">root cause / corrective action</div><div class="term-gloss">the underlying reason / the fix that follows.</div><div class="term-eg">"identify the <b>root cause</b>"</div></div>
+        <div class="term"><div class="term-word">redundancy / fail-safe</div><div class="term-gloss">backup systems / designed to fail into a safe state.</div><div class="term-eg">"built-in <b>redundancy</b>"</div></div>
+        <div class="term"><div class="term-word">to ground a fleet</div><div class="term-gloss">to stop aircraft from flying.</div><div class="term-eg">"regulators <b>grounded</b> the fleet"</div></div>
+        <div class="c1 term"><span class="c1-badge">C1</span><div class="term-word">safety-critical</div><div class="term-gloss">a part/system whose failure endangers the flight.</div><div class="term-eg">"a <b>safety-critical</b> component"</div></div>
+      </div>
+    </div>
+
+    <div class="family">
+      <div class="family-title">4 · Corporate &amp; economic</div>
+      <div class="terms">
+        <div class="term"><div class="term-word">to outsource / a supplier</div><div class="term-gloss">to have work done by an outside company.</div><div class="term-eg">"structure <b>outsourced</b> to cheaper <b>suppliers</b>"</div></div>
+        <div class="term"><div class="term-word">supply chain</div><div class="term-gloss">the network of suppliers feeding production.</div><div class="term-eg">"a fragile <b>supply chain</b>"</div></div>
+        <div class="term"><div class="term-word">to cut corners</div><div class="term-gloss">to skip proper steps to save time or money.</div><div class="term-eg">"under pressure, they <b>cut corners</b>"</div></div>
+        <div class="term"><div class="term-word">shareholder value</div><div class="term-gloss">returns to owners of the stock.</div><div class="term-eg">"putting <b>shareholder value</b> first"</div></div>
+        <div class="term"><div class="term-word">cost-cutting / margins</div><div class="term-gloss">reducing spending / profit per unit.</div><div class="term-eg">"relentless <b>cost-cutting</b>"</div></div>
+        <div class="c1 term"><span class="c1-badge">C1</span><div class="term-word">a race to the bottom</div><div class="term-gloss">competition that erodes standards.</div><div class="term-eg">"outsourcing became <b>a race to the bottom</b>"</div></div>
+      </div>
+    </div>
+
+    <div class="family">
+      <div class="family-title">5 · Accountability &amp; law</div>
+      <div class="family-sub">Your home turf — the vocabulary maps straight onto litigation.</div>
+      <div class="terms">
+        <div class="term"><div class="term-word">a whistleblower / to blow the whistle</div><div class="term-gloss">someone who reports wrongdoing inside an organisation.</div><div class="term-eg">"he <b>blew the whistle</b> on the plant"</div></div>
+        <div class="term"><div class="term-word">a deposition / to be deposed</div><div class="term-gloss">pre-trial sworn questioning by lawyers.</div><div class="term-eg">"he died during a break in his <b>deposition</b>"</div></div>
+        <div class="term"><div class="term-word">liability / negligence</div><div class="term-gloss">legal responsibility / failure of a duty of care.</div><div class="term-eg">"exposed to huge <b>liability</b>"</div></div>
+        <div class="term"><div class="term-word">retaliation / to retaliate</div><div class="term-gloss">punishing someone for speaking up.</div><div class="term-eg">"he sued for <b>retaliation</b>"</div></div>
+        <div class="term trap"><span class="trap-flag"></span><div class="term-word">evidence</div><div class="term-gloss"><em>évidence</em> = obviousness. English <b>evidence</b> = <em>preuve(s)</em>.</div><div class="term-eg">✗ "it's an evidence" → ✓ "it's <b>obvious</b>" / "the <b>evidence</b> shows"</div></div>
+        <div class="term trap"><span class="trap-flag"></span><div class="term-word">to report</div><div class="term-gloss"><em>reporter</em> = to postpone. To <b>report</b> = to signal / un rapport.</div><div class="term-eg">✗ "report the meeting to Friday" → ✓ "<b>postpone</b> the meeting"</div></div>
+        <div class="term trap"><span class="trap-flag"></span><div class="term-word">to prevent</div><div class="term-gloss"><em>prévenir</em> = to warn / notify. <b>Prevent</b> = <em>empêcher</em>.</div><div class="term-eg">✗ "prevent the FAA" → ✓ "<b>warn</b> the FAA"</div></div>
+        <div class="term trap"><span class="trap-flag"></span><div class="term-word">deception</div><div class="term-gloss"><em>déception</em> = disappointment. <b>Deception</b> = <em>tromperie</em>.</div><div class="term-eg">✗ "a big deception for staff" → ✓ "a big <b>disappointment</b>"</div></div>
+        <div class="c1 term"><span class="c1-badge">C1</span><div class="term-word">regulatory capture</div><div class="term-gloss">when a regulator serves the industry it should police.</div><div class="term-eg">"critics allege <b>regulatory capture</b>"</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRILL 1: collocations -->
+  <section id="drill">
+    <div class="section-head">
+      <span class="section-kicker">15:00 · solo work</span>
+      <h2>Precision drills</h2>
+    </div>
+    <p class="section-intro">Say each answer aloud before you lock it in. Words travel in company — pick the partner that actually collocates.</p>
+
+    <div class="drill">
+      <h3>A · Which noun does each verb take?</h3>
+      <div class="how">Choose the natural collocation. Then check.</div>
+      <div id="colloc"></div>
+      <button class="btn" onclick="checkColloc()">Check</button>
+      <span class="drill-score" id="collocScore"></span>
+    </div>
+
+    <div class="drill">
+      <h3>B · Repair the false friend</h3>
+      <div class="how">Each sentence is French wearing an English costume. Rewrite it — out loud first — then compare with a good version.</div>
+      <div id="repair"></div>
+      <button class="btn ghost" onclick="revealRepairs()">Show good versions</button>
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section id="write">
+    <div class="section-head">
+      <span class="section-kicker">30:00 · produce</span>
+      <h2>Now write your own analysis</h2>
+    </div>
+    <p class="section-intro">Pick one prompt. Say your opening sentence aloud before you type it. The contract below is your finish line — not "is it good", but "did I do these five things".</p>
+
+    <div class="prompts">
+      <div class="prompt" data-len="180–220 words" onclick="choose(this)">
+        <div class="tag">A · Argument</div>
+        <div class="q">Aviation regulators should tighten safety oversight of manufacturers, even if it slows production and raises prices. Do you agree?</div>
+        <div class="len">180–220 words · take a clear position</div>
+      </div>
+      <div class="prompt" data-len="~150 words" onclick="choose(this)">
+        <div class="tag">B · Briefing note</div>
+        <div class="q">Brief a colleague who hasn't seen <em>Freefall</em>: what does it reveal about Boeing's safety culture, and why does it matter?</div>
+        <div class="len">~150 words · neutral, informative register</div>
+      </div>
+    </div>
+
+    <div class="contract">
+      <div class="lbl">Must-use contract — tick before you start, audit when you finish</div>
+      <div class="check-line"><input type="checkbox"><label>Three terms from <b>different</b> families, used correctly</label></div>
+      <div class="check-line"><input type="checkbox"><label>One false friend <b>you personally</b> trip on, used correctly</label></div>
+      <div class="check-line"><input type="checkbox"><label>One concession structure <span class="eg">— While / Although / Admittedly …, …</span></label></div>
+      <div class="check-line"><input type="checkbox"><label>One agentless passive <span class="eg">— corners were cut · the fleet was grounded · concerns were dismissed</span></label></div>
+      <div class="check-line"><input type="checkbox"><label>A one-sentence <b>thesis</b> up front <span class="eg">— your spoken sentence from the bridge</span></label></div>
+    </div>
+
+    <textarea class="writing" id="writing" placeholder="Say it, then write it…"></textarea>
+    <div class="wc"><b id="wcNum">0</b> words <span id="wcTarget" class="target"></span></div>
+  </section>
+
+  <!-- TEACHER KEY -->
+  <details class="key">
+    <summary>Teacher key &amp; notes</summary>
+    <div class="key-body">
+      <h4>Collocation answers</h4>
+      <ul class="ans">
+        <li>blow → <b>the whistle</b></li>
+        <li>raise → <b>concerns / the alarm</b></li>
+        <li>meet → <b>tolerances / standards</b></li>
+        <li>cut → <b>corners</b></li>
+        <li>ground → <b>a fleet</b></li>
+        <li>conduct → <b>an audit</b></li>
+        <li>build → <b>trust</b></li>
+        <li>put profits ahead of → <b>safety</b></li>
+      </ul>
+      <h4>False-friend repairs (models)</h4>
+      <ul class="ans">
+        <li>"Boeing did a control on each plane." → <b>ran a check / carried out an inspection</b></li>
+        <li>"It's an evidence that safety came second." → <b>It's obvious that… / The evidence shows…</b></li>
+        <li>"Barnett wanted to prevent the FAA." → <b>warn / notify the FAA</b></li>
+        <li>"They reported the hearing to next month." → <b>postponed the hearing</b></li>
+        <li>"There was a big deception among staff." → <b>disappointment</b></li>
+        <li>"They must achieve the inspection before delivery." → <b>complete / finish the inspection</b></li>
+      </ul>
+      <h4>Teaching moves</h4>
+      <ul>
+        <li><em>Expert seat.</em> Family 1 is hers — let her supply the airframe terms, you supply the collocations and register. She's the pilot; you're the language guide.</li>
+        <li><em>Discovery before naming.</em> She underlines "industry words" in the spine <b>before</b> the families appear. Name the concession clause only after she's noticed the model does it — then link it to legal argument (concede, then rebut).</li>
+        <li><em>Speak-then-write</em> at both scales: the spoken one-line thesis at the bridge becomes her opening sentence; each repaired sentence is said aloud first.</li>
+        <li><em>Feedback as upgrades.</em> Two precision lifts (a collocation + a false friend) and one structural nudge. No more. She's strong — be honest, stay in upgrade framing.</li>
+        <li><em>Harvest.</em> Pull 3–4 French-influenced phrasings for her reformulation sheet; the traps can feed the aviation faux-amis glossary next time you report entries.</li>
+        <li><em>Sits beside, not on top of,</em> the 737 MAX listening lesson — this is the 787 / quality-culture angle with written production as the target.</li>
+        <li><em>Accuracy in the room:</em> the film is broader than the Dreamliner (737 MAX + the Alaska door plug too). If she's watched it, that's your way in.</li>
+      </ul>
+      <h4>Closing recap (non-negotiable)</h4>
+      <ul><li>She leaves saying <b>3 words + 1 structure</b> she's taking with her. Bridge to lesson 2.</li></ul>
+    </div>
+  </details>
+
+  <footer>
+    Built one lesson at a time <span class="ornament">·</span> ESG Langues <span class="ornament">·</span> 1 September 2026
+  </footer>
+</div>
+
+<script>
+  // ---- safe storage (works on GitHub Pages; degrades quietly elsewhere) ----
+  const store = {
+    get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+    set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+  };
+
+  // ---- C1 toggle ----
+  const c1 = document.getElementById('c1');
+  function applyC1(){ document.body.classList.toggle('c1-on', c1.checked); }
+  c1.checked = store.get('laura_c1') === '1';
+  applyC1();
+  c1.addEventListener('change', () => { applyC1(); store.set('laura_c1', c1.checked ? '1' : '0'); });
+
+  // ---- collocation drill ----
+  const colloc = [
+    { verb: 'blow',   answer: 'the whistle', opts: ['the whistle','the alarm','a complaint'] },
+    { verb: 'raise',  answer: 'concerns',    opts: ['corners','concerns','an audit'] },
+    { verb: 'meet',   answer: 'tolerances',  opts: ['tolerances','the whistle','a fleet'] },
+    { verb: 'cut',    answer: 'corners',     opts: ['trust','an audit','corners'] },
+    { verb: 'ground', answer: 'a fleet',     opts: ['a fleet','concerns','tolerances'] },
+    { verb: 'conduct',answer: 'an audit',    opts: ['corners','an audit','the whistle'] },
+    { verb: 'build',  answer: 'trust',       opts: ['trust','a fleet','the alarm'] },
+    { verb: 'put profits ahead of', answer: 'safety', opts: ['safety','an audit','corners'] }
+  ];
+  const collocEl = document.getElementById('colloc');
+  colloc.forEach((c, i) => {
+    const row = document.createElement('div');
+    row.className = 'colloc-row';
+    row.innerHTML = `<span class="mark" id="cm${i}"></span>
+      <span class="colloc-verb">${c.verb} …</span>
+      <select id="cs${i}"><option value="">— choose —</option>${c.opts.map(o=>`<option>${o}</option>`).join('')}</select>`;
+    collocEl.appendChild(row);
+  });
+  function checkColloc(){
+    let right = 0;
+    colloc.forEach((c,i) => {
+      const sel = document.getElementById('cs'+i);
+      const row = sel.closest('.colloc-row');
+      const mk = document.getElementById('cm'+i);
+      row.classList.remove('correct','wrong'); mk.classList.remove('correct','wrong');
+      if(!sel.value) { mk.textContent=''; return; }
+      if(sel.value === c.answer){ row.classList.add('correct'); mk.classList.add('correct'); mk.textContent='✓'; right++; }
+      else { row.classList.add('wrong'); mk.classList.add('wrong'); mk.textContent='✗'; }
+    });
+    document.getElementById('collocScore').innerHTML = `<b>${right}</b> / ${colloc.length}`;
+  }
+
+  // ---- repair drill ----
+  const repairs = [
+    { wrong: 'Boeing did a control on each plane before delivery.', good: 'Boeing ran a check / carried out an inspection on each plane before delivery.' },
+    { wrong: 'For the inspectors, it was an evidence that safety came second.', good: 'For the inspectors, it was obvious that safety came second. / the evidence showed that…' },
+    { wrong: 'Barnett wanted to prevent the FAA about the defects.', good: 'Barnett wanted to warn / notify the FAA about the defects.' },
+    { wrong: 'The company reported the hearing to the following month.', good: 'The company postponed the hearing to the following month.' },
+    { wrong: 'There was a big deception among the staff on the line.', good: 'There was a big disappointment among the staff on the line.' },
+    { wrong: 'They must achieve the inspection before the plane is delivered.', good: 'They must complete / finish the inspection before the plane is delivered.' }
+  ];
+  const repairEl = document.getElementById('repair');
+  repairs.forEach((r,i) => {
+    const item = document.createElement('div');
+    item.className = 'repair-item';
+    item.innerHTML = `<div class="repair-wrong">${r.wrong}</div>
+      <input class="fix" id="fix${i}" type="text" placeholder="Your fix…" autocomplete="off">
+      <div class="repair-reveal" id="rev${i}">${r.good}</div>`;
+    repairEl.appendChild(item);
+    const inp = item.querySelector('.fix');
+    inp.value = store.get('laura_fix'+i) || '';
+    inp.addEventListener('input', () => store.set('laura_fix'+i, inp.value));
+  });
+  function revealRepairs(){ document.querySelectorAll('.repair-reveal').forEach(el => el.classList.add('show')); }
+
+  // ---- writing ----
+  const prompts = document.querySelectorAll('.prompt');
+  const wcTarget = document.getElementById('wcTarget');
+  function choose(el){
+    prompts.forEach(p => p.classList.remove('chosen'));
+    el.classList.add('chosen');
+    wcTarget.textContent = '· target ' + el.dataset.len;
+    store.set('laura_prompt', el.querySelector('.tag').textContent.trim());
+  }
+  const savedPrompt = store.get('laura_prompt');
+  if(savedPrompt){ prompts.forEach(p => { if(p.querySelector('.tag').textContent.trim() === savedPrompt) choose(p); }); }
+
+  const writing = document.getElementById('writing');
+  const wcNum = document.getElementById('wcNum');
+  writing.value = store.get('laura_writing') || '';
+  function countWords(){
+    const w = writing.value.trim();
+    wcNum.textContent = w ? w.split(/\s+/).length : 0;
+  }
+  countWords();
+  writing.addEventListener('input', () => { countWords(); store.set('laura_writing', writing.value); });
+
+  // persist contract checkboxes
+  document.querySelectorAll('.contract input').forEach((cb, i) => {
+    cb.checked = store.get('laura_ct'+i) === '1';
+    cb.addEventListener('change', () => store.set('laura_ct'+i, cb.checked ? '1' : '0'));
+  });
+</script>
+</body>
+</html>
