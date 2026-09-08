@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Question Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F2E8;
+    --ink:#241F1B;
+    --teal:#12403E;
+    --teal-lift:#1B5350;
+    --clay:#B85C38;
+    --sage:#8DA189;
+    --rule:rgba(36,31,27,.18);
+  }
+
+  *{box-sizing:border-box}
+
+  html,body{margin:0;padding:0}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding:32px 24px 48px;
+  }
+
+  .shell{max-width:920px;margin:0 auto}
+
+  /* ---- masthead ---- */
+  .masthead{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--rule);
+  }
+  .masthead h1{
+    font-family:"Fraunces",Georgia,serif;
+    font-optical-sizing:auto;
+    font-weight:500;
+    font-size:1.5rem;
+    letter-spacing:-.01em;
+    margin:0;
+  }
+  .masthead p{
+    margin:0;
+    font-size:.86rem;
+    color:rgba(36,31,27,.6);
+  }
+
+  /* ---- territory picker ---- */
+  .territories{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:20px 0 26px;
+  }
+  .territory{
+    font:inherit;
+    font-size:.95rem;
+    font-weight:500;
+    color:rgba(36,31,27,.55);
+    background:transparent;
+    border:1px solid transparent;
+    border-radius:999px;
+    padding:7px 15px;
+    cursor:pointer;
+    transition:color .15s ease, background-color .15s ease, border-color .15s ease;
+  }
+  .territory:hover{color:var(--ink)}
+  .territory[aria-selected="true"]{
+    color:var(--teal);
+    border-color:rgba(18,64,62,.35);
+    background:rgba(141,161,137,.16);
+  }
+
+  /* ---- the card: the one bold object ---- */
+  .card{
+    background:var(--teal);
+    color:var(--paper);
+    border-radius:6px;
+    padding:clamp(30px,5vw,54px);
+    min-height:clamp(260px,38vh,360px);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+
+  .question{
+    font-family:"Fraunces",Georgia,serif;
+    font-optical-sizing:auto;
+    font-weight:400;
+    font-size:clamp(1.55rem,3.6vw,2.5rem);
+    line-height:1.22;
+    letter-spacing:-.015em;
+    margin:0;
+    max-width:24ch;
+    text-wrap:balance;
+  }
+
+  .deeper{
+    margin-top:30px;
+    padding-top:20px;
+    border-top:1px solid rgba(247,242,232,.22);
+    display:none;
+  }
+  .deeper.open{display:block}
+  .deeper ul{list-style:none;margin:0;padding:0}
+  .deeper li{
+    font-size:clamp(1rem,1.6vw,1.18rem);
+    line-height:1.45;
+    color:rgba(247,242,232,.9);
+    padding-left:20px;
+    position:relative;
+    max-width:52ch;
+  }
+  .deeper li + li{margin-top:11px}
+  .deeper li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:.62em;
+    width:9px;
+    height:1px;
+    background:var(--sage);
+  }
+
+  .card-foot{
+    margin-top:34px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+
+  .link-btn{
+    font:inherit;
+    font-size:.9rem;
+    font-weight:500;
+    background:transparent;
+    border:1px solid rgba(247,242,232,.4);
+    color:var(--paper);
+    border-radius:999px;
+    padding:7px 16px;
+    cursor:pointer;
+    transition:background-color .15s ease,border-color .15s ease;
+  }
+  .link-btn:hover{background:rgba(247,242,232,.12);border-color:rgba(247,242,232,.7)}
+  .link-btn[disabled]{opacity:.35;cursor:default}
+  .link-btn[disabled]:hover{background:transparent;border-color:rgba(247,242,232,.4)}
+
+  /* ---- controls under the card ---- */
+  .controls{
+    margin-top:22px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+
+  .next{
+    font:inherit;
+    font-size:1rem;
+    font-weight:600;
+    background:var(--clay);
+    color:#FFF8F1;
+    border:none;
+    border-radius:4px;
+    padding:13px 28px;
+    cursor:pointer;
+    transition:background-color .15s ease;
+  }
+  .next:hover{background:#A24E2D}
+  .next[disabled]{background:rgba(36,31,27,.2);color:rgba(36,31,27,.5);cursor:default}
+
+  .count{
+    font-size:.88rem;
+    color:rgba(36,31,27,.6);
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---- runway ledger: how much is left in this set ---- */
+  .ledger{
+    display:flex;
+    gap:5px;
+    margin-left:auto;
+    align-items:center;
+  }
+  .tick{
+    width:3px;
+    height:17px;
+    background:rgba(36,31,27,.16);
+    border-radius:1px;
+  }
+  .tick.spent{background:var(--sage)}
+  .tick.current{background:var(--clay);height:23px}
+
+  .hint{
+    margin-top:26px;
+    padding-top:14px;
+    border-top:1px solid var(--rule);
+    font-size:.82rem;
+    color:rgba(36,31,27,.5);
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .hint kbd{
+    font-family:inherit;
+    font-size:.78rem;
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:1px 6px;
+  }
+  .reset{
+    font:inherit;
+    font-size:.82rem;
+    background:none;
+    border:none;
+    color:rgba(36,31,27,.5);
+    text-decoration:underline;
+    text-underline-offset:3px;
+    cursor:pointer;
+    padding:0;
+  }
+  .reset:hover{color:var(--clay)}
+
+  :focus-visible{outline:2px solid var(--clay);outline-offset:3px}
+
+  @media (max-width:560px){
+    body{padding:22px 16px 36px}
+    .ledger{margin-left:0;width:100%;order:3}
+    .question{max-width:none}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="masthead">
+    <h1>Question bank</h1>
+    <p>Conversation fuel for a fifty-minute hour</p>
+  </header>
+
+  <div class="territories" role="tablist" aria-label="Question sets">
+    <button class="territory" role="tab" data-set="work" aria-selected="true">Work &amp; professional life</button>
+    <button class="territory" role="tab" data-set="society" aria-selected="false">Society &amp; change</button>
+    <button class="territory" role="tab" data-set="ideas" aria-selected="false">Bigger questions</button>
+  </div>
+
+  <main class="card">
+    <div>
+      <p class="question" id="question" aria-live="polite">Press start to pull the first question.</p>
+      <div class="deeper" id="deeper">
+        <ul id="followups"></ul>
+      </div>
+    </div>
+    <div class="card-foot">
+      <button class="link-btn" id="deeperBtn" disabled>Go deeper</button>
+    </div>
+  </main>
+
+  <div class="controls">
+    <button class="next" id="nextBtn">Start</button>
+    <span class="count" id="count"></span>
+    <div class="ledger" id="ledger" aria-hidden="true"></div>
+  </div>
+
+  <div class="hint">
+    <span><kbd>space</kbd> next question &nbsp;·&nbsp; <kbd>↓</kbd> go deeper</span>
+    <button class="reset" id="resetBtn">Clear this set</button>
+  </div>
+
+</div>
+
+<script>
+const STORE = "craig_questionbank_v1";
+
+const SETS = {
+  work: [
+    {q:"What part of your job would be hardest to explain to someone outside your field?", f:["Where does the explanation usually break down?","Who explains it well, and what do they do differently?"]},
+    {q:"Think of the best manager you've ever had. What did they actually do differently?", f:["Could you do that yourself?","What did they still get wrong?"]},
+    {q:"What's a skill you were hired for that you barely use now?", f:["When did you notice it had stopped mattering?","What replaced it?"]},
+    {q:"When was the last time you changed your mind about something at work?", f:["Was it a person or the evidence that changed it?","How easily do you admit that in front of others?"]},
+    {q:"What does a genuinely productive day look like for you — not just a busy one?", f:["How often do you actually get one?","What ruins it fastest?"]},
+    {q:"What career advice have you ignored? Were you right to?", f:["Who gave it, and why did they believe it?","What advice would you give them now?"]},
+    {q:"If your job disappeared tomorrow, what's the first thing you'd do?", f:["Would you stay in the same industry?","What's stopping you from doing it now?"]},
+    {q:"What's the most pointless meeting you've sat through, and why did it exist anyway?", f:["What would have to change for it to be worth the time?","Who benefits from meetings like that?"]},
+    {q:"How do people in your industry recognise each other? What are the signals?", f:["Which of them do you have?","Which ones do you dislike?"]},
+    {q:"What's something your company claims to value but doesn't really?", f:["Does anyone say so out loud?","What does it actually value?"]},
+    {q:"Where and when do you do your best thinking?", f:["Can you engineer that, or does it just happen?","What kind of problem needs it?"]},
+    {q:"What would you tell someone starting in your field that nobody told you?", f:["How long did it take you to work out?","Would you have listened?"]},
+    {q:"Have you ever learned something useful from a difficult colleague?", f:["Would you work with them again?","What did they see that you didn't?"]},
+    {q:"What's the gap between how your job looks from outside and how it feels from inside?", f:["Which version do you describe at a party?","Does the gap bother you?"]},
+    {q:"How much of your work could be done by someone with no experience?", f:["What's the part that couldn't be?","Has that proportion changed?"]},
+    {q:"What's a decision at work you'd make differently now?", f:["Did anyone warn you at the time?","What did it cost?"]},
+    {q:"Will you be doing this job in ten years? What would have to change?", f:["Is that a plan or a hope?","What could pull you away?"]},
+    {q:"What's the hardest conversation you've had to have at work?", f:["How did you prepare for it?","What would you do differently?"]}
+  ],
+  society: [
+    {q:"What's changed in your country in the last ten years that people don't talk about enough?", f:["Who noticed it first?","Is it reversible?"]},
+    {q:"What do outsiders consistently misunderstand about where you're from?", f:["Where does the misunderstanding come from?","Does it ever work in your favour?"]},
+    {q:"Is your generation better or worse off than your parents'? Be specific.", f:["What did they have that you don't?","What would they envy about your life?"]},
+    {q:"What tradition would you keep even if it made no practical sense?", f:["Who taught it to you?","What would be lost without it?"]},
+    {q:"What's completely normal where you live that would shock people elsewhere?", f:["When did you realise it wasn't universal?","Would you defend it?"]},
+    {q:"Has your relationship with your phone changed in the last few years?", f:["What have you tried that didn't work?","What would you miss most?"]},
+    {q:"What do younger people understand that older people don't — and the other way round?", f:["Which side are you on now?","When did that flip?"]},
+    {q:"If you could undo one invention of the last fifty years, which one?", f:["Who would object loudest?","What would fill the gap?"]},
+    {q:"What does your city do well that other cities should copy?", f:["Why hasn't it spread?","What would break if it did?"]},
+    {q:"Are people more or less honest than they used to be? What makes you say that?", f:["Is that everywhere, or just where you are?","What would change it?"]},
+    {q:"What's a rule everyone follows where you're from that nobody ever wrote down?", f:["How do newcomers find out?","What happens if you break it?"]},
+    {q:"Has living or travelling somewhere else changed what counts as normal for you?", f:["What was hardest to adjust to?","What can't you go back to?"]},
+    {q:"What kind of news do you deliberately avoid?", f:["Is avoiding it a luxury?","What do you follow closely instead?"]},
+    {q:"What's disappearing that you'll actually miss?", f:["Could it be saved?","Is anyone trying?"]},
+    {q:"Are people getting worse at being bored?", f:["When were you last properly bored?","Does it matter?"]},
+    {q:"What would have to happen for you to leave the country you live in now?", f:["How close have you come?","Where would you go?"]},
+    {q:"Where you're from, do people say the same thing in public as in private?", f:["Which one is the real one?","Does that gap cause problems?"]},
+    {q:"What change did you resist at first and now can't live without?", f:["What was your objection?","What convinced you?"]}
+  ],
+  ideas: [
+    {q:"Is it better to be respected or liked?", f:["Which do you chase without meaning to?","Can you really have both?"]},
+    {q:"Would you rather know a painful truth or stay comfortably unaware?", f:["Does it depend who it's about?","Have you ever chosen not to know something?"]},
+    {q:"Does everyone have a price?", f:["What would yours be, in principle?","Is refusing the price a luxury?"]},
+    {q:"Is luck just preparation that happened to work out?", f:["How much of where you are is luck?","Do successful people underrate it?"]},
+    {q:"Should you always tell a friend the truth?", f:["When did you last decide not to?","What were you protecting?"]},
+    {q:"Is patience a virtue, or slowness with good marketing?", f:["When has waiting cost you something?","Who taught you to wait?"]},
+    {q:"Can people really change, or do they just get better at hiding?", f:["Have you changed?","How would you know either way?"]},
+    {q:"Is it possible to be too honest?", f:["Where exactly is the line?","Who do you know who crosses it?"]},
+    {q:"What do you own that you'd struggle to justify to a stranger?", f:["Would you buy it again?","Why does it matter to you?"]},
+    {q:"If nobody would ever find out, does that change whether something is wrong?", f:["What does that assume about people?","Does it change how it would feel?"]},
+    {q:"Is ambition something you're born with or something you learn?", f:["Where did yours come from?","Has it gone up or down?"]},
+    {q:"Do we choose our friends, or does circumstance choose them for us?", f:["How did you meet your closest friend?","Would you be friends if you met today?"]},
+    {q:"Is there such a thing as useless knowledge?", f:["What's the most useless thing you know?","Has anything useless ever become useful?"]},
+    {q:"Would you accept a smaller life in exchange for certainty?", f:["Which parts would you shrink?","How much uncertainty do you live with now?"]},
+    {q:"Are we responsible for harm we didn't intend?", f:["Does intention change the apology?","Where does the responsibility stop?"]},
+    {q:"Is forgiveness always the right choice?", f:["Is it for them or for you?","Is there something you wouldn't forgive?"]},
+    {q:"What's overrated that almost everyone agrees is good?", f:["Why does it get such a good reputation?","What's underrated instead?"]},
+    {q:"If you could be certain about one thing, what would you choose?", f:["What does not knowing it cost you?","Would certainty actually help?"]}
+  ]
+};
+
+let active = "work";
+let current = -1;
+let spent = {work:[], society:[], ideas:[]};
+
+const $q = document.getElementById("question");
+const $deeper = document.getElementById("deeper");
+const $follow = document.getElementById("followups");
+const $deeperBtn = document.getElementById("deeperBtn");
+const $next = document.getElementById("nextBtn");
+const $count = document.getElementById("count");
+const $ledger = document.getElementById("ledger");
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORE);
+    if(raw){
+      const saved = JSON.parse(raw);
+      for(const k in spent){
+        if(Array.isArray(saved[k])) spent[k] = saved[k];
+      }
+    }
+  }catch(e){/* first run, or storage unavailable */}
+}
+
+function save(){
+  try{ localStorage.setItem(STORE, JSON.stringify(spent)); }catch(e){}
+}
+
+function remaining(){
+  return SETS[active].length - spent[active].length;
+}
+
+function drawLedger(){
+  $ledger.textContent = "";
+  SETS[active].forEach((_, i) => {
+    const t = document.createElement("span");
+    t.className = "tick" + (i === current ? " current" : (spent[active].indexOf(i) > -1 ? " spent" : ""));
+    $ledger.appendChild(t);
+  });
+}
+
+function drawCount(){
+  const left = remaining();
+  if(current === -1 && left === SETS[active].length){
+    $count.textContent = left + " questions in this set";
+  }else if(current === -1 && left > 0){
+    $count.textContent = left + " left in this set";
+  }else if(left === 0){
+    $count.textContent = "That's the whole set";
+  }else{
+    $count.textContent = left + (left === 1 ? " question left" : " questions left");
+  }
+}
+
+function closeDeeper(){
+  $deeper.className = "deeper";
+  $follow.textContent = "";
+}
+
+function openDeeper(){
+  if(current === -1) return;
+  $follow.textContent = "";
+  SETS[active][current].f.forEach(text => {
+    const li = document.createElement("li");
+    li.textContent = text;
+    $follow.appendChild(li);
+  });
+  $deeper.className = "deeper open";
+  $deeperBtn.disabled = true;
+}
+
+function pull(){
+  const pool = [];
+  SETS[active].forEach((_, i) => { if(spent[active].indexOf(i) === -1) pool.push(i); });
+  if(!pool.length){
+    $q.textContent = "You've been through this set. Switch sets above, or clear it to start again.";
+    current = -1;
+    closeDeeper();
+    $deeperBtn.disabled = true;
+    $next.disabled = true;
+    $next.textContent = "Set finished";
+    drawCount();
+    drawLedger();
+    return;
+  }
+  current = pool[Math.floor(Math.random() * pool.length)];
+  spent[active].push(current);
+  save();
+  $q.textContent = SETS[active][current].q;
+  closeDeeper();
+  $deeperBtn.disabled = false;
+  $next.disabled = false;
+  $next.textContent = "Next question";
+  drawCount();
+  drawLedger();
+}
+
+function switchSet(name){
+  active = name;
+  current = -1;
+  closeDeeper();
+  $deeperBtn.disabled = true;
+  $next.disabled = false;
+  $next.textContent = remaining() ? "Pull a question" : "Set finished";
+  if(!remaining()) $next.disabled = true;
+  $q.textContent = "Pull a question when you're ready.";
+  document.querySelectorAll(".territory").forEach(b => {
+    b.setAttribute("aria-selected", b.dataset.set === name ? "true" : "false");
+  });
+  drawCount();
+  drawLedger();
+}
+
+document.querySelectorAll(".territory").forEach(btn => {
+  btn.addEventListener("click", () => switchSet(btn.dataset.set));
+});
+
+$next.addEventListener("click", pull);
+$deeperBtn.addEventListener("click", openDeeper);
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  spent[active] = [];
+  save();
+  switchSet(active);
+});
+
+document.addEventListener("keydown", e => {
+  const tag = document.activeElement && document.activeElement.tagName;
+  if(e.key === " " || e.key === "ArrowRight"){
+    if(tag === "BUTTON") return;
+    e.preventDefault();
+    if(!$next.disabled) pull();
+  }
+  if(e.key === "ArrowDown"){
+    if(tag === "BUTTON") return;
+    e.preventDefault();
+    if(!$deeperBtn.disabled) openDeeper();
+  }
+});
+
+load();
+switchSet("work");
+</script>
+</body>
+</html>
