@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Money, Work and a Life in English — Session 5 · Laura</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cf;
+    --ink: #1d2438;
+    --ink-soft: #5a607a;
+    --trap: #a83232;
+    --truth: #2d6a4f;
+    --rule: #c9b896;
+    --shadow: rgba(29, 36, 56, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(ellipse at 12% 18%, rgba(168, 50, 50, 0.04) 0%, transparent 52%),
+      radial-gradient(ellipse at 88% 82%, rgba(45, 106, 79, 0.04) 0%, transparent 52%);
+  }
+
+  .container { max-width: 880px; margin: 0 auto; padding: 56px 32px 90px; }
+
+  .scorebar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex; flex-wrap: wrap; gap: 20px;
+    align-items: center; justify-content: center;
+    padding: 11px 20px;
+    font-family: 'Lora', serif;
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+  }
+  .scorebar span strong { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 500; }
+  .scorebar .reset {
+    background: none; border: 1px solid rgba(244,237,224,0.35); color: var(--paper);
+    font-family: 'Lora', serif; font-size: 11px; padding: 4px 12px; border-radius: 2px; cursor: pointer;
+  }
+  .scorebar .reset:hover { background: rgba(244,237,224,0.12); }
+
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 34px; margin-bottom: 14px; }
+  .eyebrow { font-size: 11.5px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 14px; }
+  h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400; font-style: italic;
+    font-size: clamp(44px, 8vw, 84px);
+    line-height: 0.95; letter-spacing: -0.025em;
+    font-variation-settings: "SOFT" 80, "WONK" 1;
+  }
+  .subtitle { font-family: 'Fraunces', serif; font-style: italic; font-size: clamp(16px, 2vw, 19px); color: var(--ink-soft); margin-top: 18px; max-width: 60ch; }
+
+  .stretch-row { display: flex; align-items: center; gap: 12px; margin: 26px 0 40px; font-size: 13px; color: var(--ink-soft); }
+  .switch { position: relative; width: 46px; height: 24px; background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 14px; cursor: pointer; flex: none; }
+  .switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--ink-soft); transition: transform 0.2s, background 0.2s; }
+  .switch.on { background: rgba(45,106,79,0.16); border-color: var(--truth); }
+  .switch.on::after { transform: translateX(22px); background: var(--truth); }
+
+  section { margin-bottom: 52px; scroll-margin-top: 70px; }
+
+  .sec-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); padding-bottom: 10px; margin-bottom: 22px; }
+  .sec-head h2 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 30px; letter-spacing: -0.015em; }
+  .badge { font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); border: 1px solid var(--rule); padding: 4px 10px; border-radius: 2px; white-space: nowrap; }
+  .lede { color: var(--ink-soft); font-size: 15px; max-width: 62ch; margin-bottom: 22px; }
+
+  .q { background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px; padding: 18px 20px; margin-bottom: 14px; }
+  .q-prompt { font-size: 15.5px; margin-bottom: 12px; }
+  .q-prompt em { font-style: italic; color: var(--trap); }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt {
+    font-family: 'Lora', serif; font-size: 14.5px;
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 8px 14px; cursor: pointer; color: var(--ink);
+  }
+  .opt:hover { border-color: var(--ink); }
+  .opt:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .opt.correct { background: rgba(45,106,79,0.14); border-color: var(--truth); color: var(--truth); font-weight: 600; }
+  .opt.wrong { background: rgba(168,50,50,0.1); border-color: var(--trap); color: var(--trap); text-decoration: line-through; }
+  .q-note { display: none; margin-top: 12px; padding-top: 11px; border-top: 1px dashed var(--rule); font-size: 13.5px; color: var(--ink-soft); }
+  .q.answered .q-note { display: block; }
+  .stretch-item { display: none; }
+  body.stretch-on .stretch-item { display: block; }
+
+  .say-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .say {
+    background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 18px; cursor: pointer; text-align: left; font-family: 'Lora', serif; color: var(--ink);
+  }
+  .say:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .say-face { font-family: 'Fraunces', serif; font-style: italic; font-size: 25px; color: var(--ink); }
+  .say-back { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--rule); font-size: 14px; }
+  .say.open .say-back { display: block; }
+  .say-back b { color: var(--truth); font-weight: 600; }
+  .say-back .warn { color: var(--trap); }
+  .say-hint { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-soft); margin-top: 10px; }
+  .say.open .say-hint { display: none; }
+
+  .letter {
+    background: #fbf7ee; border: 1px solid var(--rule); border-radius: 2px;
+    padding: 32px 34px; font-size: 15.5px; line-height: 1.75; box-shadow: 0 10px 30px var(--shadow);
+  }
+  .letter .meta { font-size: 13px; color: var(--ink-soft); border-bottom: 1px solid var(--rule); padding-bottom: 14px; margin-bottom: 18px; }
+  .letter p { margin-bottom: 14px; }
+  .trapword {
+    border-bottom: 2px dotted var(--trap); cursor: pointer; color: inherit;
+    background: none; border-left: 0; border-right: 0; border-top: 0; font: inherit; padding: 0;
+  }
+  .trapword:hover { background: rgba(168,50,50,0.08); }
+  .trapword:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .trapword.found { background: rgba(45,106,79,0.14); border-bottom-color: var(--truth); }
+  .gloss {
+    display: none; margin: 8px 0 16px; padding: 12px 15px;
+    background: rgba(45,106,79,0.07); border-left: 3px solid var(--truth); font-size: 14px;
+  }
+  .gloss.show { display: block; }
+  .gloss b { color: var(--truth); }
+
+  .task { background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px; padding: 20px 22px; margin-top: 22px; }
+  .task h3 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 20px; margin-bottom: 12px; }
+  ol.decode { margin-left: 20px; }
+  ol.decode li { margin-bottom: 10px; font-size: 15px; }
+  .reveal-btn {
+    font-family: 'Lora', serif; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    background: transparent; border: 1px solid var(--rule); color: var(--ink-soft);
+    padding: 6px 12px; border-radius: 2px; cursor: pointer; margin-left: 6px;
+  }
+  .reveal-btn:hover { border-color: var(--ink); color: var(--ink); }
+  .answer { display: none; color: var(--truth); font-style: italic; margin-top: 5px; }
+  .answer.show { display: block; }
+
+  .contract { list-style: none; }
+  .contract li { display: flex; gap: 11px; align-items: flex-start; margin-bottom: 11px; font-size: 15px; }
+  .contract input { margin-top: 6px; accent-color: var(--truth); width: 16px; height: 16px; flex: none; }
+  .contract li.done { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: var(--rule); }
+
+  textarea {
+    width: 100%; min-height: 150px; margin-top: 16px; padding: 16px;
+    background: #fbf7ee; border: 1px solid var(--rule); border-radius: 2px;
+    font-family: 'Lora', serif; font-size: 15px; line-height: 1.65; color: var(--ink); resize: vertical;
+  }
+  textarea:focus { outline: none; border-color: var(--ink); }
+
+  .props { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .prop { background: var(--paper-deep); border: 1px solid var(--rule); border-left: 3px solid var(--rule); border-radius: 2px; padding: 16px 18px; font-size: 15px; cursor: pointer; }
+  .prop.picked { border-left-color: var(--trap); background: #fbf7ee; }
+  .frames { background: rgba(45,106,79,0.07); border-left: 3px solid var(--truth); padding: 16px 18px; font-size: 14.5px; }
+  .frames div { margin-bottom: 7px; }
+  .frames b { color: var(--truth); font-weight: 600; }
+  .timer-row { display: flex; align-items: center; gap: 16px; margin-top: 18px; }
+  .timer { font-family: 'Fraunces', serif; font-style: italic; font-size: 38px; color: var(--ink); min-width: 100px; }
+  .btn {
+    font-family: 'Lora', serif; font-size: 12.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    background: var(--ink); color: var(--paper); border: none; padding: 11px 20px; border-radius: 2px; cursor: pointer;
+  }
+  .btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--rule); }
+
+  .modules { display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 14px; }
+  .mod {
+    position: relative; background: var(--paper-deep); border: 1px solid var(--rule); border-radius: 2px;
+    padding: 20px 20px 18px; cursor: pointer; text-align: left; font-family: 'Lora', serif; color: var(--ink);
+  }
+  .mod:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .mod h4 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 21px; margin-bottom: 7px; line-height: 1.2; }
+  .mod p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.5; }
+  .mod.on { background: #fbf7ee; border-color: var(--truth); box-shadow: inset 3px 0 0 var(--truth); }
+  .rank {
+    display: none; position: absolute; top: 14px; right: 14px;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 13px;
+    color: var(--paper); background: var(--truth); width: 24px; height: 24px; border-radius: 50%;
+    align-items: center; justify-content: center;
+  }
+  .mod.on .rank { display: flex; }
+
+  footer { margin-top: 70px; padding-top: 26px; border-top: 1px solid var(--rule); text-align: center; font-family: 'Fraunces', serif; font-style: italic; font-size: 13px; color: var(--ink-soft); }
+
+  @media (max-width: 640px) {
+    .container { padding: 36px 18px 60px; }
+    .letter { padding: 22px 20px; }
+    .say-grid, .modules, .props { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+  @media print {
+    body { background: #fff; }
+    .scorebar, .btn, .reveal-btn, .stretch-row { display: none; }
+    .answer, .gloss, .say-back, .q-note { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scorebar">
+  <span><strong id="s-sprint">0</strong>/12 sprint</span>
+  <span><strong id="s-traps">0</strong>/10 terms opened</span>
+  <span><strong id="s-mods">0</strong>/6 modules chosen</span>
+  <button class="reset" id="reset" type="button">Clear page</button>
+</div>
+
+<div class="container">
+  <header>
+    <div class="eyebrow">Session five · Finance and everyday English</div>
+    <h1>Money, work<br>and a life<br>in English</h1>
+    <div class="subtitle">An offer letter, the numbers inside it, and the vocabulary that decides what you actually take home.</div>
+  </header>
+
+  <div class="stretch-row">
+    <div class="switch" id="stretch" role="switch" aria-checked="false" tabindex="0" aria-label="C1 stretch items"></div>
+    <span>C1 stretch items — off</span>
+  </div>
+
+  <!-- 1 -->
+  <section id="sprint">
+    <div class="sec-head">
+      <h2>What transfers</h2>
+      <span class="badge">5 min</span>
+    </div>
+    <p class="lede">The French words that caused trouble in aviation English work the same way in finance. Twelve quick ones — choose the English you would actually use.</p>
+    <div id="sprint-items"></div>
+  </section>
+
+  <!-- 2 -->
+  <section id="numbers">
+    <div class="sec-head">
+      <h2>Numbers out loud</h2>
+      <span class="badge">8 min</span>
+    </div>
+    <p class="lede">Reading numbers and saying them are different skills. Say each card aloud before you tap it.</p>
+    <div class="say-grid" id="say-grid"></div>
+  </section>
+
+  <!-- 3 -->
+  <section id="offer">
+    <div class="sec-head">
+      <h2>The offer</h2>
+      <span class="badge">14 min</span>
+    </div>
+    <p class="lede">Around half the world's commercial aircraft are owned and financed out of Dublin, so the vocabulary below sits at the join between your field and finance. Ten expressions are underlined; work out each one before you tap it.</p>
+
+    <div class="letter">
+      <div class="meta">From: Aoife Brennan, Head of Talent · Liffey Aviation Capital, Dublin<br>Subject: Offer of employment — Junior Analyst, Portfolio Strategy</div>
+      <p>Dear Laura,</p>
+      <p>Further to your interviews last week, I'm delighted to confirm our offer for the position of Junior Analyst, Portfolio Strategy, reporting to our Head of Fleet Risk.</p>
+      <p>The starting salary is €48,000 <button class="trapword" data-g="g1">gross</button> per annum, paid monthly <button class="trapword" data-g="g2">in arrears</button>. You will also be eligible for a <button class="trapword" data-g="g3">discretionary</button> bonus of up to 12%, <button class="trapword" data-g="g4">pro-rated</button> in your first year.</p>
+      <div class="gloss" id="g1"><b>gross</b> = before tax and deductions (FR <em>brut</em>). The opposite is <b>net</b> — what reaches your account. The two figures are far apart.</div>
+      <div class="gloss" id="g2"><b>in arrears</b> = paid at the end of the period worked, not the start. The first payment arrives after a month of work.</div>
+      <div class="gloss" id="g3"><b>discretionary</b> = decided by the company; not guaranteed and not contractual. "Up to 12%" includes 0%. Compare with a <b>guaranteed</b> or <b>contractual</b> bonus.</div>
+      <div class="gloss" id="g4"><b>pro-rated</b> = scaled to the time actually worked. Starting in October gives roughly a quarter of it. Verb: <em>to pro-rate</em>.</div>
+      <p>The first six months constitute a <button class="trapword" data-g="g5">probation period</button>, during which either party may terminate with two weeks' <button class="trapword" data-g="g6">notice</button>.</p>
+      <div class="gloss" id="g5"><b>probation period</b> = FR <em>période d'essai</em>. In everyday English, <em>probation</em> on its own usually refers to a criminal sentence served outside prison, so keep the full phrase or say <b>trial period</b>.</div>
+      <div class="gloss" id="g6"><b>notice</b> = the warning period before leaving (FR <em>préavis</em>). Collocations: <em>to give notice</em>, <em>to work your notice</em>, <em>a three-month notice period</em>. Not <em>prevent</em> — <em>prévenir</em> is <b>to let someone know</b> or <b>to warn</b>.</div>
+      <p>You will be <button class="trapword" data-g="g7">enrolled</button> in our pension scheme, where we match your contributions up to 5%, and in the company health plan, which is treated as a <button class="trapword" data-g="g8">benefit-in-kind</button> for tax purposes. Annual leave is 25 days, <button class="trapword" data-g="g9">exclusive of</button> public holidays.</p>
+      <div class="gloss" id="g7"><b>enrolled</b> = signed up, registered (FR <em>inscrit</em>). <em>To enrol in</em> a scheme, a course, a programme. British spelling doubles the L in <em>enrolled</em>.</div>
+      <div class="gloss" id="g8"><b>benefit-in-kind</b> = FR <em>avantage en nature</em>. Something of value that isn't cash — health cover, a company car — which the tax authority still counts as income. Note that <b>scheme</b> and <b>plan</b> are neutral words here.</div>
+      <div class="gloss" id="g9"><b>exclusive of</b> = not counted in, so the 25 days come <em>in addition to</em> the public holidays. It looks like exclusion; it means addition. Opposite: <b>inclusive of</b>.</div>
+      <p>A relocation allowance of €3,000 is available on production of receipts. The offer is <button class="trapword" data-g="g10">subject to</button> satisfactory references and proof of your right to work in Ireland.</p>
+      <div class="gloss" id="g10"><b>subject to</b> = conditional on; the offer can still fall through (FR <em>sous réserve de</em>). An Irish passport settles the second condition immediately.</div>
+      <p>We'd be grateful if you could revert by Friday. Do come back to me with any questions in the meantime.</p>
+      <p>Kind regards,<br>Aoife</p>
+    </div>
+
+    <div class="task">
+      <h3>Reading the detail</h3>
+      <ol class="decode">
+        <li>Is the bonus money you can count on? <button class="reveal-btn" data-a="a1">Check</button><div class="answer" id="a1">No. <em>Discretionary</em> and <em>up to</em> both allow zero. It shouldn't be budgeted for.</div></li>
+        <li>You contribute 3% to the pension. What goes in in total? <button class="reveal-btn" data-a="a2">Check</button><div class="answer" id="a2">6% — they match up to 5%, so they match your 3%. Contributing 5% would put 10% in.</div></li>
+        <li>How many days of leave do you actually get? <button class="reveal-btn" data-a="a3">Check</button><div class="answer" id="a3">25 plus the public holidays — around 34 in Ireland. <em>Exclusive of</em> adds rather than subtracts.</div></li>
+        <li>Do you receive €3,000 for the move? <button class="reveal-btn" data-a="a4">Check</button><div class="answer" id="a4">Only against receipts, and only up to €3,000. <em>On production of</em> = when you show us.</div></li>
+        <li>Say the monthly gross figure out loud. <button class="reveal-btn" data-a="a5">Check</button><div class="answer" id="a5">€4,000 — "four thousand euro a month, before tax". Then the annual: "forty-eight thousand".</div></li>
+        <li>Name three questions worth asking before signing. <button class="reveal-btn" data-a="a6">Check</button><div class="answer" id="a6">Possible lines: is the bonus formula published? what happens to the pension contributions if you leave in year one? does the health cover extend to a partner?</div></li>
+        <li class="stretch-item">What does <em>revert</em> mean here, and would you use it yourself? <button class="reveal-btn" data-a="a7">Check</button><div class="answer" id="a7">"Get back to me." It is business-letter English, common in Ireland and India, and stiff elsewhere. Worth understanding; write <em>get back to you</em> instead.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="reply">
+    <div class="sec-head">
+      <h2>Your reply</h2>
+      <span class="badge">12 min</span>
+    </div>
+    <p class="lede">Say each sentence aloud before typing it. Eighty to a hundred words: accept in principle, ask two real questions, keep the tone warm. All five items below must appear.</p>
+    <ul class="contract" id="contract">
+      <li><input type="checkbox" id="c1"><label for="c1">An indirect question: <em>Could you confirm whether the bonus formula is published?</em></label></li>
+      <li><input type="checkbox" id="c2"><label for="c2">A concession: <em>While the package is very much in line with what I'd hoped…</em></label></li>
+      <li><input type="checkbox" id="c3"><label for="c3">One number, written the way you would say it</label></li>
+      <li><input type="checkbox" id="c4"><label for="c4">A conditional: <em>If I were to start in October…</em></label></li>
+      <li><input type="checkbox" id="c5"><label for="c5">No term from today's list used incorrectly</label></li>
+    </ul>
+    <textarea id="draft" placeholder="Dear Aoife,"></textarea>
+  </section>
+
+  <!-- 5 -->
+  <section id="debate">
+    <div class="sec-head">
+      <h2>Concession and rebuttal</h2>
+      <span class="badge">10 min</span>
+    </div>
+    <p class="lede">Concede the strongest opposing point, then answer it. Choose two propositions, ninety seconds each, no notes.</p>
+    <div class="props" id="props"></div>
+    <div class="frames">
+      <div><b>Admittedly</b> the cost is real — <b>that said</b>, …</div>
+      <div><b>While it's true that</b> …, <b>the stronger point is that</b> …</div>
+      <div><b>Granted</b>, …, <b>but that assumes</b> …</div>
+      <div><b>There's a fair argument that</b> … <b>What it overlooks is</b> …</div>
+      <div class="stretch-item"><b>The objection has some force, up to a point</b> — <b>where it breaks down is</b> …</div>
+    </div>
+    <div class="timer-row">
+      <div class="timer" id="timer">1:30</div>
+      <button class="btn" id="start" type="button">Start 90 seconds</button>
+      <button class="btn ghost" id="stop" type="button">Reset</button>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="spine">
+    <div class="sec-head">
+      <h2>The next ten hours</h2>
+      <span class="badge">8 min</span>
+    </div>
+    <p class="lede">Choose six modules. The first three you tap set the running order. Anything that doesn't interest you is the wrong module — leave it out.</p>
+    <div class="modules" id="modules"></div>
+  </section>
+
+  <!-- 7 -->
+  <section id="close">
+    <div class="sec-head">
+      <h2>Three things to take away</h2>
+      <span class="badge">3 min</span>
+    </div>
+    <p class="lede">In your own words: one from the trap list, one from the numbers, one from your reply.</p>
+    <textarea id="takeaways" placeholder="1.&#10;2.&#10;3."></textarea>
+  </section>
+
+  <footer>Liffey Aviation Capital is a fictional employer; the terms in the letter are standard. <span style="color:var(--rule); margin:0 8px">·</span> Session 5 — September 2026</footer>
+</div>
+
+<script>
+/* ---------------- data ---------------- */
+const sprint = [
+  { p: "Le délai de paiement est de 30 jours.", opts: ["the delay", "the deadline", "the payment term"], a: 2, alt: 1,
+    n: "<em>Délai</em> is a period allowed, not a hold-up: payment terms, lead time, deadline. <em>Delay</em> means something has gone wrong." },
+  { p: "La caution est de deux mois de loyer.", opts: ["the caution", "the deposit", "the guarantee"], a: 1,
+    n: "Renting in Dublin or London: <em>deposit</em>. A person who guarantees you is a <em>guarantor</em>. <em>Caution</em> in English means prudence, or a police warning." },
+  { p: "L'entreprise a fait un bénéfice de 2 millions.", opts: ["a benefit", "a profit", "a revenue"], a: 1,
+    n: "<em>Profit</em> = what remains after costs. <em>Revenue</em> or <em>turnover</em> = the money coming in. <em>Benefits</em> = what an employer provides beyond salary." },
+  { p: "Je vais demander une augmentation.", opts: ["demand", "ask for", "require"], a: 1,
+    n: "<em>To demand</em> is forceful and non-negotiable in English. You <em>ask for</em> a raise (US) or a pay rise (UK/IE)." },
+  { p: "J'assisterai à la réunion de lundi.", opts: ["assist", "attend", "participate"], a: 1,
+    n: "<em>Attend</em> = be present. <em>Assist</em> = help someone. This one often survives into C1 unless it is addressed directly." },
+  { p: "Actuellement, les taux sont bas.", opts: ["Actually", "Currently", "Eventually"], a: 1,
+    n: "<em>Actuellement</em> → currently, at the moment. <em>Actually</em> → en fait." },
+  { p: "Éventuellement, on pourrait renégocier.", opts: ["Eventually", "Possibly", "Finally"], a: 1,
+    n: "<em>Éventuellement</em> = possibly, if need be. <em>Eventually</em> = finalement, after some time. The error reverses the meaning of the sentence." },
+  { p: "Notre société est basée à Dublin.", opts: ["society", "company", "firm"], a: 1, alt: 2,
+    n: "<em>Company</em> or <em>firm</em>. <em>Society</em> is the social sense only. <em>Corporation</em> is US usage and usually implies scale." },
+  { p: "Le loyer a augmenté de 8%.", opts: ["The rent", "The rente", "The renting"], a: 0,
+    n: "<em>Rent</em> = loyer. An English <em>annuity</em> or <em>private income</em> covers what French calls <em>une rente</em>. Rent <em>rose by</em> 8%, or <em>went up</em> 8%." },
+  { p: "Il faut prévenir le client.", opts: ["prevent", "let the client know", "prevent from"], a: 1,
+    n: "<em>Prévenir</em> = warn, let know, give notice. <em>Prevent</em> = empêcher. In an email the error reads as a threat." },
+  { p: "J'ai suivi une formation en finance.", opts: ["a formation", "a training course", "a training"], a: 1,
+    n: "<em>Training</em> is uncountable: <em>some training</em>, <em>a training course</em>, <em>a course</em>. Never <em>a training</em>." },
+  { p: "Ce dossier est sensible.", opts: ["sensible", "sensitive", "delicate"], a: 1,
+    n: "<em>Sensitive</em> = délicat, confidentiel. <em>Sensible</em> in English means raisonnable, pragmatique." },
+  { p: "Nous avons un chiffre d'affaires de 40 M€.", opts: ["a business number", "a turnover", "a benefit"], a: 1, stretch: true,
+    n: "<em>Turnover</em> (UK/IE) or <em>revenue</em> (US). Note the second sense: staff turnover = le taux de rotation du personnel." },
+  { p: "Le taux directeur a baissé d'un quart de point.", opts: ["the director rate", "the base rate", "the key rate"], a: 1, alt: 2, stretch: true,
+    n: "<em>Base rate</em> (Bank of England), <em>policy rate</em> or <em>key rate</em> (ECB). It fell by 25 basis points — <em>bps</em>, said 'bips'." }
+];
+
+const says = [
+  { f: "€1,500", b: "<b>fifteen hundred euro</b> or <b>one thousand five hundred euros</b>. In Ireland the price stays 'euro' in the plural: <em>forty thousand euro</em>." },
+  { f: "0.5%", b: "<b>nought point five per cent</b> (UK/IE) · <b>zero point five percent</b> (US). <span class='warn'>Not</span> 'zero comma five'." },
+  { f: "1,250,000", b: "<b>one point two five million</b>, or <b>a million two hundred and fifty thousand</b>. The punctuation inverts: French 1 250 000,50 → English 1,250,000.50" },
+  { f: "€12.50", b: "<b>twelve fifty</b> in speech; <b>twelve euros fifty</b> in full. Same in sterling: <em>twelve pounds fifty</em>." },
+  { f: "a 3% increase", b: "Noun: <b>IN</b>crease. Verb: to in<b>CREASE</b>. Same pattern: DEcrease/deCREASE, REcord/reCORD, CONtract/conTRACT." },
+  { f: "debt · mortgage · receipt", b: "Silent letters: <b>det</b> · <b>MOR-gidge</b> · <b>ri-SEET</b>. Three very common money words, all irregular." },
+  { f: "month · growth · worth", b: "The <b>th</b> is a tongue-between-teeth sound, not /s/ or /z/. <em>Six months' growth</em> is worth drilling slowly." },
+  { f: "€2 billion", b: "<b>two billion</b> = FR <em>deux milliards</em>. English has no everyday equivalent of <em>milliard</em>, and a French <em>billion</em> is an English <b>trillion</b> — a factor of a thousand." },
+  { f: "raised · increased · budgeted", b: "Three <b>-ed</b> sounds: rais<b>d</b> · increas<b>t</b> · budget<b>id</b>. The rule follows the preceding sound, not the spelling." },
+  { f: "2/3 and 3/4", b: "<b>two thirds</b> · <b>three quarters</b>. And 1.5 is <b>one and a half</b> in ordinary speech." },
+  { f: "15/05/2027", b: "<b>the fifteenth of May</b> (UK/IE) · <b>May fifteenth</b> (US). US dates are written 05/15 — check the order before booking anything." },
+  { f: "+353 85 220 4471", b: "<b>double two oh, four four seven one</b>. English uses <b>oh</b> for zero when reading numbers aloud, and pairs doubles.", stretch: true },
+  { f: "expensive / expansive", b: "<b>ik-SPEN-siv</b> = coûteux. <b>ik-SPAN-siv</b> = vaste, expansif.", stretch: true }
+];
+
+const props = [
+  "Rent controls protect tenants more than they harm the market.",
+  "A four-day week would make most companies more productive, not less.",
+  "Airlines that can't survive without state aid should be allowed to fail.",
+  "Cash should be phased out entirely within ten years.",
+  "Owning property is no longer a realistic goal for our generation.",
+  "A country's economy matters less to your life than the city you live in."
+];
+
+const modules = [
+  { t: "The money you touch", d: "Renting, banking, bills, contracts and administration — the English of living somewhere." },
+  { t: "Getting paid", d: "Offers, payslips, salary negotiation, pensions, and what tax does to a figure." },
+  { t: "Reading the economy", d: "Inflation, interest rates, employment figures, and how to read a business page efficiently." },
+  { t: "Aviation and finance", d: "Leasing, fleet risk, and why Dublin finances so much of the global fleet." },
+  { t: "Everyday register", d: "The informal layer: colleagues, phone calls, humour, and conversation that goes somewhere." },
+  { t: "Structured disagreement", d: "Debate, concession and rebuttal, hedging, and disagreeing without damage." },
+  { t: "Pronunciation and stress", d: "Word stress, rhythm and connected speech. The accent stays; the clarity improves." },
+  { t: "Written English", d: "Emails, CV, LinkedIn and applications — what a stranger reads before meeting you." },
+  { t: "Interviews in English", d: "Competency questions, structuring an answer, and the questions that always come up." },
+  { t: "Independent reading routine", d: "A weekly routine you run alone, so the language keeps developing between sessions." }
+];
+
+/* ---------------- storage ---------------- */
+const KEY = 'laura-s5';
+let state = { sprint: {}, traps: [], mods: [], checks: {}, draft: '', takeaways: '', picked: [], stretch: false };
+try { const raw = localStorage.getItem(KEY); if (raw) state = Object.assign(state, JSON.parse(raw)); } catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+/* ---------------- sprint ---------------- */
+const sprintBox = document.getElementById('sprint-items');
+sprint.forEach((item, i) => {
+  const q = document.createElement('div');
+  q.className = 'q' + (item.stretch ? ' stretch-item' : '');
+  const opts = item.opts.map((o, j) => `<button class="opt" type="button" data-q="${i}" data-o="${j}">${o}</button>`).join('');
+  q.innerHTML = `<div class="q-prompt"><em>${item.p}</em></div><div class="opts">${opts}</div><div class="q-note">${item.n}</div>`;
+  sprintBox.appendChild(q);
+});
+sprintBox.addEventListener('click', e => {
+  const b = e.target.closest('.opt');
+  if (!b) return;
+  const qi = +b.dataset.q, oi = +b.dataset.o, card = b.closest('.q');
+  if (card.classList.contains('answered')) return;
+  const item = sprint[qi];
+  const ok = oi === item.a || oi === item.alt;
+  card.classList.add('answered');
+  card.querySelectorAll('.opt').forEach(o => {
+    const k = +o.dataset.o;
+    if (k === item.a || k === item.alt) o.classList.add('correct');
+    else if (k === oi) o.classList.add('wrong');
+  });
+  state.sprint[qi] = ok; save(); tally();
+});
+
+/* ---------------- say cards ---------------- */
+const sayGrid = document.getElementById('say-grid');
+says.forEach(s => {
+  const c = document.createElement('button');
+  c.type = 'button';
+  c.className = 'say' + (s.stretch ? ' stretch-item' : '');
+  c.innerHTML = `<div class="say-face">${s.f}</div><div class="say-hint">Say it, then tap</div><div class="say-back">${s.b}</div>`;
+  c.addEventListener('click', () => c.classList.toggle('open'));
+  sayGrid.appendChild(c);
+});
+
+/* ---------------- letter glosses ---------------- */
+document.querySelectorAll('.trapword').forEach(w => {
+  const id = w.dataset.g;
+  if (state.traps.includes(id)) { w.classList.add('found'); document.getElementById(id).classList.add('show'); }
+  w.addEventListener('click', () => {
+    const g = document.getElementById(id);
+    g.classList.toggle('show');
+    w.classList.toggle('found', g.classList.contains('show'));
+    state.traps = [...document.querySelectorAll('.trapword.found')].map(x => x.dataset.g);
+    save(); tally();
+  });
+});
+document.querySelectorAll('.reveal-btn').forEach(b => {
+  b.addEventListener('click', () => document.getElementById(b.dataset.a).classList.toggle('show'));
+});
+
+/* ---------------- contract + textareas ---------------- */
+document.querySelectorAll('#contract input').forEach(cb => {
+  cb.checked = !!state.checks[cb.id];
+  cb.closest('li').classList.toggle('done', cb.checked);
+  cb.addEventListener('change', () => {
+    state.checks[cb.id] = cb.checked;
+    cb.closest('li').classList.toggle('done', cb.checked);
+    save();
+  });
+});
+['draft', 'takeaways'].forEach(id => {
+  const el = document.getElementById(id);
+  el.value = state[id] || '';
+  el.addEventListener('input', () => { state[id] = el.value; save(); });
+});
+
+/* ---------------- props + timer ---------------- */
+const propBox = document.getElementById('props');
+props.forEach((p, i) => {
+  const d = document.createElement('div');
+  d.className = 'prop' + (state.picked.includes(i) ? ' picked' : '');
+  d.textContent = p;
+  d.addEventListener('click', () => {
+    d.classList.toggle('picked');
+    state.picked = [...propBox.children].reduce((acc, el, k) => el.classList.contains('picked') ? [...acc, k] : acc, []);
+    save();
+  });
+  propBox.appendChild(d);
+});
+
+let t = null, left = 90;
+const timerEl = document.getElementById('timer');
+function paint() { timerEl.textContent = Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0'); }
+document.getElementById('start').addEventListener('click', () => {
+  clearInterval(t);
+  left = 90; paint();
+  t = setInterval(() => { left--; paint(); if (left <= 0) { clearInterval(t); timerEl.textContent = 'Time'; } }, 1000);
+});
+document.getElementById('stop').addEventListener('click', () => { clearInterval(t); left = 90; paint(); });
+
+/* ---------------- modules ---------------- */
+const modBox = document.getElementById('modules');
+modules.forEach((m, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'mod';
+  b.innerHTML = `<div class="rank"></div><h4>${m.t}</h4><p>${m.d}</p>`;
+  b.addEventListener('click', () => {
+    const at = state.mods.indexOf(i);
+    if (at > -1) state.mods.splice(at, 1);
+    else if (state.mods.length < 6) state.mods.push(i);
+    paintMods(); save(); tally();
+  });
+  modBox.appendChild(b);
+});
+function paintMods() {
+  [...modBox.children].forEach((el, i) => {
+    const at = state.mods.indexOf(i);
+    el.classList.toggle('on', at > -1);
+    el.querySelector('.rank').textContent = at > -1 && at < 3 ? at + 1 : '✓';
+  });
+}
+
+/* ---------------- stretch toggle ---------------- */
+const sw = document.getElementById('stretch');
+function paintStretch() {
+  document.body.classList.toggle('stretch-on', state.stretch);
+  sw.classList.toggle('on', state.stretch);
+  sw.setAttribute('aria-checked', state.stretch ? 'true' : 'false');
+  sw.nextElementSibling.textContent = 'C1 stretch items — ' + (state.stretch ? 'on' : 'off');
+}
+function toggleStretch() { state.stretch = !state.stretch; paintStretch(); save(); }
+sw.addEventListener('click', toggleStretch);
+sw.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleStretch(); } });
+
+/* ---------------- tally + reset ---------------- */
+function tally() {
+  document.getElementById('s-sprint').textContent = Object.values(state.sprint).filter(Boolean).length;
+  document.getElementById('s-traps').textContent = state.traps.length;
+  document.getElementById('s-mods').textContent = state.mods.length;
+}
+document.getElementById('reset').addEventListener('click', () => {
+  state = { sprint: {}, traps: [], mods: [], checks: {}, draft: '', takeaways: '', picked: [], stretch: false };
+  save(); location.reload();
+});
+
+/* restore answered sprint items */
+Object.keys(state.sprint).forEach(qi => {
+  const card = sprintBox.children[qi];
+  if (!card) return;
+  card.classList.add('answered');
+  card.querySelectorAll('.opt').forEach(o => {
+    const k = +o.dataset.o, item = sprint[qi];
+    if (k === item.a || k === item.alt) o.classList.add('correct');
+  });
+});
+paintMods(); paintStretch(); paint(); tally();
+</script>
+</body>
+</html>
