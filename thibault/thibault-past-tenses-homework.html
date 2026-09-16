@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Past tenses: homework — Thibault's notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF7EE;--card:#FFFDF8;--ink:#2A2421;--ink-soft:#5E534C;
+  --burgundy:#7A2436;--burgundy-tint:#F4E4E3;--sage:#5F7D5E;--sage-tint:#E5ECE0;
+  --rule:#E6DFCF;--line:#CFC6B4;--margin:rgba(122,36,54,.28);
+  --serif:"Gelasio", Georgia, "Times New Roman", serif;color-scheme:light;
+}
+*{box-sizing:border-box}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px;border-radius:2px}
+button,input{font-family:var(--serif)}
+main{max-width:820px;margin:0 auto;padding:56px 40px 96px 76px;background-image:linear-gradient(to right,transparent 40px,var(--margin) 40px,var(--margin) 41px,transparent 41px);background-repeat:no-repeat}
+header{border-bottom:2px solid var(--burgundy);padding-bottom:28px;margin-bottom:8px}
+.kicker{font-style:italic;color:var(--sage);margin:0 0 6px;font-size:16px}
+h1{font-size:clamp(36px,5.5vw,54px);line-height:1.05;color:var(--burgundy);margin:0 0 14px;font-weight:700}
+.lede{font-size:19px;margin:0 0 14px;max-width:640px}
+.plan{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:22px 0 0;border:1px solid var(--rule);border-radius:8px;overflow:hidden;background:var(--card)}
+.plan a{display:block;padding:10px 12px;text-decoration:none;color:var(--ink);border-right:1px solid var(--rule);font-size:14.5px;line-height:1.35}
+.plan a:last-child{border-right:0}
+.plan .t{display:block;color:var(--ink-soft);font-style:italic;font-size:13.5px}
+.plan .st{display:block;font-size:13.5px;margin-top:3px;color:var(--ink-soft)}
+.plan a.done{background:var(--sage-tint)}
+.plan a.done .st{color:var(--sage);font-weight:600}
+.total{font-size:15px;color:var(--ink-soft);font-style:italic;margin:10px 0 0}
+
+section{padding-top:56px;scroll-margin-top:10px}
+h2{font-size:31px;line-height:1.15;color:var(--burgundy);margin:0 0 4px;font-weight:600}
+h2 .n{font-style:italic;font-weight:400;color:var(--sage);margin-right:10px}
+.sub{font-style:italic;color:var(--ink-soft);margin:0 0 20px;font-size:17px}
+.sub b{font-style:normal;color:var(--ink)}
+p{margin:0 0 14px}
+
+.card{border:1px solid var(--rule);border-radius:8px;background:var(--card);padding:22px 24px;margin:16px 0}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 8px}
+.rulec{border-left:3px solid var(--sage);background:var(--sage-tint);padding:12px 16px;border-radius:0 6px 6px 0;font-size:16px;line-height:1.5}
+.rulec .rn{color:var(--sage);font-style:italic;font-weight:600;display:block;margin-bottom:2px}
+.rulec em{color:var(--ink-soft)}
+.rulec.trap{border-left-color:var(--burgundy);background:var(--burgundy-tint)}
+.rulec.trap .rn{color:var(--burgundy)}
+
+.bar{height:8px;background:var(--rule);border-radius:99px;overflow:hidden;margin:8px 0 4px}
+.bar i{display:block;height:100%;width:0;background:var(--sage);transition:width .3s}
+.meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:15px;color:var(--ink-soft);font-style:italic}
+
+.q{font-size:19px;margin:6px 0 12px}
+.q .tag{display:block;font-size:14px;color:var(--sage);font-style:italic}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:8px 16px;border-radius:6px;font-size:17px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--burgundy)}
+.opt:disabled{cursor:default}
+.opt.full{display:block;width:100%;text-align:left}
+.opt.correct{background:var(--sage);border-color:var(--sage);color:#fff}
+.opt.wrongc{background:var(--burgundy-tint);border-color:var(--burgundy);color:var(--burgundy);text-decoration:line-through}
+.opt .k{font-size:13px;opacity:.6;margin-right:6px;font-style:italic}
+.fb{font-size:16px;margin-top:12px;padding-left:12px;border-left:2px solid var(--rule);min-height:0}
+.fb.ok{border-color:var(--sage)}.fb.bad{border-color:var(--burgundy)}
+.btn{border:1px solid var(--burgundy);background:var(--burgundy);color:#fff;border-radius:6px;padding:8px 18px;font-size:16px;cursor:pointer;margin:14px 10px 0 0}
+.btn.ghost{background:none;color:var(--burgundy)}
+.btn:disabled{opacity:.45;cursor:default}
+
+.result{text-align:left;padding:6px 0}
+.result .big{font-size:44px;line-height:1;color:var(--burgundy);font-weight:700;margin:0 0 6px}
+.result .big.pass{color:var(--sage)}
+.result ul{margin:10px 0 0;padding-left:20px;font-size:16px}
+.result li{margin:4px 0}
+
+/* trainer */
+.flash{display:grid;grid-template-columns:1fr;gap:10px}
+.flash .base{font-size:40px;font-weight:700;color:var(--ink);line-height:1.1;margin:0}
+.flash .fr{font-style:italic;color:var(--ink-soft);margin:0 0 6px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fields label{font-size:14.5px;color:var(--ink-soft);font-style:italic;display:block;margin-bottom:3px}
+.fields input,.gap input{font-size:18px;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);width:100%}
+.fields input.ok,.gap input.ok{border-color:var(--sage);background:var(--sage-tint)}
+.fields input.bad,.gap input.bad{border-color:var(--burgundy);background:var(--burgundy-tint)}
+.rounds{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.round{border:1px solid var(--line);background:var(--paper);padding:6px 14px;border-radius:999px;font-size:15px;cursor:pointer;color:var(--ink)}
+.round[aria-pressed="true"]{background:var(--burgundy);border-color:var(--burgundy);color:#fff}
+.round.done::after{content:" ✓"}
+.pips{display:inline-flex;gap:4px;vertical-align:middle;margin-left:6px}
+.pips b{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--sage);display:inline-block}
+.pips b.on{background:var(--sage)}
+
+/* gap fill */
+.gap{padding:12px 0;border-bottom:1px dashed var(--rule)}
+.gap:last-of-type{border-bottom:0}
+.gap .s{margin:0 0 6px;font-size:17.5px}
+.gap .s .num{color:var(--sage);font-style:italic;margin-right:6px}
+.gap .row{display:grid;grid-template-columns:minmax(0,260px) 1fr;gap:12px;align-items:center}
+.gap .why{font-size:15px;color:var(--ink-soft)}
+.gap .why b{color:var(--burgundy)}
+.gap .why.ok b{color:var(--sage)}
+
+/* drill */
+.timer{height:6px;background:var(--rule);border-radius:99px;overflow:hidden;margin:4px 0 14px}
+.timer i{display:block;height:100%;width:100%;background:var(--burgundy)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:15.5px;cursor:pointer}
+.toggle input{accent-color:var(--burgundy);width:17px;height:17px}
+.drill-prompt{font-size:24px;line-height:1.35;margin:4px 0 16px}
+.drill-prompt .kind{display:block;font-size:14.5px;color:var(--sage);font-style:italic}
+
+.memo ol{margin:8px 0 0;padding-left:22px}
+.memo li{margin:6px 0}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:16.5px;margin:8px 0;cursor:pointer}
+.check input{accent-color:var(--sage);width:18px;height:18px;margin-top:4px}
+
+.summary{border:2px solid var(--burgundy);border-radius:8px;padding:20px 24px;background:var(--card);margin-top:22px}
+.summary table{width:100%;border-collapse:collapse;font-size:16.5px}
+.summary td{padding:7px 8px 7px 0;border-bottom:1px solid var(--rule)}
+.summary td:last-child{text-align:right;font-style:italic}
+.summary .ready{color:var(--sage);font-weight:600;font-style:normal}
+.small{font-size:14.5px;color:var(--ink-soft);font-style:italic}
+.linkbtn{background:none;border:0;color:var(--burgundy);text-decoration:underline;text-underline-offset:3px;cursor:pointer;font-size:14.5px;padding:0}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--rule);font-size:14.5px;color:var(--ink-soft);font-style:italic}
+
+@media (max-width:760px){
+  main{padding:32px 20px 72px;background-image:none}
+  .plan{grid-template-columns:1fr 1fr}
+  .plan a{border-bottom:1px solid var(--rule)}
+  .rules,.fields{grid-template-columns:1fr}
+  .gap .row{grid-template-columns:1fr}
+  .flash .base{font-size:34px}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <p class="kicker">Thibault's notebook · homework</p>
+  <h1>Past tenses: make it automatic</h1>
+  <p class="lede">You've seen the rules. Now practise until you don't have to think about them. Do the steps in order. Each one has a target: when you reach it, move on.</p>
+  <nav class="plan" aria-label="Steps">
+    <a href="#s1" data-step="1">Rules check<span class="t">10 min</span><span class="st">Target 11/12</span></a>
+    <a href="#s2" data-step="2">Participles<span class="t">15 min</span><span class="st">Learn all cards</span></a>
+    <a href="#s3" data-step="3">In context<span class="t">10 min</span><span class="st">Target 14/16</span></a>
+    <a href="#s4" data-step="4">The drill<span class="t">10 min</span><span class="st">Target 17/20</span></a>
+    <a href="#s5" data-step="5">Voice memo<span class="t">5 min</span><span class="st">Send to Craig</span></a>
+  </nav>
+  <p class="total">About 50 minutes in total. Your progress is saved in this browser, so you can stop and come back.</p>
+</header>
+
+<!-- STEP 1 -->
+<section id="s1">
+  <h2><span class="n">1</span>Rules check</h2>
+  <p class="sub">Read the six rules once. Then answer twelve questions. <b>Before each answer, say which rule you're using.</b></p>
+
+  <div class="rules">
+    <div class="rulec"><span class="rn">Rule 1 · Finished time</span>A finished time → <strong>simple past</strong>.<br><em>yesterday, last week, two days ago, in 2020, when…?</em></div>
+    <div class="rulec"><span class="rn">Rule 2 · did + base</span><strong>Did / didn't</strong> + base verb. Never two past forms.<br><em>Be</em> uses <strong>was / were</strong>, not <em>did</em>.</div>
+    <div class="rulec"><span class="rn">Rule 3 · In progress</span>Background action → <strong>was / were + -ing</strong>. The interruption → simple past. <em>Know, want, need, like</em>: no -ing.</div>
+    <div class="rulec"><span class="rn">Rule 4 · Connected to now</span>Experience, unfinished time, a result now → <strong>have + participle</strong>.<br><em>ever, never, already, yet, this year, so far</em></div>
+    <div class="rulec trap"><span class="rn">Rule 5 · The depuis trap</span>Past until now with <strong>for / since</strong> → present perfect. <strong>Never</strong> the present.</div>
+    <div class="rulec trap"><span class="rn">Rule 6 · The third column</span>After <strong>have / has</strong>, use the <strong>participle</strong>: <em>written, taken, seen, been</em>. Not <em>wrote, took, saw</em>.</div>
+  </div>
+
+  <div class="card" id="rulesQuiz" aria-live="polite"></div>
+</section>
+
+<!-- STEP 2 -->
+<section id="s2">
+  <h2><span class="n">2</span>Participles</h2>
+  <p class="sub">Say all three forms out loud first, <b>then</b> type the last two. Each card comes back until you get it right twice in a row. Mistakes come back sooner.</p>
+  <div class="card" id="trainer">
+    <div class="rounds" role="group" aria-label="Choose a round">
+      <button class="round" data-round="A" aria-pressed="true">Round A: bought · bought</button>
+      <button class="round" data-round="B" aria-pressed="false">Round B: took · taken</button>
+    </div>
+    <div class="bar"><i id="trBar"></i></div>
+    <div class="meta"><span id="trCount"></span><span id="trHint">Press Enter to check</span></div>
+    <div id="trBody" style="margin-top:16px"></div>
+  </div>
+</section>
+
+<!-- STEP 3 -->
+<section id="s3">
+  <h2><span class="n">3</span>In context</h2>
+  <p class="sub">Past simple or participle? Type the right form of the verb in brackets. Look for the signal: a finished time, or <em>have</em>.</p>
+  <div class="card" id="context">
+    <div id="ctxItems"></div>
+    <button class="btn" type="button" id="ctxCheck">Check my answers</button>
+    <button class="btn ghost" type="button" id="ctxClear">Clear and try again</button>
+    <div id="ctxResult" class="result" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- STEP 4 -->
+<section id="s4">
+  <h2><span class="n">4</span>The drill</h2>
+  <p class="sub">Twenty fast questions, mixed. Ten seconds each. This is the rhythm of the drill we'll do in class, so <b>say the answer aloud</b> before you click. Use keys 1, 2, 3 if you like.</p>
+  <div class="card" id="drill">
+    <div id="drBody"></div>
+  </div>
+</section>
+
+<!-- STEP 5 -->
+<section id="s5">
+  <h2><span class="n">5</span>Voice memo</h2>
+  <p class="sub">One to two minutes. Record it on your phone and send it to Craig.</p>
+  <div class="card memo">
+    <p class="q" style="margin-top:0">"What have you done this week? And what did you do last weekend?"</p>
+    <p>Start with the week so far, then tell the weekend like a story. Try to include:</p>
+    <label class="check"><input type="checkbox" data-memo="0"> at least three things you <strong>have done</strong> this week</label>
+    <label class="check"><input type="checkbox" data-memo="1"> a moment when you <strong>were doing</strong> something and something happened</label>
+    <label class="check"><input type="checkbox" data-memo="2"> two irregular verbs from Round B</label>
+    <label class="check"><input type="checkbox" data-memo="3"> one sentence with <strong>for</strong> or <strong>since</strong></label>
+    <label class="check"><input type="checkbox" data-memo="4"> I've sent the memo to Craig</label>
+  </div>
+
+  <div class="summary" id="summary" aria-live="polite"></div>
+  <p class="small" style="margin-top:10px">When everything is done, take a screenshot of this box and send it with your memo. <button class="linkbtn" type="button" id="resetAll">Reset all progress</button></p>
+</section>
+
+<footer>Thibault's notebook · English with Craig</footer>
+</main>
+
+<script>
+(function(){
+  var KEY = "thibault_pasthw_v1";
+  var state = {rules:0, trA:false, trB:false, ctx:0, drill:0, memo:[false,false,false,false,false]};
+  try { var saved = localStorage.getItem(KEY); if (saved) { var p = JSON.parse(saved); for (var k in p) state[k] = p[k]; } } catch(e){}
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} renderSummary(); }
+  function shuffle(a){ a=a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;"); }
+  function norm(s){ return String(s||"").toLowerCase().replace(/[’`]/g,"'").replace(/\s*\/\s*/g,"/").replace(/\s+/g," ").trim(); }
+
+  /* ============ STEP 1: rules check ============ */
+  var RULES = [
+    {s:"I ___ him at the festival last summer.", o:["saw","have seen","was seeing"], a:"saw", r:1, e:"<em>Last summer</em> is finished time."},
+    {s:"We ___ the contract two weeks ago.", o:["signed","have signed","were signing"], a:"signed", r:1, e:"<em>Ago</em> always means finished time."},
+    {s:"When ___ you ___ the label?", o:["did … call","have … called","were … calling"], a:"did … call", r:1, e:"<em>When…?</em> asks for a finished time."},
+    {s:"I ___ in Berlin for two years, and then I moved to Paris.", o:["lived","have lived","live"], a:"lived", r:1, e:"Berlin is finished: you moved. <em>For</em> works with the past too."},
+    {s:"Did he ___ the rider?", o:["send","sent","sended"], a:"send", r:2, e:"<em>Did</em> + base verb."},
+    {s:"They didn't ___ our offer.", o:["accept","accepted","accepting"], a:"accept", r:2, e:"<em>Didn't</em> + base verb."},
+    {s:"I ___ really tired after the flight.", o:["was","did be","have been yesterday"], a:"was", r:2, e:"<em>Be</em> uses was / were, not <em>did</em>."},
+    {s:"I was checking my emails when the artist ___.", o:["arrived","was arriving","has arrived"], a:"arrived", r:3, e:"The short interruption takes the simple past."},
+    {s:"The band ___ on stage when the power went out.", o:["were playing","played","have played"], a:"were playing", r:3, e:"The longer action in progress: was / were + -ing."},
+    {s:"I ___ the answer, but I didn't say anything.", o:["knew","was knowing","have known"], a:"knew", r:3, e:"<em>Know</em> is a state verb: no -ing."},
+    {s:"We ___ three gigs so far this month.", o:["have done","did","were doing"], a:"have done", r:4, e:"<em>So far this month</em>: the month isn't finished."},
+    {s:"___ you ever ___ to Detroit?", o:["Have … been","Did … went","Are … being"], a:"Have … been", r:4, e:"Experience in your life, no time given: <em>have + been</em>."},
+    {s:"Has the promoter paid ___ ?", o:["yet","yesterday","last week"], a:"yet", r:4, e:"<em>Yet</em> goes with the present perfect. A finished time can't."},
+    {s:"She ___ at the agency since March.", o:["has worked","works","worked"], a:"has worked", r:5, e:"<em>Since</em> + until now: present perfect, not present."},
+    {s:"How long ___ you ___ him?", o:["have … known","do … know","are … knowing"], a:"have … known", r:5, e:"<em>How long</em> until now: present perfect. The depuis trap."},
+    {s:"We ___ the same manager for four years, and she's still great.", o:["'ve had","have","had"], a:"'ve had", r:5, e:"Still true now + <em>for</em>: present perfect."},
+    {s:"She's ___ the email already.", o:["written","wrote","write"], a:"written", r:6, e:"After <em>has</em>: participle, written."},
+    {s:"I've ___ that film twice.", o:["seen","saw","see"], a:"seen", r:6, e:"After <em>have</em>: participle, seen."},
+    {s:"Have you ___ the new track? Yes, I love it.", o:["heard","hear","hearing"], a:"heard", r:6, e:"After <em>have</em>: participle, heard."},
+    {s:"They've ___ the early flight to Lisbon.", o:["taken","took","take"], a:"taken", r:6, e:"After <em>have</em>: participle, taken."}
+  ];
+  var rq = {items:[], i:0, score:0, missed:[]};
+  var rulesRoot = document.getElementById("rulesQuiz");
+  function startRules(){
+    // two items per rule, shuffled
+    var byRule = {};
+    RULES.forEach(function(it){ (byRule[it.r] = byRule[it.r] || []).push(it); });
+    var pick = [];
+    Object.keys(byRule).forEach(function(r){ pick = pick.concat(shuffle(byRule[r]).slice(0,2)); });
+    rq = {items: shuffle(pick), i:0, score:0, missed:[]};
+    showRule();
+  }
+  function showRule(){
+    if (rq.i >= rq.items.length) return endRules();
+    var it = rq.items[rq.i];
+    rulesRoot.innerHTML =
+      "<div class='bar'><i style='width:"+(rq.i/rq.items.length*100)+"%'></i></div>"+
+      "<div class='meta'><span>Question "+(rq.i+1)+" of "+rq.items.length+"</span><span>Score "+rq.score+"</span></div>"+
+      "<p class='q'><span class='tag'>Which rule? Say it, then choose.</span>"+it.s.replace("___","_____")+"</p>"+
+      "<div class='opts'></div><div class='fb' hidden></div><div class='next'></div>";
+    var opts = rulesRoot.querySelector(".opts"), fb = rulesRoot.querySelector(".fb");
+    shuffle(it.o).forEach(function(o){
+      var b = document.createElement("button"); b.type="button"; b.className="opt"; b.textContent=o;
+      b.addEventListener("click", function(){
+        var ok = o === it.a;
+        opts.querySelectorAll("button").forEach(function(x){ x.disabled=true; if (x.textContent===it.a) x.classList.add("correct"); });
+        if (!ok){ b.classList.add("wrongc"); rq.missed.push(it.r); } else rq.score++;
+        fb.hidden=false; fb.className="fb "+(ok?"ok":"bad");
+        fb.innerHTML = "<b>"+(ok?"Right.":"Not quite.")+"</b> Rule "+it.r+": "+it.e;
+        var nb = document.createElement("button"); nb.type="button"; nb.className="btn";
+        nb.textContent = rq.i+1 < rq.items.length ? "Next question" : "See my score";
+        nb.addEventListener("click", function(){ rq.i++; showRule(); });
+        rulesRoot.querySelector(".next").appendChild(nb); nb.focus();
+      });
+      opts.appendChild(b);
+    });
+  }
+  function endRules(){
+    var pass = rq.score >= 11;
+    state.rules = Math.max(state.rules, rq.score); save();
+    var missed = {}; rq.missed.forEach(function(r){ missed[r]=(missed[r]||0)+1; });
+    var list = Object.keys(missed).map(function(r){ return "<li>Rule "+r+" ("+missed[r]+" wrong). Read it again before you retry.</li>"; }).join("");
+    rulesRoot.innerHTML = "<div class='result'><p class='big "+(pass?"pass":"")+"'>"+rq.score+" / 12</p>"+
+      "<p>"+(pass ? "Target reached. Go on to step 2." : "The target is 11. Every retry uses different sentences.")+"</p>"+
+      (list ? "<ul>"+list+"</ul>" : "")+
+      "<button class='btn "+(pass?"ghost":"")+"' type='button' id='rulesAgain'>"+(pass?"Do it again":"Try again")+"</button>"+
+      (pass ? "<a class='btn' style='text-decoration:none;display:inline-block' href='#s2'>Go to step 2</a>" : "")+"</div>";
+    document.getElementById("rulesAgain").addEventListener("click", startRules);
+  }
+  startRules();
+
+  /* ============ STEP 2: participle trainer ============ */
+  var ROUND = {
+    A: [["bring","brought","brought","apporter"],["buy","bought","bought","acheter"],["think","thought","thought","penser"],["catch","caught","caught","attraper"],["teach","taught","taught","enseigner"],["send","sent","sent","envoyer"],["spend","spent","spent","dépenser, passer"],["keep","kept","kept","garder"],["leave","left","left","partir, laisser"],["lose","lost","lost","perdre"],["pay","paid","paid","payer"],["hear","heard","heard","entendre"],["sell","sold","sold","vendre"],["tell","told","told","dire, raconter"],["find","found","found","trouver"],["understand","understood","understood","comprendre"]],
+    B: [["be","was/were","been","être"],["go","went","gone/been","aller"],["do","did","done","faire"],["see","saw","seen","voir"],["take","took","taken","prendre"],["give","gave","given","donner"],["write","wrote","written","écrire"],["speak","spoke","spoken","parler"],["break","broke","broken","casser"],["choose","chose","chosen","choisir"],["forget","forgot","forgotten","oublier"],["know","knew","known","savoir, connaître"],["fly","flew","flown","prendre l'avion"],["begin","began","begun","commencer"],["come","came","come","venir"],["run","ran","run","courir, gérer"]]
+  };
+  function accepts(field, v){
+    var opts = field.split("/"); var n = norm(v);
+    if (field === "was/were") return ["was/were","were/was","was","were","was or were"].indexOf(n) > -1;
+    return opts.indexOf(n) > -1 || n === norm(field);
+  }
+  var tr = null, curRound = "A", trFocus = false;
+  var trBody = document.getElementById("trBody");
+  function startRound(r, quiet){
+    curRound = r; trFocus = !quiet;
+    document.querySelectorAll(".round").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.round===r ? "true":"false"); });
+    tr = {queue: shuffle(ROUND[r].map(function(v,i){return i;})), streak: ROUND[r].map(function(){return 0;}), done: ROUND[r].map(function(){return false;}), attempts:0, errors:0};
+    showCard();
+  }
+  function updateRoundChips(){
+    document.querySelectorAll(".round").forEach(function(b){ b.classList.toggle("done", !!state["tr"+b.dataset.round]); });
+  }
+  function showCard(){
+    var mastered = tr.done.filter(Boolean).length, total = tr.done.length;
+    document.getElementById("trBar").style.width = (mastered/total*100)+"%";
+    document.getElementById("trCount").textContent = mastered+" of "+total+" cards learned";
+    if (!tr.queue.length) return endRound();
+    var idx = tr.queue[0], v = ROUND[curRound][idx];
+    var pips = "<span class='pips' aria-label='"+tr.streak[idx]+" of 2 correct'><b class='"+(tr.streak[idx]>0?"on":"")+"'></b><b></b></span>";
+    trBody.innerHTML = "<div class='flash'><p class='base'>"+v[0]+pips+"</p><p class='fr'>"+v[3]+"</p>"+
+      "<div class='fields'><div><label for='f1'>Past simple</label><input id='f1' autocomplete='off' autocapitalize='off' spellcheck='false'></div>"+
+      "<div><label for='f2'>Past participle</label><input id='f2' autocomplete='off' autocapitalize='off' spellcheck='false'></div></div>"+
+      "<div class='fb' hidden></div><div><button class='btn' type='button' id='trCheck'>Check</button></div></div>";
+    var f1 = document.getElementById("f1"), f2 = document.getElementById("f2");
+    if (trFocus) f1.focus({preventScroll:false});
+    var checked = false;
+    function check(){
+      if (checked){ next(); return; }
+      checked = true; trFocus = true; tr.attempts++;
+      var ok1 = accepts(v[1], f1.value), ok2 = accepts(v[2], f2.value);
+      f1.className = ok1?"ok":"bad"; f2.className = ok2?"ok":"bad";
+      var fb = trBody.querySelector(".fb"); fb.hidden = false;
+      var answer = v[0]+" · "+v[1].replace("/"," / ")+" · "+v[2].replace("/"," / ");
+      tr.queue.shift();
+      if (ok1 && ok2){
+        tr.streak[idx]++;
+        if (tr.streak[idx] >= 2){ tr.done[idx] = true; fb.innerHTML = "<b>Learned.</b> "+answer; }
+        else { tr.queue.splice(Math.min(tr.queue.length, 5 + Math.floor(Math.random()*3)), 0, idx); fb.innerHTML = "<b>Right.</b> Once more later to lock it in."; }
+        fb.className = "fb ok";
+      } else {
+        tr.errors++; tr.streak[idx] = 0;
+        tr.queue.splice(Math.min(tr.queue.length, 2), 0, idx);
+        fb.className = "fb bad";
+        fb.innerHTML = "<b>Say it three times:</b> "+answer+(v[0]==="go" ? "<br><em>gone</em> = still there · <em>been</em> = went and came back" : "");
+      }
+      var btn = document.getElementById("trCheck"); btn.textContent = "Next card"; btn.focus();
+    }
+    function next(){ showCard(); }
+    document.getElementById("trCheck").addEventListener("click", check);
+    [f1,f2].forEach(function(inp, i){
+      inp.addEventListener("keydown", function(e){
+        if (e.key === "Enter"){ e.preventDefault(); if (i===0 && !checked && !f2.value) f2.focus(); else check(); }
+      });
+    });
+  }
+  function endRound(){
+    state["tr"+curRound] = true; save(); updateRoundChips();
+    var acc = Math.round((tr.attempts - tr.errors) / tr.attempts * 100);
+    var other = curRound === "A" ? "B" : "A";
+    trBody.innerHTML = "<div class='result'><p class='big pass'>Round "+curRound+" learned</p>"+
+      "<p>"+tr.attempts+" answers, "+acc+"% right first time.</p>"+
+      "<button class='btn ghost' type='button' id='trAgain'>Repeat round "+curRound+"</button>"+
+      (state["tr"+other] ? "<a class='btn' style='text-decoration:none;display:inline-block' href='#s3'>Go to step 3</a>" : "<button class='btn' type='button' id='trNext'>Start round "+other+"</button>")+"</div>";
+    document.getElementById("trAgain").addEventListener("click", function(){ startRound(curRound); });
+    var n = document.getElementById("trNext"); if (n) n.addEventListener("click", function(){ startRound(other); });
+  }
+  document.querySelectorAll(".round").forEach(function(b){ b.addEventListener("click", function(){ startRound(b.dataset.round); }); });
+  updateRoundChips();
+  startRound("A", true);
+
+  /* ============ STEP 3: context ============ */
+  var CTX = [
+    {s:"I ___ (see) Marco at the airport yesterday.", a:["saw"], why:"<b>yesterday</b> → past simple"},
+    {s:"I've ___ (see) him three times this year.", a:["seen"], why:"<b>have</b> → participle"},
+    {s:"Have you ___ (write) the press release?", a:["written"], why:"<b>have</b> → participle"},
+    {s:"She ___ (write) it last night.", a:["wrote"], why:"<b>last night</b> → past simple"},
+    {s:"We ___ (not / go) to the afterparty on Saturday.", a:["didn't go","did not go"], why:"<b>didn't</b> + base verb"},
+    {s:"Has he ever ___ (go) to Detroit?", a:["been"], why:"experience, went and came back → <b>been</b>"},
+    {s:"They've ___ (take) the early flight.", a:["taken"], why:"<b>have</b> → participle"},
+    {s:"He ___ (take) a taxi from the station an hour ago.", a:["took"], why:"<b>ago</b> → past simple"},
+    {s:"I ___ (forget) my charger this morning, but I found a spare.", a:["forgot"], why:"a finished event this morning, and <b>found</b> is past simple too"},
+    {s:"Sorry, I've ___ (forget) your colleague's name.", a:["forgotten"], why:"<b>have</b> → participle"},
+    {s:"The label has ___ (choose) the next single.", a:["chosen"], why:"<b>has</b> → participle"},
+    {s:"Did you ___ (speak) to the promoter on Friday?", a:["speak"], why:"<b>did</b> + base verb"},
+    {s:"We've ___ (know) each other since 2015.", a:["known"], why:"<b>since</b> + have → participle"},
+    {s:"The tour ___ (begin) in Lisbon last April.", a:["began"], why:"<b>last April</b> → past simple"},
+    {s:"I ___ (buy) new headphones in Berlin.", a:["bought"], why:"a finished event → past simple"},
+    {s:"…and I've already ___ (lose) them!", a:["lost"], why:"<b>have</b> → participle"}
+  ];
+  var ctxItems = document.getElementById("ctxItems");
+  CTX.forEach(function(c, i){
+    var d = document.createElement("div"); d.className = "gap";
+    d.innerHTML = "<p class='s'><span class='num'>"+(i+1)+".</span>"+c.s.replace("___","_____")+"</p>"+
+      "<div class='row'><input type='text' autocomplete='off' autocapitalize='off' spellcheck='false' aria-label='Answer "+(i+1)+"'><span class='why' hidden></span></div>";
+    ctxItems.appendChild(d);
+  });
+  document.getElementById("ctxCheck").addEventListener("click", function(){
+    var score = 0;
+    ctxItems.querySelectorAll(".gap").forEach(function(g, i){
+      var inp = g.querySelector("input"), why = g.querySelector(".why");
+      var ok = CTX[i].a.indexOf(norm(inp.value)) > -1;
+      if (ok) score++;
+      inp.className = ok ? "ok" : "bad";
+      why.hidden = false; why.className = "why"+(ok?" ok":"");
+      why.innerHTML = (ok ? "✓ " : "✗ <strong>"+CTX[i].a[0]+"</strong> · ") + CTX[i].why;
+    });
+    state.ctx = Math.max(state.ctx, score); save();
+    var pass = score >= 14;
+    document.getElementById("ctxResult").innerHTML = "<p class='big "+(pass?"pass":"")+"' style='margin-top:18px'>"+score+" / 16</p><p>"+
+      (pass ? "Target reached. Go on to the drill." : "The target is 14. Look at the red ones: was the signal a finished time, or <em>have</em>? Then clear and try again.")+"</p>";
+  });
+  document.getElementById("ctxClear").addEventListener("click", function(){
+    ctxItems.querySelectorAll("input").forEach(function(x){ x.value=""; x.className=""; });
+    ctxItems.querySelectorAll(".why").forEach(function(x){ x.hidden=true; });
+    document.getElementById("ctxResult").innerHTML = "";
+    ctxItems.querySelector("input").focus();
+  });
+
+  /* ============ STEP 4: drill ============ */
+  var DRILL = [
+    {k:"Past simple", p:"bring", o:["brought","brang","bringed"], a:"brought"},
+    {k:"Past simple", p:"think", o:["thought","thinked","taught"], a:"thought"},
+    {k:"Past simple", p:"catch", o:["caught","catched","cought"], a:"caught"},
+    {k:"Past simple", p:"pay", o:["paid","payed","pay"], a:"paid"},
+    {k:"Past simple", p:"leave", o:["left","leaved","lost"], a:"left"},
+    {k:"Past simple", p:"fly", o:["flew","flied","flown"], a:"flew"},
+    {k:"Participle", p:"choose", o:["chosen","chose","choosed"], a:"chosen"},
+    {k:"Participle", p:"write", o:["written","wrote","writed"], a:"written"},
+    {k:"Participle", p:"take", o:["taken","took","taked"], a:"taken"},
+    {k:"Participle", p:"be", o:["been","was","being"], a:"been"},
+    {k:"Participle", p:"break", o:["broken","broke","breaked"], a:"broken"},
+    {k:"Participle", p:"begin", o:["begun","began","beginned"], a:"begun"},
+    {k:"Participle", p:"know", o:["known","knew","knowed"], a:"known"},
+    {k:"Participle", p:"forget", o:["forgotten","forgot","forgetted"], a:"forgotten"},
+    {k:"Participle", p:"come", o:["come","came","comed"], a:"come"},
+    {k:"In English", p:"Je l'ai vu hier.", o:["I saw him yesterday.","I've seen him yesterday.","I was seeing him yesterday."], a:"I saw him yesterday."},
+    {k:"In English", p:"Je travaille ici depuis 2020.", o:["I've worked here since 2020.","I work here since 2020.","I worked here since 2020."], a:"I've worked here since 2020."},
+    {k:"In English", p:"Il n'est pas venu.", o:["He didn't come.","He didn't came.","He hasn't came."], a:"He didn't come."},
+    {k:"In English", p:"Je dormais quand tu as appelé.", o:["I was sleeping when you called.","I slept when you were calling.","I've slept when you called."], a:"I was sleeping when you called."},
+    {k:"In English", p:"Elle voulait plus d'argent.", o:["She wanted more money.","She was wanting more money.","She has wanted more money."], a:"She wanted more money."},
+    {k:"In English", p:"Tu as déjà été à Londres ?", o:["Have you ever been to London?","Did you ever went to London?","Are you ever been to London?"], a:"Have you ever been to London?"},
+    {k:"In English", p:"Tu as envoyé le contrat ? (ça y est ?)", o:["Have you sent the contract yet?","Did you sent the contract yet?","Have you send the contract yet?"], a:"Have you sent the contract yet?"},
+    {k:"In English", p:"On a signé trois artistes cette année.", o:["We've signed three artists this year.","We sign three artists this year.","We were signing three artists this year."], a:"We've signed three artists this year."},
+    {k:"In English", p:"J'ai fait une erreur.", o:["I made a mistake.","I did a mistake.","I've done a mistake."], a:"I made a mistake."},
+    {k:"In English", p:"On a regardé tout le set.", o:["We watched the whole set.","We looked the whole set.","We saw at the whole set."], a:"We watched the whole set."},
+    {k:"In English", p:"Regarde ce contrat.", o:["Look at this contract.","Watch this contract.","Look this contract."], a:"Look at this contract."},
+    {k:"In English", p:"On a fait une pause.", o:["We took a break.","We made a break.","We did a break."], a:"We took a break."},
+    {k:"In English", p:"Tu as fait les papiers ?", o:["Have you done the paperwork?","Have you made the paperwork?","Did you did the paperwork?"], a:"Have you done the paperwork?"},
+    {k:"Correct it", p:"I have been in Amsterdam last October.", o:["I was in Amsterdam last October.","I am in Amsterdam last October.","I've gone to Amsterdam last October."], a:"I was in Amsterdam last October."},
+    {k:"Correct it", p:"How long do you know her?", o:["How long have you known her?","How long did you knew her?","How long are you knowing her?"], a:"How long have you known her?"}
+  ];
+  var SECONDS = 10;
+  var dr = null, timerId = null;
+  var drBody = document.getElementById("drBody");
+  var relaxed = false;
+  function drillIntro(){
+    stopTimer();
+    drBody.innerHTML = "<p>Twenty questions from a mixed pool: past simple and participles, French to English, and mistakes to correct. If time runs out, it counts as wrong.</p>"+
+      "<label class='toggle'><input type='checkbox' id='relaxed' "+(relaxed?"checked":"")+"> Practice mode, no timer (doesn't count for the target)</label><br>"+
+      "<button class='btn' type='button' id='drStart'>Start the drill</button>"+
+      (state.drill ? "<p class='small' style='margin-top:12px'>Your best timed score: "+state.drill+" / 20</p>" : "");
+    document.getElementById("relaxed").addEventListener("change", function(e){ relaxed = e.target.checked; });
+    document.getElementById("drStart").addEventListener("click", startDrill);
+  }
+  function startDrill(){
+    // balance: 6 forms (3 past, 3 participle), 11 in-English, 2 correct-it, +1 random
+    var past = shuffle(DRILL.filter(function(d){return d.k==="Past simple";})).slice(0,3);
+    var part = shuffle(DRILL.filter(function(d){return d.k==="Participle";})).slice(0,4);
+    var eng = shuffle(DRILL.filter(function(d){return d.k==="In English";})).slice(0,11);
+    var cor = DRILL.filter(function(d){return d.k==="Correct it";});
+    dr = {items: shuffle(past.concat(part, eng, cor)), i:0, score:0, wrong:[], timed: !relaxed, start: Date.now()};
+    showDrill();
+  }
+  function stopTimer(){ if (timerId){ clearInterval(timerId); timerId = null; } }
+  function showDrill(){
+    stopTimer();
+    if (dr.i >= dr.items.length) return endDrill();
+    var it = dr.items[dr.i];
+    var prompt = it.k === "Past simple" ? "Past simple of <strong>"+esc(it.p)+"</strong>" :
+                 it.k === "Participle" ? "Past participle of <strong>"+esc(it.p)+"</strong>" :
+                 it.k === "In English" ? "<em>"+esc(it.p)+"</em>" : "<span style='text-decoration:line-through;text-decoration-color:var(--burgundy)'>"+esc(it.p)+"</span>";
+    drBody.innerHTML = "<div class='meta'><span>"+(dr.i+1)+" / "+dr.items.length+"</span><span>Score "+dr.score+(dr.timed?"":" · practice mode")+"</span></div>"+
+      (dr.timed ? "<div class='timer'><i id='drTimer'></i></div>" : "<div style='height:20px'></div>")+
+      "<p class='drill-prompt'><span class='kind'>"+it.k+"</span>"+prompt+"</p><div class='opts'></div><div class='fb' hidden></div>";
+    var opts = drBody.querySelector(".opts"), answered = false;
+    var full = it.k === "In English" || it.k === "Correct it";
+    var order = shuffle(it.o);
+    function answer(choice){
+      if (answered) return; answered = true; stopTimer();
+      var ok = choice === it.a;
+      opts.querySelectorAll("button").forEach(function(x){ x.disabled = true; if (x.dataset.v === it.a) x.classList.add("correct"); if (choice !== null && x.dataset.v === choice && !ok) x.classList.add("wrongc"); });
+      if (ok) dr.score++; else dr.wrong.push(it);
+      var fb = drBody.querySelector(".fb"); fb.hidden = false; fb.className = "fb "+(ok?"ok":"bad");
+      fb.innerHTML = ok ? "<b>Right.</b> Say it once more." : "<b>"+(choice===null?"Time's up.":"Not quite.")+"</b> Say it: "+esc(it.a);
+      setTimeout(function(){ dr.i++; showDrill(); }, ok ? 900 : 2200);
+    }
+    order.forEach(function(o, n){
+      var b = document.createElement("button"); b.type="button"; b.className="opt"+(full?" full":""); b.dataset.v = o;
+      b.innerHTML = "<span class='k'>"+(n+1)+"</span>"+esc(o);
+      b.addEventListener("click", function(){ answer(o); });
+      opts.appendChild(b);
+    });
+    dr.keyHandler = function(e){ var n = parseInt(e.key,10); if (n>=1 && n<=order.length && !answered && !/INPUT/.test(document.activeElement.tagName)) answer(order[n-1]); };
+    if (dr.timed){
+      var t0 = Date.now(), bar = document.getElementById("drTimer");
+      timerId = setInterval(function(){
+        var left = 1 - (Date.now()-t0)/(SECONDS*1000);
+        if (bar) bar.style.width = Math.max(0,left*100)+"%";
+        if (left <= 0) answer(null);
+      }, 100);
+    }
+  }
+  document.addEventListener("keydown", function(e){ if (dr && dr.keyHandler && document.getElementById("drBody").contains(document.querySelector("#drBody .opts"))) dr.keyHandler(e); });
+  function endDrill(){
+    stopTimer(); dr.keyHandler = null;
+    var pass = dr.score >= 17;
+    if (dr.timed){ state.drill = Math.max(state.drill, dr.score); save(); }
+    var mins = Math.round((Date.now()-dr.start)/1000);
+    var list = dr.wrong.map(function(w){ return "<li>"+(w.k==="Past simple"||w.k==="Participle" ? w.k+" of "+esc(w.p)+": " : "")+"<strong>"+esc(w.a)+"</strong></li>"; }).join("");
+    drBody.innerHTML = "<div class='result'><p class='big "+(pass?"pass":"")+"'>"+dr.score+" / 20</p>"+
+      "<p>"+(dr.timed ? (pass ? "Target reached in "+mins+" seconds. You're ready for the class drill." : "The target is 17. Say each answer below out loud three times, then go again. Each run uses a new mix.") : "Practice run. Switch the timer back on when you're ready to count it.")+"</p>"+
+      (list ? "<p style='margin:10px 0 0'>To say again:</p><ul>"+list+"</ul>" : "")+
+      "<button class='btn' type='button' id='drAgain'>Go again</button>"+(pass && dr.timed ? "<a class='btn ghost' style='text-decoration:none;display:inline-block' href='#s5'>Go to step 5</a>" : "")+"</div>";
+    document.getElementById("drAgain").addEventListener("click", drillIntro);
+  }
+  drillIntro();
+
+  /* ============ STEP 5 + summary ============ */
+  document.querySelectorAll("[data-memo]").forEach(function(cb){
+    var i = +cb.dataset.memo; cb.checked = !!state.memo[i];
+    cb.addEventListener("change", function(){ state.memo[i] = cb.checked; save(); });
+  });
+  function renderSummary(){
+    var rows = [
+      ["1. Rules check", state.rules ? state.rules+" / 12" : "not started", state.rules >= 11],
+      ["2. Participles", state.trA && state.trB ? "both rounds" : (state.trA ? "round A done" : state.trB ? "round B done" : "not started"), state.trA && state.trB],
+      ["3. In context", state.ctx ? state.ctx+" / 16" : "not started", state.ctx >= 14],
+      ["4. The drill (best)", state.drill ? state.drill+" / 20" : "not started", state.drill >= 17],
+      ["5. Voice memo", state.memo[4] ? "sent" : "not sent", !!state.memo[4]]
+    ];
+    var all = rows.every(function(r){return r[2];});
+    document.getElementById("summary").innerHTML = "<p style='margin:0 0 8px;font-size:20px;color:var(--burgundy);font-weight:600'>"+(all ? "Homework complete" : "My homework")+"</p><table>"+
+      rows.map(function(r){ return "<tr><td>"+r[0]+"</td><td>"+(r[2] ? "<span class='ready'>"+r[1]+" ✓</span>" : r[1])+"</td></tr>"; }).join("")+"</table>";
+    var steps = {1:rows[0][2],2:rows[1][2],3:rows[2][2],4:rows[3][2],5:rows[4][2]};
+    document.querySelectorAll(".plan a").forEach(function(a){
+      var s = a.dataset.step; a.classList.toggle("done", !!steps[s]);
+      var st = a.querySelector(".st");
+      if (!st.dataset.orig) st.dataset.orig = st.textContent;
+      st.textContent = steps[s] ? "Done ✓" : st.dataset.orig;
+    });
+  }
+  document.getElementById("resetAll").addEventListener("click", function(){
+    if (!confirm("Reset all your homework progress?")) return;
+    state = {rules:0, trA:false, trB:false, ctx:0, drill:0, memo:[false,false,false,false,false]};
+    try { localStorage.removeItem(KEY); } catch(e){}
+    document.querySelectorAll("[data-memo]").forEach(function(cb){ cb.checked = false; });
+    updateRoundChips(); renderSummary(); startRules(); startRound("A", true); drillIntro();
+  });
+  renderSummary();
+})();
+</script>
+</body>
+</html>
