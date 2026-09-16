@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Gremlins on the Scale — Listening Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..800,0..100;1,9..144,300..800,0..100&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f4ede0;
+    --cream-deep: #ebe1cf;
+    --navy: #1d2438;
+    --navy-soft: #5a607a;
+    --rust: #a8462a;
+    --teal: #2b6f6b;
+    --rule: #c9b896;
+    --ok: #2b6f6b;
+    --bad: #a8462a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  body { background: var(--cream); color: var(--navy); font-family: 'Lora', Georgia, serif; font-size: 17px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  a { color: var(--teal); }
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  /* Sticky score bar */
+  .bar { position: sticky; top: 0; z-index: 10; background: var(--navy); color: var(--cream); display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; padding: 10px 20px; font-size: 14px; }
+  .bar .title { font-family: 'Fraunces', serif; font-style: italic; font-size: 17px; margin-right: auto; }
+  .bar b { font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; }
+  .bar button { background: transparent; color: var(--cream); border: 1px solid rgba(244,237,224,.4); border-radius: 3px; padding: 5px 10px; font: inherit; font-size: 13px; cursor: pointer; }
+  .bar button[aria-pressed="true"] { background: var(--cream); color: var(--navy); }
+
+  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 22px 80px; }
+  header { border-bottom: 1px solid var(--rule); padding-bottom: 28px; margin-bottom: 12px; }
+  h1 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: clamp(42px, 8vw, 72px); line-height: 1; letter-spacing: -0.02em; font-variation-settings: "SOFT" 80; }
+  .lede { font-family: 'Fraunces', serif; font-style: italic; color: var(--navy-soft); font-size: 19px; margin-top: 14px; }
+  .source { margin-top: 16px; font-size: 15px; color: var(--navy-soft); }
+
+  .banner { background: var(--navy); color: var(--cream); margin: 28px -22px 0; padding: 38px 34px 30px; position: relative; border-left: 6px solid var(--rust); }
+  .banner blockquote { font-family: 'Fraunces', serif; font-style: italic; font-weight: 350; font-size: clamp(28px, 5.4vw, 44px); line-height: 1.12; letter-spacing: -0.01em; font-variation-settings: "SOFT" 80; }
+  .banner blockquote::before { content: "\201C"; color: var(--rust); font-size: 1.6em; line-height: 0; vertical-align: -0.38em; margin-right: 4px; }
+  .banner figcaption { margin-top: 16px; font-size: 14px; color: rgba(244,237,224,.72); }
+  @media (min-width: 820px) { .banner { margin-left: -34px; margin-right: -34px; } }
+  @media print { .banner { background: none; color: var(--navy); } }
+
+  section { padding: 40px 0 8px; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+  h2 { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 32px; line-height: 1.15; margin-bottom: 6px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .time { font-family: 'Lora', serif; font-style: normal; font-size: 12px; background: var(--cream-deep); border: 1px solid var(--rule); border-radius: 20px; padding: 2px 10px; color: var(--navy-soft); }
+  .intro { color: var(--navy-soft); margin-bottom: 20px; }
+  h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 20px; margin: 24px 0 10px; }
+  p + p { margin-top: 10px; }
+
+  .q { margin: 0 0 18px; }
+  .q > p { margin-bottom: 6px; }
+  .opt { display: flex; gap: 10px; align-items: flex-start; padding: 6px 10px; border-radius: 3px; cursor: pointer; }
+  .opt:hover { background: var(--cream-deep); }
+  .opt input { margin-top: 7px; accent-color: var(--teal); }
+  .row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 10px 0; border-top: 1px dashed var(--rule); }
+  .row:first-child { border-top: none; }
+  select, input[type=text], textarea { font: inherit; font-size: 16px; color: var(--navy); background: #fbf7ef; border: 1px solid var(--rule); border-radius: 3px; padding: 7px 10px; }
+  select { max-width: 100%; }
+  textarea { width: 100%; min-height: 110px; resize: vertical; line-height: 1.55; }
+  input[type=text] { width: 12ch; padding: 3px 8px; }
+  .ok { border-color: var(--ok) !important; box-shadow: inset 0 0 0 1px var(--ok); }
+  .bad { border-color: var(--bad) !important; box-shadow: inset 0 0 0 1px var(--bad); }
+  .opt.ok, .row.ok { background: rgba(43,111,107,.09); box-shadow: none; }
+  .opt.bad, .row.bad { background: rgba(168,70,42,.08); box-shadow: none; }
+
+  .btn { font: inherit; font-size: 15px; background: var(--navy); color: var(--cream); border: none; border-radius: 3px; padding: 9px 18px; cursor: pointer; margin: 6px 8px 6px 0; }
+  .btn.ghost { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+  .result { font-family: 'Fraunces', serif; font-style: italic; color: var(--teal); margin-left: 4px; }
+
+  .panel { background: var(--cream-deep); border: 1px solid var(--rule); border-radius: 3px; padding: 18px 20px; margin: 14px 0; }
+  .prompt { border-left: 3px solid var(--teal); padding: 4px 0 4px 14px; margin: 12px 0; }
+
+  /* The balance */
+  .balance { background: #fbf7ef; border: 1px solid var(--rule); border-radius: 3px; padding: 10px 10px 18px; margin: 14px 0; }
+  .balance svg { width: 100%; height: auto; display: block; }
+  #beam { transform-box: view-box; transform-origin: 240px 150px; transition: transform .7s cubic-bezier(.3,1.4,.5,1); }
+  .gremlin { transition: opacity .4s ease; }
+  .stages { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-top: 8px; }
+  .stages button { font: inherit; font-size: 14px; background: transparent; border: 1px solid var(--rule); border-radius: 20px; padding: 5px 13px; cursor: pointer; color: var(--navy); }
+  .stages button[aria-pressed="true"] { background: var(--navy); color: var(--cream); border-color: var(--navy); }
+  .stage-text { text-align: center; margin: 14px auto 0; max-width: 560px; }
+  .stage-name { font-family: 'Fraunces', serif; font-style: italic; font-size: 22px; }
+  .caption { margin-top: 8px; }
+  .caption[hidden] { display: none; }
+
+  /* Register ladder */
+  .ladder { border: 1px solid var(--rule); border-radius: 3px; margin: 14px 0; background: #fbf7ef; }
+  .rung { display: grid; grid-template-columns: 88px 1fr; gap: 12px; padding: 10px 14px; border-top: 1px dashed var(--rule); align-items: start; }
+  .rung:first-child { border-top: none; }
+  .rung .lvl { font-family: 'Fraunces', serif; font-style: italic; color: var(--navy-soft); padding-top: 6px; }
+  .rung .given { padding-top: 6px; font-style: italic; }
+  .rung textarea { min-height: 52px; }
+  .model { font-size: 15px; color: var(--teal); margin-top: 4px; }
+  .model[hidden] { display: none; }
+
+  .contract label, .chip { display: flex; gap: 10px; align-items: flex-start; padding: 5px 0; cursor: pointer; }
+  .contract input, .chip input { margin-top: 7px; accent-color: var(--teal); }
+  .count { font-size: 14px; color: var(--navy-soft); margin-top: 4px; }
+  .count.good { color: var(--teal); }
+
+  .phrases { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4px 26px; }
+  .phrases h4 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 17px; margin: 16px 0 2px; grid-column: 1 / -1; }
+  .chip span { font-style: italic; }
+  .watch { font-size: 15px; margin-top: 16px; }
+
+  .c1-only { display: none; }
+  body.c1 .c1-only { display: block; }
+  .c1-tag { font-size: 12px; background: var(--rust); color: var(--cream); border-radius: 20px; padding: 1px 9px; margin-right: 6px; font-style: normal; }
+
+  details.key { margin-top: 50px; border: 2px solid var(--rust); border-radius: 3px; background: #fbf7ef; }
+  details.key > summary { cursor: pointer; padding: 14px 18px; font-family: 'Fraunces', serif; font-size: 20px; list-style: none; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  details.key > summary::-webkit-details-marker { display: none; }
+  .badge { font-family: 'Lora', serif; font-size: 12px; background: var(--rust); color: var(--cream); padding: 2px 10px; border-radius: 20px; }
+  .key-body { padding: 4px 22px 24px; font-size: 15.5px; }
+  .key-body h3 { font-size: 18px; }
+  .key-body ol, .key-body ul { padding-left: 22px; }
+  .key-body li { margin: 3px 0; }
+  table.plan { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 8px 0; }
+  table.plan td { border-top: 1px solid var(--rule); padding: 8px 6px; vertical-align: top; }
+  table.plan td:first-child { white-space: nowrap; font-family: 'Fraunces', serif; font-style: italic; }
+
+  footer { margin-top: 50px; text-align: center; font-size: 13px; color: var(--navy-soft); font-style: italic; }
+
+  @media (max-width: 560px) {
+    .row { grid-template-columns: 1fr; }
+    .rung { grid-template-columns: 1fr; gap: 4px; }
+    h2 { font-size: 27px; }
+  }
+  @media print { .bar, .btn, details.key { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="bar" role="region" aria-label="Progress">
+  <span class="title">The gremlins on the scale</span>
+  <span>Score <b id="score">0</b>/<span id="total">30</span></span>
+  <span>Contracts <b id="contracts">0</b>/8</span>
+  <span>Phrases <b id="phrasesUsed">0</b></span>
+  <button id="c1Toggle" aria-pressed="false" type="button">C1 stretch</button>
+  <button id="resetBtn" type="button">Reset</button>
+</div>
+
+<div class="wrap">
+  <header>
+    <h1>The gremlins on the scale</h1>
+    <p class="lede">Why we can't stop scrolling, according to an addiction psychiatrist.</p>
+    <p class="source"><em>The Oprah Podcast</em>, with Dr Anna Lembke, author of <em>Dopamine Nation</em>. Listen from <strong>7:00 to 11:20</strong> only.
+      <a href="https://open.spotify.com/episode/3qTpXOu2s8TjYbjJCrpgzr" target="_blank" rel="noopener">Open the episode on Spotify</a></p>
+  </header>
+
+  <figure class="banner">
+    <blockquote>Dopamine is really our survival neurotransmitter.</blockquote>
+    <figcaption>Dr Anna Lembke, later in the episode (45:15)</figcaption>
+  </figure>
+
+  <!-- 1 -->
+  <section id="s1">
+    <h2>Before you listen <span class="time">4 min</span></h2>
+    <p class="intro">Talk first. No right answers here.</p>
+    <div class="prompt">How many times a day do you think you pick up your phone? Is there an app you open without really deciding to?</div>
+    <div class="prompt">A Stanford addiction psychiatrist is going to explain why we can't stop scrolling. Predict three words or ideas you expect to hear.</div>
+    <textarea data-save id="predict" placeholder="Your three predictions…" style="min-height:70px"></textarea>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <h2>First listen: the big picture <span class="time">6 min</span></h2>
+    <p class="intro">Play 7:00–11:20 once, without pausing. Then choose the best answer.</p>
+    <div id="gist"></div>
+    <button class="btn" type="button" data-check="gist">Check</button><span class="result" id="gist-res"></span>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <h2>Second listen: the detail <span class="time">8 min</span></h2>
+    <p class="intro">Listen again. You can pause this time. True, false, or not mentioned?</p>
+    <div id="tf"></div>
+    <button class="btn" type="button" data-check="tf">Check</button><span class="result" id="tf-res"></span>
+
+    <h3>Put the process in order</h3>
+    <p class="intro">Number these stages 1 to 5.</p>
+    <div id="seq"></div>
+    <button class="btn" type="button" data-check="seq">Check</button><span class="result" id="seq-res"></span>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <h2>Explain the balance <span class="time">6 min</span></h2>
+    <p class="intro">Step through the stages. For each one, describe out loud what's happening before you reveal the explanation.</p>
+    <div class="balance">
+      <svg viewBox="0 0 480 240" role="img" aria-labelledby="balTitle">
+        <title id="balTitle">A balance with pleasure on the left and pain on the right</title>
+        <polygon points="240,150 214,222 266,222" fill="#1d2438"/>
+        <line x1="150" y1="224" x2="330" y2="224" stroke="#c9b896" stroke-width="3"/>
+        <g id="beam">
+          <rect x="60" y="146" width="360" height="8" rx="3" fill="#1d2438"/>
+          <circle cx="240" cy="150" r="7" fill="#f4ede0" stroke="#1d2438" stroke-width="2"/>
+          <!-- pans -->
+          <line x1="90" y1="150" x2="90" y2="118" stroke="#1d2438" stroke-width="2"/>
+          <rect x="45" y="112" width="90" height="7" rx="3" fill="#2b6f6b"/>
+          <line x1="390" y1="150" x2="390" y2="118" stroke="#1d2438" stroke-width="2"/>
+          <rect x="345" y="112" width="90" height="7" rx="3" fill="#a8462a"/>
+          <text x="90" y="178" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="16" fill="#2b6f6b">pleasure</text>
+          <text x="390" y="178" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="16" fill="#a8462a">pain</text>
+          <!-- dopamine hit -->
+          <g id="hit" class="gremlin" opacity="0">
+            <circle cx="90" cy="96" r="15" fill="#2b6f6b"/>
+            <text x="90" y="101" text-anchor="middle" font-family="Lora, serif" font-size="13" fill="#f4ede0">hit</text>
+          </g>
+          <g id="gremlins"></g>
+        </g>
+      </svg>
+      <div class="stages" id="stageBtns"></div>
+      <div class="stage-text" aria-live="polite">
+        <div class="stage-name" id="stageName"></div>
+        <div class="count" id="stageCue"></div>
+        <button class="btn ghost" type="button" id="revealStage">Reveal the explanation</button>
+        <p class="caption" id="stageCaption" hidden></p>
+      </div>
+    </div>
+    <div class="c1-only prompt"><span class="c1-tag">C1</span>Lembke comes back to this later in the episode. Before you find out, predict: what would make the gremlins hop off, and why might people feel <em>worse</em> before they feel better?</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <h2>Build the vocabulary <span class="time">8 min</span></h2>
+    <p class="intro">Match each expression to its meaning.</p>
+    <div id="vocab"></div>
+    <button class="btn" type="button" data-check="vocab">Check</button><span class="result" id="vocab-res"></span>
+
+    <h3>Now use it</h3>
+    <p class="intro">Complete each sentence with one expression from above. Change the form if you need to.</p>
+    <div id="gaps"></div>
+    <button class="btn" type="button" data-check="gaps">Check</button><span class="result" id="gaps-res"></span>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <h2>Shift the register <span class="time">9 min</span></h2>
+    <p class="intro">Each idea appears at one level. Say the other two versions aloud, then write them. Only then look at a model.</p>
+    <div id="ladders"></div>
+
+    <details class="panel">
+      <summary style="cursor:pointer"><strong>What changed?</strong> Open this after you've tried at least three.</summary>
+      <p style="margin-top:10px"><strong>Going up</strong>, speakers tend to turn verbs into nouns (<em>use</em> → <em>use of</em>), make the subject impersonal (<em>I</em> → <em>individuals</em>), swap phrasal verbs for single verbs (<em>wear off</em> → <em>diminish</em>), and add precise hedges (<em>is associated with</em>).</p>
+      <p><strong>Going down</strong>, they do the opposite: <em>you</em> and <em>I</em>, contractions, phrasal verbs, vivid idioms (<em>glued to</em>, <em>a buzz</em>), and shorter clauses.</p>
+      <p>Neither is better. The skill is choosing on purpose.</p>
+    </details>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <h2>Summarise it <span class="time">9 min</span></h2>
+    <p class="intro">Say it first, then write it.</p>
+
+    <h3>Step 1: say it in 60 seconds</h3>
+    <p>Explain Lembke's argument to someone who hasn't heard the podcast.</p>
+    <button class="btn ghost" type="button" id="timerBtn">Start 60 seconds</button><span class="result" id="timerOut"></span>
+
+    <h3>Step 2: write it in 80–100 words</h3>
+    <p>Neutral register: this is for a colleague, not a friend or an academic journal.</p>
+    <textarea data-save id="summary" style="min-height:170px" placeholder="In this segment, Dr Anna Lembke explains…"></textarea>
+    <div class="count" id="wc">0 words</div>
+
+    <div class="panel contract">
+      <strong>Your finish line</strong>
+      <label><input type="checkbox" data-save data-contract id="k1"> I used the balance metaphor.</label>
+      <label><input type="checkbox" data-save data-contract id="k2"> I used at least three expressions from the vocabulary section.</label>
+      <label><input type="checkbox" data-save data-contract id="k3"> I linked cause and effect (<em>as a result</em>, <em>which means that</em>, <em>so</em>).</label>
+      <label><input type="checkbox" data-save data-contract id="k4"> I reported her view rather than stating it as fact (<em>she argues</em>, <em>according to Lembke</em>).</label>
+      <label><input type="checkbox" data-save data-contract id="k5"> I stayed neutral throughout: no slang, no jargon.</label>
+    </div>
+
+    <div class="c1-only">
+      <h3><span class="c1-tag">C1</span>Compress it twice</h3>
+      <p>One sentence texted to a friend:</p>
+      <textarea data-save id="sumCasual" style="min-height:60px"></textarea>
+      <p style="margin-top:12px">A 40-word formal abstract:</p>
+      <textarea data-save id="sumFormal" style="min-height:90px"></textarea>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <h2>What do you think? <span class="time">8 min</span></h2>
+    <p class="intro">Choose two questions to discuss. Tick each phrase the first time you use it.</p>
+    <div class="prompt">Look back at the quote at the top of the page. Lembke argues that the brain can start treating a habit as if it were essential for survival. What might that look like with a phone?</div>
+    <div class="prompt">Where is your own balance right now? What tips it?</div>
+    <div class="prompt">Is it fair to call heavy smartphone use an "addiction", or does the word lose its meaning?</div>
+    <div class="prompt">Whose responsibility is this: individuals, tech companies, employers, or governments?</div>
+    <div class="prompt">In your work, has being constantly connected made you more effective or less?</div>
+    <div class="prompt c1-only"><span class="c1-tag">C1</span>France introduced a legal right to disconnect in 2017. Has it worked, and should other countries follow?</div>
+
+    <div class="phrases" id="phraseBank"></div>
+    <p class="watch"><strong>Watch out.</strong> <em>Actually</em> means <em>en fait</em>, not <em>actuellement</em> (use <em>currently</em>). <em>Eventually</em> means <em>à terme</em>, not <em>éventuellement</em> (use <em>possibly</em>).</p>
+
+    <h3>Write your reflection</h3>
+    <p>Four to six sentences on the question you found most interesting.</p>
+    <textarea data-save id="reflection" style="min-height:140px"></textarea>
+    <div class="panel contract">
+      <strong>Your finish line</strong>
+      <label><input type="checkbox" data-save data-contract id="r1"> One concession (<em>That said…</em>, <em>Admittedly…</em>).</label>
+      <label><input type="checkbox" data-save data-contract id="r2"> One sentence about my own habits.</label>
+      <label><input type="checkbox" data-save data-contract id="r3"> One speculation about the future (<em>I suspect…</em>, <em>It may well be that…</em>).</label>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <h2>Before you go <span class="time">2 min</span></h2>
+    <p>Three expressions I want to keep:</p>
+    <textarea data-save id="exit1" style="min-height:52px"></textarea>
+    <p style="margin-top:12px">One small change I might try this week:</p>
+    <textarea data-save id="exit2" style="min-height:52px"></textarea>
+  </section>
+
+  <details class="key">
+    <summary>Teacher key <span class="badge">Don't screen-share</span></summary>
+    <div class="key-body">
+
+      <h3>Before class</h3>
+      <p>No published transcript exists. Items are built from the episode's chapter markers and Lembke's well-documented pleasure–pain model. Listen to 7:00–11:20 once and strike any detail item she doesn't actually cover; items most at risk are marked <strong>(verify)</strong>.</p>
+
+      <h3>Timed plan</h3>
+      <table class="plan">
+        <tr><td>0–4</td><td>Settle. Phone question first; she's the expert on her own habits. Predictions typed, not discussed yet. <em>Activates schema and gives a listening purpose.</em></td></tr>
+        <tr><td>4–10</td><td>One uninterrupted play. Gist items. Revisit predictions: "Which of yours came up?"</td></tr>
+        <tr><td>10–18</td><td>Second play, pausing allowed. T/F/NM, then sequence. Replay only the disputed bit, not the whole clip.</td></tr>
+        <tr><td>18–24</td><td>Balance. She narrates each stage <em>before</em> revealing. Don't feed the vocabulary; note what she reaches for. <em>Discovery before naming.</em></td></tr>
+        <tr><td>24–32</td><td>Matching, then gap-fill. Name any vocabulary she already produced at stage 4: "You said X; Lembke's word was tolerance."</td></tr>
+        <tr><td>32–41</td><td>Register ladders. Speak each rung first. Open "What changed?" only after three items.</td></tr>
+        <tr><td>41–50</td><td>60-second oral summary, then silent writing. Regroup on <em>her</em> text: pick two sentences to upgrade together.</td></tr>
+        <tr><td>50–58</td><td>Opinion discussion with phrase bank. Collect upgrades below.</td></tr>
+        <tr><td>58–60</td><td>Exit ticket. Written reflection becomes homework if time runs short.</td></tr>
+      </table>
+      <p><strong>50-minute version:</strong> three balance stages (1, 3, 5), three register ladders, reflection as homework.</p>
+
+      <h3>First listen</h3>
+      <ol><li>b</li><li>a</li><li>c</li></ol>
+
+      <h3>Second listen</h3>
+      <ol>
+        <li>True (verify)</li>
+        <li>True</li>
+        <li>False: the gremlins pile onto the pain side to restore balance.</li>
+        <li>False: repeated use produces a <em>weaker</em> effect (tolerance).</li>
+        <li>True (verify)</li>
+        <li>Not mentioned (verify)</li>
+      </ol>
+      <p><strong>Order:</strong> The brain at rest (1); a pleasurable activity (2); the brain compensates (3); repeated use (4); stopping leaves us feeling worse (5).</p>
+
+      <h3>Vocabulary</h3>
+      <p>Matching is auto-marked. Gap-fill: 1 wear off / wears off · 2 tolerance · 3 compulsive · 4 craving · 5 hooked · 6 hit.</p>
+
+      <h3>Model summary (92 words)</h3>
+      <p><em>In this segment, Dr Anna Lembke explains why digital habits can become compulsive. She describes the brain as a balance that tries to keep pleasure and pain level. Each scroll or notification gives us a small hit of dopamine, which tips the balance towards pleasure. The brain then compensates by adding weight to the pain side, her "gremlins", so we feel a come-down and a craving for more. With repeated use, the gremlins stay, tolerance builds, and we can end up in a dopamine deficit, needing the device just to feel normal.</em></p>
+
+      <h3>C1 compressions (models)</h3>
+      <p><em>Casual:</em> Basically, every scroll gives you a buzz, your brain pays it back with a low, and you end up needing your phone just to feel OK.</p>
+      <p><em>Formal:</em> Lembke contends that repeated digital stimulation disrupts the brain's pleasure–pain equilibrium. Compensatory adaptation produces tolerance and, ultimately, a dopamine-deficit state in which continued use is required merely to restore baseline mood.</p>
+
+      <h3>Upgrades spotted this session</h3>
+      <p>French-influenced phrasings for the running upgrade list and glossary. Saved on this device only.</p>
+      <textarea data-save id="teacherUpgrades" placeholder="What she said → the upgrade"></textarea>
+    </div>
+  </details>
+
+  <footer>ESG Langues · Listening and expression · B2+</footer>
+</div>
+
+<script>
+(function () {
+  const KEY = 'esg-dopamine-gremlins-v1';
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { state = {}; }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  state.fields = state.fields || {};
+  state.scores = state.scores || {};
+
+  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  /* ---------- Data ---------- */
+  const GIST = [
+    { q: "What is the main purpose of this part of the conversation?", opts: [
+      "To share a personal story of recovery from phone addiction",
+      "To explain, using brain science, how everyday tech habits can become addictive",
+      "To compare which apps are the most harmful" ], a: 1 },
+    { q: "What does the balance with gremlins help to illustrate?", opts: [
+      "How the brain restores equilibrium after pleasure, and what that costs us",
+      "How people should divide their time between work and leisure",
+      "Why some people are naturally more disciplined than others" ], a: 0 },
+    { q: "Why does Lembke see this as a problem of our time in particular?", opts: [
+      "Because people today have weaker willpower than previous generations",
+      "Because dopamine itself is harmful to the brain",
+      "Because we now have constant, easy access to highly rewarding stimulation" ], a: 2 }
+  ];
+  const TF = [
+    { q: "Pleasure and pain are processed in the same part of the brain.", a: "T" },
+    { q: "The brain works to keep pleasure and pain in balance.", a: "T" },
+    { q: "The gremlins represent the pleasure we get from our devices.", a: "F" },
+    { q: "If we repeat an activity often, it gives us a stronger effect over time.", a: "F" },
+    { q: "In a dopamine-deficit state, people can feel anxious or irritable when they aren't using.", a: "T" },
+    { q: "She gives a precise number of hours of safe daily screen time.", a: "NM" }
+  ];
+  const SEQ = [ // shown in this order; n = correct position
+    { t: "The brain compensates by tipping the balance towards pain, and we feel a come-down.", n: 3 },
+    { t: "The brain is at rest, with pleasure and pain level.", n: 1 },
+    { t: "When we stop, we're left feeling worse than where we started.", n: 5 },
+    { t: "A pleasurable activity releases dopamine and tips the balance.", n: 2 },
+    { t: "With repeated use, the pain side stays heavy, and we need more to feel the same.", n: 4 }
+  ];
+  const VOCAB = [
+    { term: "compulsive", def: "done repeatedly, even when you want to stop" },
+    { term: "a craving", def: "a strong, urgent desire for something" },
+    { term: "tolerance", def: "needing more of something to get the same effect" },
+    { term: "homeostasis", def: "the body's tendency to return to a stable balance" },
+    { term: "a hit (of dopamine)", def: "a short burst of pleasure or reward" },
+    { term: "to wear off", def: "to fade gradually until it disappears" },
+    { term: "a come-down", def: "the low feeling that follows a high" },
+    { term: "a dopamine deficit", def: "a state where your baseline mood is below normal" },
+    { term: "to be hooked (on)", def: "informal: to be addicted to or obsessed with" },
+    { term: "to tip the balance", def: "to make one side heavier, so it goes down" }
+  ];
+  const DEF_ORDER = [6, 2, 9, 0, 4, 8, 1, 5, 3, 7];
+  const GAPS = [
+    { pre: "After an hour on Instagram, the pleasure starts to", post: "and I just feel flat.", ok: ["wear off"] },
+    { pre: "The more we scroll, the higher our", post: "becomes, so we need more novelty to feel anything.", ok: ["tolerance"] },
+    { pre: "Checking email every two minutes has become", post: ": I do it even when I don't want to.", ok: ["compulsive"] },
+    { pre: "By late afternoon, I get a real", post: "for something sweet.", ok: ["craving"] },
+    { pre: "Honestly, I'm completely", post: "on this new series.", ok: ["hooked"] },
+    { pre: "Every notification gives us a small", post: "of dopamine.", ok: ["hit"] }
+  ];
+  const LADDERS = [
+    { given: "casual", casual: "I'm glued to my phone all day.",
+      neutral: "I spend most of the day on my phone.",
+      formal: "A substantial proportion of my waking hours is spent on my mobile device." },
+    { given: "neutral", casual: "Apps give you a quick buzz, but it wears off fast.",
+      neutral: "Using apps gives us a quick burst of pleasure, but it doesn't last.",
+      formal: "Digital applications deliver a brief surge of reward, the effects of which are short-lived." },
+    { given: "formal", casual: "The more you do it, the less it does for you, so you end up needing more.",
+      neutral: "If we keep doing it, we get used to it and need more to feel the same.",
+      formal: "Repeated exposure leads to tolerance, necessitating ever greater stimulation." },
+    { given: "casual", casual: "When I put my phone down, I feel kind of rubbish.",
+      neutral: "When I stop using my phone, I feel anxious and low.",
+      formal: "Periods of non-use are associated with irritability and low mood." },
+    { given: "neutral", casual: "Your brain basically just wants to even things out.",
+      neutral: "Our brains try to keep pleasure and pain in balance.",
+      formal: "The brain seeks to maintain equilibrium between pleasure and pain." }
+  ];
+  const PHRASES = {
+    "Giving a view": ["As I see it, …", "I'm inclined to think that …", "I'd go as far as to say …", "I'm not entirely convinced that …"],
+    "Conceding and pushing back": ["That said, …", "Admittedly, … but …", "I take the point, but …", "While that's true to some extent, …"],
+    "Reflecting on yourself": ["If I'm honest with myself, …", "I've noticed that I tend to …", "It's made me realise that …", "I recognise myself in …"],
+    "Speculating": ["I suspect that …", "It may well be that …", "I wouldn't be surprised if …", "Presumably, …"],
+    "Rounding off": ["All things considered, …", "On balance, …", "What it comes down to is …", "So, in a nutshell, …"]
+  };
+  const STAGES = [
+    { name: "At rest", angle: 0, hit: 0, g: 0, cue: "Use: level, balance, at rest",
+      cap: "Pleasure and pain are processed in the same place, and the brain wants the balance to stay <strong>level</strong>. This drive towards stability is <strong>homeostasis</strong>." },
+    { name: "The hit", angle: -14, hit: 1, g: 0, cue: "Use: dopamine, tips, pleasure",
+      cap: "We scroll, shop or get a notification. A <strong>hit</strong> of dopamine <strong>tips the balance</strong> towards pleasure." },
+    { name: "The gremlins arrive", angle: 9, hit: 0, g: 3, cue: "Use: compensate, pain side, come-down, craving",
+      cap: "To restore balance, the brain puts weight on the pain side: the <strong>gremlins</strong>. They overshoot, so we feel a <strong>come-down</strong> and a <strong>craving</strong> to go back for more." },
+    { name: "They stay", angle: 3, hit: 1, g: 6, cue: "Use: repeated, tolerance, the same effect",
+      cap: "With <strong>repeated</strong> use, the gremlins don't leave. The same hit barely moves the balance any more: this is <strong>tolerance</strong>." },
+    { name: "The deficit", angle: 17, hit: 0, g: 9, cue: "Use: deficit, anxious, irritable, just to feel normal",
+      cap: "Now the balance rests on the pain side. In a <strong>dopamine deficit</strong>, we feel anxious or irritable without the device, and use it <strong>just to feel normal</strong>." }
+  ];
+
+  /* ---------- Render ---------- */
+  document.getElementById('gist').innerHTML = GIST.map((g, i) =>
+    `<div class="q"><p>${i+1}. ${esc(g.q)}</p>${g.opts.map((o, j) =>
+      `<label class="opt"><input type="radio" name="gist${i}" value="${j}" data-save> <span>${String.fromCharCode(97+j)}) ${esc(o)}</span></label>`).join('')}</div>`).join('');
+
+  document.getElementById('tf').innerHTML = TF.map((t, i) =>
+    `<div class="row" id="tfrow${i}"><span>${i+1}. ${esc(t.q)}</span>
+      <select id="tf${i}" data-save aria-label="Answer ${i+1}"><option value="">Choose…</option><option value="T">True</option><option value="F">False</option><option value="NM">Not mentioned</option></select></div>`).join('');
+
+  document.getElementById('seq').innerHTML = SEQ.map((s, i) =>
+    `<div class="row" id="seqrow${i}"><span>${esc(s.t)}</span>
+      <select id="seq${i}" data-save aria-label="Position"><option value="">#</option>${[1,2,3,4,5].map(n => `<option>${n}</option>`).join('')}</select></div>`).join('');
+
+  document.getElementById('vocab').innerHTML = VOCAB.map((v, i) =>
+    `<div class="row" id="vrow${i}"><strong>${esc(v.term)}</strong>
+      <select id="voc${i}" data-save aria-label="Meaning of ${esc(v.term)}"><option value="">Choose a meaning…</option>${DEF_ORDER.map(d => `<option value="${d}">${esc(VOCAB[d].def)}</option>`).join('')}</select></div>`).join('');
+
+  document.getElementById('gaps').innerHTML = GAPS.map((g, i) =>
+    `<p class="q">${i+1}. ${esc(g.pre)} <input type="text" id="gap${i}" data-save aria-label="Gap ${i+1}" autocomplete="off"> ${esc(g.post)}</p>`).join('');
+
+  const LV = ['casual', 'neutral', 'formal'];
+  document.getElementById('ladders').innerHTML = LADDERS.map((l, i) =>
+    `<div class="ladder">${LV.map(lv => `<div class="rung"><span class="lvl">${lv}</span>${
+      lv === l.given ? `<div class="given">${esc(l[lv])}</div>` :
+      `<div><textarea id="lad${i}${lv}" data-save aria-label="${lv} version"></textarea><div class="model" id="mod${i}${lv}" hidden>Model: ${esc(l[lv])}</div></div>`
+    }</div>`).join('')}<div class="rung"><span></span><div><button class="btn ghost" type="button" data-model="${i}">Show a model</button></div></div></div>`).join('');
+
+  document.getElementById('phraseBank').innerHTML = Object.entries(PHRASES).map(([h, list], gi) =>
+    `<h4>${esc(h)}</h4>${list.map((p, pi) => `<label class="chip"><input type="checkbox" data-save data-phrase id="ph${gi}_${pi}"> <span>${esc(p)}</span></label>`).join('')}`).join('');
+
+  /* ---------- Save / restore ---------- */
+  function fieldKey(el) { return el.type === 'radio' ? el.name : el.id; }
+  document.querySelectorAll('[data-save]').forEach(el => {
+    const k = fieldKey(el), v = state.fields[k];
+    if (v !== undefined) {
+      if (el.type === 'radio') el.checked = (el.value === v);
+      else if (el.type === 'checkbox') el.checked = !!v;
+      else el.value = v;
+    }
+    el.addEventListener(el.tagName === 'SELECT' || el.type === 'radio' || el.type === 'checkbox' ? 'change' : 'input', () => {
+      state.fields[k] = el.type === 'checkbox' ? el.checked : el.value;
+      persist(); updateCounts();
+    });
+  });
+
+  /* ---------- Checking ---------- */
+  const norm = s => (s || '').toLowerCase().replace(/[’']/g, "'").replace(/\s+/g, ' ').trim();
+  function setMark(el, ok) { el.classList.remove('ok', 'bad'); el.classList.add(ok ? 'ok' : 'bad'); }
+  const checkers = {
+    gist() {
+      let s = 0;
+      GIST.forEach((g, i) => document.querySelectorAll(`input[name=gist${i}]`).forEach(r => {
+        const lab = r.closest('.opt'); lab.classList.remove('ok', 'bad');
+        if (r.checked) { const ok = +r.value === g.a; if (ok) s++; setMark(lab, ok); }
+      }));
+      return [s, GIST.length];
+    },
+    tf() { let s = 0; TF.forEach((t, i) => { const ok = document.getElementById('tf'+i).value === t.a; if (ok) s++; setMark(document.getElementById('tfrow'+i), ok); }); return [s, TF.length]; },
+    seq() { let s = 0; SEQ.forEach((q, i) => { const ok = +document.getElementById('seq'+i).value === q.n; if (ok) s++; setMark(document.getElementById('seqrow'+i), ok); }); return [s, SEQ.length]; },
+    vocab() { let s = 0; VOCAB.forEach((v, i) => { const ok = +document.getElementById('voc'+i).value === i && document.getElementById('voc'+i).value !== ''; if (ok) s++; setMark(document.getElementById('vrow'+i), ok); }); return [s, VOCAB.length]; },
+    gaps() {
+      let s = 0;
+      GAPS.forEach((g, i) => {
+        const el = document.getElementById('gap'+i), v = norm(el.value);
+        const ok = g.ok.some(a => v === a || v === a.replace(/^(\w+)/, '$1s'));
+        if (ok) s++; setMark(el, ok);
+      });
+      return [s, GAPS.length];
+    }
+  };
+  document.querySelectorAll('[data-check]').forEach(b => b.addEventListener('click', () => {
+    const k = b.dataset.check, [s, t] = checkers[k]();
+    state.scores[k] = s; persist();
+    document.getElementById(k + '-res').textContent = `${s} / ${t}`;
+    updateCounts();
+  }));
+
+  document.querySelectorAll('[data-model]').forEach(b => b.addEventListener('click', () => {
+    const i = b.dataset.model;
+    LV.forEach(lv => { const m = document.getElementById(`mod${i}${lv}`); if (m) m.hidden = false; });
+    b.remove();
+  }));
+
+  /* ---------- Counts ---------- */
+  function updateCounts() {
+    document.getElementById('score').textContent = Object.values(state.scores).reduce((a, b) => a + b, 0);
+    document.getElementById('contracts').textContent = document.querySelectorAll('[data-contract]:checked').length;
+    document.getElementById('phrasesUsed').textContent = document.querySelectorAll('[data-phrase]:checked').length;
+    const txt = document.getElementById('summary').value.trim();
+    const n = txt ? txt.split(/\s+/).length : 0;
+    const wc = document.getElementById('wc');
+    wc.textContent = `${n} word${n === 1 ? '' : 's'}${n >= 80 && n <= 100 ? ': on target' : ''}`;
+    wc.classList.toggle('good', n >= 80 && n <= 100);
+  }
+
+  /* ---------- Balance ---------- */
+  const NS = 'http://www.w3.org/2000/svg';
+  const gWrap = document.getElementById('gremlins');
+  const slots = [[362,98],[390,98],[418,98],[376,76],[404,76],[362,54],[390,54],[418,54],[390,32]];
+  slots.forEach(([x, y]) => {
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'gremlin'); g.setAttribute('opacity', '0');
+    g.innerHTML = `<polygon points="${x-9},${y-6} ${x-5},${y-17} ${x-1},${y-8}" fill="#a8462a"/>
+      <polygon points="${x+9},${y-6} ${x+5},${y-17} ${x+1},${y-8}" fill="#a8462a"/>
+      <circle cx="${x}" cy="${y}" r="11" fill="#a8462a"/>
+      <circle cx="${x-4}" cy="${y-2}" r="2.6" fill="#f4ede0"/><circle cx="${x+4}" cy="${y-2}" r="2.6" fill="#f4ede0"/>
+      <path d="M${x-4} ${y+5} q4 -3 8 0" stroke="#f4ede0" stroke-width="1.5" fill="none"/>`;
+    gWrap.appendChild(g);
+  });
+  const beam = document.getElementById('beam'), hit = document.getElementById('hit');
+  const btnWrap = document.getElementById('stageBtns');
+  STAGES.forEach((s, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = `${i+1}. ${s.name}`;
+    b.addEventListener('click', () => showStage(i)); btnWrap.appendChild(b);
+  });
+  function showStage(i) {
+    const s = STAGES[i];
+    beam.style.transform = `rotate(${s.angle}deg)`;
+    hit.setAttribute('opacity', s.hit);
+    [...gWrap.children].forEach((g, j) => g.setAttribute('opacity', j < s.g ? 1 : 0));
+    [...btnWrap.children].forEach((b, j) => b.setAttribute('aria-pressed', j === i));
+    document.getElementById('stageName').textContent = s.name;
+    document.getElementById('stageCue').textContent = s.cue;
+    const cap = document.getElementById('stageCaption'); cap.innerHTML = s.cap; cap.hidden = true;
+    document.getElementById('revealStage').hidden = false;
+  }
+  document.getElementById('revealStage').addEventListener('click', e => {
+    document.getElementById('stageCaption').hidden = false; e.target.hidden = true;
+  });
+  showStage(0);
+
+  /* ---------- Timer ---------- */
+  let timer = null;
+  document.getElementById('timerBtn').addEventListener('click', e => {
+    const out = document.getElementById('timerOut');
+    if (timer) { clearInterval(timer); timer = null; e.target.textContent = 'Start 60 seconds'; out.textContent = ''; return; }
+    let t = 60; out.textContent = '60s'; e.target.textContent = 'Stop';
+    timer = setInterval(() => {
+      t--; out.textContent = t > 0 ? `${t}s` : 'Time. Now write it.';
+      if (t <= 0) { clearInterval(timer); timer = null; e.target.textContent = 'Start 60 seconds'; }
+    }, 1000);
+  });
+
+  /* ---------- C1 toggle and reset ---------- */
+  const c1 = document.getElementById('c1Toggle');
+  function applyC1(on) { document.body.classList.toggle('c1', on); c1.setAttribute('aria-pressed', on); }
+  applyC1(!!state.c1);
+  c1.addEventListener('click', () => { state.c1 = !state.c1; persist(); applyC1(state.c1); });
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (!confirm('Clear all answers on this device?')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  });
+
+  /* restore previous results */
+  Object.keys(state.scores).forEach(k => { if (checkers[k]) { const [s, t] = checkers[k](); document.getElementById(k + '-res').textContent = `${s} / ${t}`; } });
+  updateCounts();
+})();
+</script>
+</body>
+</html>
