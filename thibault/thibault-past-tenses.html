@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The past, in English — Thibault's notebook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gelasio:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FBF7EE;
+  --paper-deep:#F3ECDD;
+  --ink:#2A2421;
+  --ink-soft:#5E534C;
+  --burgundy:#7A2436;
+  --burgundy-tint:#F4E4E3;
+  --sage:#5F7D5E;
+  --sage-tint:#E5ECE0;
+  --rule:#E6DFCF;
+  --margin:rgba(122,36,54,.28);
+  --serif:"Gelasio", Georgia, "Times New Roman", serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important}}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:18px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--burgundy)}
+:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px;border-radius:2px}
+
+/* ---------- layout ---------- */
+.shell{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:0}
+nav.toc{position:sticky;top:0;align-self:start;height:100vh;padding:56px 28px 32px 32px;overflow-y:auto}
+nav.toc p.toc-title{font-style:italic;color:var(--ink-soft);margin:0 0 14px;font-size:15px}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:toc}
+nav.toc li{counter-increment:toc;margin:0}
+nav.toc a{display:grid;grid-template-columns:26px 1fr;text-decoration:none;color:var(--ink);font-size:15.5px;line-height:1.35;padding:7px 0;border-bottom:1px solid var(--rule)}
+nav.toc a::before{content:counter(toc);color:var(--burgundy);font-style:italic}
+nav.toc a:hover,nav.toc a.active{color:var(--burgundy)}
+nav.toc a.active{font-weight:600}
+
+main{
+  position:relative;padding:56px 56px 96px 72px;min-width:0;
+  background-image:linear-gradient(to right, transparent 40px, var(--margin) 40px, var(--margin) 41px, transparent 41px);
+  background-repeat:no-repeat;
+}
+.page{max-width:740px}
+
+header.cover{padding-bottom:36px;margin-bottom:12px;border-bottom:2px solid var(--burgundy)}
+header.cover .kicker{font-style:italic;color:var(--sage);margin:0 0 8px;font-size:16px}
+header.cover h1{font-size:clamp(40px,6vw,64px);line-height:1.02;font-weight:700;color:var(--burgundy);margin:0 0 18px;letter-spacing:-.01em}
+header.cover .lede{font-size:20px;line-height:1.55;color:var(--ink);margin:0;max-width:640px}
+.how{margin-top:22px;font-size:16px;color:var(--ink-soft)}
+
+section{padding-top:64px;scroll-margin-top:12px}
+h2{font-size:34px;line-height:1.15;color:var(--burgundy);margin:0 0 6px;font-weight:600}
+h2 .n{font-style:italic;font-weight:400;color:var(--sage);margin-right:10px}
+.sub{font-style:italic;color:var(--ink-soft);margin:0 0 26px;font-size:18px}
+h3{font-size:22px;margin:38px 0 10px;font-weight:600;color:var(--ink)}
+p{margin:0 0 16px}
+em.ex{font-style:italic}
+strong{font-weight:600}
+
+/* ---------- boxes ---------- */
+.rule-box{border-left:3px solid var(--sage);background:var(--sage-tint);padding:16px 22px;margin:22px 0;border-radius:0 6px 6px 0}
+.rule-box p:last-child{margin-bottom:0}
+.rule-box .label{color:var(--sage);font-style:italic;font-weight:600;display:block;margin-bottom:4px}
+.trap{border-left:3px solid var(--burgundy);background:var(--burgundy-tint);padding:16px 22px;margin:22px 0;border-radius:0 6px 6px 0}
+.trap .label{color:var(--burgundy);font-style:italic;font-weight:600;display:block;margin-bottom:6px}
+.trap p:last-child{margin-bottom:0}
+.pair{display:grid;grid-template-columns:22px 1fr;gap:2px 6px;margin:4px 0}
+.no{color:var(--burgundy);font-weight:700}
+.yes{color:var(--sage);font-weight:700}
+.wrong{text-decoration:line-through;text-decoration-color:var(--burgundy);text-decoration-thickness:1.5px;color:var(--ink-soft)}
+
+/* ---------- tables ---------- */
+.table-wrap{overflow-x:auto;margin:18px 0 22px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:16.5px;line-height:1.45}
+th{text-align:left;font-weight:600;color:var(--burgundy);border-bottom:2px solid var(--burgundy);padding:8px 12px 8px 0;white-space:nowrap}
+td{border-bottom:1px solid var(--rule);padding:9px 12px 9px 0;vertical-align:top}
+td.fr{color:var(--ink-soft);font-style:italic}
+table.forms td:first-child{color:var(--sage);font-style:italic;white-space:nowrap}
+
+.markers{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0}
+.markers > div{border:1px solid var(--rule);background:#FFFDF8;padding:14px 18px;border-radius:6px}
+.markers h4{margin:0 0 6px;font-size:17px;font-weight:600}
+.markers h4.past{color:var(--burgundy)}
+.markers h4.perf{color:var(--sage)}
+.markers p{font-size:16px;margin:0;line-height:1.6}
+
+/* ---------- timeline ---------- */
+figure.timeline{margin:28px 0 8px;background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:18px 18px 6px}
+figure.timeline svg{width:100%;height:auto;display:block}
+.tl-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:18px 0 0}
+.tl-legend div{padding-top:10px;border-top:2px solid var(--ink)}
+.tl-legend div.b{border-top-color:var(--burgundy)}
+.tl-legend div.s{border-top-color:var(--sage)}
+.tl-legend h4{margin:0 0 4px;font-size:18px;font-weight:600}
+.tl-legend p{font-size:15.5px;line-height:1.55;margin:0 0 8px}
+
+/* ---------- collocations ---------- */
+.colloc{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:18px 0}
+.colloc > div{padding:16px 20px;border-radius:6px;border:1px solid var(--rule);background:#FFFDF8}
+.colloc h4{margin:0 0 4px;font-size:24px;font-weight:700}
+.colloc .make h4{color:var(--burgundy)}
+.colloc .do h4{color:var(--sage)}
+.colloc .gist{font-style:italic;color:var(--ink-soft);font-size:15.5px;margin:0 0 10px}
+.colloc ul{margin:0;padding:0;list-style:none;font-size:16px;line-height:1.5}
+.colloc li{padding:5px 0;border-bottom:1px dashed var(--rule)}
+.colloc li:last-child{border-bottom:0}
+.colloc li span{display:block;color:var(--ink-soft);font-style:italic;font-size:14.5px}
+
+.svw{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0}
+.svw > div{padding:16px 18px;border:1px solid var(--rule);border-radius:6px;background:#FFFDF8}
+.svw h4{margin:0;font-size:24px;font-weight:700;color:var(--burgundy)}
+.svw .forms{font-style:italic;color:var(--sage);font-size:15px;margin:0 0 8px}
+.svw p{font-size:15.5px;line-height:1.55;margin:0 0 8px}
+.svw .eg{border-top:1px dashed var(--rule);padding-top:8px;font-style:italic}
+
+/* ---------- irregular verbs tool ---------- */
+.verb-tools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:16px 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+button{font-family:var(--serif)}
+.chip{border:1px solid var(--rule);background:#FFFDF8;color:var(--ink);padding:5px 12px;border-radius:999px;font-size:15px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+.search{font-family:var(--serif);font-size:16px;padding:6px 12px;border:1px solid var(--rule);border-radius:6px;background:#FFFDF8;color:var(--ink);min-width:0;width:180px}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:15.5px;cursor:pointer;user-select:none}
+.toggle input{accent-color:var(--burgundy);width:17px;height:17px}
+.pattern-note{font-size:15.5px;color:var(--ink-soft);font-style:italic;min-height:26px;margin:4px 0 0}
+table.verbs td.form{font-weight:500}
+table.verbs.testing td.form .val{visibility:hidden}
+table.verbs.testing td.form{cursor:pointer;background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(95,125,94,.08) 6px 12px)}
+table.verbs.testing td.form.shown{background:none}
+table.verbs.testing td.form.shown .val{visibility:visible}
+.count{font-size:14.5px;color:var(--ink-soft);font-style:italic}
+
+.ed-sounds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.ed-sounds div{border-top:2px solid var(--sage);padding-top:8px}
+.ed-sounds h4{margin:0;font-size:21px;color:var(--sage);font-weight:600}
+.ed-sounds p{font-size:15.5px;margin:0 0 6px;line-height:1.5}
+
+/* ---------- practice ---------- */
+.exercise{margin:34px 0 10px;border:1px solid var(--rule);border-radius:8px;background:#FFFDF8;padding:22px 24px}
+.ex-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:10px}
+.ex-head h3{margin:0;font-size:22px;color:var(--burgundy)}
+.score{font-style:italic;color:var(--sage);font-size:16px}
+.ex-intro{font-size:16px;color:var(--ink-soft);margin:6px 0 8px}
+.item{padding:14px 0;border-bottom:1px dashed var(--rule)}
+.item:last-of-type{border-bottom:0}
+.q{margin:0 0 8px;font-size:17.5px}
+.q .num{color:var(--sage);font-style:italic;margin-right:6px}
+.blank{display:inline-block;min-width:70px;border-bottom:1.5px solid var(--ink-soft);text-align:center;padding:0 4px;font-weight:600}
+.blank.ok{color:var(--sage);border-color:var(--sage)}
+.blank.bad{color:var(--burgundy);border-color:var(--burgundy)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{border:1px solid #CFC6B4;background:var(--paper);color:var(--ink);padding:6px 14px;border-radius:6px;font-size:16px;cursor:pointer;transition:background .15s,border-color .15s}
+.opt:hover:not(:disabled){border-color:var(--burgundy)}
+.opt:disabled{cursor:default}
+.opt.correct{background:var(--sage);border-color:var(--sage);color:#fff}
+.opt.chosen-wrong{background:var(--burgundy-tint);border-color:var(--burgundy);color:var(--burgundy);text-decoration:line-through}
+.opt.full{display:block;width:100%;text-align:left}
+.feedback{font-size:15.5px;line-height:1.55;margin-top:8px;padding-left:12px;border-left:2px solid var(--rule)}
+.feedback.ok{border-color:var(--sage)}
+.feedback.bad{border-color:var(--burgundy)}
+.feedback b{font-weight:600}
+.reset{margin-top:12px;border:0;background:none;color:var(--burgundy);font-size:15.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px 0}
+
+.typein{display:grid;grid-template-columns:110px 1fr 1fr 34px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--rule)}
+.typein.headrow{border-bottom:2px solid var(--burgundy);font-weight:600;color:var(--burgundy);font-size:15.5px;padding-bottom:6px}
+.typein .base{font-weight:600}
+.typein input{font-family:var(--serif);font-size:16px;padding:5px 10px;border:1px solid #CFC6B4;border-radius:5px;background:var(--paper);color:var(--ink);width:100%;min-width:0}
+.typein input.ok{border-color:var(--sage);background:var(--sage-tint)}
+.typein input.bad{border-color:var(--burgundy);background:var(--burgundy-tint)}
+.typein .mark{font-weight:700;text-align:center}
+.typein .reveal{grid-column:2 / 4;font-size:14.5px;color:var(--burgundy);font-style:italic;margin-top:-4px}
+.btn{border:1px solid var(--burgundy);background:var(--burgundy);color:#fff;border-radius:6px;padding:7px 18px;font-size:16px;cursor:pointer;margin-top:14px;margin-right:10px}
+.btn.ghost{background:none;color:var(--burgundy)}
+
+/* ---------- speaking ---------- */
+.prompts{counter-reset:pr;list-style:none;padding:0;margin:20px 0}
+.prompts li{counter-increment:pr;display:grid;grid-template-columns:36px 1fr;padding:16px 0;border-bottom:1px solid var(--rule)}
+.prompts li::before{content:counter(pr);font-size:26px;line-height:1;color:var(--burgundy);font-style:italic}
+.prompts .p{font-size:18.5px;margin:0 0 6px}
+.prompts .tools{font-size:15px;color:var(--sage);font-style:italic;margin:0}
+
+footer{margin-top:72px;padding-top:18px;border-top:1px solid var(--rule);font-size:15px;color:var(--ink-soft);font-style:italic}
+
+/* ---------- responsive ---------- */
+@media (max-width: 920px){
+  .shell{grid-template-columns:1fr}
+  nav.toc{position:sticky;top:0;height:auto;z-index:5;background:var(--paper);padding:10px 16px;border-bottom:1px solid var(--rule);overflow-x:auto;overflow-y:hidden}
+  nav.toc p.toc-title{display:none}
+  nav.toc ol{display:flex;gap:18px;white-space:nowrap}
+  nav.toc a{border:0;padding:4px 0;grid-template-columns:18px auto}
+  main{padding:36px 22px 72px 22px;background-image:none}
+  section{scroll-margin-top:56px}
+}
+@media (max-width: 640px){
+  body{font-size:17px}
+  h2{font-size:28px}
+  .markers,.colloc,.svw,.tl-legend,.ed-sounds{grid-template-columns:1fr}
+  .typein{grid-template-columns:78px 1fr 1fr 24px;gap:6px}
+  .exercise{padding:18px 16px}
+}
+@media print{
+  nav.toc{display:none}
+  .shell{grid-template-columns:1fr}
+  main{background:none;padding:0}
+  .exercise{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<nav class="toc" aria-label="Contents">
+  <p class="toc-title">In this notebook</p>
+  <ol>
+    <li><a href="#picture">The big picture</a></li>
+    <li><a href="#simple">Simple past</a></li>
+    <li><a href="#continuous">Past continuous</a></li>
+    <li><a href="#perfect">Past or present perfect?</a></li>
+    <li><a href="#irregular">Irregular verbs</a></li>
+    <li><a href="#makedo">Make or do?</a></li>
+    <li><a href="#seelook">See, look or watch?</a></li>
+    <li><a href="#practice">Practice</a></li>
+    <li><a href="#speak">Speak it</a></li>
+  </ol>
+</nav>
+
+<main>
+<div class="page">
+
+<header class="cover">
+  <p class="kicker">Thibault's notebook</p>
+  <h1>The past, in English</h1>
+  <p class="lede">Three past tenses, the verbs that don't follow the rules, and the word pairs that French makes easy to mix up. Read it once with Craig, then come back to it whenever a sentence about yesterday doesn't feel right.</p>
+  <p class="how">Work through the sections in order the first time. The practice exercises check themselves, and the speaking prompts at the end are for saying out loud, not writing.</p>
+</header>
+
+<!-- 1 -->
+<section id="picture">
+  <h2><span class="n">1</span>The big picture</h2>
+  <p class="sub">English has three main ways to talk about the past. French mostly has two, which is where the trouble starts.</p>
+
+  <p>In French, <em>j'ai signé</em> (passé composé) covers almost every finished action. English splits that territory between the <strong>simple past</strong> and the <strong>present perfect</strong>, and the choice depends on one question: <strong>is the time finished, or does it connect to now?</strong> The <strong>past continuous</strong> is closer to the French imparfait: it describes something in progress.</p>
+
+  <figure class="timeline" aria-label="Timeline comparing the three tenses">
+    <svg viewBox="0 0 720 330" role="img" aria-labelledby="tlTitle">
+      <title id="tlTitle">Simple past is a point in finished time. Past continuous is an action in progress, often interrupted. Present perfect is a period that reaches now.</title>
+      <g font-family="Gelasio, Georgia, serif">
+        <!-- now line -->
+        <line x1="620" y1="18" x2="620" y2="318" stroke="#7A2436" stroke-width="1.5" stroke-dasharray="5 5"/>
+        <text x="620" y="14" text-anchor="middle" font-size="15" font-style="italic" fill="#7A2436">now</text>
+
+        <!-- row 1 simple past -->
+        <text x="10" y="58" font-size="16" font-weight="600" fill="#2A2421">Simple past</text>
+        <line x1="10" y1="88" x2="700" y2="88" stroke="#2A2421" stroke-width="1.5"/>
+        <polygon points="700,83 712,88 700,93" fill="#2A2421"/>
+        <path d="M262 76 L286 100 M286 76 L262 100" stroke="#2A2421" stroke-width="3" stroke-linecap="round"/>
+        <text x="274" y="122" text-anchor="middle" font-size="14.5" font-style="italic" fill="#5E534C">last Monday</text>
+
+        <!-- row 2 past continuous -->
+        <text x="10" y="162" font-size="16" font-weight="600" fill="#7A2436">Past continuous</text>
+        <line x1="10" y1="192" x2="700" y2="192" stroke="#2A2421" stroke-width="1.5"/>
+        <polygon points="700,187 712,192 700,197" fill="#2A2421"/>
+        <path d="M150 192 q12 -14 24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0 t24 0" fill="none" stroke="#5F7D5E" stroke-width="3" stroke-linecap="round"/>
+        <path d="M284 176 L304 208 M304 176 L284 208" stroke="#7A2436" stroke-width="3" stroke-linecap="round"/>
+        <text x="210" y="226" text-anchor="middle" font-size="14.5" font-style="italic" fill="#5E534C">in progress…</text>
+        <text x="330" y="226" font-size="14.5" font-style="italic" fill="#7A2436">…interrupted</text>
+
+        <!-- row 3 present perfect -->
+        <text x="10" y="266" font-size="16" font-weight="600" fill="#5F7D5E">Present perfect</text>
+        <line x1="10" y1="296" x2="700" y2="296" stroke="#2A2421" stroke-width="1.5"/>
+        <polygon points="700,291 712,296 700,301" fill="#2A2421"/>
+        <line x1="330" y1="296" x2="620" y2="296" stroke="#5F7D5E" stroke-width="7" stroke-linecap="round" opacity=".85"/>
+        <line x1="330" y1="284" x2="330" y2="308" stroke="#5F7D5E" stroke-width="2.5"/>
+        <text x="330" y="324" text-anchor="middle" font-size="14.5" font-style="italic" fill="#5E534C">since 2021</text>
+        <text x="475" y="282" text-anchor="middle" font-size="14.5" font-style="italic" fill="#5F7D5E">still true now</text>
+      </g>
+    </svg>
+    <div class="tl-legend">
+      <div>
+        <h4>Simple past</h4>
+        <p>Finished action, finished time. The moment is over.</p>
+        <p><em>I <strong>signed</strong> the contract last Monday.</em></p>
+      </div>
+      <div class="b">
+        <h4>Past continuous</h4>
+        <p>An action in progress at a moment in the past, often the background to something else.</p>
+        <p><em>I <strong>was driving</strong> when you <strong>called</strong>.</em></p>
+      </div>
+      <div class="s">
+        <h4>Present perfect</h4>
+        <p>The past connected to now: a period that isn't finished, or an experience with no time given.</p>
+        <p><em>I<strong>'ve worked</strong> with her since 2021.</em></p>
+      </div>
+    </div>
+  </figure>
+</section>
+
+<!-- 2 -->
+<section id="simple">
+  <h2><span class="n">2</span>Simple past</h2>
+  <p class="sub">The storytelling tense. Finished actions at a finished time.</p>
+
+  <h3>How to form it</h3>
+  <div class="table-wrap">
+  <table class="forms">
+    <thead><tr><th>Form</th><th>Structure</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>positive</td><td>verb + <strong>-ed</strong>, or the irregular form</td><td>We <strong>played</strong> in Lyon. We <strong>went</strong> to Berlin.</td></tr>
+      <tr><td>negative</td><td><strong>didn't</strong> + base verb</td><td>We <strong>didn't play</strong> in Lyon. We <strong>didn't go</strong> to Berlin.</td></tr>
+      <tr><td>question</td><td><strong>Did</strong> + subject + base verb</td><td><strong>Did</strong> you <strong>play</strong> in Lyon? Where <strong>did</strong> you <strong>go</strong>?</td></tr>
+      <tr><td>short answer</td><td>Yes, I <strong>did</strong>. / No, I <strong>didn't</strong>.</td><td><em>Did he send the rider?</em> Yes, he did.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="trap">
+    <span class="label">The most common mistake: two past forms in one verb</span>
+    <p><strong>Did</strong> already carries the past. The main verb goes back to its base form.</p>
+    <div class="pair"><span class="no">✗</span><span class="wrong">Did you saw the email? I didn't went.</span></div>
+    <div class="pair"><span class="yes">✓</span><span>Did you <strong>see</strong> the email? I didn't <strong>go</strong>.</span></div>
+  </div>
+
+  <p>The verb <strong>be</strong> is different: it doesn't use <em>did</em>. Use <strong>was / were</strong>, <strong>wasn't / weren't</strong>, and invert for questions.</p>
+  <div class="pair"><span class="no">✗</span><span class="wrong">Did you be at the show? I didn't be tired.</span></div>
+  <div class="pair"><span class="yes">✓</span><span><strong>Were</strong> you at the show? I <strong>wasn't</strong> tired.</span></div>
+
+  <h3>Spelling the -ed ending</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Verb ends in…</th><th>Rule</th><th>Examples</th></tr></thead>
+    <tbody>
+      <tr><td>most verbs</td><td>add <strong>-ed</strong></td><td>book → booked, sign → signed</td></tr>
+      <tr><td>-e</td><td>add <strong>-d</strong></td><td>release → released, arrive → arrived</td></tr>
+      <tr><td>consonant + -y</td><td>-y becomes <strong>-ied</strong></td><td>try → tried, reply → replied</td></tr>
+      <tr><td>vowel + -y</td><td>add <strong>-ed</strong></td><td>play → played, delay → delayed</td></tr>
+      <tr><td>short verb, one vowel + one consonant</td><td>double the consonant</td><td>plan → planned, stop → stopped</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Saying the -ed ending</h3>
+  <p>The <em>-ed</em> is almost never a separate syllable. It has three sounds, and only one of them adds a syllable.</p>
+  <div class="ed-sounds">
+    <div>
+      <h4>/t/</h4>
+      <p>After voiceless sounds: p, k, s, sh, ch, f, x.</p>
+      <p><em>booked, mixed, stopped, finished, asked</em></p>
+    </div>
+    <div>
+      <h4>/d/</h4>
+      <p>After voiced sounds and vowels: everything else.</p>
+      <p><em>played, signed, called, confirmed, toured</em></p>
+    </div>
+    <div>
+      <h4>/ɪd/</h4>
+      <p>Only after <strong>t</strong> or <strong>d</strong>. This one adds a syllable.</p>
+      <p><em>recorded, started, needed, invited, negotiated</em></p>
+    </div>
+  </div>
+  <div class="trap">
+    <span class="label">French speakers often do one of two things</span>
+    <p>They pronounce every <em>-ed</em> as an extra syllable (<span class="wrong">book-ed</span>, <span class="wrong">sign-ed</span>), or they drop it completely so the listener hears the present (<em>I book the flight</em>). Say <strong>bookt</strong> and <strong>signd</strong>: one syllable, with a clear final sound.</p>
+  </div>
+
+  <h3>Time words that go with it</h3>
+  <p>If one of these is in the sentence, the simple past is almost always the right choice: <em>yesterday, last night, last week, last year, two days <strong>ago</strong>, in 2019, on Friday, at 10 pm, when I was younger, when we arrived, then, after that.</em></p>
+</section>
+
+<!-- 3 -->
+<section id="continuous">
+  <h2><span class="n">3</span>Past continuous</h2>
+  <p class="sub">The background tense. Something in progress at a moment in the past.</p>
+
+  <div class="table-wrap">
+  <table class="forms">
+    <thead><tr><th>Form</th><th>Structure</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>positive</td><td><strong>was / were</strong> + verb-ing</td><td>I <strong>was waiting</strong> backstage. They <strong>were setting up</strong>.</td></tr>
+      <tr><td>negative</td><td><strong>wasn't / weren't</strong> + verb-ing</td><td>She <strong>wasn't listening</strong>.</td></tr>
+      <tr><td>question</td><td><strong>Was / Were</strong> + subject + verb-ing</td><td>What <strong>were</strong> you <strong>doing</strong> at midnight?</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Three main uses</h3>
+  <p><strong>An action interrupted by a shorter one.</strong> The long action takes the past continuous; the short action that interrupts it takes the simple past. Use <em>when</em> before the short action, and <em>while</em> before the long one.</p>
+  <p><em>I <strong>was checking</strong> the lights <strong>when</strong> the power <strong>went</strong> out.<br><strong>While</strong> we <strong>were driving</strong> to the venue, the promoter <strong>called</strong>.</em></p>
+
+  <p><strong>Setting the scene in a story.</strong> It paints the picture before the events happen.</p>
+  <p><em>It <strong>was raining</strong>, people <strong>were queuing</strong> outside, and the DJ <strong>was</strong> still <strong>looking</strong> for his USB stick.</em></p>
+
+  <p><strong>Two actions happening at the same time.</strong></p>
+  <p><em>While I <strong>was negotiating</strong> the fee, my assistant <strong>was booking</strong> the hotel.</em></p>
+
+  <div class="rule-box">
+    <span class="label">The test</span>
+    <p>If you would say <em>j'étais en train de…</em> in French, the past continuous is probably right. If you would use the passé composé for a single event, use the simple past.</p>
+  </div>
+
+  <div class="trap">
+    <span class="label">Verbs that don't take -ing</span>
+    <p>Verbs about states rather than actions stay in the simple past, even when the situation lasted a long time: <em>know, want, need, like, love, hate, believe, understand, mean, own, seem, belong</em>.</p>
+    <div class="pair"><span class="no">✗</span><span class="wrong">I was knowing the promoter. She was wanting a higher fee.</span></div>
+    <div class="pair"><span class="yes">✓</span><span>I <strong>knew</strong> the promoter. She <strong>wanted</strong> a higher fee.</span></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="perfect">
+  <h2><span class="n">4</span>Simple past or present perfect?</h2>
+  <p class="sub">The passé composé trap, and the one decision that matters most.</p>
+
+  <p>The present perfect is <strong>have / has + past participle</strong>: <em>I've signed, she's released, we haven't seen, have you been?</em> It looks like the passé composé, and that is exactly the problem. The form is similar, but the meaning is not the same.</p>
+
+  <div class="trap">
+    <span class="label">The French trap</span>
+    <div class="pair"><span class="no">✗</span><span class="wrong">I have seen him yesterday.</span></div>
+    <div class="pair"><span class="no">✗</span><span class="wrong">We have played in Amsterdam last October.</span></div>
+    <div class="pair"><span class="yes">✓</span><span>I <strong>saw</strong> him yesterday. We <strong>played</strong> in Amsterdam last October.</span></div>
+    <p style="margin-top:10px">In English, a finished time (<em>yesterday, last October</em>) and the present perfect cannot go together. Never.</p>
+  </div>
+
+  <h3>The decision in one question</h3>
+  <div class="rule-box">
+    <span class="label">Ask yourself</span>
+    <p><strong>Can I say, or does the listener know, <em>when</em> it happened, and is that time finished?</strong><br>Yes → simple past. No, or the time period is still open → present perfect.</p>
+  </div>
+
+  <h3>When to use the present perfect</h3>
+  <p><strong>Experience, with no time given.</strong> Your life up to now is the time period, and it isn't finished.</p>
+  <p><em>I<strong>'ve worked</strong> at ADE three times. <strong>Have</strong> you ever <strong>been</strong> to Tokyo?</em><br>But as soon as you give the time, switch: <em>I <strong>went</strong> in 2023.</em></p>
+
+  <p><strong>An unfinished time period.</strong> <em>Today, this week, this year, so far</em> are still open.</p>
+  <p><em>We<strong>'ve signed</strong> three new artists this year.</em> (the year isn't over)<br><em>We <strong>signed</strong> three new artists last year.</em> (the year is over)</p>
+
+  <p><strong>A past action with a result that matters now.</strong></p>
+  <p><em>I<strong>'ve lost</strong> my phone.</em> (I don't have it now)<br><em>The label <strong>has sent</strong> the contract.</em> (it's here, we can read it)</p>
+
+  <p><strong>A situation that started in the past and continues now,</strong> with <em>for</em> and <em>since</em>.</p>
+  <p><em>I<strong>'ve managed</strong> her <strong>for</strong> four years. We<strong>'ve known</strong> each other <strong>since</strong> 2019.</em></p>
+
+  <div class="trap">
+    <span class="label">The depuis trap</span>
+    <p>French uses the present with <em>depuis</em>. English cannot.</p>
+    <div class="pair"><span class="no">✗</span><span class="wrong">I work with this label since 2021. How long are you a manager?</span></div>
+    <div class="pair"><span class="yes">✓</span><span>I<strong>'ve worked</strong> with this label since 2021. How long <strong>have</strong> you <strong>been</strong> a manager?</span></div>
+    <p style="margin-top:10px">For actions (not states), you will also hear the present perfect continuous: <em>I<strong>'ve been working</strong> on this deal for weeks.</em> Both are correct.</p>
+  </div>
+
+  <h3>Signal words</h3>
+  <div class="markers">
+    <div>
+      <h4 class="past">Simple past</h4>
+      <p>yesterday · last week / month / year · … ago · in 2020 · on Monday · at 9 o'clock · when I was… · when did…?</p>
+    </div>
+    <div>
+      <h4 class="perf">Present perfect</h4>
+      <p>ever · never · already · yet · just · so far · recently · this week / year (unfinished) · for · since · how long…?</p>
+    </div>
+  </div>
+  <p><strong>For</strong> works with both, and the meaning changes: <em>I <strong>lived</strong> in Berlin for two years</em> (I don't live there now). <em>I<strong>'ve lived</strong> in Paris for two years</em> (I still live there).</p>
+
+  <h3>How a real conversation moves</h3>
+  <p>English speakers often open with the present perfect (general, no time), then switch to the simple past as soon as details and times appear.</p>
+  <p><em>— <strong>Have</strong> you ever <strong>played</strong> Dekmantel?<br>— Yes, we <strong>have</strong>. We <strong>played</strong> there in 2022.<br>— How <strong>was</strong> it?<br>— Amazing. The crowd <strong>was</strong> incredible, but it <strong>rained</strong> the whole weekend.</em></p>
+</section>
+
+<!-- 5 -->
+<section id="irregular">
+  <h2><span class="n">5</span>Irregular verbs</h2>
+  <p class="sub">The ones you actually need, grouped by pattern so they're easier to remember.</p>
+
+  <p>Every English verb has three forms: the <strong>base</strong> (<em>take</em>), the <strong>past simple</strong> (<em>took</em>) and the <strong>past participle</strong> (<em>taken</em>), used after <em>have</em>. Regular verbs use <em>-ed</em> for both. Irregular verbs don't, but most of them fall into a few patterns. Learn them in groups, not alphabetically.</p>
+
+  <div class="verb-tools">
+    <div class="chips" role="group" aria-label="Filter by pattern">
+      <button class="chip" data-pat="all" aria-pressed="true">All</button>
+      <button class="chip" data-pat="AAA" aria-pressed="false">put · put · put</button>
+      <button class="chip" data-pat="ABB" aria-pressed="false">buy · bought · bought</button>
+      <button class="chip" data-pat="ABC" aria-pressed="false">take · took · taken</button>
+      <button class="chip" data-pat="ABA" aria-pressed="false">come · came · come</button>
+    </div>
+    <input class="search" type="search" id="verbSearch" placeholder="Find a verb" aria-label="Find a verb">
+    <label class="toggle"><input type="checkbox" id="testMode"> Test myself</label>
+  </div>
+  <p class="pattern-note" id="patternNote">73 common verbs. Tick <em>Test myself</em> to hide the forms, then tap a cell to check.</p>
+
+  <div class="table-wrap">
+    <table class="verbs" id="verbTable">
+      <thead><tr><th>Base</th><th>Past simple</th><th>Past participle</th><th>En français</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p class="count" id="verbCount"></p>
+
+  <div class="trap">
+    <span class="label">Watch the participle</span>
+    <p>With <em>have</em>, use the third column, not the second.</p>
+    <div class="pair"><span class="no">✗</span><span class="wrong">Have you went there? I've wrote the email. She's took the call.</span></div>
+    <div class="pair"><span class="yes">✓</span><span>Have you <strong>been</strong> there? I've <strong>written</strong> the email. She's <strong>taken</strong> the call.</span></div>
+    <p style="margin-top:10px"><em>Go</em> has two participles: <strong>been</strong> (you went and came back) and <strong>gone</strong> (you went and are still there). <em>He's been to Ibiza</em> = experience. <em>He's gone to Ibiza</em> = he's there now.</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="makedo">
+  <h2><span class="n">6</span>Make or do?</h2>
+  <p class="sub">French has one verb, <em>faire</em>. English has two, and sometimes neither.</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Base</th><th>Past simple</th><th>Past participle</th></tr></thead>
+    <tbody>
+      <tr><td><strong>make</strong></td><td>made</td><td>made</td></tr>
+      <tr><td><strong>do</strong></td><td>did</td><td>done</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="colloc">
+    <div class="make">
+      <h4>make</h4>
+      <p class="gist">Creating or producing something. There is a result at the end.</p>
+      <ul>
+        <li>make a decision<span>We made the decision on Friday.</span></li>
+        <li>make a mistake<span>I made a mistake on the invoice.</span></li>
+        <li>make a deal / an offer<span>The label made us an offer.</span></li>
+        <li>make money / a profit / a loss<span>The tour made a small profit.</span></li>
+        <li>make a call<span>I made a few calls this morning.</span></li>
+        <li>make a plan / arrangements<span>Have you made the travel arrangements?</span></li>
+        <li>make progress / a change<span>We've made real progress this month.</span></li>
+        <li>make an effort / a suggestion<span>Can I make a suggestion?</span></li>
+        <li>make an impression<span>He made a great first impression.</span></li>
+        <li>make a list / notes / a playlist<span>She made a playlist for the flight.</span></li>
+        <li>make sure / make sense<span>Make sure the rider is signed.</span></li>
+        <li>make time for / make an exception<span>I'll make time for a call on Monday.</span></li>
+      </ul>
+    </div>
+    <div class="do">
+      <h4>do</h4>
+      <p class="gist">Activities, tasks, work, duties. The focus is the action itself.</p>
+      <ul>
+        <li>do business (with)<span>We've done business with them for years.</span></li>
+        <li>do a job / work<span>You did a great job on the poster.</span></li>
+        <li>do the paperwork / the accounts<span>I did the visa paperwork last night.</span></li>
+        <li>do research<span>Did you do any research on the venue?</span></li>
+        <li>do your best<span>I did my best, but the flight was cancelled.</span></li>
+        <li>do someone a favour<span>Could you do me a favour?</span></li>
+        <li>do well / badly<span>The single did really well in Germany.</span></li>
+        <li>do damage / harm<span>The storm did some damage to the stage.</span></li>
+        <li>do an interview<span>He did an interview with Mixmag.</span></li>
+        <li>do a tour / a gig <em>(informal)</em><span>They did a European tour in spring.</span></li>
+        <li>do exercise / sport<span>I didn't do any sport on tour.</span></li>
+        <li>do something / nothing / anything<span>What did you do at the weekend?</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <span class="label">When you're not sure</span>
+    <p>Ask: <em>is there a new thing at the end?</em> A decision, a deal, a plan, money, a mistake: <strong>make</strong>. Or is it a task you carry out? Work, paperwork, research, a job: <strong>do</strong>. And with general words like <em>something, nothing, everything, what</em>, it's always <strong>do</strong>.</p>
+  </div>
+
+  <h3>When faire is neither make nor do</h3>
+  <p>Many everyday <em>faire</em> expressions use a different verb completely. These are the ones that come up most in your work.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>En français</th><th>In English</th><th>In the past</th></tr></thead>
+    <tbody>
+      <tr><td class="fr">faire une pause</td><td><strong>take</strong> a break</td><td>We took a break after soundcheck.</td></tr>
+      <tr><td class="fr">faire une photo</td><td><strong>take</strong> a photo</td><td>Did you take any photos of the crowd?</td></tr>
+      <tr><td class="fr">faire attention</td><td><strong>pay</strong> attention</td><td>He didn't pay attention to the clause.</td></tr>
+      <tr><td class="fr">faire la fête / une fête</td><td><strong>party</strong> / <strong>have</strong> or <strong>throw</strong> a party</td><td>We threw a party for the release.</td></tr>
+      <tr><td class="fr">faire la queue</td><td><strong>queue</strong> (UK) / <strong>wait in line</strong> (US)</td><td>People queued for two hours.</td></tr>
+      <tr><td class="fr">faire un rêve</td><td><strong>have</strong> a dream</td><td>I had a strange dream last night.</td></tr>
+      <tr><td class="fr">faire connaissance</td><td><strong>get to know</strong> / <strong>meet</strong></td><td>We got to know each other in Berlin.</td></tr>
+      <tr><td class="fr">faire une promenade</td><td><strong>go for</strong> a walk</td><td>I went for a walk before the show.</td></tr>
+      <tr><td class="fr">faire un tour (d'un lieu)</td><td><strong>have a look around</strong></td><td>We had a look around the venue.</td></tr>
+      <tr><td class="fr">faire semblant</td><td><strong>pretend</strong></td><td>He pretended he hadn't seen the email.</td></tr>
+      <tr><td class="fr">faire mal</td><td><strong>hurt</strong></td><td>My back hurt after the flight.</td></tr>
+      <tr><td class="fr">faire la cuisine / les courses</td><td><strong>cook</strong> / <strong>do</strong> the shopping</td><td>I did the shopping on Saturday.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="seelook">
+  <h2><span class="n">7</span>See, look or watch?</h2>
+  <p class="sub">French splits these between <em>voir</em> and <em>regarder</em>. English uses three verbs, and the difference is about attention and movement.</p>
+
+  <div class="svw">
+    <div>
+      <h4>see</h4>
+      <p class="forms">see · saw · seen</p>
+      <p>Your eyes are open and something comes into view. You don't have to try. Also used for meeting people and for understanding.</p>
+      <p class="eg">I saw him at the festival.<br>I see what you mean.</p>
+    </div>
+    <div>
+      <h4>look (at)</h4>
+      <p class="forms">look · looked · looked</p>
+      <p>You choose to direct your eyes at something, usually still and usually for a short time. Needs <strong>at</strong> before the object.</p>
+      <p class="eg">Look at this contract.<br>I looked at the poster.</p>
+    </div>
+    <div>
+      <h4>watch</h4>
+      <p class="forms">watch · watched · watched</p>
+      <p>You pay attention over time to something that moves, changes or happens: a film, a match, a set, a person.</p>
+      <p class="eg">We watched the whole set.<br>Did you watch the match?</p>
+    </div>
+  </div>
+
+  <div class="trap">
+    <span class="label">The regarder trap</span>
+    <div class="pair"><span class="no">✗</span><span class="wrong">I looked the TV last night. Look this photo.</span></div>
+    <div class="pair"><span class="yes">✓</span><span>I <strong>watched</strong> TV last night. <strong>Look at</strong> this photo.</span></div>
+    <p style="margin-top:10px"><em>Regarder la télé / un film / un match</em> → <strong>watch</strong>. <em>Regarder une photo / un document / quelqu'un</em> (briefly) → <strong>look at</strong>.</p>
+  </div>
+
+  <h3>The small differences that matter</h3>
+  <p><strong>Films.</strong> You <strong>see</strong> a film at the cinema (<em>We saw the new Villeneuve film</em>) and <strong>watch</strong> a film at home. Both are common for a film you've seen in general: <em>Have you seen / watched it?</em></p>
+  <p><strong>Live performances.</strong> <em>I <strong>saw</strong> Peggy Gou play in 2019</em> (the experience). <em>I <strong>watched</strong> her set from the side of the stage</em> (paying attention the whole time). After <em>see / watch someone</em>, use the base verb or -ing: <em>I saw her <strong>play</strong> / <strong>playing</strong>.</em></p>
+  <p><strong>Look = seem.</strong> Without <em>at</em>, <em>look</em> + adjective describes how something appears: <em>You <strong>look</strong> tired. The new artwork <strong>looks</strong> great.</em></p>
+  <p><strong>Keep an eye on.</strong> <em>Can you <strong>watch</strong> my bag for a minute?</em> means <em>surveiller</em>. For people or things you take care of longer, use <strong>look after</strong>: <em>She looked after the artists on tour.</em></p>
+  <p><strong>Looking for.</strong> <em>Chercher</em> is <strong>look for</strong>: <em>I'm looking for my headphones. Have you seen them?</em></p>
+
+  <div class="rule-box">
+    <span class="label">The same logic for sound</span>
+    <p><strong>hear</strong> (heard) is like <em>see</em>: it just arrives. <strong>listen to</strong> (listened) is like <em>watch</em>: you pay attention. <em>I <strong>heard</strong> a noise. I <strong>listened to</strong> the new track three times.</em></p>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="practice">
+  <h2><span class="n">8</span>Practice</h2>
+  <p class="sub">Each exercise checks itself. Try every answer before you look at the explanation.</p>
+
+  <div class="exercise" id="exStory">
+    <div class="ex-head"><h3>A. A night at ADE</h3><span class="score" data-score></span></div>
+    <p class="ex-intro">A short story. Choose the right tense for each gap: simple past, past continuous or present perfect.</p>
+    <div class="items"></div>
+    <button class="reset" type="button">Start again</button>
+  </div>
+
+  <div class="exercise" id="exWhich">
+    <div class="ex-head"><h3>B. Which one is right?</h3><span class="score" data-score></span></div>
+    <p class="ex-intro">Each pair has one correct sentence and one typical mistake. Choose the correct one.</p>
+    <div class="items"></div>
+    <button class="reset" type="button">Start again</button>
+  </div>
+
+  <div class="exercise" id="exIrregular">
+    <div class="ex-head"><h3>C. Irregular forms</h3><span class="score" data-score></span></div>
+    <p class="ex-intro">Type the past simple and the past participle, then check.</p>
+    <div class="typein headrow"><span>Base</span><span>Past simple</span><span>Past participle</span><span></span></div>
+    <div class="items"></div>
+    <button class="btn" type="button" data-check>Check my answers</button>
+    <button class="btn ghost" type="button" data-clear>Clear</button>
+  </div>
+
+  <div class="exercise" id="exMakeDo">
+    <div class="ex-head"><h3>D. Make or do?</h3><span class="score" data-score></span></div>
+    <p class="ex-intro">Choose the right verb, in the right form.</p>
+    <div class="items"></div>
+    <button class="reset" type="button">Start again</button>
+  </div>
+
+  <div class="exercise" id="exFaire">
+    <div class="ex-head"><h3>E. Careful: faire</h3><span class="score" data-score></span></div>
+    <p class="ex-intro">These all use <em>faire</em> in French. Which verb does English use?</p>
+    <div class="items"></div>
+    <button class="reset" type="button">Start again</button>
+  </div>
+
+  <div class="exercise" id="exSee">
+    <div class="ex-head"><h3>F. See, look or watch?</h3><span class="score" data-score></span></div>
+    <p class="ex-intro">Choose the best verb for each sentence.</p>
+    <div class="items"></div>
+    <button class="reset" type="button">Start again</button>
+  </div>
+</section>
+
+<!-- 9 -->
+<section id="speak">
+  <h2><span class="n">9</span>Speak it</h2>
+  <p class="sub">Answer out loud, in full sentences. Aim for one minute each. The tools under each prompt are the structures to use.</p>
+
+  <ol class="prompts">
+    <li><div><p class="p">Tell me about the last show you went to. Where were you, what was happening around you, and what happened that you remember?</p><p class="tools">past continuous for the scene · simple past for the events · when / while</p></div></li>
+    <li><div><p class="p">What have you done this week so far? What did you do yesterday?</p><p class="tools">present perfect for the open week · simple past for yesterday</p></div></li>
+    <li><div><p class="p">Describe a problem on tour. What were you doing when you found out, and what did you do next?</p><p class="tools">was / were + -ing · when · then, after that, in the end</p></div></li>
+    <li><div><p class="p">Talk about one of your artists. How long have you worked together, and how did you first meet?</p><p class="tools">for / since + present perfect · simple past for the first meeting</p></div></li>
+    <li><div><p class="p">What's the best decision you've made in your career? When did you make it, and why?</p><p class="tools">make a decision · made / have made · irregular verbs</p></div></li>
+    <li><div><p class="p">Which artists have you seen live more than once? Tell me about the first time you saw one of them.</p><p class="tools">have seen (experience) · saw (the first time) · watched the set</p></div></li>
+    <li><div><p class="p">Tell me about a deal that didn't work. What did you do, what mistakes did you make, and what have you done differently since?</p><p class="tools">do / make · didn't + base verb · since then + present perfect</p></div></li>
+  </ol>
+</section>
+
+<footer>Thibault's notebook · English with Craig</footer>
+
+</div>
+</main>
+</div>
+
+<script>
+(function(){
+  /* ---------------- irregular verbs ---------------- */
+  var VERBS = [
+    // AAA
+    ["put","put","put","mettre","AAA"],["cut","cut","cut","couper","AAA"],["cost","cost","cost","coûter","AAA"],
+    ["hit","hit","hit","frapper","AAA"],["let","let","let","laisser","AAA"],["set","set","set","fixer, régler","AAA"],
+    ["shut","shut","shut","fermer","AAA"],["quit","quit","quit","arrêter, quitter","AAA"],["hurt","hurt","hurt","faire mal, blesser","AAA"],
+    ["read","read","read","lire (past: say “red”)","AAA"],
+    // ABB
+    ["bring","brought","brought","apporter","ABB"],["buy","bought","bought","acheter","ABB"],["think","thought","thought","penser","ABB"],
+    ["teach","taught","taught","enseigner","ABB"],["catch","caught","caught","attraper","ABB"],["fight","fought","fought","se battre","ABB"],
+    ["send","sent","sent","envoyer","ABB"],["spend","spent","spent","dépenser, passer (du temps)","ABB"],["lend","lent","lent","prêter","ABB"],
+    ["build","built","built","construire","ABB"],["keep","kept","kept","garder","ABB"],["sleep","slept","slept","dormir","ABB"],
+    ["feel","felt","felt","sentir, ressentir","ABB"],["meet","met","met","rencontrer","ABB"],["leave","left","left","partir, laisser","ABB"],
+    ["lose","lost","lost","perdre","ABB"],["mean","meant","meant","signifier, vouloir dire","ABB"],["lead","led","led","diriger, mener","ABB"],
+    ["say","said","said","dire","ABB"],["pay","paid","paid","payer","ABB"],["make","made","made","faire, fabriquer","ABB"],
+    ["hear","heard","heard","entendre","ABB"],["sell","sold","sold","vendre","ABB"],["tell","told","told","dire, raconter","ABB"],
+    ["find","found","found","trouver","ABB"],["have","had","had","avoir","ABB"],["get","got","got","obtenir, recevoir (US: gotten)","ABB"],
+    ["hold","held","held","tenir, organiser","ABB"],["stand","stood","stood","être debout","ABB"],["understand","understood","understood","comprendre","ABB"],
+    ["sit","sat","sat","s'asseoir","ABB"],["win","won","won","gagner","ABB"],
+    // ABC
+    ["be","was / were","been","être","ABC"],["go","went","gone / been","aller","ABC"],["do","did","done","faire","ABC"],
+    ["see","saw","seen","voir","ABC"],["take","took","taken","prendre","ABC"],["give","gave","given","donner","ABC"],
+    ["write","wrote","written","écrire","ABC"],["speak","spoke","spoken","parler","ABC"],["break","broke","broken","casser","ABC"],
+    ["choose","chose","chosen","choisir","ABC"],["forget","forgot","forgotten","oublier","ABC"],["drive","drove","driven","conduire","ABC"],
+    ["ride","rode","ridden","faire du vélo, monter","ABC"],["eat","ate","eaten","manger","ABC"],["fall","fell","fallen","tomber","ABC"],
+    ["know","knew","known","savoir, connaître","ABC"],["grow","grew","grown","grandir, cultiver","ABC"],["throw","threw","thrown","lancer, jeter","ABC"],
+    ["fly","flew","flown","voler, prendre l'avion","ABC"],["draw","drew","drawn","dessiner, attirer (a crowd)","ABC"],["wake","woke","woken","se réveiller","ABC"],
+    ["begin","began","begun","commencer","ABC"],["drink","drank","drunk","boire","ABC"],["sing","sang","sung","chanter","ABC"],
+    ["ring","rang","rung","sonner, appeler","ABC"],["swim","swam","swum","nager","ABC"],["wear","wore","worn","porter (vêtements)","ABC"],
+    ["show","showed","shown","montrer","ABC"],
+    // ABA
+    ["come","came","come","venir","ABA"],["become","became","become","devenir","ABA"],["run","ran","run","courir, gérer","ABA"]
+  ];
+  var NOTES = {
+    all:"73 common verbs. Tick <em>Test myself</em> to hide the forms, then tap a cell to check.",
+    AAA:"All three forms are the same. The easiest group: nothing to learn except that they don't take -ed.",
+    ABB:"Past simple and participle are the same. Learn them in sound families: <em>bought, brought, thought, taught, caught</em> · <em>sent, spent, lent, built</em> · <em>kept, slept, felt, met, left</em>.",
+    ABC:"Three different forms. Many participles end in <em>-en</em> (taken, written, chosen) or change i → a → u (begin, began, begun).",
+    ABA:"The participle goes back to the base form. Only a few verbs, but very frequent ones."
+  };
+  var tbody = document.querySelector("#verbTable tbody");
+  var table = document.getElementById("verbTable");
+  var currentPat = "all";
+  function renderVerbs(){
+    var q = (document.getElementById("verbSearch").value || "").trim().toLowerCase();
+    var html = "", n = 0;
+    VERBS.forEach(function(v){
+      if (currentPat !== "all" && v[4] !== currentPat) return;
+      if (q && (v[0]+" "+v[1]+" "+v[2]+" "+v[3]).toLowerCase().indexOf(q) === -1) return;
+      n++;
+      html += "<tr><td><strong>"+v[0]+"</strong></td><td class='form' tabindex='0'><span class='val'>"+v[1]+"</span></td><td class='form' tabindex='0'><span class='val'>"+v[2]+"</span></td><td class='fr'>"+v[3]+"</td></tr>";
+    });
+    tbody.innerHTML = html || "<tr><td colspan='4'><em>No verb matches that search.</em></td></tr>";
+    document.getElementById("verbCount").textContent = n + (n === 1 ? " verb shown" : " verbs shown");
+  }
+  document.querySelectorAll(".chip").forEach(function(c){
+    c.addEventListener("click", function(){
+      document.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed","false")});
+      c.setAttribute("aria-pressed","true");
+      currentPat = c.getAttribute("data-pat");
+      document.getElementById("patternNote").innerHTML = NOTES[currentPat];
+      renderVerbs();
+    });
+  });
+  document.getElementById("verbSearch").addEventListener("input", renderVerbs);
+  document.getElementById("testMode").addEventListener("change", function(e){
+    table.classList.toggle("testing", e.target.checked);
+    tbody.querySelectorAll("td.form").forEach(function(td){td.classList.remove("shown")});
+  });
+  function revealCell(e){
+    var td = e.target.closest("td.form");
+    if (td && table.classList.contains("testing")) td.classList.toggle("shown");
+  }
+  tbody.addEventListener("click", revealCell);
+  tbody.addEventListener("keydown", function(e){ if (e.key === "Enter" || e.key === " "){ e.preventDefault(); revealCell(e); } });
+  renderVerbs();
+
+  /* ---------------- choice exercises ---------------- */
+  function shuffle(a){ a = a.slice(); for (var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+
+  var STORY = [
+    {s:"Last October, I ___ two of my artists to Amsterdam Dance Event.", o:["took","have taken","was taking"], a:"took", e:"<b>Last October</b> is a finished time, so simple past. <em>Have taken</em> is the passé composé trap."},
+    {s:"On the first night, while we ___ to the venue, the promoter called me.", o:["were driving","drove","have driven"], a:"were driving", e:"<b>While</b> + the longer action in progress, interrupted by the call: past continuous."},
+    {s:"He ___ that the sound system had a problem.", o:["said","was saying","has said"], a:"said", e:"A single, complete event in the story: simple past."},
+    {s:"When we got to the club, the technicians ___ on the mixer.", o:["were still working","still worked","have still worked"], a:"were still working", e:"The work was in progress when we arrived: past continuous for the background action."},
+    {s:"My artist ___ to start late, so she was very stressed.", o:["didn't want","wasn't wanting","hasn't wanted"], a:"didn't want", e:"<b>Want</b> is a state verb, so it doesn't take -ing. Negative simple past: <em>didn't</em> + base verb."},
+    {s:"In the end, the set ___ forty minutes late, but it was fantastic.", o:["started","was starting","has started"], a:"started", e:"A finished event at a finished time in the story: simple past."},
+    {s:"Since then, I ___ with that promoter three more times.", o:["have worked","worked","was working"], a:"have worked", e:"<b>Since then</b> means from that time until now, so present perfect."},
+    {s:"It's still the most stressful night I ___ in this job.", o:["have ever had","was ever having","have ever have"], a:"have ever had", e:"Superlative + <b>ever</b> covers your whole career up to now: present perfect with the participle <em>had</em>."},
+    {s:"And this year? We ___ two shows there already, and the festival isn't over.", o:["have played","played","were playing"], a:"have played", e:"<b>This year</b> is unfinished and <b>already</b> is a present perfect signal."}
+  ];
+
+  var WHICH = [
+    {o:["I saw him yesterday.","I have seen him yesterday."], a:"I saw him yesterday.", e:"<b>Yesterday</b> is finished time. The present perfect is never used with a finished time."},
+    {o:["Did you sign the contract?","Did you signed the contract?"], a:"Did you sign the contract?", e:"<b>Did</b> carries the past, so the main verb stays in its base form."},
+    {o:["I've worked with this label since 2021.","I work with this label since 2021."], a:"I've worked with this label since 2021.", e:"The depuis trap. Past to now with <b>since</b>: present perfect, not present."},
+    {o:["We didn't know about the delay.","We didn't knew about the delay."], a:"We didn't know about the delay.", e:"<b>Didn't</b> + base verb. Only one past form per verb."},
+    {o:["She wanted a higher fee.","She was wanting a higher fee."], a:"She wanted a higher fee.", e:"<b>Want</b> is a state verb: no -ing form."},
+    {o:["How long have you been a manager?","How long are you a manager?"], a:"How long have you been a manager?", e:"<b>How long</b> for a situation that continues now: present perfect."},
+    {o:["I was in Berlin last year.","I've been in Berlin last year."], a:"I was in Berlin last year.", e:"<b>Last year</b> is finished time: simple past."},
+    {o:["While I was waiting for the taxi, it started to rain.","While I waited for the taxi, it was starting to rain."], a:"While I was waiting for the taxi, it started to rain.", e:"The long background action (waiting) is continuous. The short event (the rain starting) is simple past."},
+    {o:["Have you written the press release?","Have you wrote the press release?"], a:"Have you written the press release?", e:"After <b>have</b>, use the past participle (third column): <em>written</em>."},
+    {o:["I made a mistake in the email.","I did a mistake in the email."], a:"I made a mistake in the email.", e:"It's always <b>make</b> a mistake."}
+  ];
+
+  var MAKEDO = [
+    {s:"We ___ a deal with the label last week.", o:["made","did"], a:"made", e:"<b>make</b> a deal: the result is an agreement."},
+    {s:"She ___ a great job on the tour poster.", o:["did","made"], a:"did", e:"<b>do</b> a job."},
+    {s:"I think I ___ a mistake on the invoice.", o:["made","did"], a:"made", e:"<b>make</b> a mistake, always."},
+    {s:"They ___ a lot of research before choosing the venue.", o:["did","made"], a:"did", e:"<b>do</b> research: an activity."},
+    {s:"He ___ a lot of money from that single.", o:["made","did"], a:"made", e:"<b>make</b> money."},
+    {s:"My colleague ___ me a huge favour yesterday.", o:["did","made"], a:"did", e:"<b>do</b> someone a favour."},
+    {s:"We ___ real progress this month.", o:["have made","have done"], a:"have made", e:"<b>make</b> progress. Present perfect because <em>this month</em> isn't finished."},
+    {s:"I ___ the visa paperwork last night.", o:["did","made"], a:"did", e:"<b>do</b> the paperwork: a task."},
+    {s:"The new booking agent ___ a very good impression.", o:["made","did"], a:"made", e:"<b>make</b> an impression."},
+    {s:"The storm ___ serious damage to the main stage.", o:["did","made"], a:"did", e:"<b>do</b> damage."},
+    {s:"What ___ you ___ at the weekend?", o:["did … do","did … make"], a:"did … do", e:"General activity with <b>what</b>: <em>do</em>. Question form: <em>did</em> + base verb <em>do</em>."},
+    {s:"Have you ___ a decision about the Berlin offer yet?", o:["made","done"], a:"made", e:"<b>make</b> a decision. <em>Yet</em> + present perfect, participle <em>made</em>."}
+  ];
+
+  var FAIRE = [
+    {s:"We ___ a short break after soundcheck.", o:["took","made","did","had"], a:"took", e:"<em>Faire une pause</em> → <b>take</b> a break."},
+    {s:"Did you ___ any photos of the crowd?", o:["take","make","do","have"], a:"take", e:"<em>Faire une photo</em> → <b>take</b> a photo."},
+    {s:"He didn't ___ attention to the cancellation clause.", o:["pay","make","do","give"], a:"pay", e:"<em>Faire attention</em> → <b>pay</b> attention."},
+    {s:"We ___ a party for the album release.", o:["threw","made","did","took"], a:"threw", e:"<em>Faire une fête</em> → <b>throw</b> (or <b>have</b>) a party."},
+    {s:"I ___ for a walk along the canal before the show.", o:["went","made","did","took"], a:"went", e:"<em>Faire une promenade</em> → <b>go for</b> a walk."},
+    {s:"We ___ each other at a festival in 2018.", o:["got to know","made knowledge of","did the acquaintance of","made to know"], a:"got to know", e:"<em>Faire connaissance</em> → <b>get to know</b> (or simply <b>meet</b>)."},
+    {s:"I ___ a strange dream about the tour last night.", o:["had","made","did","took"], a:"had", e:"<em>Faire un rêve</em> → <b>have</b> a dream."}
+  ];
+
+  var SEE = [
+    {s:"Did you ___ the match last night?", o:["watch","look","see at"], a:"watch", e:"A match happens over time and you follow it: <b>watch</b>."},
+    {s:"___ at this contract. The dates are wrong.", o:["Look","Watch","See"], a:"Look", e:"Directing your eyes at a document: <b>look at</b>."},
+    {s:"I first ___ him play at a small club in 2019.", o:["saw","looked","watched at"], a:"saw", e:"The experience of seeing a performance: <b>see</b> someone play. Past: <em>saw</em>."},
+    {s:"We ___ the whole set from the side of the stage.", o:["watched","looked","saw at"], a:"watched", e:"Paying attention for the whole performance: <b>watch</b>."},
+    {s:"You ___ tired. Did you sleep on the plane?", o:["look","watch","see"], a:"look", e:"<b>Look</b> + adjective = seem."},
+    {s:"I'm ___ for my passport. Have you ___ it?", o:["looking … seen","watching … looked","seeing … watched"], a:"looking … seen", e:"<em>Chercher</em> = <b>look for</b>. Noticing something = <b>see</b>, participle <em>seen</em>."},
+    {s:"Can you ___ my bag while I get a drink?", o:["watch","look","see"], a:"watch", e:"Keep an eye on something for a short time: <b>watch</b>."},
+    {s:"I ___ you at the festival, but I didn't have time to say hello.", o:["saw","watched","looked"], a:"saw", e:"You noticed the person without planning to: <b>see</b>."},
+    {s:"Have you ___ my email about the rider?", o:["seen","watched","looked"], a:"seen", e:"Noticing or receiving something: <b>see</b>. After <em>have</em>: <em>seen</em>."}
+  ];
+
+  function buildChoice(rootId, data, mode){
+    var root = document.getElementById(rootId);
+    var itemsEl = root.querySelector(".items");
+    var scoreEl = root.querySelector("[data-score]");
+    var answered = 0, correct = 0;
+    function updateScore(){ scoreEl.textContent = correct + " / " + data.length + (answered === data.length ? " — finished" : ""); }
+    function render(){
+      answered = 0; correct = 0; itemsEl.innerHTML = "";
+      data.forEach(function(d, i){
+        var item = document.createElement("div"); item.className = "item";
+        var q = document.createElement("p"); q.className = "q";
+        var num = "<span class='num'>"+(i+1)+".</span>";
+        if (mode === "pair"){ q.innerHTML = num; }
+        else { q.innerHTML = num + d.s.replace("___", "<span class='blank'>&nbsp;</span>"); }
+        item.appendChild(q);
+        var opts = document.createElement("div"); opts.className = "opts";
+        var fb = document.createElement("div"); fb.className = "feedback"; fb.hidden = true;
+        shuffle(d.o).forEach(function(o){
+          var b = document.createElement("button"); b.type = "button";
+          b.className = "opt" + (mode === "pair" ? " full" : ""); b.textContent = o;
+          b.addEventListener("click", function(){
+            var ok = (o === d.a);
+            opts.querySelectorAll("button").forEach(function(x){
+              x.disabled = true;
+              if (x.textContent === d.a) x.classList.add("correct");
+            });
+            if (!ok) b.classList.add("chosen-wrong");
+            var blank = q.querySelector(".blank");
+            if (blank){ blank.textContent = d.a; blank.classList.add(ok ? "ok" : "bad"); }
+            fb.hidden = false; fb.className = "feedback " + (ok ? "ok" : "bad");
+            fb.innerHTML = (ok ? "<b>Right.</b> " : "<b>Not quite.</b> ") + d.e;
+            answered++; if (ok) correct++; updateScore();
+          });
+          opts.appendChild(b);
+        });
+        item.appendChild(opts); item.appendChild(fb);
+        itemsEl.appendChild(item);
+      });
+      updateScore();
+    }
+    root.querySelector(".reset").addEventListener("click", render);
+    render();
+  }
+  buildChoice("exStory", STORY);
+  buildChoice("exWhich", WHICH, "pair");
+  buildChoice("exMakeDo", MAKEDO);
+  buildChoice("exFaire", FAIRE);
+  buildChoice("exSee", SEE);
+
+  /* ---------------- type-in irregulars ---------------- */
+  var TYPE = [
+    ["bring",["brought"],["brought"]],["think",["thought"],["thought"]],["catch",["caught"],["caught"]],
+    ["lose",["lost"],["lost"]],["pay",["paid"],["paid"]],["leave",["left"],["left"]],
+    ["choose",["chose"],["chosen"]],["forget",["forgot"],["forgotten"]],["write",["wrote"],["written"]],
+    ["fall",["fell"],["fallen"]],["begin",["began"],["begun"]],["fly",["flew"],["flown"]]
+  ];
+  (function(){
+    var root = document.getElementById("exIrregular");
+    var itemsEl = root.querySelector(".items");
+    var scoreEl = root.querySelector("[data-score]");
+    function norm(s){ return s.trim().toLowerCase().replace(/\s+/g," "); }
+    TYPE.forEach(function(t){
+      var row = document.createElement("div"); row.className = "typein";
+      row.innerHTML = "<span class='base'>"+t[0]+"</span>"+
+        "<input type='text' autocomplete='off' autocapitalize='off' spellcheck='false' aria-label='Past simple of "+t[0]+"'>"+
+        "<input type='text' autocomplete='off' autocapitalize='off' spellcheck='false' aria-label='Past participle of "+t[0]+"'>"+
+        "<span class='mark' aria-live='polite'></span><span class='reveal' hidden></span>";
+      itemsEl.appendChild(row);
+    });
+    scoreEl.textContent = "0 / " + TYPE.length;
+    root.querySelector("[data-check]").addEventListener("click", function(){
+      var score = 0;
+      itemsEl.querySelectorAll(".typein").forEach(function(row, i){
+        var ins = row.querySelectorAll("input");
+        var ok1 = TYPE[i][1].indexOf(norm(ins[0].value)) > -1;
+        var ok2 = TYPE[i][2].indexOf(norm(ins[1].value)) > -1;
+        ins[0].className = ok1 ? "ok" : "bad"; ins[1].className = ok2 ? "ok" : "bad";
+        var mark = row.querySelector(".mark"), rev = row.querySelector(".reveal");
+        if (ok1 && ok2){ score++; mark.textContent = "✓"; mark.style.color = "var(--sage)"; rev.hidden = true; }
+        else { mark.textContent = "✗"; mark.style.color = "var(--burgundy)"; rev.hidden = false; rev.textContent = t0(i); }
+      });
+      scoreEl.textContent = score + " / " + TYPE.length;
+    });
+    function t0(i){ return TYPE[i][0] + " · " + TYPE[i][1][0] + " · " + TYPE[i][2][0]; }
+    root.querySelector("[data-clear]").addEventListener("click", function(){
+      itemsEl.querySelectorAll("input").forEach(function(x){ x.value = ""; x.className = ""; });
+      itemsEl.querySelectorAll(".mark").forEach(function(x){ x.textContent = ""; });
+      itemsEl.querySelectorAll(".reveal").forEach(function(x){ x.hidden = true; });
+      scoreEl.textContent = "0 / " + TYPE.length;
+    });
+  })();
+
+  /* ---------------- toc highlighting ---------------- */
+  if ("IntersectionObserver" in window){
+    var links = {};
+    document.querySelectorAll("nav.toc a").forEach(function(a){ links[a.getAttribute("href").slice(1)] = a; });
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){
+          Object.keys(links).forEach(function(k){ links[k].classList.remove("active"); });
+          if (links[en.target.id]) links[en.target.id].classList.add("active");
+        }
+      });
+    }, {rootMargin:"-30% 0px -60% 0px"});
+    document.querySelectorAll("main section").forEach(function(s){ obs.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
