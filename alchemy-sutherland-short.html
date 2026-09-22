@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Logic of Magic — three clips · B1–B2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Lora:ital,wght@0,400..700;1,400..600&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f4ede0;--cream-deep:#ebe1cf;--navy:#1d2438;--navy-soft:#5a607a;--rust:#a83232;--teal:#2b6b6b;--rule:#c9b896}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--cream);color:var(--navy);font-family:'Lora',Georgia,serif;font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:34px 22px 80px}
+h1,h2{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-variation-settings:"SOFT" 80}
+h1{font-size:clamp(42px,8vw,76px);line-height:.95;letter-spacing:-.025em}
+h2{font-size:clamp(26px,4vw,34px);line-height:1.1}
+p{margin-bottom:10px}
+.scorebar{position:sticky;top:0;z-index:20;background:var(--navy);color:var(--cream);padding:10px 22px;padding-top:calc(10px + env(safe-area-inset-top,0px));display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:14px}
+.scorebar .score{font-family:'Fraunces',serif;font-style:italic;font-size:18px}
+.scorebar b{font-style:normal;font-weight:600}
+.meter{flex:1;min-width:100px;height:6px;background:rgba(244,237,224,.2);border-radius:3px;overflow:hidden}
+.meter span{display:block;height:100%;width:0;background:var(--teal);transition:width .3s}
+.bar-btns{display:flex;gap:8px}
+.bar-btns button{background:transparent;border:1px solid rgba(244,237,224,.45);color:var(--cream);font:inherit;font-size:13px;padding:5px 11px;border-radius:2px;cursor:pointer}
+.bar-btns button[aria-pressed="true"]{background:var(--cream);color:var(--navy)}
+header{padding:30px 0 24px;border-bottom:1px solid var(--rule);margin-bottom:28px}
+.kicker{font-size:14px;color:var(--navy-soft);margin-bottom:10px}
+.dek{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(17px,2.3vw,20px);color:var(--navy-soft);margin-top:14px}
+section{margin-bottom:44px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:14px;flex-wrap:wrap}
+.badge{font-size:12.5px;padding:3px 10px;border-radius:20px;background:var(--cream-deep);border:1px solid var(--rule);color:var(--navy-soft);white-space:nowrap}
+.panel{background:var(--cream-deep);border:1px solid var(--rule);border-radius:2px;padding:18px 20px;margin:14px 0}
+.panel.task{border-left:3px solid var(--rust)}
+.task-title{font-weight:600;margin-bottom:6px}
+.clip{background:var(--navy);color:var(--cream);border-radius:2px;margin:12px 0 16px;padding:6px 20px}
+.clip a{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;color:inherit;text-decoration:none;padding:10px 0}
+.clip a+a{border-top:1px solid rgba(244,237,224,.2)}
+.clip .play{display:inline-flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;background:var(--cream);color:var(--navy);font-size:18px}
+.clip a:hover .play{background:var(--teal);color:#fff}
+.clip .time{font-family:'Fraunces',serif;font-style:italic;font-size:24px;line-height:1.1}
+.clip .sub{font-size:13.5px;opacity:.78}
+ol.listen{margin:4px 0 0 22px}
+ol.listen li{margin-bottom:4px}
+.words{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.words span{border:1px solid var(--rule);background:var(--cream);border-radius:2px;padding:5px 10px;font-size:14.5px}
+.words span b{font-family:'Fraunces',serif;font-weight:600}
+.q{padding:10px 0;border-bottom:1px dotted var(--rule)}
+.q:last-child{border-bottom:none}
+.q .stem{margin-bottom:6px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts button{font:inherit;font-size:14.5px;padding:6px 13px;background:var(--cream);border:1px solid var(--rule);border-radius:2px;cursor:pointer;color:var(--navy);text-align:left}
+.opts button:hover{border-color:var(--navy)}
+.opts button.right{background:var(--teal);color:#fff;border-color:var(--teal)}
+.opts button.wrong{background:rgba(168,50,50,.1);border-color:var(--rust);color:var(--rust)}
+.feedback{font-size:14px;color:var(--navy-soft);font-style:italic;margin-top:4px;min-height:1em}
+.idioms{list-style:none}
+.idioms li{padding:8px 0;border-bottom:1px dotted var(--rule);font-size:15.5px}
+.idioms li:last-child{border-bottom:none}
+.idioms b{font-family:'Fraunces',serif;font-weight:600;font-size:17px}
+.idioms i{color:var(--navy-soft)}
+.ts{display:inline-block;min-width:50px;font-size:13px;text-decoration:none;color:var(--cream);background:var(--teal);border-radius:2px;padding:1px 6px;margin-right:6px;text-align:center}
+.ts:hover{background:var(--navy)}
+.rule-box{border-left:3px solid var(--teal);padding:4px 0 4px 14px;margin:10px 0 12px;font-size:15.5px}
+.rule-box em{color:var(--teal);font-style:normal;font-weight:600}
+textarea{width:100%;min-height:120px;font:inherit;font-size:15.5px;line-height:1.6;padding:12px;background:var(--cream);border:1px solid var(--rule);border-radius:2px;color:var(--navy);resize:vertical}
+textarea:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.stance{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.stance button{font:inherit;font-size:13.5px;padding:5px 12px;border:1px solid var(--rule);background:var(--cream);border-radius:20px;cursor:pointer;color:var(--navy)}
+.stance button[aria-pressed="true"]{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+.claim{padding:10px 0;border-bottom:1px dotted var(--rule)}
+.claim:last-child{border-bottom:none}
+.c1{display:none}
+body.stretch .c1{display:block}
+body.stretch li.c1{display:list-item}
+.c1-tag{font-size:12px;color:var(--rust);border:1px solid var(--rust);border-radius:20px;padding:1px 8px;margin-right:6px}
+details.key{margin-top:50px;border:1px solid var(--navy);border-radius:2px}
+details.key summary{cursor:pointer;padding:12px 18px;font-family:'Fraunces',serif;font-style:italic;font-size:19px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+details.key summary::-webkit-details-marker{display:none}
+.noshare{font-family:'Lora',serif;font-style:normal;font-size:12.5px;background:var(--rust);color:#fff;padding:3px 10px;border-radius:20px}
+.key-body{padding:2px 20px 20px;font-size:15px}
+.key-body h4{font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:17px;margin:14px 0 4px;color:var(--teal)}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);text-align:center;font-family:'Fraunces',serif;font-style:italic;font-size:13.5px;color:var(--navy-soft)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{.scorebar,details.key{display:none}body{background:#fff}.clip{background:#fff;color:var(--navy);border:1px solid var(--navy)}}
+</style>
+</head>
+<body>
+
+<div class="scorebar" role="region" aria-label="Score">
+  <div class="score">Score <b id="score">0</b> / <b id="total">0</b></div>
+  <div class="meter" aria-hidden="true"><span id="meter"></span></div>
+  <div class="bar-btns">
+    <button type="button" id="stretchBtn" aria-pressed="false">C1 stretch</button>
+    <button type="button" id="resetBtn">Reset</button>
+  </div>
+</div>
+
+<div class="wrap">
+<header>
+  <p class="kicker">Business English, B1–B2 · three short clips · about 45 minutes</p>
+  <h1>The logic of magic</h1>
+  <p class="dek">Rory Sutherland, of the advertising agency Ogilvy, argues that people don't behave logically, so the best business ideas often don't look logical either. His 2019 book is called <em>Alchemy</em>: creating value by changing how people see things, not the things themselves.</p>
+</header>
+
+<section>
+  <div class="sec-head"><h2>Clip 1 · Psychology beats logic</h2><span class="badge">12 min</span></div>
+  <div class="panel task">
+    <p class="task-title">Listen for</p>
+    <ol class="listen">
+      <li>What problem does Churchill solve at the banquet, and how?</li>
+      <li>What could the UK have done instead of spending £6 billion on a faster train to Paris?</li>
+    </ol>
+  </div>
+  <div class="clip" data-clip="0"></div>
+  <div class="words">
+    <span><b>take the hit</b> · accept a loss</span>
+    <span><b>spotted</b> · seen, noticed</span>
+    <span><b>put back</b> · return</span>
+    <span><b>quantity</b> vs. <b>quality</b></span>
+  </div>
+  <div class="panel"><div id="q1"></div></div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Clip 2 · Change the story</h2><span class="badge">12 min</span></div>
+  <div class="panel task">
+    <p class="task-title">Listen for</p>
+    <ol class="listen">
+      <li>Why did James Watt invent "horsepower"?</li>
+      <li>What happened when London's rail lines were added to the Tube map?</li>
+    </ol>
+  </div>
+  <div class="clip" data-clip="1"></div>
+  <div class="words">
+    <span><b>get rid of</b> · remove</span>
+    <span><b>do your head in</b> · confuse, frustrate</span>
+    <span><b>comprehensible</b> · easy to understand</span>
+    <span><b>pay a premium</b> · pay extra</span>
+  </div>
+  <div class="panel"><div id="q2"></div></div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Clip 3 · Explore, don't just exploit</h2><span class="badge">12 min</span></div>
+  <div class="panel task">
+    <p class="task-title">Listen for</p>
+    <ol class="listen">
+      <li>Why is business more like poker than chess?</li>
+      <li>Why do 20% of bees ignore the waggle dance, and why is that useful?</li>
+    </ol>
+  </div>
+  <div class="clip" data-clip="2"></div>
+  <div class="words">
+    <span><b>hit pay dirt</b> · find something very valuable</span>
+    <span><b>take on board</b> · accept and use</span>
+    <span><b>go off at random</b> · leave in no set direction</span>
+    <span><b>explore</b> vs. <b>exploit</b></span>
+  </div>
+  <div class="panel"><div id="q3"></div></div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Language from the talk</h2><span class="badge">8 min</span></div>
+  <div class="panel">
+    <p class="task-title">Phrasal verbs and idioms · tap a time to hear it</p>
+    <ul class="idioms">
+      <li><a class="ts" href="https://youtu.be/lhlS-Wds02M?t=161" target="_blank" rel="noopener">2:41</a><b>take the hit</b> — accept a loss or cost. <i>We took the hit on margins to keep the client.</i></li>
+      <li><a class="ts" href="https://youtu.be/lhlS-Wds02M?t=188" target="_blank" rel="noopener">3:08</a><b>put back</b> — return something to its place. <i>Please put the files back when you've finished.</i></li>
+      <li><a class="ts" href="https://youtu.be/lhlS-Wds02M?t=673" target="_blank" rel="noopener">11:13</a><b>get rid of</b> — remove. <i>The new system let us get rid of two manual steps.</i></li>
+      <li><a class="ts" href="https://youtu.be/lhlS-Wds02M?t=739" target="_blank" rel="noopener">12:19</a><b>do your head in</b> — confuse or frustrate you (informal, British). <i>Three different spreadsheets? That does my head in.</i></li>
+      <li><a class="ts" href="https://youtu.be/lhlS-Wds02M?t=1011" target="_blank" rel="noopener">16:51</a><b>hit pay dirt</b> — suddenly find something very valuable. <i>After ten failed tests, we finally hit pay dirt.</i></li>
+      <li><a class="ts" href="https://youtu.be/lhlS-Wds02M?t=1405" target="_blank" rel="noopener">23:25</a><b>take on board</b> — accept and act on information. <i>We've taken your feedback on board.</i></li>
+      <li class="c1"><a class="ts" href="https://youtu.be/lhlS-Wds02M?t=182" target="_blank" rel="noopener">3:02</a><span class="c1-tag">C1</span><b>sidle up to</b> — approach someone quietly, a little secretly. <i>He sidled up to the director after the meeting.</i></li>
+      <li class="c1"><a class="ts" href="https://youtu.be/lhlS-Wds02M?t=1448" target="_blank" rel="noopener">24:08</a><span class="c1-tag">C1</span><b>trapped in a local maximum</b> — stuck at "good enough", unable to find something better. <i>Cost-cutting alone kept us trapped in a local maximum.</i></li>
+    </ul>
+  </div>
+
+  <div class="panel task">
+    <p class="task-title">Grammar 1 · Reporting what a speaker says</p>
+    <div class="rule-box">To summarise a talk, use a <em>reporting verb + that</em>. In summaries we usually keep the present tense: <em>Sutherland argues that…</em>, <em>He points out that…</em>, <em>He suggests that…</em>. For a single past event, use the past: <em>He said that usage went up four times on the first day.</em></div>
+    <div id="g1"></div>
+  </div>
+
+  <div class="panel task">
+    <p class="task-title">Grammar 2 · Agreeing, but not completely</p>
+    <div class="rule-box">To give a balanced view, accept one point, then limit it. <em>Although / While</em> + clause, main clause: <em>While better Wi-Fi is cheaper, some passengers really need speed.</em> Or two sentences: <em>He has a point. However, …</em>. Note: <em>despite</em> + noun, not + clause: <em>Despite the cost, …</em></div>
+    <div id="g2"></div>
+    <p class="c1" style="margin-top:10px"><span class="c1-tag">C1</span><em>Granted, faster trains are useful; even so, … · Much as I admire his examples, …</em></p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Summarise and respond</h2><span class="badge">10 min</span></div>
+  <div class="panel task">
+    <p class="task-title">1 · Summarise in three sentences</p>
+    <p>Say it to a partner first, then write it. Give one sentence per clip and use a reporting verb in each.</p>
+    <textarea data-save="summary" placeholder="Sutherland argues that… He points out that… He also suggests that…"></textarea>
+  </div>
+  <div class="panel task">
+    <p class="task-title">2 · Where do you stand?</p>
+    <div id="claims"></div>
+    <p style="margin-top:12px">Now write one sentence where you agree with Sutherland and one where you don't. Use <em>while</em>, <em>although</em> or <em>however</em>.</p>
+    <textarea data-save="respond" placeholder="While I agree that…, I'm not convinced that…"></textarea>
+  </div>
+</section>
+
+<details class="key">
+  <summary>Teacher key <span class="noshare">Don't screen-share</span></summary>
+  <div class="key-body">
+    <h4>Clips</h4>
+    <p>Clip 1, 1:30–5:50: the Churchill story, then the £6bn railway vs. £50m Wi-Fi example ending with "What would Disney do?"<br>
+    Clip 2, 10:37–14:28: James Watt and horsepower, the Tube map, and the "pool access" hotel room. <strong>Stop at 14:28.</strong> The next line contains a joke that isn't suitable for class.<br>
+    Clip 3, two parts: 16:26–17:09 on chess vs. poker, then 23:04–25:00 on the bees and the explore/exploit trade-off.</p>
+    <h4>Flow</h4>
+    <p>Show the listen-for questions → play the clip → pairs compare orally → click the check questions. Keep the grammar short and name it after they've tried the sentences. The reflection is speak-then-write.</p>
+    <h4>Answers</h4>
+    <p>Clip 1: b, a · Clip 2: b, b, c · Clip 3: a, b<br>Grammar 1: argues · points out · said<br>Grammar 2: While · However · Despite</p>
+    <h4>Upgrade point</h4>
+    <p>Churchill presents himself as a "fellow offender rather than an accuser". This is a good moment for <strong>defuse</strong> a situation (désamorcer). Many write-ups wrongly say "diffuse".</p>
+  </div>
+</details>
+
+<footer>ESG Langues · Craig Carey · September 2026</footer>
+</div>
+
+<script>
+const VIDEO = "https://youtu.be/lhlS-Wds02M";
+const CLIPS = [
+  [{ start: "1:30",  end: "5:50",  note: "Churchill's salt shaker · the £6bn railway" }],
+  [{ start: "10:37", end: "14:28", note: "Horsepower · the Tube map · 'pool access'" }],
+  [{ start: "16:26", end: "17:09", note: "Part A · chess vs. poker" },
+   { start: "23:04", end: "25:00", note: "Part B · the bees" }]
+];
+
+const STORE = 'alchemy-short-v2';
+let state = {};
+try { state = JSON.parse(localStorage.getItem(STORE)) || {}; } catch(e) { state = {}; }
+function save(){ try { localStorage.setItem(STORE, JSON.stringify(state)); } catch(e){} }
+state.ans = state.ans || {}; state.txt = state.txt || {}; state.stance = state.stance || {};
+
+const toSec = t => t.split(':').map(Number).reduce((a,b)=>a*60+b,0);
+const len = (a,b) => { const s = toSec(b)-toSec(a); return Math.floor(s/60) + ' min ' + String(s%60).padStart(2,'0') + ' s'; };
+document.querySelectorAll('.clip').forEach(el => {
+  el.innerHTML = CLIPS[+el.dataset.clip].map(p =>
+    `<a href="${VIDEO}?t=${toSec(p.start)}" target="_blank" rel="noopener" aria-label="Play from ${p.start} to ${p.end}">
+      <span class="play">▶</span>
+      <span><span class="time">${p.start} – ${p.end}</span><br><span class="sub">${p.note} · ${len(p.start,p.end)} · stop at ${p.end}</span></span>
+    </a>`).join('');
+});
+
+const scored = [];
+function updateScore(){
+  const n = scored.filter(id => state.ans[id] && state.ans[id].ok).length;
+  document.getElementById('score').textContent = n;
+  document.getElementById('total').textContent = scored.length;
+  document.getElementById('meter').style.width = (scored.length ? n/scored.length*100 : 0) + '%';
+}
+function build(boxId, items){
+  const box = document.getElementById(boxId);
+  items.forEach((it,i) => {
+    const id = boxId + '-' + i; scored.push(id);
+    const q = document.createElement('div'); q.className = 'q';
+    q.innerHTML = `<div class="stem">${it.q}</div><div class="opts"></div><div class="feedback"></div>`;
+    const row = q.querySelector('.opts'), fb = q.querySelector('.feedback');
+    const mark = j => { [...row.children].forEach((b,k)=>{ b.classList.remove('right','wrong'); if(k===j) b.classList.add(j===it.a?'right':'wrong'); }); fb.textContent = j===it.a ? (it.why||'') : 'Not quite. Try again.'; };
+    it.o.forEach((o,j) => { const b = document.createElement('button'); b.type='button'; b.innerHTML=o;
+      b.addEventListener('click', () => { mark(j); state.ans[id] = {pick:j, ok:j===it.a}; save(); updateScore(); }); row.appendChild(b); });
+    if (state.ans[id]) mark(state.ans[id].pick);
+    box.appendChild(q);
+  });
+}
+
+build('q1', [
+  {q:'How does Churchill deal with the guest who took the gold salt shaker?', o:['a) He accuses the guest publicly','b) He takes the pepper pot too, then suggests they both put them back','c) He lets the guest keep it'], a:1, why:'He becomes a "fellow offender", not an accuser, so nobody is embarrassed.'},
+  {q:'Instead of £6 billion for a faster train, Sutherland suggests…', o:['a) about £50 million on really good Wi-Fi','b) cheaper tickets','c) a new airport'], a:0, why:'Change the quality of the time, not the quantity.'}
+]);
+build('q2', [
+  {q:'Mine owners wanted to know…', o:['a) the size of the boiler','b) how many horses they could get rid of','c) who invented the engine'], a:1, why:'"Horsepower" answered their real question.'},
+  {q:'On the first day the lines appeared on the Tube map, usage…', o:['a) stayed the same','b) went up by a factor of four','c) went down'], a:1, why:'The change was "pixels and ink", not new trains.'},
+  {q:'The hotel could charge more for "pool access" rooms because…', o:['a) it built a new pool','b) the rooms were bigger','c) it described the same rooms differently'], a:2, why:'Nobody had to build anything.'}
+]);
+build('q3', [
+  {q:'Business is like poker because…', o:['a) a few big moments decide most of the result','b) you should always play safe','c) luck doesn\'t matter'], a:0, why:'You keep looking for outsized effects.'},
+  {q:'Without the random bees, the hive…', o:['a) collects more food forever','b) gets trapped, can\'t adapt, and can\'t get lucky','c) moves somewhere new'], a:1, why:'Exploring and exploiting are two parts of the same system.'}
+]);
+build('g1', [
+  {q:'In your summary: "Sutherland ___ that people don\'t behave logically."', o:['argues','argued to','says to'], a:0, why:'Present tense for the talk\'s ideas.'},
+  {q:'"He ___ that a few poker hands decide the whole evening."', o:['points','points out','point out'], a:1, why:'Point out + that.'},
+  {q:'A single past event: "He ___ that usage went up four times."', o:['said','told','says us'], a:0, why:'Say (that) / tell someone (that).'}
+]);
+build('g2', [
+  {q:'"___ Wi-Fi is cheaper, some passengers really need speed."', o:['Despite','While','However'], a:1, why:'While + clause.'},
+  {q:'"He has a point. ___, not every business can take big risks."', o:['However','Although','Despite'], a:0, why:'However starts a new sentence.'},
+  {q:'"___ the high cost, faster trains still matter to commuters."', o:['Although','While','Despite'], a:2, why:'Despite + noun.'}
+]);
+
+(function(){
+  const claims = [
+    'The quality of time matters more than the quantity of time.',
+    'How something is described can matter as much as what it is.',
+    'Every business needs some people who "go off at random".'
+  ];
+  const box = document.getElementById('claims');
+  claims.forEach((c,i) => {
+    const d = document.createElement('div'); d.className='claim';
+    d.innerHTML = `<div>${c}</div><div class="stance" role="group" aria-label="Your position"></div>`;
+    const g = d.querySelector('.stance');
+    ['Agree','Partly','Disagree'].forEach(l => { const b = document.createElement('button'); b.type='button'; b.textContent=l;
+      b.setAttribute('aria-pressed', state.stance[i]===l?'true':'false');
+      b.addEventListener('click', () => { state.stance[i]=l; save(); [...g.children].forEach(x=>x.setAttribute('aria-pressed', x===b?'true':'false')); });
+      g.appendChild(b); });
+    box.appendChild(d);
+  });
+})();
+
+document.querySelectorAll('textarea[data-save]').forEach(t => {
+  const k = t.dataset.save; if (state.txt[k]) t.value = state.txt[k];
+  t.addEventListener('input', () => { state.txt[k] = t.value; save(); });
+});
+
+const sb = document.getElementById('stretchBtn');
+function setStretch(on){ document.body.classList.toggle('stretch', on); sb.setAttribute('aria-pressed', on?'true':'false'); }
+setStretch(!!state.stretch);
+sb.addEventListener('click', () => { state.stretch = !state.stretch; save(); setStretch(state.stretch); });
+document.getElementById('resetBtn').addEventListener('click', () => {
+  if (!confirm('Clear all answers and writing on this page?')) return;
+  try { localStorage.removeItem(STORE); } catch(e){}
+  location.reload();
+});
+updateScore();
+</script>
+</body>
+</html>
