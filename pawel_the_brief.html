@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Brief</title>
+
+<!--
+  ==========================================================================
+  THE BRIEF — weekly topic set-up
+  --------------------------------------------------------------------------
+  Edit ONLY the TOPIC block below each week, then redeploy.
+
+  1. Give the topic a new id (e.g. "2026-09-22-remote-work"). Pawel's notes
+     are saved per id, so a new id = a clean page; reusing an id = his notes
+     from that topic come back.
+  2. Set type to "image", "text" or "video".
+  3. Fill in the matching field(s). Leave the others as "".
+     - image: imageUrl (a direct link to a .jpg/.png) + imageAlt
+     - text:  paste the text between the backticks; blank line = new paragraph
+     - video: a YouTube link (watch, youtu.be, shorts or embed) or a direct .mp4
+  4. source and why are optional but recommended.
+  5. extraPrompts: optional reaction prompts specific to this topic.
+  ==========================================================================
+-->
+<script>
+const TOPIC = {
+  id: "topic-01",
+  title: "[Topic title goes here]",
+  why: "[One sentence on why this topic is worth talking about]",
+  type: "text",                // "image" | "text" | "video"
+
+  imageUrl: "",
+  imageAlt: "",
+
+  text: `[Paste the text here. Leave a blank line between paragraphs.]`,
+
+  videoUrl: "",
+
+  source: "[Source, author or date]",
+  extraPrompts: []             // e.g. ["Would this work in a Polish company?"]
+};
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --parchment:#F2E8D5;
+    --vellum:#FBF6EC;
+    --ink:#2A241C;
+    --sepia:#76664F;
+    --rule:#DCCBAE;
+    --saffron:#D9942A;
+    --saffron-deep:#9A5E12;
+    --saffron-wash:#F6E2B8;
+    --moss:#5E6B45;
+    --serif:"Spectral", Georgia, serif;
+    --sans:"Inter", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--parchment)}
+  body{
+    margin:0; color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.55;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #F8EFDC 0%, transparent 60%),
+      var(--parchment);
+    min-height:100vh;
+  }
+  .page{max-width:760px; margin:0 auto; padding:56px 28px 96px}
+
+  header.masthead{margin-bottom:40px}
+  .masthead .kicker{font-family:var(--serif); font-style:italic; color:var(--sepia); font-size:1.05rem; margin:0 0 6px}
+  .masthead h1{font-family:var(--serif); font-weight:500; font-size:clamp(2rem,5vw,2.9rem); line-height:1.1; margin:0 0 14px; letter-spacing:-0.01em}
+  .masthead .why{font-family:var(--serif); font-size:1.15rem; line-height:1.6; color:var(--ink); margin:0; max-width:60ch}
+
+  .callback{
+    background:var(--vellum); border-left:3px solid var(--saffron); padding:18px 22px; margin:0 0 44px;
+    border-radius:0 6px 6px 0;
+  }
+  .callback h2{font-family:var(--serif); font-weight:500; font-size:1.2rem; margin:0 0 4px}
+  .callback p{margin:0 0 10px; color:var(--sepia); font-size:.93rem}
+  .callback ul{margin:0; padding:0; list-style:none}
+  .callback li{font-family:var(--serif); font-size:1.08rem; padding:4px 0}
+
+  section.movement{
+    display:grid; grid-template-columns:64px 1fr; gap:0 18px;
+    padding:36px 0; border-top:1px solid var(--rule);
+  }
+  .numeral{
+    font-family:var(--serif); font-style:italic; font-weight:400; font-size:3.2rem; line-height:.9;
+    color:var(--saffron); text-align:right; padding-top:2px;
+  }
+  .movement h2{font-family:var(--serif); font-weight:500; font-size:1.65rem; line-height:1.2; margin:0 0 6px}
+  .movement .lede{margin:0 0 22px; color:var(--sepia); max-width:62ch}
+
+  /* stimulus */
+  .stimulus{background:var(--vellum); border:1px solid var(--rule); border-radius:8px; padding:26px 28px}
+  .stimulus img{display:block; max-width:100%; height:auto; border-radius:4px; margin:0 auto}
+  .stimulus .reading p{font-family:var(--serif); font-size:1.14rem; line-height:1.75; margin:0 0 1em; max-width:66ch}
+  .stimulus .reading p:last-child{margin-bottom:0}
+  .video-frame{position:relative; padding-top:56.25%; border-radius:4px; overflow:hidden; background:#000}
+  .video-frame iframe,.video-frame video{position:absolute; inset:0; width:100%; height:100%; border:0}
+  .stimulus .source{margin:16px 0 0; font-size:.88rem; color:var(--sepia); font-style:italic; font-family:var(--serif)}
+  .empty-stimulus{font-family:var(--serif); font-style:italic; color:var(--sepia); text-align:center; padding:30px 10px}
+
+  /* prompts */
+  .prompt-card{
+    background:var(--vellum); border:1px solid var(--rule); border-radius:8px; padding:28px;
+  }
+  .prompt-count{font-size:.85rem; color:var(--sepia); margin:0 0 10px}
+  .prompt-text{font-family:var(--serif); font-size:1.45rem; line-height:1.35; margin:0 0 22px; min-height:2.8em}
+  .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+
+  button{
+    font-family:var(--sans); font-size:.94rem; font-weight:500; cursor:pointer;
+    border-radius:999px; padding:9px 18px; border:1px solid var(--ink); background:transparent; color:var(--ink);
+    transition:background .15s, color .15s;
+  }
+  button:hover{background:var(--ink); color:var(--vellum)}
+  button.primary{background:var(--ink); color:var(--vellum)}
+  button.primary:hover{background:var(--saffron-deep); border-color:var(--saffron-deep)}
+  button.quiet{border-color:var(--rule); color:var(--sepia)}
+  button.quiet:hover{background:var(--rule); color:var(--ink)}
+  button:focus-visible, textarea:focus-visible, input:focus-visible, .chip:focus-visible{outline:2px solid var(--saffron); outline-offset:2px}
+  button[disabled]{opacity:.4; cursor:default}
+  button[disabled]:hover{background:transparent; color:var(--ink)}
+
+  label.field{display:block; font-size:.9rem; font-weight:500; margin:0 0 6px; color:var(--ink)}
+  textarea, input[type=text]{
+    width:100%; font-family:var(--serif); font-size:1.08rem; line-height:1.6; color:var(--ink);
+    background:#FFFCF5; border:1px solid var(--rule); border-radius:6px; padding:12px 14px; resize:vertical;
+  }
+  textarea{min-height:84px}
+  textarea::placeholder, input::placeholder{color:#A99A80; font-style:italic}
+
+  /* anatomy */
+  .anatomy{display:grid; gap:18px}
+  .part{background:var(--vellum); border:1px solid var(--rule); border-radius:8px; padding:20px 22px}
+  .part h3{font-family:var(--serif); font-weight:500; font-size:1.25rem; margin:0 0 2px}
+  .part .q{margin:0 0 12px; color:var(--sepia); font-size:.95rem}
+  .frames{display:none; margin:12px 0 0; padding:12px 16px; background:var(--saffron-wash); border-radius:6px}
+  .frames.open{display:block}
+  .frames p{margin:0; font-family:var(--serif); font-size:1.05rem; line-height:1.7}
+  .reveal-row{margin-top:22px}
+
+  /* frames picker */
+  .frame-picker{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:24px}
+  .frame-option{
+    text-align:left; border-radius:8px; border:1px solid var(--rule); background:var(--vellum); padding:16px 18px;
+    font-family:var(--sans); color:var(--ink);
+  }
+  .frame-option strong{display:block; font-family:var(--serif); font-weight:500; font-size:1.18rem; margin-bottom:3px}
+  .frame-option span{display:block; font-size:.88rem; color:var(--sepia); font-weight:400; line-height:1.4}
+  .frame-option:hover{background:#FFF8EA; color:var(--ink); border-color:var(--saffron)}
+  .frame-option[aria-pressed="true"]{border-color:var(--saffron); box-shadow:inset 0 0 0 1px var(--saffron); background:#FFF8EA}
+  .moves{display:grid; gap:18px}
+  .move .hint{margin:0 0 6px; font-size:.88rem; color:var(--sepia)}
+  .move .hint em{font-family:var(--serif); font-size:1rem; color:var(--saffron-deep)}
+  .wordcount{font-size:.85rem; color:var(--sepia); margin:14px 0 0}
+  .stretch{margin-top:28px; padding:22px; border:1px dashed var(--saffron); border-radius:8px}
+  .stretch h3{font-family:var(--serif); font-weight:500; font-size:1.2rem; margin:0 0 4px}
+  .stretch p{margin:0 0 14px; color:var(--sepia); font-size:.95rem}
+  .stretch .pair{display:grid; gap:12px}
+
+  /* toolkit */
+  .toolkit{display:none}
+  .toolkit.open{display:block}
+  .tool-group{margin-bottom:26px}
+  .tool-group h3{font-family:var(--serif); font-weight:500; font-size:1.3rem; margin:0}
+  .tool-group .purpose{margin:0 0 10px; color:var(--sepia); font-size:.93rem}
+  .phrase-list{display:grid; gap:8px}
+  .chip{
+    display:flex; justify-content:space-between; align-items:baseline; gap:16px; width:100%;
+    text-align:left; border-radius:6px; border:1px solid var(--rule); background:var(--vellum);
+    padding:10px 14px; font-family:var(--serif); font-size:1.1rem; font-weight:400; color:var(--ink);
+  }
+  .chip:hover{background:#FFF8EA; color:var(--ink); border-color:var(--saffron)}
+  .chip .reg{font-family:var(--sans); font-size:.78rem; color:var(--sepia); white-space:nowrap}
+  .chip[aria-pressed="true"]{background:var(--saffron-wash); border-color:var(--saffron)}
+  .chip[aria-pressed="true"] .reg::before{content:"✓ "; color:var(--saffron-deep)}
+  .legend{font-size:.88rem; color:var(--sepia); margin:0 0 20px}
+  .locked{background:var(--vellum); border:1px solid var(--rule); border-radius:8px; padding:24px}
+  .locked p{margin:0 0 14px; font-family:var(--serif); font-size:1.12rem}
+
+  /* delivery */
+  .round{background:var(--vellum); border:1px solid var(--rule); border-radius:8px; padding:22px 24px; margin-bottom:16px}
+  .round h3{font-family:var(--serif); font-weight:500; font-size:1.25rem; margin:0 0 4px}
+  .round p{margin:0 0 12px}
+  .round .scene{font-family:var(--serif); font-style:italic; font-size:1.08rem}
+  .round.done{border-color:var(--moss)}
+  .round.done .done-mark{display:inline}
+  .done-mark{display:none; color:var(--moss); font-size:.9rem; margin-left:8px}
+  .chosen{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 14px; padding:0; list-style:none}
+  .chosen li{font-family:var(--serif); font-size:1.02rem; background:var(--saffron-wash); padding:4px 12px; border-radius:999px}
+  .chosen-empty{color:var(--sepia); font-size:.92rem; font-style:italic; margin:0 0 14px}
+
+  .bank{margin-top:30px}
+  .bank h3{font-family:var(--serif); font-weight:500; font-size:1.35rem; margin:0 0 4px}
+  .bank .lede{margin-bottom:16px}
+  .bank-form{display:grid; grid-template-columns:1fr 1fr auto; gap:10px; align-items:end}
+  .bank-list{list-style:none; margin:20px 0 0; padding:0}
+  .bank-list li{
+    display:grid; grid-template-columns:1fr 1fr auto; gap:14px; align-items:baseline;
+    padding:12px 0; border-bottom:1px solid var(--rule);
+  }
+  .bank-list .said{font-family:var(--serif); color:var(--sepia); text-decoration:line-through; text-decoration-color:rgba(118,102,79,.45)}
+  .bank-list .better{font-family:var(--serif); font-size:1.08rem}
+  .bank-list button{padding:4px 12px; font-size:.82rem}
+  .bank-empty{color:var(--sepia); font-style:italic; font-size:.94rem; margin:16px 0 0}
+
+  footer{margin-top:40px; padding-top:24px; border-top:1px solid var(--rule); display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center}
+  footer p{margin:0; font-size:.86rem; color:var(--sepia)}
+
+  @media (max-width:640px){
+    .page{padding:36px 18px 72px}
+    section.movement{grid-template-columns:1fr}
+    .numeral{text-align:left; font-size:2.4rem; margin-bottom:6px}
+    .frame-picker{grid-template-columns:1fr}
+    .bank-form{grid-template-columns:1fr}
+    .bank-list li{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){ *{transition:none !important} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="masthead">
+    <p class="kicker">The Brief</p>
+    <h1 id="topic-title"></h1>
+    <p class="why" id="topic-why"></p>
+  </header>
+
+  <aside class="callback" id="callback" hidden>
+    <h2>Bring these back today</h2>
+    <p>Your upgrades from last time. Try to use two of them while you talk.</p>
+    <ul id="callback-list"></ul>
+  </aside>
+
+  <!-- 1 -->
+  <section class="movement" aria-labelledby="h-stim">
+    <div class="numeral" aria-hidden="true">1</div>
+    <div>
+      <h2 id="h-stim">Take it in</h2>
+      <p class="lede">Take as long as you need. There is no rush.</p>
+      <div class="stimulus" id="stimulus"></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="movement" aria-labelledby="h-first">
+    <div class="numeral" aria-hidden="true">2</div>
+    <div>
+      <h2 id="h-first">First take</h2>
+      <p class="lede">Answer out loud. Think first, then speak. Silence is fine.</p>
+      <div class="prompt-card">
+        <p class="prompt-count" id="prompt-count"></p>
+        <p class="prompt-text" id="prompt-text"></p>
+        <div class="row">
+          <button type="button" id="prompt-prev" class="quiet">Previous</button>
+          <button type="button" id="prompt-next" class="primary">Next question</button>
+        </div>
+      </div>
+      <div style="margin-top:18px">
+        <label class="field" for="first-notes">Words or ideas you want to keep</label>
+        <textarea id="first-notes" data-save="firstNotes" placeholder="Optional: jot anything worth remembering"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="movement" aria-labelledby="h-anat">
+    <div class="numeral" aria-hidden="true">3</div>
+    <div>
+      <h2 id="h-anat">How the argument works</h2>
+      <p class="lede">Every piece is trying to persuade someone of something. Take it apart. Say your answer first, then make a note.</p>
+      <div class="anatomy" id="anatomy"></div>
+      <div class="reveal-row row">
+        <button type="button" id="frames-toggle">Show ways to say it</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="movement" aria-labelledby="h-draft">
+    <div class="numeral" aria-hidden="true">4</div>
+    <div>
+      <h2 id="h-draft">Write your version</h2>
+      <p class="lede">Choose one format. Notes are enough; you will speak from them, not read them.</p>
+      <div class="frame-picker" id="frame-picker" role="group" aria-label="Choose a format"></div>
+      <div class="moves" id="moves"></div>
+      <p class="wordcount" id="wordcount" hidden></p>
+
+      <div class="stretch" id="stretch" hidden>
+        <h3>Stretch one sentence</h3>
+        <p>Choose a sentence that feels safe or ordinary. Say it aloud in two different ways, then write the version you like best.</p>
+        <div class="pair">
+          <div>
+            <label class="field" for="stretch-safe">The safe version</label>
+            <input type="text" id="stretch-safe" data-save="stretchSafe">
+          </div>
+          <div>
+            <label class="field" for="stretch-better">Your stronger version</label>
+            <input type="text" id="stretch-better" data-save="stretchBetter">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="movement" aria-labelledby="h-tool">
+    <div class="numeral" aria-hidden="true">5</div>
+    <div>
+      <h2 id="h-tool">Disagree well</h2>
+      <p class="lede">First, respond to the piece in your own words: where do you agree, and where not? Then open the toolkit.</p>
+      <div class="locked" id="tool-locked">
+        <p>Have you given your own response out loud?</p>
+        <button type="button" class="primary" id="tool-open">Yes, show the toolkit</button>
+      </div>
+      <div class="toolkit" id="toolkit">
+        <p class="legend">Tap the phrases you want to use in your brief. <strong>Neutral</strong> works anywhere. <strong>Formal</strong> suits meetings and writing. <strong>Direct</strong> is firm; use it with care.</p>
+        <div id="tool-groups"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="movement" aria-labelledby="h-deliver">
+    <div class="numeral" aria-hidden="true">6</div>
+    <div>
+      <h2 id="h-deliver">Deliver it</h2>
+      <p class="lede">Say it twice: first short, then complete. Don't read your notes word for word.</p>
+
+      <div class="round" id="round-1">
+        <h3>The corridor version <span class="done-mark">Done</span></h3>
+        <p class="scene">You meet your manager in the corridor. "I hear you looked into this. What's the headline?"</p>
+        <p>Give the main point and one reason. Nothing more.</p>
+        <button type="button" data-round="1">Mark as done</button>
+      </div>
+
+      <div class="round" id="round-2">
+        <h3>The meeting version <span class="done-mark">Done</span></h3>
+        <p class="scene">Now you have five minutes in a meeting. A colleague is sceptical.</p>
+        <p>Give your full version from your notes. Use at least two of your phrases:</p>
+        <ul class="chosen" id="chosen"></ul>
+        <p class="chosen-empty" id="chosen-empty">No phrases chosen yet. Pick some in step 5.</p>
+        <button type="button" data-round="2">Mark as done</button>
+      </div>
+
+      <div class="bank">
+        <h3>Upgrade bank</h3>
+        <p class="lede">What you said, and a stronger way to say it. These come back at the start of your next lesson.</p>
+        <div class="bank-form">
+          <div>
+            <label class="field" for="up-said">What I said</label>
+            <input type="text" id="up-said" placeholder="e.g. I don't agree">
+          </div>
+          <div>
+            <label class="field" for="up-better">Stronger way</label>
+            <input type="text" id="up-better" placeholder="e.g. I'm not convinced that follows">
+          </div>
+          <button type="button" class="primary" id="up-add">Add</button>
+        </div>
+        <ul class="bank-list" id="bank-list"></ul>
+        <p class="bank-empty" id="bank-empty">Nothing here yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p id="save-status">Your notes are saved on this device.</p>
+    <button type="button" class="quiet" id="clear-topic">Clear notes for this topic</button>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const KEY = "pawel_brief_v1";
+
+  /* ---------- content ---------- */
+  const BASE_PROMPTS = [
+    "What is your first reaction, and why?",
+    "What stayed with you most?",
+    "Who would welcome this, and who would push back?",
+    "Does this connect with anything in your own work or experience?",
+    "If you could ask the person behind this one question, what would it be?"
+  ];
+
+  const ANATOMY = [
+    { key:"claim", title:"The claim", q:"What is it really saying? Try to put it in one sentence.",
+      frames:["The central point is that…","Essentially, the argument is that…","What they're getting at is…"] },
+    { key:"grounds", title:"The grounds", q:"What does it use to convince you: data, examples, authority, emotion?",
+      frames:["This is based largely on…","They back this up with…","The evidence offered is mostly…"] },
+    { key:"assumption", title:"The assumption", q:"What does it take for granted without saying so?",
+      frames:["This rests on the assumption that…","It takes for granted that…","Underlying all of this is the idea that…"] },
+    { key:"concession", title:"The concession", q:"Does it admit anything on the other side?",
+      frames:["To be fair, it does acknowledge that…","It concedes that…, but still maintains…","It never really engages with…"] },
+    { key:"gap", title:"The gap", q:"What is missing, weak or overstated?",
+      frames:["What it glosses over is…","The weak link in the argument is…","I think it overstates…"] }
+  ];
+
+  const FORMATS = [
+    { key:"reaction", name:"Reaction", desc:"What you felt and thought, and why.",
+      moves:[
+        { key:"struck", label:"What struck me", starter:"What struck me most was…" },
+        { key:"matters", label:"Why it matters to me", starter:"This resonates with me because…" },
+        { key:"land", label:"Where I land", starter:"On balance, I'm left feeling that…" }
+      ]},
+    { key:"summary", name:"Summary for a colleague", desc:"Neutral and clear. No opinion yet.",
+      moves:[
+        { key:"topic", label:"What it is", starter:"This piece looks at…" },
+        { key:"point", label:"The main point", starter:"The key argument is that…" },
+        { key:"support", label:"How it supports that", starter:"It supports this by pointing to…" },
+        { key:"implication", label:"Why it's relevant", starter:"The takeaway for us is…" }
+      ]},
+    { key:"opinion", name:"Opinion", desc:"A position, and an honest look at the other side.",
+      moves:[
+        { key:"position", label:"My position", starter:"My view is that…" },
+        { key:"reason", label:"My strongest reason", starter:"The main reason is…" },
+        { key:"counter", label:"The other side, taken seriously", starter:"Admittedly, there's a case to be made that…" },
+        { key:"hold", label:"Why I still hold my view", starter:"Even so, I'd maintain that…" }
+      ]},
+    { key:"brief", name:"Brief for your manager", desc:"Bottom line first. Busy reader.",
+      moves:[
+        { key:"bottom", label:"Bottom line", starter:"In short, …" },
+        { key:"background", label:"Background, in two sentences", starter:"For context, …" },
+        { key:"points", label:"Key points", starter:"There are two things worth flagging. First, …" },
+        { key:"recommend", label:"What I recommend", starter:"I'd suggest we…" }
+      ]}
+  ];
+
+  const TOOLKIT = [
+    { name:"Acknowledge", purpose:"Show you have heard the other view before you respond.", phrases:[
+      ["I see where you're coming from.","neutral"],
+      ["That's a fair point, as far as it goes.","neutral"],
+      ["I take the point that…","formal"],
+      ["There's a good deal of merit in…","formal"] ]},
+    { name:"Qualify", purpose:"Agree in part, and mark the limits.", phrases:[
+      ["That's true up to a point.","neutral"],
+      ["It depends what we mean by…","neutral"],
+      ["I'd want to add a caveat here.","formal"],
+      ["That holds in some cases, but not across the board.","formal"] ]},
+    { name:"Challenge", purpose:"Push back on the reasoning, not the person.", phrases:[
+      ["I'm not sure that follows.","neutral"],
+      ["I'd question whether…","formal"],
+      ["The evidence doesn't quite bear that out.","formal"],
+      ["I don't think that holds up.","direct"],
+      ["Frankly, I'm not convinced.","direct"] ]},
+    { name:"Propose", purpose:"Move the discussion forward.", phrases:[
+      ["What if we looked at it from another angle?","neutral"],
+      ["A middle ground might be to…","neutral"],
+      ["Would it be worth considering…?","formal"],
+      ["I'd suggest we…","direct"] ]}
+  ];
+
+  /* ---------- storage ---------- */
+  function load(){
+    try{ const raw = localStorage.getItem(KEY); if(raw){ const s = JSON.parse(raw); s.topics = s.topics||{}; s.upgrades = s.upgrades||[]; return s; } }
+    catch(e){}
+    return { topics:{}, upgrades:[] };
+  }
+  const state = load();
+  const tid = String(TOPIC.id || "topic");
+  function T(){
+    if(!state.topics[tid]) state.topics[tid] = { title:TOPIC.title, anatomy:{}, format:"", moves:{}, phrases:[], rounds:{}, promptIndex:0, toolOpen:false };
+    return state.topics[tid];
+  }
+  let saveTimer = null;
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); document.getElementById("save-status").textContent = "Saved on this device."; }
+    catch(e){ document.getElementById("save-status").textContent = "Notes can't be saved in this browser. Copy anything you want to keep."; }
+  }
+  function saveSoon(){ clearTimeout(saveTimer); saveTimer = setTimeout(save, 400); }
+
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const isPlaceholder = s => !s || /^\s*\[.*\]\s*$/s.test(s);
+
+  /* ---------- header ---------- */
+  document.getElementById("topic-title").textContent = isPlaceholder(TOPIC.title) ? "This week's topic" : TOPIC.title;
+  const whyEl = document.getElementById("topic-why");
+  if(isPlaceholder(TOPIC.why)) whyEl.hidden = true; else whyEl.textContent = TOPIC.why;
+  document.title = "The Brief: " + document.getElementById("topic-title").textContent;
+
+  /* ---------- callback ---------- */
+  (function(){
+    const prior = state.upgrades.filter(u => u.topic !== tid).slice(-3);
+    if(!prior.length) return;
+    document.getElementById("callback-list").innerHTML = prior.map(u => `<li>${esc(u.better)}</li>`).join("");
+    document.getElementById("callback").hidden = false;
+  })();
+
+  /* ---------- 1 stimulus ---------- */
+  function youTubeId(url){
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/|live\/))([\w-]{11})/);
+    return m ? m[1] : null;
+  }
+  function timeParam(url){
+    const m = url.match(/[?&]t=(\d+)/); return m ? "?start=" + m[1] : "";
+  }
+  (function(){
+    const box = document.getElementById("stimulus");
+    let html = "";
+    const type = (TOPIC.type||"").toLowerCase();
+    if(type === "image" && !isPlaceholder(TOPIC.imageUrl)){
+      html = `<img src="${esc(TOPIC.imageUrl)}" alt="${esc(TOPIC.imageAlt||"")}">`;
+    } else if(type === "text" && !isPlaceholder(TOPIC.text)){
+      html = `<div class="reading">` + TOPIC.text.trim().split(/\n\s*\n/).map(p => `<p>${esc(p.trim()).replace(/\n/g," ")}</p>`).join("") + `</div>`;
+    } else if(type === "video" && !isPlaceholder(TOPIC.videoUrl)){
+      const id = youTubeId(TOPIC.videoUrl);
+      if(id){
+        html = `<div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${id}${timeParam(TOPIC.videoUrl)}" title="Video" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`;
+      } else if(/\.(mp4|webm)(\?|$)/i.test(TOPIC.videoUrl)){
+        html = `<div class="video-frame"><video src="${esc(TOPIC.videoUrl)}" controls preload="metadata"></video></div>`;
+      } else {
+        html = `<p class="empty-stimulus"><a href="${esc(TOPIC.videoUrl)}" target="_blank" rel="noopener">Open the video in a new tab</a></p>`;
+      }
+    } else {
+      html = `<p class="empty-stimulus">The material for this week will appear here.</p>`;
+    }
+    if(!isPlaceholder(TOPIC.source)) html += `<p class="source">${esc(TOPIC.source)}</p>`;
+    box.innerHTML = html;
+  })();
+
+  /* ---------- 2 prompts ---------- */
+  const prompts = BASE_PROMPTS.concat((TOPIC.extraPrompts||[]).filter(p => !isPlaceholder(p)));
+  function renderPrompt(){
+    const t = T(); const i = Math.min(Math.max(t.promptIndex||0,0), prompts.length-1);
+    t.promptIndex = i;
+    document.getElementById("prompt-count").textContent = `Question ${i+1} of ${prompts.length}`;
+    document.getElementById("prompt-text").textContent = prompts[i];
+    document.getElementById("prompt-prev").disabled = i === 0;
+    const next = document.getElementById("prompt-next");
+    next.disabled = i === prompts.length-1;
+    next.textContent = i === prompts.length-1 ? "Last question" : "Next question";
+  }
+  document.getElementById("prompt-prev").addEventListener("click", () => { T().promptIndex--; renderPrompt(); saveSoon(); });
+  document.getElementById("prompt-next").addEventListener("click", () => { T().promptIndex++; renderPrompt(); saveSoon(); });
+  renderPrompt();
+
+  /* ---------- simple saved fields ---------- */
+  document.querySelectorAll("[data-save]").forEach(el => {
+    const k = el.dataset.save; el.value = T()[k] || "";
+    el.addEventListener("input", () => { T()[k] = el.value; saveSoon(); });
+  });
+
+  /* ---------- 3 anatomy ---------- */
+  (function(){
+    const wrap = document.getElementById("anatomy");
+    wrap.innerHTML = ANATOMY.map(p => `
+      <div class="part">
+        <h3>${p.title}</h3>
+        <p class="q">${p.q}</p>
+        <textarea id="an-${p.key}" data-an="${p.key}" aria-label="${p.title}: notes"></textarea>
+        <div class="frames"><p>${p.frames.map(esc).join("<br>")}</p></div>
+      </div>`).join("");
+    wrap.querySelectorAll("[data-an]").forEach(el => {
+      el.value = T().anatomy[el.dataset.an] || "";
+      el.addEventListener("input", () => { T().anatomy[el.dataset.an] = el.value; saveSoon(); });
+    });
+    const btn = document.getElementById("frames-toggle");
+    btn.addEventListener("click", () => {
+      const open = !wrap.querySelector(".frames").classList.contains("open");
+      wrap.querySelectorAll(".frames").forEach(f => f.classList.toggle("open", open));
+      btn.textContent = open ? "Hide ways to say it" : "Show ways to say it";
+    });
+  })();
+
+  /* ---------- 4 draft ---------- */
+  function renderFormats(){
+    const t = T();
+    const picker = document.getElementById("frame-picker");
+    picker.innerHTML = FORMATS.map(f => `
+      <button type="button" class="frame-option" data-format="${f.key}" aria-pressed="${t.format===f.key}">
+        <strong>${f.name}</strong><span>${f.desc}</span>
+      </button>`).join("");
+    picker.querySelectorAll("[data-format]").forEach(b => b.addEventListener("click", () => {
+      T().format = b.dataset.format; renderFormats(); saveSoon();
+    }));
+    const f = FORMATS.find(x => x.key === t.format);
+    const moves = document.getElementById("moves");
+    const wc = document.getElementById("wordcount");
+    const stretch = document.getElementById("stretch");
+    if(!f){ moves.innerHTML = ""; wc.hidden = true; stretch.hidden = true; return; }
+    t.moves[f.key] = t.moves[f.key] || {};
+    moves.innerHTML = f.moves.map(m => `
+      <div class="move">
+        <label class="field" for="mv-${m.key}">${m.label}</label>
+        <p class="hint">You could start: <em>${esc(m.starter)}</em></p>
+        <textarea id="mv-${m.key}" data-move="${m.key}"></textarea>
+      </div>`).join("");
+    moves.querySelectorAll("[data-move]").forEach(el => {
+      el.value = t.moves[f.key][el.dataset.move] || "";
+      el.addEventListener("input", () => { T().moves[f.key][el.dataset.move] = el.value; updateCount(); saveSoon(); });
+    });
+    wc.hidden = false; stretch.hidden = false;
+    updateCount();
+  }
+  function updateCount(){
+    const t = T(); const m = t.moves[t.format] || {};
+    const n = Object.values(m).join(" ").trim().split(/\s+/).filter(Boolean).length;
+    document.getElementById("wordcount").textContent = n === 1 ? "1 word" : `${n} words`;
+  }
+  renderFormats();
+
+  /* ---------- 5 toolkit ---------- */
+  function renderToolkit(){
+    const t = T();
+    document.getElementById("tool-groups").innerHTML = TOOLKIT.map(g => `
+      <div class="tool-group">
+        <h3>${g.name}</h3>
+        <p class="purpose">${g.purpose}</p>
+        <div class="phrase-list">
+          ${g.phrases.map(([p,r]) => `<button type="button" class="chip" data-phrase="${esc(p)}" aria-pressed="${t.phrases.includes(p)}"><span>${esc(p)}</span><span class="reg">${r}</span></button>`).join("")}
+        </div>
+      </div>`).join("");
+    document.querySelectorAll("#tool-groups .chip").forEach(c => c.addEventListener("click", () => {
+      const p = c.dataset.phrase; const list = T().phrases;
+      const i = list.indexOf(p); if(i >= 0) list.splice(i,1); else list.push(p);
+      c.setAttribute("aria-pressed", String(i < 0));
+      renderChosen(); saveSoon();
+    }));
+  }
+  function setToolOpen(open){
+    document.getElementById("tool-locked").hidden = open;
+    document.getElementById("toolkit").classList.toggle("open", open);
+  }
+  document.getElementById("tool-open").addEventListener("click", () => { T().toolOpen = true; setToolOpen(true); saveSoon(); });
+  renderToolkit(); setToolOpen(!!T().toolOpen);
+
+  /* ---------- 6 delivery ---------- */
+  function renderChosen(){
+    const list = T().phrases;
+    document.getElementById("chosen").innerHTML = list.map(p => `<li>${esc(p)}</li>`).join("");
+    document.getElementById("chosen-empty").hidden = list.length > 0;
+  }
+  function renderRounds(){
+    [1,2].forEach(n => {
+      const done = !!T().rounds[n];
+      document.getElementById("round-"+n).classList.toggle("done", done);
+      const b = document.querySelector(`[data-round="${n}"]`);
+      b.textContent = done ? "Mark as not done" : "Mark as done";
+    });
+  }
+  document.querySelectorAll("[data-round]").forEach(b => b.addEventListener("click", () => {
+    const r = T().rounds; r[b.dataset.round] = !r[b.dataset.round]; renderRounds(); saveSoon();
+  }));
+  renderChosen(); renderRounds();
+
+  function renderBank(){
+    const list = document.getElementById("bank-list");
+    list.innerHTML = state.upgrades.map((u,i) => `
+      <li><span class="said">${esc(u.said)}</span><span class="better">${esc(u.better)}</span>
+      <button type="button" class="quiet" data-del="${i}" aria-label="Remove ${esc(u.better)}">Remove</button></li>`).reverse().join("");
+    document.getElementById("bank-empty").hidden = state.upgrades.length > 0;
+    list.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => {
+      state.upgrades.splice(Number(b.dataset.del),1); renderBank(); save();
+    }));
+  }
+  document.getElementById("up-add").addEventListener("click", () => {
+    const s = document.getElementById("up-said"), b = document.getElementById("up-better");
+    if(!b.value.trim()){ b.focus(); return; }
+    state.upgrades.push({ said:s.value.trim(), better:b.value.trim(), topic:tid, date:new Date().toISOString().slice(0,10) });
+    s.value = ""; b.value = ""; s.focus(); renderBank(); save();
+  });
+  renderBank();
+
+  /* ---------- clear ---------- */
+  document.getElementById("clear-topic").addEventListener("click", () => {
+    if(!confirm("Clear all notes for this topic? Your upgrade bank will be kept.")) return;
+    delete state.topics[tid]; save(); location.reload();
+  });
+})();
+</script>
+</body>
+</html>
