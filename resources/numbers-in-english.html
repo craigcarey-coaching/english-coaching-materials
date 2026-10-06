@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Numbers in English — Dates, Money &amp; Data (B2 Reference)</title>
+<meta name="description" content="A B2-level reference on how English writes and says dates, days of the month, counting numbers, position, money and statistics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EFE3;
+    --paper: #FFFDF7;
+    --ink: #241F19;
+    --ink-soft: #4A4238;
+    --teal: #1E5C55;
+    --teal-deep: #123B36;
+    --clay: #B75A3B;
+    --clay-soft: #F1DFD3;
+    --sage: #8A9B7E;
+    --sage-line: #D8DEC9;
+    --radius: 6px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    color: var(--teal-deep);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  h1 { font-weight: 500; }
+  h2 { font-weight: 600; }
+
+  p { margin: 0 0 1em; max-width: 68ch; }
+
+  a { color: var(--teal); }
+
+  .num, code, td.num-col, .hero-value {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- layout shell ---------- */
+
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.site-header {
+    background: var(--cream);
+    border-bottom: 1px solid var(--sage-line);
+  }
+
+  .title-row {
+    padding: 40px 0 20px;
+  }
+
+  .title-row h1 {
+    font-size: clamp(1.9rem, 4vw, 2.5rem);
+  }
+
+  .title-row .kicker {
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+    margin-top: 10px;
+    max-width: 60ch;
+  }
+
+  nav.section-nav {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--cream);
+    border-top: 1px solid var(--sage-line);
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+  }
+
+  nav.section-nav .wrap {
+    display: flex;
+    gap: 22px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  nav.section-nav a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.94rem;
+    font-weight: 500;
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+  }
+
+  nav.section-nav a:hover,
+  nav.section-nav a:focus-visible {
+    color: var(--teal-deep);
+    border-bottom-color: var(--clay);
+  }
+
+  /* ---------- hero ---------- */
+
+  .hero {
+    padding: 36px 0 44px;
+    border-bottom: 1px solid var(--sage-line);
+  }
+
+  .hero-demo {
+    margin-top: 24px;
+    background: var(--paper);
+    border: 1px solid var(--sage-line);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    display: grid;
+    gap: 14px;
+  }
+
+  .hero-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    align-items: baseline;
+  }
+
+  .hero-label {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    min-width: 118px;
+  }
+
+  .hero-value {
+    font-size: 1.05rem;
+    color: var(--teal-deep);
+  }
+
+  .hero-spoken {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--ink);
+  }
+
+  /* ---------- sections ---------- */
+
+  main section {
+    padding: 46px 0;
+    border-bottom: 1px solid var(--sage-line);
+  }
+
+  main section:last-of-type { border-bottom: none; }
+
+  main section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+  }
+
+  .section-intro {
+    color: var(--ink-soft);
+    margin-bottom: 26px;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+
+  ul.plain, ol.plain {
+    margin: 0 0 1em;
+    padding-left: 1.3em;
+  }
+
+  ul.plain li, ol.plain li {
+    margin-bottom: 6px;
+  }
+
+  /* ---------- tables ---------- */
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    border: 1px solid var(--sage-line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+
+  caption {
+    text-align: left;
+    caption-side: top;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--sage-line);
+    font-size: 0.96rem;
+    vertical-align: top;
+  }
+
+  thead th {
+    background: #EFE7D6;
+    color: var(--ink-soft);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  /* ---------- callouts: the page's one recurring signal ---------- */
+
+  .flag {
+    border-left: 3px solid var(--clay);
+    background: var(--clay-soft);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 18px 0;
+    font-size: 0.96rem;
+  }
+
+  .flag p { margin: 0; max-width: none; }
+
+  /* ---------- days-of-month grid ---------- */
+
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .day-cell {
+    background: var(--paper);
+    border: 1px solid var(--sage-line);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.92rem;
+  }
+
+  .day-cell.watch {
+    border-color: var(--clay);
+    background: var(--clay-soft);
+  }
+
+  .day-cell .num { color: var(--teal-deep); }
+
+  .grid-note {
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    margin-top: 10px;
+  }
+
+  .grid-note .swatch {
+    display: inline-block;
+    width: 10px; height: 10px;
+    background: var(--clay-soft);
+    border: 1px solid var(--clay);
+    border-radius: 2px;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  /* ---------- quick check (details/summary) ---------- */
+
+  details {
+    background: var(--paper);
+    border: 1px solid var(--sage-line);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+
+  summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--teal-deep);
+  }
+
+  summary::marker { color: var(--clay); }
+
+  details p { margin: 10px 0 0; max-width: none; }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    padding: 30px 0 50px;
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+  }
+
+  /* ---------- accessibility & motion ---------- */
+
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-label { min-width: 100%; }
+    th, td { padding: 8px 10px; font-size: 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap title-row">
+    <h1>Numbers in English</h1>
+    <p class="kicker">Numbers look one way on the page and often sound completely different out loud. This page collects the patterns for dates, days of the month, counting, position, money and statistics — B2 level, for reference during or between lessons.</p>
+  </div>
+  <nav class="section-nav" aria-label="Sections">
+    <div class="wrap">
+      <a href="#dates">Dates</a>
+      <a href="#days">Days of the month</a>
+      <a href="#counting">Counting</a>
+      <a href="#position">Position &amp; order</a>
+      <a href="#money">Money</a>
+      <a href="#stats">Data &amp; stats</a>
+      <a href="#practice">Quick check</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <div class="wrap">
+    <section class="hero" aria-label="Today's date, three ways">
+      <div class="hero-demo">
+        <div class="hero-row">
+          <span class="hero-label">Written (UK)</span>
+          <span class="hero-value"><span id="hero-uk-numeric">07/09/2026</span> &nbsp;·&nbsp; <span id="hero-uk-long">7 September 2026</span></span>
+        </div>
+        <div class="hero-row">
+          <span class="hero-label">Written (US)</span>
+          <span class="hero-value"><span id="hero-us-numeric">09/07/2026</span> &nbsp;·&nbsp; <span id="hero-us-long">September 7, 2026</span></span>
+        </div>
+        <div class="hero-row">
+          <span class="hero-label">Said aloud</span>
+          <span class="hero-spoken">“<span id="hero-spoken">the seventh of September, twenty twenty-six</span>”</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="wrap">
+
+    <section id="dates">
+      <h2>Dates</h2>
+      <p class="section-intro">The same date can be written three different ways — and the way it's said doesn't match the numeral at all.</p>
+
+      <h3>Writing dates</h3>
+      <table>
+        <caption>How the date above would appear in each style</caption>
+        <thead>
+          <tr><th>Style</th><th>Pattern</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>UK (day / month / year)</td><td class="num">DD/MM/YYYY</td><td class="num">07/09/2026</td></tr>
+          <tr><td>US (month / day / year)</td><td class="num">MM/DD/YYYY</td><td class="num">09/07/2026</td></tr>
+          <tr><td>International / ISO (forms, data)</td><td class="num">YYYY-MM-DD</td><td class="num">2026-09-07</td></tr>
+          <tr><td>UK, long form</td><td>—</td><td>7 September 2026</td></tr>
+          <tr><td>US, long form</td><td>—</td><td>September 7, 2026</td></tr>
+        </tbody>
+      </table>
+
+      <div class="flag">
+        <p>07/09 is two different dates depending on where you are. In the UK it's 7 September; in the US it's July 9th. When the date matters — flights, contracts, forms — write the month as a word: 7 Sept 2026.</p>
+      </div>
+
+      <h3>Saying dates aloud</h3>
+      <ul class="plain">
+        <li>The day is said as an ordinal, even though it's usually written as a plain number: <span class="num">7</span> → <em>the seventh</em>.</li>
+        <li>UK pattern: <em>the [ordinal] of [month]</em> → “the seventh of September”.</li>
+        <li>US pattern: <em>[month] [ordinal]</em> → “September seventh” (no “the … of”).</li>
+        <li>With a preposition: “on the 7th of September” / “on September 7th”.</li>
+        <li>With the year: “the seventh of September, twenty twenty-six”.</li>
+      </ul>
+
+      <h3>Years and decades</h3>
+      <table>
+        <thead><tr><th>Year</th><th>Said as</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1500</td><td>fifteen hundred</td></tr>
+          <tr><td class="num">1806</td><td>eighteen oh-six</td></tr>
+          <tr><td class="num">1990</td><td>nineteen ninety</td></tr>
+          <tr><td class="num">2000</td><td>two thousand</td></tr>
+          <tr><td class="num">2006</td><td>two thousand and six</td></tr>
+          <tr><td class="num">2026</td><td>twenty twenty-six <em>(also: two thousand and twenty-six)</em></td></tr>
+          <tr><td class="num">1990s</td><td>the nineteen-nineties</td></tr>
+          <tr><td class="num">2020s</td><td>the twenty-twenties</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="days">
+      <h2>Days of the month</h2>
+      <p class="section-intro">Dates run on ordinal numbers — first, second, third. The rule is mostly regular, with a handful of forms worth knowing by sight.</p>
+
+      <p>Add <span class="num">-th</span> to most numbers. <span class="num">1</span>, <span class="num">2</span> and <span class="num">3</span> are irregular (first, second, third), and that irregularity carries into twenty-one, twenty-two, twenty-three and thirty-one. But <span class="num">11</span>, <span class="num">12</span> and <span class="num">13</span> stay <span class="num">-th</span> even though they end in 1, 2, 3 — they're the exception to the exception.</p>
+
+      <div class="days-grid">
+        <div class="day-cell watch"><span class="num">1st</span><span>first</span></div>
+        <div class="day-cell watch"><span class="num">2nd</span><span>second</span></div>
+        <div class="day-cell watch"><span class="num">3rd</span><span>third</span></div>
+        <div class="day-cell"><span class="num">4th</span><span>fourth</span></div>
+        <div class="day-cell"><span class="num">5th</span><span>fifth</span></div>
+        <div class="day-cell"><span class="num">6th</span><span>sixth</span></div>
+        <div class="day-cell"><span class="num">7th</span><span>seventh</span></div>
+        <div class="day-cell"><span class="num">8th</span><span>eighth</span></div>
+        <div class="day-cell"><span class="num">9th</span><span>ninth</span></div>
+        <div class="day-cell"><span class="num">10th</span><span>tenth</span></div>
+        <div class="day-cell watch"><span class="num">11th</span><span>eleventh</span></div>
+        <div class="day-cell watch"><span class="num">12th</span><span>twelfth</span></div>
+        <div class="day-cell watch"><span class="num">13th</span><span>thirteenth</span></div>
+        <div class="day-cell"><span class="num">14th</span><span>fourteenth</span></div>
+        <div class="day-cell"><span class="num">15th</span><span>fifteenth</span></div>
+        <div class="day-cell"><span class="num">16th</span><span>sixteenth</span></div>
+        <div class="day-cell"><span class="num">17th</span><span>seventeenth</span></div>
+        <div class="day-cell"><span class="num">18th</span><span>eighteenth</span></div>
+        <div class="day-cell"><span class="num">19th</span><span>nineteenth</span></div>
+        <div class="day-cell"><span class="num">20th</span><span>twentieth</span></div>
+        <div class="day-cell watch"><span class="num">21st</span><span>twenty-first</span></div>
+        <div class="day-cell watch"><span class="num">22nd</span><span>twenty-second</span></div>
+        <div class="day-cell watch"><span class="num">23rd</span><span>twenty-third</span></div>
+        <div class="day-cell"><span class="num">24th</span><span>twenty-fourth</span></div>
+        <div class="day-cell"><span class="num">25th</span><span>twenty-fifth</span></div>
+        <div class="day-cell"><span class="num">26th</span><span>twenty-sixth</span></div>
+        <div class="day-cell"><span class="num">27th</span><span>twenty-seventh</span></div>
+        <div class="day-cell"><span class="num">28th</span><span>twenty-eighth</span></div>
+        <div class="day-cell"><span class="num">29th</span><span>twenty-ninth</span></div>
+        <div class="day-cell"><span class="num">30th</span><span>thirtieth</span></div>
+        <div class="day-cell watch"><span class="num">31st</span><span>thirty-first</span></div>
+      </div>
+      <p class="grid-note"><span class="swatch"></span>Shaded cells: the ones you can't get by pattern-matching the last digit alone.</p>
+    </section>
+
+    <section id="counting">
+      <h2>Counting numbers</h2>
+      <p class="section-intro">The building blocks — and the two places English quietly splits from most other languages.</p>
+
+      <h3>How numbers build up</h3>
+      <table>
+        <thead><tr><th>Number</th><th>In words</th></tr></thead>
+        <tbody>
+          <tr><td class="num">21</td><td>twenty-one <em>(hyphenated)</em></td></tr>
+          <tr><td class="num">100</td><td>one hundred / a hundred</td></tr>
+          <tr><td class="num">101</td><td>one hundred and one (UK) · one hundred one (US)</td></tr>
+          <tr><td class="num">1,000</td><td>one thousand</td></tr>
+          <tr><td class="num">1,250</td><td>one thousand two hundred and fifty</td></tr>
+          <tr><td class="num">1,000,000</td><td>one million</td></tr>
+          <tr><td class="num">1,000,000,000</td><td>one billion</td></tr>
+        </tbody>
+      </table>
+
+      <div class="flag">
+        <p>English groups thousands with a comma and marks decimals with a full stop: <span class="num">1,250.75</span>. That's the reverse of French, German, Spanish and many other languages, which write <span class="num">1.250,75</span>. Worth checking twice on anything written for an English-speaking reader.</p>
+      </div>
+
+      <h3>Numbers read digit by digit</h3>
+      <ul class="plain">
+        <li>Phone and reference numbers are read digit by digit, not as whole numbers: <span class="num">020 7946 0958</span> → “oh two oh, seven nine four six, oh nine five eight”.</li>
+        <li>Repeated digits (British English): <span class="num">55</span> → “double five”; <span class="num">007</span> → “double oh seven”.</li>
+      </ul>
+
+      <h3>The many faces of zero</h3>
+      <table>
+        <thead><tr><th>Form</th><th>Used for</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td>zero</td><td>general, formal, technical</td><td>“the temperature is zero”</td></tr>
+          <tr><td>oh</td><td>digit strings, times, phone numbers</td><td>“nine oh five” (9:05)</td></tr>
+          <tr><td>nil</td><td>football scores</td><td class="num">2–0 → “two nil”</td></tr>
+          <tr><td>love</td><td>tennis scores</td><td class="num">40–0 → “forty love”</td></tr>
+          <tr><td>nought</td><td>British, before a decimal point</td><td class="num">0.5 → “nought point five”</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="position">
+      <h2>Position &amp; order</h2>
+      <p class="section-intro">Away from dates, ordinal numbers do the everyday work of describing order and place.</p>
+
+      <ul class="plain">
+        <li>“the fourth house on the street”</li>
+        <li>“she lives on the third floor”</li>
+        <li>“he came second in the race”</li>
+        <li>“this is my second language”</li>
+        <li>“take the first left, then the second right”</li>
+        <li>“it's her 30th birthday” · “their 25th wedding anniversary”</li>
+        <li>“firstly … secondly … finally” — organising an explanation or an argument</li>
+      </ul>
+
+      <div class="flag">
+        <p>Floors aren't counted the same everywhere. In the UK, the ground floor is floor <span class="num">0</span>, so the third floor is three storeys up. In the US, the ground floor is already the first floor, so the third floor is only two storeys up. Worth a second look on any room number.</p>
+      </div>
+
+      <div class="flag">
+        <p>Century numbers run one ahead of the years inside them: the 21st century covers 2001–2100, not the 2100s. A date in the 2020s belongs to “the 21st century”.</p>
+      </div>
+    </section>
+
+    <section id="money">
+      <h2>Money</h2>
+      <p class="section-intro">Money combines everything above — whole numbers, decimals and separators — in one place.</p>
+
+      <h3>Writing money</h3>
+      <ul class="plain">
+        <li>The symbol goes before the number, with no space: <span class="num">$50</span>, <span class="num">£50</span>, <span class="num">€50</span>.</li>
+        <li>Decimals mark the smaller unit: <span class="num">$19.99</span>, <span class="num">£4.50</span>.</li>
+        <li>Thousands still take a comma: <span class="num">$1,250,000</span>.</li>
+        <li>Reports and headlines abbreviate: <span class="num">$2.1m</span>, <span class="num">£4.5bn</span>, “a 12% rise”.</li>
+      </ul>
+
+      <h3>Saying money aloud</h3>
+      <table>
+        <thead><tr><th>Written</th><th>Said</th></tr></thead>
+        <tbody>
+          <tr><td class="num">$19.99</td><td>nineteen ninety-nine / nineteen dollars ninety-nine</td></tr>
+          <tr><td class="num">£4.50</td><td>four pounds fifty</td></tr>
+          <tr><td class="num">€5</td><td>five euros</td></tr>
+          <tr><td class="num">$20</td><td>twenty dollars / twenty bucks <em>(informal, US)</em></td></tr>
+          <tr><td class="num">£20</td><td>twenty pounds / twenty quid <em>(informal, UK)</em></td></tr>
+          <tr><td class="num">$1,000</td><td>a thousand dollars</td></tr>
+          <tr><td class="num">$1,500</td><td>fifteen hundred dollars <em>(very common alternative)</em></td></tr>
+          <tr><td class="num">$1,000,000</td><td>a million dollars</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Talking about amounts approximately</h3>
+      <ul class="plain">
+        <li>just under $50 · just over £100</li>
+        <li>roughly €200 · in the region of $10,000</li>
+        <li>nearly a million</li>
+      </ul>
+    </section>
+
+    <section id="stats">
+      <h2>Data &amp; statistics</h2>
+      <p class="section-intro">The same rules power percentages, decimals and the numbers in any report or article.</p>
+
+      <h3>Decimals, percentages and fractions</h3>
+      <table>
+        <thead><tr><th>Written</th><th>Said</th></tr></thead>
+        <tbody>
+          <tr><td class="num">50%</td><td>fifty percent</td></tr>
+          <tr><td class="num">0.5%</td><td>nought point five percent / half a percent</td></tr>
+          <tr><td class="num">3.14</td><td>three point one four <em>(each digit said separately after the point)</em></td></tr>
+          <tr><td class="num">0.07</td><td>nought point oh seven / zero point zero seven</td></tr>
+          <tr><td class="num">1/2</td><td>a half</td></tr>
+          <tr><td class="num">1/3</td><td>a third</td></tr>
+          <tr><td class="num">3/4</td><td>three quarters</td></tr>
+          <tr><td class="num">2/5</td><td>two fifths</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Describing change</h3>
+      <ul class="plain">
+        <li>“sales <strong>rose by</strong> 20% <strong>to</strong> $2 million”</li>
+        <li>“the population <strong>increased from</strong> 1.2 <strong>to</strong> 1.5 million”</li>
+        <li>“prices <strong>fell by</strong> 8%” · “demand <strong>dropped to</strong> half its usual level”</li>
+        <li>“the figure <strong>doubled</strong> / <strong>halved</strong> / <strong>tripled</strong>”</li>
+        <li>“turnover <strong>remained stable at</strong> €4 million”</li>
+      </ul>
+
+      <h3>Big numbers in reports</h3>
+      <ul class="plain">
+        <li><span class="num">1.5 million</span> people → “one point five million people”</li>
+        <li><span class="num">2.3 billion</span> → “two point three billion”</li>
+        <li>headline shorthand: <span class="num">2.1m</span>, <span class="num">4.5bn</span>, <span class="num">12k</span></li>
+      </ul>
+    </section>
+
+    <section id="practice">
+      <h2>Quick check</h2>
+      <p class="section-intro">Six prompts pulling from every section above. Try each one before opening it.</p>
+
+      <details>
+        <summary>Write “14 March 2026” the way a British form would ask for it.</summary>
+        <p><span class="num">14/03/2026</span></p>
+      </details>
+
+      <details>
+        <summary>Say that same date aloud, British style.</summary>
+        <p>“the fourteenth of March, twenty twenty-six”</p>
+      </details>
+
+      <details>
+        <summary>What's the ordinal for 23?</summary>
+        <p><span class="num">23rd</span> — twenty-third</p>
+      </details>
+
+      <details>
+        <summary>Say this price aloud: $45.50</summary>
+        <p>“forty-five fifty” / “forty-five dollars fifty”</p>
+      </details>
+
+      <details>
+        <summary>Say this aloud: 3.05</summary>
+        <p>“three point oh five”</p>
+      </details>
+
+      <details>
+        <summary>Complete naturally: “Sales _____ 20% _____ $2 million.”</summary>
+        <p>“Sales <strong>rose by</strong> 20% <strong>to</strong> $2 million.”</p>
+      </details>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Numbers in English — a B2 reference page. The date above updates to today automatically.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var ones = ['zero','one','two','three','four','five','six','seven','eight','nine','ten',
+    'eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  var tens = ['zero','ten','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+  var ordWords = ['','first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth',
+    'eleventh','twelfth','thirteenth','fourteenth','fifteenth','sixteenth','seventeenth','eighteenth','nineteenth','twentieth',
+    'twenty-first','twenty-second','twenty-third','twenty-fourth','twenty-fifth','twenty-sixth','twenty-seventh','twenty-eighth','twenty-ninth','thirtieth','thirty-first'];
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  function twoDigitWord(n) {
+    if (n < 20) return ones[n];
+    var t = Math.floor(n / 10), o = n % 10;
+    return o === 0 ? tens[t] : tens[t] + '-' + ones[o];
+  }
+  function yearSuffix(n) {
+    if (n === 0) return 'hundred';
+    if (n < 10) return 'oh-' + ones[n];
+    return twoDigitWord(n);
+  }
+  function yearToWords(y) {
+    var firstTwo = Math.floor(y / 100), lastTwo = y % 100;
+    if (y >= 2000 && y < 2010) {
+      return lastTwo === 0 ? 'two thousand' : 'two thousand and ' + ones[lastTwo];
+    }
+    return twoDigitWord(firstTwo) + ' ' + yearSuffix(lastTwo);
+  }
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function setText(id, text) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = text;
+  }
+
+  try {
+    var today = new Date();
+    var d = today.getDate(), m = today.getMonth(), y = today.getFullYear();
+    var mm = pad(m + 1), dd = pad(d);
+
+    setText('hero-uk-numeric', dd + '/' + mm + '/' + y);
+    setText('hero-us-numeric', mm + '/' + dd + '/' + y);
+    setText('hero-uk-long', d + ' ' + months[m] + ' ' + y);
+    setText('hero-us-long', months[m] + ' ' + d + ', ' + y);
+    setText('hero-spoken', 'the ' + (ordWords[d] || d) + ' of ' + months[m] + ', ' + yearToWords(y));
+  } catch (e) {
+    /* static example in the markup stays as a safe fallback */
+  }
+})();
+</script>
+
+</body>
+</html>
