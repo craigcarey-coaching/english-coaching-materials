@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who sits at the table — Milda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital@0;1&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E6ECEA;
+  --sheet:#F8FAF9;
+  --ink:#18222D;
+  --muted:#56616B;
+  --rule:#C9D3D0;
+  --cam:#2F6B5A;
+  --cam-pale:#A3C1AD;
+  --cam-wash:#E2EDE7;
+  --ox:#8A2B35;
+  --ox-wash:#F3E4E4;
+  --brass:#946F22;
+  --brass-wash:#F4ECD9;
+  --display:"Libre Caslon Display",Georgia,"Times New Roman",serif;
+  --serif:"Libre Caslon Text",Georgia,"Times New Roman",serif;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{margin:0;color:var(--ink);font:400 17px/1.6 var(--sans);background:var(--paper)}
+.wrap{max-width:760px;margin:0 auto;padding:56px 24px 96px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,textarea:focus-visible{outline:3px solid var(--cam-pale);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Hero */
+header{border-left:6px solid var(--cam);padding:4px 0 4px 24px;margin-bottom:56px}
+h1{font:400 clamp(40px,7vw,64px)/1.02 var(--display);margin:0 0 16px;letter-spacing:-.01em}
+.lede{font:400 19px/1.55 var(--serif);color:var(--muted);margin:0;max-width:34em}
+
+/* Sections */
+section{margin-top:64px}
+.sec-head{display:flex;gap:18px;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:22px}
+.sec-num{font:400 34px/1 var(--display);color:var(--cam)}
+h2{font:400 30px/1.15 var(--display);margin:0}
+.instr{color:var(--muted);margin:0 0 22px;max-width:38em}
+
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:3px;padding:26px 28px}
+.brief p{font:400 18px/1.75 var(--serif);margin:0 0 14px}
+.brief p:last-child{margin:0}
+.brief mark{background:none;border-bottom:2px solid var(--cam-pale);color:inherit;padding:0 1px}
+.retell{margin-top:18px;display:grid;gap:12px}
+.retell div{border-left:3px solid var(--rule);padding:4px 0 4px 16px}
+.retell b{font-weight:600}
+
+/* Register ladder */
+.ladder-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;color:var(--muted);font-size:15px}
+.ladder-nav button{background:none;border:1px solid var(--rule);border-radius:3px;padding:6px 14px;background:var(--sheet)}
+.ladder-nav button:disabled{opacity:.4;cursor:default}
+.ladder{position:relative;padding-left:34px}
+.ladder::before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:2px;background:var(--rule)}
+.rung{position:relative;margin-bottom:16px}
+.rung::before{content:"";position:absolute;left:-29px;top:20px;width:12px;height:12px;border-radius:50%;background:var(--sheet);border:2px solid var(--rule)}
+.rung-label{font-size:14px;color:var(--muted);margin-bottom:4px}
+.rung-text{font:400 19px/1.5 var(--serif)}
+.rung.everyday .rung-text{padding:14px 18px;background:var(--sheet);border:1px solid var(--rule);border-radius:3px}
+.say{margin:6px 0 22px;padding:14px 18px;border:1px dashed var(--cam);border-radius:3px;color:var(--cam);font-weight:500}
+.options{display:grid;gap:12px}
+.opt{display:block;width:100%;text-align:left;background:var(--sheet);border:1px solid var(--rule);border-radius:3px;padding:14px 18px;font:400 18px/1.5 var(--serif);transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--cam-pale)}
+.opt.right{background:var(--cam-wash);border-color:var(--cam)}
+.opt.stiff{background:var(--brass-wash);border-color:var(--brass)}
+.opt .tag{display:block;font:500 13px/1.4 var(--sans);margin-top:6px}
+.opt.right .tag{color:var(--cam)}
+.opt.stiff .tag{color:var(--brass)}
+.note{margin-top:16px;padding:14px 18px;border-left:3px solid var(--cam);background:var(--sheet);font-size:16px}
+.primary{background:var(--ink);color:var(--sheet);border:0;border-radius:3px;padding:10px 18px;font-weight:500}
+.primary:hover{background:#2A3846}
+
+/* Word cards */
+.word-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.word-tabs button{background:var(--sheet);border:1px solid var(--rule);border-radius:20px;padding:5px 14px;font-size:15px}
+.word-tabs button[aria-pressed="true"]{background:var(--ink);color:var(--sheet);border-color:var(--ink)}
+.word-tabs button.done::after{content:" ✓";color:var(--cam)}
+.word-tabs button[aria-pressed="true"].done::after{color:var(--cam-pale)}
+.headword{font:400 42px/1.1 var(--display);margin:0}
+.pos{font:italic 400 16px var(--serif);color:var(--muted);margin-left:8px}
+.ctx{font:italic 400 18px/1.6 var(--serif);color:var(--muted);margin:10px 0 22px}
+.q{font-weight:600;margin:0 0 12px}
+.odd-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.odd{background:var(--sheet);border:1px solid var(--rule);border-radius:3px;padding:12px 14px;text-align:left;font:400 17px var(--serif)}
+.odd:hover{border-color:var(--cam-pale)}
+.odd.hit{background:var(--ox-wash);border-color:var(--ox);color:var(--ox)}
+.odd.miss{opacity:.55}
+.feedback{margin-top:14px;font-size:16px}
+.columns{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+.col h3{font:600 15px var(--sans);margin:0 0 8px;padding-bottom:6px;border-bottom:2px solid}
+.col.syn h3{color:var(--cam);border-color:var(--cam)}
+.col.ant h3{color:var(--ox);border-color:var(--ox)}
+.col ul{list-style:none;margin:0;padding:0}
+.col li{font:400 18px/1.5 var(--serif);padding:4px 0;border-bottom:1px solid var(--rule)}
+.nuance{margin-top:20px;padding:16px 18px;background:var(--cam-wash);border-radius:3px;font-size:16px}
+.nuance b{font-weight:600}
+.hidden{display:none!important}
+
+/* Bench test */
+.frame{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:24px;border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--sheet)}
+.frame div{padding:12px 14px;border-right:1px solid var(--rule);font-size:15px}
+.frame div:last-child{border-right:0}
+.frame b{display:block;font:400 19px var(--display);margin-bottom:4px;color:var(--cam)}
+.frame i{font-family:var(--serif);color:var(--muted)}
+.prompt-card{background:var(--ink);color:var(--sheet);border-radius:3px;padding:30px 30px 24px}
+.prompt-card p{font:400 22px/1.5 var(--serif);margin:0 0 20px}
+.must{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--cam-pale)}
+.must span{border:1px solid var(--cam-pale);border-radius:20px;padding:3px 12px;color:var(--sheet);font-family:var(--serif);font-size:16px}
+.prompt-nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--muted);font-size:15px}
+.prompt-nav div{display:flex;gap:8px}
+.prompt-nav button{background:var(--sheet);border:1px solid var(--rule);border-radius:3px;padding:6px 14px}
+
+/* Sentence bank */
+textarea{width:100%;min-height:96px;resize:vertical;font:400 18px/1.55 var(--serif);padding:14px 16px;border:1px solid var(--rule);border-radius:3px;background:var(--sheet);color:var(--ink)}
+.bank-actions{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:14px;color:var(--muted)}
+.bank{list-style:none;padding:0;margin:22px 0 0}
+.bank li{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--rule);font:400 18px/1.55 var(--serif)}
+.bank li button{background:none;border:0;color:var(--muted);font:400 14px var(--sans);padding:4px 0;flex-shrink:0}
+.bank li button:hover{color:var(--ox)}
+.empty{color:var(--muted);font-style:italic;font-family:var(--serif)}
+
+@media (max-width:620px){
+  .wrap{padding:36px 18px 72px}
+  .odd-grid,.columns{grid-template-columns:1fr}
+  .frame{grid-template-columns:1fr 1fr}
+  .frame div:nth-child(2){border-right:0}
+  .frame div:nth-child(-n+2){border-bottom:1px solid var(--rule)}
+  .sheet{padding:20px}
+  .prompt-card{padding:22px}
+  .prompt-card p{font-size:20px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Who sits at the table</h1>
+  <p class="lede">Mary Robinson on parity in leadership, and the language you need to discuss it in front of a Cambridge panel. A lesson for Milda.</p>
+</header>
+
+<section id="s1">
+  <div class="sec-head"><span class="sec-num">1</span><h2>The argument in brief</h2></div>
+  <p class="instr">Read this after the clip. The underlined words return later in the lesson.</p>
+  <div class="sheet brief">
+    <p>Mary Robinson, former President of Ireland and former UN High Commissioner for Human Rights, argues that the world has been governed largely by men, and that this imbalance has consequences. Her claim is not that women are inherently better leaders, but that leadership needs a balance of perspectives.</p>
+    <p>Male-dominated leadership, she suggests, has tended to be <mark>hierarchical</mark> and to favour <mark>hard power</mark>. Women who have risen through grassroots networks tend to lead in a more <mark>collaborative</mark> way. Real <mark>parity</mark> at the top, in her view, could produce a less <mark>militarised</mark>, more cooperative world.</p>
+    <p>She also argues that gender equality has too often been paid <mark>lip service</mark>, criticises <mark>double standards</mark> in how international law is applied, and insists that states be held to <mark>account</mark>. She makes the case for a woman as the next UN Secretary-General.</p>
+  </div>
+  <div class="retell">
+    <div><b>Retell it twice.</b> First, tell a friend over coffee what she said, in two sentences.</div>
+    <div>Then summarise it for a fellowship panel, in two sentences. What changed in your vocabulary, your sentence length, and how certain you sounded?</div>
+  </div>
+</section>
+
+<section id="s2">
+  <div class="sec-head"><span class="sec-num">2</span><h2>Up a register, but not too far</h2></div>
+  <p class="instr">Say the everyday sentence for the panel, aloud. Then compare two versions and choose the one you would actually use.</p>
+  <div class="ladder-nav">
+    <button type="button" id="ladPrev">Previous</button>
+    <span id="ladCount"></span>
+    <button type="button" id="ladNext">Next</button>
+  </div>
+  <div class="ladder">
+    <div class="rung everyday">
+      <div class="rung-label">Everyday</div>
+      <div class="rung-text" id="ladEveryday"></div>
+    </div>
+    <div class="say" id="ladSay">Your version for the panel, aloud first.</div>
+    <button type="button" class="primary" id="ladReveal">Compare versions</button>
+    <div class="options hidden" id="ladOptions"></div>
+    <div class="note hidden" id="ladNote"></div>
+  </div>
+</section>
+
+<section id="s3">
+  <div class="sec-head"><span class="sec-num">3</span><h2>Same, opposite, not quite</h2></div>
+  <p class="instr">Three of the four words belong with the headword. Find the one that doesn’t, then study the full set, especially the note on nuance.</p>
+  <div class="word-tabs" id="wordTabs" role="group" aria-label="Words"></div>
+  <div class="sheet">
+    <p class="headword"><span id="wHead"></span><span class="pos" id="wPos"></span></p>
+    <p class="ctx" id="wCtx"></p>
+    <p class="q">Which one doesn’t belong?</p>
+    <div class="odd-grid" id="wOdd"></div>
+    <div class="feedback" id="wFeedback" aria-live="polite"></div>
+    <div id="wReveal" class="hidden">
+      <div class="columns">
+        <div class="col syn"><h3>Close in meaning</h3><ul id="wSyn"></ul></div>
+        <div class="col ant"><h3>Opposite</h3><ul id="wAnt"></ul></div>
+      </div>
+      <div class="nuance" id="wNuance"></div>
+    </div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="sec-head"><span class="sec-num">4</span><h2>The panel question</h2></div>
+  <p class="instr">Answer each question in about a minute, using both words on the card. Build the answer in four moves.</p>
+  <div class="frame">
+    <div><b>Position</b><i>My view is that…</i></div>
+    <div><b>Reason</b><i>The reason I say that is…</i></div>
+    <div><b>Concession</b><i>I accept that…; nonetheless…</i></div>
+    <div><b>Return</b><i>So, on balance,…</i></div>
+  </div>
+  <div class="prompt-card">
+    <p id="pText"></p>
+    <div class="must">Use: <span id="pW1"></span><span id="pW2"></span></div>
+  </div>
+  <div class="prompt-nav">
+    <span id="pCount"></span>
+    <div><button type="button" id="pPrev">Previous</button><button type="button" id="pNext">Next question</button></div>
+  </div>
+</section>
+
+<section id="s5">
+  <div class="sec-head"><span class="sec-num">5</span><h2>Sentences worth keeping</h2></div>
+  <p class="instr">Write down your best sentence from today. It stays here for next time.</p>
+  <label for="bankInput" class="hidden">Your sentence</label>
+  <textarea id="bankInput" placeholder="e.g. Commitments to algorithmic accountability have too often been paid lip service."></textarea>
+  <div class="bank-actions"><span id="bankStatus"></span><button type="button" class="primary" id="bankSave">Save sentence</button></div>
+  <ul class="bank" id="bankList"></ul>
+</section>
+
+</div>
+
+<script>
+(function(){
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+
+  /* ---------- Section 2: register ladder ---------- */
+  var ladder=[
+    {e:"If more women were in charge, there’d be fewer wars.",
+     p:"Greater parity in leadership might well lead to fewer armed conflicts.",
+     s:"An augmentation of female representation within the leadership echelons would occasion a diminution in armed hostilities.",
+     n:"“Might well” hedges without sounding weak, and “parity” says exactly what you mean. The stiff version stacks abstract nouns; to a panel it sounds defensive, not authoritative."},
+    {e:"Men in power like using force.",
+     p:"Male-dominated leadership has tended to favour hard power.",
+     s:"Leaders of the masculine gender have historically exhibited a marked predilection for coercive instruments of statecraft.",
+     n:"“Has tended to” lets you generalise without overclaiming, which matters when the claim is contested. Keep the subject concrete: “male-dominated leadership”, not “leaders of the masculine gender”."},
+    {e:"Everyone says they support equality, but they don’t really do anything.",
+     p:"Gender equality has too often been paid lip service rather than given substance.",
+     s:"Professed adherence to the principle of gender equality has been insufficiently operationalised in practice.",
+     n:"An idiom used precisely, like “pay lip service”, signals command of the language. Formal does not mean idiom-free."},
+    {e:"The rules are different depending on who you are.",
+     p:"International law is being applied selectively, and the double standards are hard to ignore.",
+     s:"The application of international legal norms is characterised by a lack of uniformity contingent upon the identity of the actor concerned.",
+     n:"“Applied selectively” is the precise legal-analytical phrase. The stiff version is technically correct but takes three times as long to land."},
+    {e:"Nobody gets punished for it.",
+     p:"Those responsible are not being held to account.",
+     s:"Culpable parties remain wholly beyond the reach of any operative accountability mechanism.",
+     n:"“Held to account” and “held accountable” are both fine. If you need the noun for the problem itself, it is “impunity”."},
+    {e:"I don’t think that’s always true.",
+     p:"I’d be cautious about generalising; the evidence is mixed.",
+     s:"One is constrained to express reservations as to the universal applicability of the aforementioned proposition.",
+     n:"Disagreeing in an interview: signal caution, then give a reason. “One” and “aforementioned” put distance between you and your own view, which is the opposite of what the panel wants to hear."}
+  ];
+  var li=0;
+  var lE=document.getElementById("ladEveryday"),lOpt=document.getElementById("ladOptions"),lNote=document.getElementById("ladNote"),
+      lRev=document.getElementById("ladReveal"),lSay=document.getElementById("ladSay"),lCount=document.getElementById("ladCount"),
+      lPrev=document.getElementById("ladPrev"),lNext=document.getElementById("ladNext");
+  function renderLadder(){
+    var it=ladder[li];
+    lE.textContent=it.e;
+    lCount.textContent=(li+1)+" of "+ladder.length;
+    lPrev.disabled=li===0;lNext.disabled=li===ladder.length-1;
+    lOpt.innerHTML="";lOpt.classList.add("hidden");lNote.classList.add("hidden");lNote.textContent="";
+    lRev.classList.remove("hidden");lSay.classList.remove("hidden");
+    var choices=shuffle([{t:it.p,k:"p"},{t:it.s,k:"s"}]);
+    choices.forEach(function(c){
+      var b=el("button","opt");b.type="button";b.appendChild(document.createTextNode(c.t));b.dataset.k=c.k;
+      b.addEventListener("click",function(){
+        Array.prototype.forEach.call(lOpt.children,function(x){
+          x.classList.add(x.dataset.k==="p"?"right":"stiff");
+          if(!x.querySelector(".tag")){var tg=el("span","tag",x.dataset.k==="p"?"For the panel":"Too stiff");x.appendChild(tg);}
+        });
+        lNote.textContent=(c.k==="p"?"Yes, that’s the one. ":"That one overshoots. ")+it.n;
+        lNote.classList.remove("hidden");
+      });
+      lOpt.appendChild(b);
+    });
+  }
+  lRev.addEventListener("click",function(){lOpt.classList.remove("hidden");lRev.classList.add("hidden");lSay.classList.add("hidden");});
+  lPrev.addEventListener("click",function(){if(li>0){li--;renderLadder();}});
+  lNext.addEventListener("click",function(){if(li<ladder.length-1){li++;renderLadder();}});
+  renderLadder();
+
+  /* ---------- Section 3: word cards ---------- */
+  var words=[
+    {h:"parity",pos:"noun",ctx:"She calls for parity in leadership: roughly half the world’s leaders should be women.",
+     opts:["equal footing","balance","equality of representation","majority"],odd:"majority",
+     why:"Parity means equal standing, not dominance. “Majority” would change her argument.",
+     syn:["equality of representation","equal footing","balance (looser)"],ant:["disparity","imbalance","under-representation"],
+     nu:"<b>Parity</b> is about equal numbers or standing. “On a par with” is its everyday relative; “disparity” is the noun you will see in equality and discrimination case law."},
+    {h:"militarised",pos:"adjective",ctx:"More women in power could help build a less militarised world.",
+     opts:["hawkish","securitised","belligerent","pacific"],odd:"pacific",
+     why:"“Pacific” (formal: peace-seeking) is the opposite, not a synonym.",
+     syn:["securitised","hawkish (attitudes)","belligerent (behaviour)"],ant:["demilitarised","pacific (formal)","conciliatory"],
+     nu:"<b>Militarised</b> describes structures and budgets; <b>hawkish</b> describes people’s attitudes; <b>securitised</b> is the academic term for treating an issue as a security threat, which is useful when discussing AI and national security."},
+    {h:"collaborative",pos:"adjective",ctx:"Women who come from grassroots networks tend to lead in a more collaborative way.",
+     opts:["consensual","multilateral","cooperative","adversarial"],odd:"adversarial",
+     why:"“Adversarial” is the opposite: two sides in contest.",
+     syn:["cooperative","consensual","multilateral (between states)"],ant:["adversarial","confrontational","unilateral"],
+     nu:"You will need <b>adversarial</b> at Cambridge: common-law procedure is described as adversarial and is usually contrasted with the <b>inquisitorial</b> model associated with civil-law systems."},
+    {h:"hierarchical",pos:"adjective",ctx:"In her view, men in power tend to be more hierarchical.",
+     opts:["top-down","command-and-control","participatory","vertical"],odd:"participatory",
+     why:"“Participatory” describes the opposite style: decisions shared widely.",
+     syn:["top-down","vertical","command-and-control"],ant:["flat","horizontal","participatory"],
+     nu:"<b>Command-and-control</b> is also a regulatory term: rules backed by sanctions, contrasted with co-regulation or principles-based regulation. That is exactly the debate around how AI should be governed."},
+    {h:"lip service",pos:"noun, in “pay lip service to”",ctx:"Gender equality, she argues, has too often been paid lip service.",
+     opts:["tokenism","window dressing","follow-through","empty rhetoric"],odd:"follow-through",
+     why:"“Follow-through” is what lip service lacks: actually doing what you promised.",
+     syn:["tokenism","window dressing","empty rhetoric"],ant:["substantive commitment","meaningful action","follow-through"],
+     nu:"The AI-governance relative is <b>ethics-washing</b>: publishing principles that are never enforced. Note the grammar: you pay lip service <i>to</i> something, and something <i>is paid</i> lip service."},
+    {h:"accountability",pos:"noun",ctx:"She insists that states be held accountable for their actions.",
+     opts:["answerability","liability","impunity","responsibility"],odd:"impunity",
+     why:"“Impunity” is freedom from punishment: the opposite of accountability.",
+     syn:["answerability","responsibility (broader)","liability (legal)"],ant:["impunity","unaccountability"],
+     nu:"Not interchangeable. <b>Liability</b> is legal exposure to a sanction; <b>responsibility</b> can be purely moral; <b>accountability</b> means having to answer to someone. “Algorithmic accountability” is a core phrase in AI law."},
+    {h:"double standards",pos:"noun, usually plural",ctx:"She criticises double standards in how international law is applied.",
+     opts:["selective application","inconsistency","even-handedness","hypocrisy"],odd:"even-handedness",
+     why:"“Even-handedness” means treating everyone by the same rule: the remedy, not the problem.",
+     syn:["selective application","inconsistency","hypocrisy (stronger, moral)"],ant:["even-handedness","consistency","impartiality"],
+     nu:"For a judge: <b>impartiality</b> concerns the decision-maker; <b>even-handedness</b> concerns how the parties are treated; <b>consistency</b> concerns outcomes over time."},
+    {h:"hard power",pos:"noun",ctx:"Male-dominated leadership, she suggests, has tended to favour hard power.",
+     opts:["coercive power","force","soft power","economic pressure"],odd:"soft power",
+     why:"“Soft power” is the opposite: influence through attraction and persuasion.",
+     syn:["coercive power","force","military and economic pressure"],ant:["soft power","persuasion","diplomacy"],
+     nu:"Joseph Nye’s distinction: <b>hard power</b> compels, <b>soft power</b> attracts. Regulatory influence, such as the so-called Brussels effect, is often discussed as a form of soft power."}
+  ];
+  var wi=0,done={};
+  var tabs=document.getElementById("wordTabs");
+  words.forEach(function(w,i){
+    var b=el("button",null,w.h);b.type="button";b.setAttribute("aria-pressed",i===0?"true":"false");
+    b.addEventListener("click",function(){wi=i;renderWord();});
+    tabs.appendChild(b);
+  });
+  function renderWord(){
+    var w=words[wi];
+    Array.prototype.forEach.call(tabs.children,function(b,i){b.setAttribute("aria-pressed",i===wi?"true":"false");b.classList.toggle("done",!!done[i]);});
+    document.getElementById("wHead").textContent=w.h;
+    document.getElementById("wPos").textContent=w.pos;
+    document.getElementById("wCtx").textContent=w.ctx;
+    var grid=document.getElementById("wOdd");grid.innerHTML="";
+    var fb=document.getElementById("wFeedback");fb.textContent="";
+    var rev=document.getElementById("wReveal");rev.classList.add("hidden");
+    shuffle(w.opts).forEach(function(o){
+      var b=el("button","odd",o);b.type="button";
+      b.addEventListener("click",function(){
+        Array.prototype.forEach.call(grid.children,function(x){
+          x.disabled=true;
+          if(x.textContent===w.odd)x.classList.add("hit");else x.classList.add("miss");
+        });
+        fb.textContent=(o===w.odd?"Right. ":"Not that one: it’s “"+w.odd+"”. ")+w.why;
+        fill("wSyn",w.syn);fill("wAnt",w.ant);
+        document.getElementById("wNuance").innerHTML=w.nu;
+        rev.classList.remove("hidden");
+        done[wi]=true;tabs.children[wi].classList.add("done");
+      });
+      grid.appendChild(b);
+    });
+  }
+  function fill(id,arr){var u=document.getElementById(id);u.innerHTML="";arr.forEach(function(t){u.appendChild(el("li",null,t));});}
+  renderWord();
+
+  /* ---------- Section 4: panel questions ---------- */
+  var prompts=[
+    {t:"Robinson argues that who sits at the table shapes the outcome. Does the same hold for the teams that design and audit AI systems?",w:["parity","under-representation"]},
+    {t:"Dozens of AI ethics charters now exist, yet few are enforceable. Is that genuine progress, or lip service?",w:["lip service","substantive"]},
+    {t:"Should AI be governed through command-and-control regulation, or through something more collaborative?",w:["top-down","consensual"]},
+    {t:"Robinson criticises double standards in international law. Where might AI regulation fall into the same trap?",w:["selective application","even-handed"]},
+    {t:"When an automated system contributes to a wrongful decision, who should be held accountable, and how?",w:["liability","answerability"]},
+    {t:"Argue the other side. Thatcher, Golda Meir and Indira Gandhi all led their countries through wars. Does that undermine Robinson’s argument?",w:["hard power","generalise"]}
+  ];
+  var pi=0;
+  function renderPrompt(){
+    var p=prompts[pi];
+    document.getElementById("pText").textContent=p.t;
+    document.getElementById("pW1").textContent=p.w[0];
+    document.getElementById("pW2").textContent=p.w[1];
+    document.getElementById("pCount").textContent="Question "+(pi+1)+" of "+prompts.length;
+  }
+  document.getElementById("pNext").addEventListener("click",function(){pi=(pi+1)%prompts.length;renderPrompt();});
+  document.getElementById("pPrev").addEventListener("click",function(){pi=(pi-1+prompts.length)%prompts.length;renderPrompt();});
+  renderPrompt();
+
+  /* ---------- Section 5: sentence bank ---------- */
+  var KEY="milda_robinson_v1",bank=[];
+  var status=document.getElementById("bankStatus"),list=document.getElementById("bankList"),input=document.getElementById("bankInput");
+  try{var raw=localStorage.getItem(KEY);if(raw)bank=JSON.parse(raw)||[];}catch(e){bank=[];}
+  function persist(){try{localStorage.setItem(KEY,JSON.stringify(bank));return true;}catch(e){return false;}}
+  function renderBank(){
+    list.innerHTML="";
+    if(!bank.length){list.appendChild(el("li","empty","No sentences yet. Your first one goes here."));return;}
+    bank.forEach(function(s,i){
+      var item=el("li");item.appendChild(el("span",null,s));
+      var d=el("button",null,"Remove");d.type="button";
+      d.addEventListener("click",function(){bank.splice(i,1);persist();renderBank();});
+      item.appendChild(d);list.appendChild(item);
+    });
+  }
+  document.getElementById("bankSave").addEventListener("click",function(){
+    var v=input.value.trim();
+    if(!v){status.textContent="Write a sentence first.";return;}
+    bank.unshift(v);input.value="";
+    status.textContent=persist()?"Saved.":"Saved for this session only: this browser isn’t storing data.";
+    renderBank();
+  });
+  renderBank();
+})();
+</script>
+</body>
+</html>
