@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuclear Waste, Nuclear Futures — listening and expression</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F4F3; --surface:#FFFFFF; --ink:#16212B; --muted:#5A6670;
+  --rule:#C9D2D6; --cherenkov:#1F64C8; --glow:#DCE8F8; --reserve:#7A8791;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#10171D; --surface:#17212A; --ink:#E4EAEE; --muted:#9AA7B1;
+    --rule:#2E3C47; --cherenkov:#6FA6F5; --glow:#1A2D46; --reserve:#7D8B96;
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 "Literata",Georgia,"Times New Roman",serif}
+.wrap{max-width:1040px;margin:0 auto;padding:3rem 1.5rem 5rem}
+.prose{max-width:68ch}
+h1,h2,h3{font-weight:700;line-height:1.2;margin:0}
+h1{font-size:clamp(2.1rem,5vw,3.2rem);letter-spacing:-.01em}
+h2{font-size:1.75rem;margin:4rem 0 .5rem}
+h3{font-size:1.2rem;margin:2.25rem 0 .6rem}
+p{margin:0 0 1rem}
+.sub{color:var(--muted);margin:.75rem 0 0;max-width:62ch}
+.focus{font-family:"Archivo",system-ui,sans-serif;color:var(--muted);font-size:.95rem;margin:0 0 1rem}
+a{color:var(--cherenkov)}
+button{font:500 .92rem/1.2 "Archivo",system-ui,sans-serif;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:.6rem .9rem;cursor:pointer}
+button:hover{border-color:var(--cherenkov)}
+button[aria-pressed="true"]{background:var(--cherenkov);color:#fff;border-color:var(--cherenkov)}
+button:focus-visible,.rung:focus-visible,.seg:focus-visible{outline:3px solid var(--cherenkov);outline-offset:2px}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}
+
+/* Player */
+.player{margin:2rem 0 0;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:1rem;scroll-margin-top:1rem}
+.frame{position:relative;aspect-ratio:16/9;background:#000;border-radius:4px;overflow:hidden}
+.frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.nowplaying{font-family:"Archivo",system-ui,sans-serif;font-size:.9rem;color:var(--muted);margin:.75rem 0 0}
+
+/* Timeline */
+.timeline{margin:1rem 0 0;font-family:"Archivo",system-ui,sans-serif}
+.track{position:relative;height:52px;background:var(--paper);border:1px solid var(--rule);border-radius:4px}
+.seg{position:absolute;top:7px;bottom:7px;border-radius:3px;background:var(--cherenkov);box-shadow:0 0 16px var(--glow);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:.85rem;border:0;padding:0;cursor:pointer}
+.seg:hover{box-shadow:0 0 26px var(--cherenkov)}
+.seg.reserve{background:transparent;border:2px dashed var(--reserve);box-shadow:none;color:var(--reserve)}
+.ticks{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:.35rem}
+
+/* Clip cards */
+.clip{display:flex;gap:1rem;align-items:flex-start;background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--cherenkov);border-radius:0 6px 6px 0;padding:1rem 1.1rem;margin:1.25rem 0;max-width:72ch}
+.clip button{flex-shrink:0;background:var(--cherenkov);color:#fff;border-color:var(--cherenkov)}
+.clip p{margin:0}
+.clip .meta{font-family:"Archivo",system-ui,sans-serif;font-size:.85rem;color:var(--muted);margin:.25rem 0 0}
+
+/* Tasks */
+.task{max-width:68ch;margin:1.5rem 0}
+.task h3{margin:0 0 .4rem}
+.task ul{margin:.25rem 0 1rem;padding-left:1.25rem}
+.task li{margin:.35rem 0}
+.frame-sentence{font-size:1.25rem;font-style:italic;margin:1rem 0;padding:1rem 1.1rem;background:var(--surface);border:1px dashed var(--rule);border-radius:6px;max-width:68ch}
+
+/* Tables */
+.tablewrap{overflow-x:auto;margin:.5rem 0 1.5rem;border:1px solid var(--rule);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:620px;font:400 .95rem/1.5 "Archivo",system-ui,sans-serif}
+th,td{text-align:left;vertical-align:top;padding:.7rem .85rem;border-bottom:1px solid var(--rule)}
+th{font-weight:600;background:var(--glow)}
+tr:last-child td{border-bottom:none}
+.ladder td:first-child{color:var(--muted)}
+.rung{cursor:pointer}
+.rung.hidden{color:transparent;background:repeating-linear-gradient(135deg,var(--glow) 0 6px,transparent 6px 12px);border-radius:3px;user-select:none}
+.rung.hidden *{visibility:hidden}
+
+@media (max-width:560px){ .clip{flex-direction:column} }
+@media print{
+  .player,.row,.clip button{display:none}
+  .rung.hidden{color:inherit;background:none}
+  .rung.hidden *{visibility:visible}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Nuclear Waste, Nuclear Futures</h1>
+  <p class="sub">Listening, discussion and register practice built around a TEDx talk by nuclear safety engineer Jo Lackenby. She argues that nuclear waste is not a problem to fear but a resource for the future. You don’t have to agree.</p>
+</header>
+
+<section class="player" id="player" aria-label="Video player">
+  <div class="frame"><iframe id="yt" title="Nuclear waste: the key to our future energy needs? Jo Lackenby, TEDxSydney" src="https://www.youtube-nocookie.com/embed/u9MQm-FMhIk?rel=0&amp;cc_load_policy=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+  <div class="timeline" aria-label="Clips within the 14:48 talk">
+    <div class="track">
+      <button class="seg" style="left:1.24%;width:18.58%" data-start="11" data-end="176" data-label="Clip 1: The dinner-party problem" aria-label="Play clip 1, 0:11 to 2:56">1</button>
+      <button class="seg reserve" style="left:25.79%;width:8.67%" data-start="229" data-end="306" data-label="Bonus clip: Safety by numbers" aria-label="Play bonus clip, 3:49 to 5:06">+</button>
+      <button class="seg" style="left:58.9%;width:11.37%" data-start="523" data-end="624" data-label="Clip 2: Is it really waste?" aria-label="Play clip 2, 8:43 to 10:24">2</button>
+      <button class="seg" style="left:82.21%;width:15.77%" data-start="730" data-end="870" data-label="Clip 3: The ask" aria-label="Play clip 3, 12:10 to 14:30">3</button>
+    </div>
+    <div class="ticks" aria-hidden="true"><span>0:00</span><span>3:00</span><span>6:00</span><span>9:00</span><span>12:00</span><span>14:48</span></div>
+  </div>
+  <p class="nowplaying" id="nowplaying" aria-live="polite">Choose a clip to play it. Each clip stops on its own at the end.</p>
+</section>
+
+<!-- PART 1 -->
+<section id="part1">
+  <h2>Part 1: The reputation problem</h2>
+  <p class="focus">Stance, concession, and saying one idea at three levels of formality.</p>
+
+  <div class="task">
+    <h3>Before you watch</h3>
+    <ul>
+      <li>When you tell someone at a dinner what you do for a living, what reactions do you get? Which one annoys you most?</li>
+      <li>The speaker is a nuclear safety engineer who calls herself an environmentalist. Predict the three arguments she will make. Which do you expect to be the weakest?</li>
+    </ul>
+  </div>
+
+  <div class="clip">
+    <button data-start="11" data-end="176" data-label="Clip 1: The dinner-party problem">▶ Play clip 1</button>
+    <div>
+      <p><strong>The dinner-party problem</strong></p>
+      <p class="meta">0:11 to 2:56, about 2 min 45 s</p>
+      <p style="margin-top:.5rem">While you watch, note one point where you agree with the speaker and one where you would push back.</p>
+    </div>
+  </div>
+
+  <div class="task">
+    <h3>After you watch</h3>
+    <ul>
+      <li>Did she make the arguments you predicted?</li>
+      <li>She suggests that nuclear isn’t perfect, but neither is any other energy source. Is that a strong argument or a deflection?</li>
+      <li>She treats public fear as the main obstacle to nuclear. Is it? What would you rank above it?</li>
+      <li>How does the public conversation about nuclear in your country compare with other places you know?</li>
+    </ul>
+  </div>
+
+  <h3>Register Ladder: one idea, three heights</h3>
+  <p class="prose">Try the neutral and formal versions yourself first, then reveal them. Click any striped cell to reveal just that one.</p>
+  <div class="row ladder-controls" data-ladder="ladder1">
+    <button data-col="neutral" aria-pressed="false">Reveal neutral</button>
+    <button data-col="formal" aria-pressed="false">Reveal formal</button>
+  </div>
+  <div class="tablewrap"><table class="ladder" id="ladder1">
+    <thead><tr><th>Idea</th><th>Casual</th><th>Neutral professional</th><th>Formal / legal-policy</th></tr></thead>
+    <tbody>
+      <tr><td>People react badly to nuclear</td><td>People get a bit funny about it.</td><td class="rung hidden" data-col="neutral"><span>Reactions tend to be mixed.</span></td><td class="rung hidden" data-col="formal"><span>The subject tends to elicit a degree of public apprehension.</span></td></tr>
+      <tr><td>Its reputation is poor</td><td>It’s got a bad rep.</td><td class="rung hidden" data-col="neutral"><span>It has something of an image problem.</span></td><td class="rung hidden" data-col="formal"><span>It suffers from a persistent reputational deficit.</span></td></tr>
+      <tr><td>Their fear is reasonable</td><td>Fair enough, really.</td><td class="rung hidden" data-col="neutral"><span>That’s an understandable reaction.</span></td><td class="rung hidden" data-col="formal"><span>Such concerns are not without foundation.</span></td></tr>
+      <tr><td>We need it</td><td>We can’t do without it.</td><td class="rung hidden" data-col="neutral"><span>It’s essential if we’re going to meet the targets.</span></td><td class="rung hidden" data-col="formal"><span>It is a prerequisite for meeting our emissions commitments.</span></td></tr>
+      <tr><td>Nothing is perfect</td><td>Nothing’s perfect, is it?</td><td class="rung hidden" data-col="neutral"><span>Every energy source involves trade-offs.</span></td><td class="rung hidden" data-col="formal"><span>No source is without its drawbacks; the relevant question is one of relative risk.</span></td></tr>
+      <tr><td>It has improved a lot</td><td>It’s come a long way.</td><td class="rung hidden" data-col="neutral"><span>It has improved considerably since then.</span></td><td class="rung hidden" data-col="formal"><span>It has undergone substantial technical and regulatory evolution.</span></td></tr>
+      <tr><td>They changed the subject</td><td>They made an excuse and wandered off.</td><td class="rung hidden" data-col="neutral"><span>They tended to change the subject.</span></td><td class="rung hidden" data-col="formal"><span>The conversation was swiftly redirected.</span></td></tr>
+      <tr><td>The industry learned</td><td>They learned their lesson.</td><td class="rung hidden" data-col="neutral"><span>Lessons were learned and shared across the industry.</span></td><td class="rung hidden" data-col="formal"><span>Operators undertook comprehensive post-incident reviews and disseminated best practice.</span></td></tr>
+    </tbody>
+  </table></div>
+  <p class="prose">Which rung would you actually use in an email to a client? The most formal option isn’t always the most persuasive.</p>
+
+  <div class="task">
+    <h3>Speak it twice</h3>
+    <p>A dinner guest asks you: “But isn’t nuclear dangerous? What about Chernobyl?” Answer twice:</p>
+    <ul>
+      <li>as you would at the table, casually, in about 45 seconds;</li>
+      <li>as an opening statement to a client or a regulator, formally, in about 60 seconds.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h3>This week</h3>
+    <p>Use one rung-up phrase from the ladder in a real email or meeting. Bring the sentence to the next class.</p>
+  </div>
+</section>
+
+<!-- PART 2 -->
+<section id="part2">
+  <h2>Part 2: Waste, resource and politics</h2>
+  <p class="focus">Evaluating an argument, and reporting verbs that show what you think of a claim.</p>
+
+  <div class="task">
+    <h3>Before you watch</h3>
+    <ul>
+      <li>Is used nuclear fuel waste, or a resource? Who gets to decide?</li>
+      <li>Does the label matter legally? What changes if something is classified one way rather than the other?</li>
+    </ul>
+  </div>
+
+  <div class="clip">
+    <button data-start="523" data-end="624" data-label="Clip 2: Is it really waste?">▶ Play clip 2</button>
+    <div>
+      <p><strong>Is it really waste?</strong></p>
+      <p class="meta">8:43 to 10:24, about 1 min 40 s</p>
+      <p style="margin-top:.5rem">In one sentence, what is the speaker’s central claim?</p>
+    </div>
+  </div>
+
+  <div class="clip">
+    <button data-start="730" data-end="870" data-label="Clip 3: The ask">▶ Play clip 3</button>
+    <div>
+      <p><strong>The ask</strong></p>
+      <p class="meta">12:10 to 14:30, about 2 min 20 s</p>
+      <p style="margin-top:.5rem">What is she asking for, and from whom? What does she leave out?</p>
+    </div>
+  </div>
+
+  <div class="task">
+    <h3>Discuss</h3>
+    <ul>
+      <li>What does the talk leave out that a regulator or a sanctions lawyer would raise first?</li>
+      <li>If a recycling future depends on technology concentrated in a few countries, is that a strategic risk?</li>
+      <li>Is “nuclear waste is a resource” a fact, a prediction, or a policy choice?</li>
+    </ul>
+  </div>
+
+  <h3>Reporting verbs that carry judgement</h3>
+  <p class="prose">Fill the gap four different ways. How does each verb change what you are saying about the speaker?</p>
+  <p class="frame-sentence">The speaker ________ that used nuclear fuel is a resource.</p>
+  <div class="row ladder-controls" data-ladder="verbs">
+    <button data-col="all" aria-pressed="false">Reveal all verbs</button>
+  </div>
+  <div class="tablewrap"><table class="ladder" id="verbs">
+    <thead><tr><th>Neutral<br><span style="font-weight:400">just reporting</span></th><th>Endorsing<br><span style="font-weight:400">you accept it</span></th><th>Distancing<br><span style="font-weight:400">you reserve judgement</span></th><th>Critical<br><span style="font-weight:400">you think it’s weak</span></th></tr></thead>
+    <tbody><tr>
+      <td class="rung hidden" data-col="all"><span>says, states, notes, explains, observes</span></td>
+      <td class="rung hidden" data-col="all"><span>shows, demonstrates, establishes, makes a compelling case that</span></td>
+      <td class="rung hidden" data-col="all"><span>claims, asserts, contends, maintains, suggests</span></td>
+      <td class="rung hidden" data-col="all"><span>overstates, glosses over, sidesteps, fails to address, conflates X with Y</span></td>
+    </tr></tbody>
+  </table></div>
+
+  <h3>Advocacy versus analysis</h3>
+  <p class="prose">The left column describes one of the speaker’s persuasive moves. Say the same thing neutrally, then analytically, before revealing.</p>
+  <div class="row ladder-controls" data-ladder="ladder2">
+    <button data-col="neutral" aria-pressed="false">Reveal neutral</button>
+    <button data-col="formal" aria-pressed="false">Reveal analytical</button>
+  </div>
+  <div class="tablewrap"><table class="ladder" id="ladder2">
+    <thead><tr><th>Advocacy move</th><th>Neutral</th><th>Analytical / formal</th></tr></thead>
+    <tbody>
+      <tr><td>Waste as something “icky”</td><td class="rung hidden" data-col="neutral"><span>people’s unease about waste</span></td><td class="rung hidden" data-col="formal"><span>a deep-seated public aversion to radioactive waste</span></td></tr>
+      <tr><td>Used fuel begging to be reused</td><td class="rung hidden" data-col="neutral"><span>it could be reused as fuel</span></td><td class="rung hidden" data-col="formal"><span>it retains substantial recoverable energy potential</span></td></tr>
+      <tr><td>A recycling “utopia”</td><td class="rung hidden" data-col="neutral"><span>fully recycling the fuel</span></td><td class="rung hidden" data-col="formal"><span>closing the nuclear fuel cycle</span></td></tr>
+      <tr><td>“Staggering” benefits</td><td class="rung hidden" data-col="neutral"><span>very significant benefits</span></td><td class="rung hidden" data-col="formal"><span>far-reaching environmental implications</span></td></tr>
+      <tr><td>We already have the tech</td><td class="rung hidden" data-col="neutral"><span>the technology already exists</span></td><td class="rung hidden" data-col="formal"><span>the requisite technology is deployed, albeit at limited scale</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="task">
+    <h3>Speak it</h3>
+    <ul>
+      <li>Give a colleague a 90-second brief on the talk: what it argues, where it persuades, where it overreaches. Use at least three reporting verbs from different columns.</li>
+      <li>Now argue the speaker’s case for 45 seconds to a sceptical EU official, as convincingly as you can.</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <h3>This week</h3>
+    <p>Write a four-to-five sentence note on the talk for a client, using three reporting verbs from different columns.</p>
+  </div>
+</section>
+
+<!-- BONUS -->
+<section id="bonus">
+  <h2>Bonus: Safety by numbers</h2>
+  <div class="clip">
+    <button data-start="229" data-end="306" data-label="Bonus clip: Safety by numbers">▶ Play bonus clip</button>
+    <div>
+      <p><strong>Safety by numbers</strong></p>
+      <p class="meta">3:49 to 5:06, about 1 min 15 s</p>
+      <p style="margin-top:.5rem">She compares deaths per unit of energy across sources. Is the comparison fair? What would you want to know about how the data was built before you accepted it?</p>
+    </div>
+  </div>
+</section>
+
+</div>
+<script>
+(function(){
+  var VIDEO = 'u9MQm-FMhIk';
+  var yt = document.getElementById('yt');
+  var now = document.getElementById('nowplaying');
+  function fmt(s){ var m = Math.floor(s/60), r = s%60; return m + ':' + (r<10?'0':'') + r; }
+  function play(start, end, label){
+    yt.src = 'https://www.youtube-nocookie.com/embed/' + VIDEO + '?start=' + start + '&end=' + end + '&autoplay=1&rel=0&cc_load_policy=1';
+    now.textContent = 'Now playing: ' + label + ' (' + fmt(start) + ' to ' + fmt(end) + ')';
+    document.getElementById('player').scrollIntoView({block:'start'});
+  }
+  document.querySelectorAll('[data-start]').forEach(function(b){
+    b.addEventListener('click', function(){
+      play(+b.getAttribute('data-start'), +b.getAttribute('data-end'), b.getAttribute('data-label'));
+    });
+  });
+
+  document.querySelectorAll('.ladder-controls').forEach(function(ctrl){
+    var table = document.getElementById(ctrl.getAttribute('data-ladder'));
+    ctrl.querySelectorAll('button').forEach(function(btn){
+      var label = btn.textContent;
+      btn.addEventListener('click', function(){
+        var col = btn.getAttribute('data-col');
+        var reveal = btn.getAttribute('aria-pressed') !== 'true';
+        table.querySelectorAll('.rung[data-col="' + col + '"]').forEach(function(c){ c.classList.toggle('hidden', !reveal); });
+        btn.setAttribute('aria-pressed', reveal ? 'true' : 'false');
+        btn.textContent = reveal ? label.replace('Reveal', 'Hide') : label;
+      });
+    });
+  });
+  document.querySelectorAll('.rung').forEach(function(c){
+    c.tabIndex = 0;
+    c.setAttribute('role', 'button');
+    c.setAttribute('aria-label', 'Reveal answer');
+    var flip = function(){ c.classList.toggle('hidden'); c.setAttribute('aria-label', c.classList.contains('hidden') ? 'Reveal answer' : 'Hide answer'); };
+    c.addEventListener('click', flip);
+    c.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); } });
+  });
+})();
+</script>
+</body>
+</html>
