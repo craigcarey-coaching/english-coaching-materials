@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Crossword, page 75</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Public+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9ecef; --paper:#ffffff; --ink:#16181b; --muted:#5f666e; --rule:#cfd5db;
+  --line:#000000; --block:#000000; --cell:#ffffff;
+  --hl-word:#d3e2f6; --hl-cell:#ffe14d; --wrong:#c4321c; --accent:#2f5da8;
+  --key:#dde2e7; --key-press:#c4cbd3; --danger:#b3301b; --overlay:rgba(16,18,22,.45);
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111316; --paper:#1a1d21; --ink:#e9ecef; --muted:#9aa3ad; --rule:#30353b;
+    --line:#000000; --block:#000000; --cell:#262a2f;
+    --hl-word:#223a5c; --hl-cell:#806a10; --wrong:#ff7b66; --accent:#85adf0;
+    --key:#2a2e34; --key-press:#3a4048; --danger:#ff8a73; --overlay:rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111316; --paper:#1a1d21; --ink:#e9ecef; --muted:#9aa3ad; --rule:#30353b;
+  --line:#000000; --block:#000000; --cell:#262a2f;
+  --hl-word:#223a5c; --hl-cell:#806a10; --wrong:#ff7b66; --accent:#85adf0;
+  --key:#2a2e34; --key-press:#3a4048; --danger:#ff8a73; --overlay:rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:15px; line-height:1.45; -webkit-tap-highlight-color:transparent;
+}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.wrap{max-width:1060px;margin:0 auto;padding:14px 14px 48px}
+.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 12px}
+.top h1{margin:0;font-weight:800;font-size:22px;letter-spacing:-.01em}
+.top h1 span{font-weight:500;color:var(--muted);font-size:15px;margin-left:6px}
+.status{font-size:13px;color:var(--muted);text-align:right}
+
+.layout{display:grid;gap:22px}
+.play{display:grid;gap:10px;align-content:start}
+@media (min-width:880px){
+  .layout{grid-template-columns:minmax(0,540px) minmax(0,1fr);align-items:start;gap:36px}
+  .play{position:sticky;top:calc(14px + env(safe-area-inset-top,0px))}
+}
+
+/* Grid */
+.board{width:100%;max-width:540px;margin:0 auto}
+.grid{
+  width:100%;aspect-ratio:1;display:grid;
+  grid-template-columns:repeat(15,minmax(0,1fr));grid-template-rows:repeat(15,minmax(0,1fr));
+  gap:1px;background:var(--line);border:2px solid var(--line);
+  container-type:inline-size;user-select:none;-webkit-user-select:none;touch-action:manipulation;
+}
+.cell{position:relative;background:var(--cell);display:flex;align-items:center;justify-content:center;cursor:pointer;min-width:0;min-height:0;overflow:hidden}
+.cell.block{background:var(--block);cursor:default}
+.cell.inword{background:var(--hl-word)}
+.cell.active{background:var(--hl-cell)}
+.cell .num{position:absolute;top:1px;left:2px;line-height:1;color:var(--muted);font-weight:500;font-size:min(2.2vw,11px);font-size:2.05cqi}
+.cell.active .num,.cell.inword .num{color:var(--ink);opacity:.7}
+.cell .ch{font-family:"Patrick Hand","Comic Neue","Segoe Print",cursive;font-size:min(5vw,26px);font-size:5cqi;line-height:1;padding-top:.12em;color:var(--ink)}
+.cell.revealed .ch{color:var(--accent)}
+.cell.revealed::before{content:"";position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:0 7px 7px 0;border-color:transparent var(--accent) transparent transparent}
+.cell.wrong .ch{color:var(--wrong)}
+.cell.wrong::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background:linear-gradient(to top right,transparent calc(50% - 1px),var(--wrong) calc(50% - 1px),var(--wrong) calc(50% + 1px),transparent calc(50% + 1px))}
+
+/* Current clue */
+.cluebar{display:flex;align-items:stretch;background:var(--paper);border:1px solid var(--rule);border-radius:10px;min-height:56px;max-width:540px;width:100%;margin:0 auto}
+.cluebar .nav{flex:0 0 42px;border:0;background:transparent;font-size:24px;line-height:1;cursor:pointer;color:var(--muted)}
+.cluebar .nav:active{color:var(--ink)}
+.cb{flex:1;display:flex;align-items:center;gap:10px;padding:8px 4px;min-width:0}
+.cb-num{font-weight:800;white-space:nowrap;font-size:14px}
+.cb-text{font-size:15px}
+
+/* On-screen keyboard (touch screens) */
+.kbd{display:grid;gap:6px;max-width:540px;width:100%;margin:0 auto}
+.krow{display:flex;gap:5px;justify-content:center}
+.key{flex:1 1 0;max-width:46px;height:46px;border:0;border-radius:7px;background:var(--key);font-weight:600;font-size:17px;cursor:pointer;touch-action:manipulation}
+.key:active{background:var(--key-press)}
+.key.wide{flex:1.7 1 0;max-width:76px;font-size:14px}
+@media (hover:hover) and (pointer:fine){ .kbd{display:none} }
+
+.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:540px;width:100%;margin:2px auto 0}
+.btn{border:1px solid var(--rule);background:var(--paper);padding:9px 16px;border-radius:999px;font-weight:600;font-size:14px;cursor:pointer}
+.btn:active{background:var(--key)}
+.btn.danger{color:var(--danger)}
+.msg{min-height:1.4em;margin:0;text-align:center;font-size:14px;color:var(--muted)}
+.msg.good{color:var(--accent);font-weight:600}
+
+/* Clue lists */
+.clues{display:grid;gap:22px}
+@media (min-width:560px){ .clues{grid-template-columns:1fr 1fr;gap:28px} }
+.clues h2{margin:0 0 6px;font-size:17px;font-weight:800}
+.clues ol{list-style:none;margin:0;padding:0}
+.clue{display:grid;grid-template-columns:2.2em 1fr;gap:4px;width:100%;text-align:left;border:0;background:transparent;padding:6px 8px;border-radius:7px;cursor:pointer;font-size:15px}
+.clue .cn{font-weight:800}
+.clue:hover{background:var(--paper)}
+li.current .clue{background:var(--hl-word)}
+li.cross .clue{box-shadow:inset 3px 0 0 var(--hl-word)}
+li.done .clue{color:var(--muted)}
+
+/* Confirm dialog */
+.overlay{position:fixed;inset:0;background:var(--overlay);display:flex;align-items:center;justify-content:center;padding:20px;z-index:20}
+.overlay[hidden]{display:none}
+.modal{background:var(--paper);color:var(--ink);border-radius:14px;padding:20px;max-width:360px;width:100%;border:1px solid var(--rule)}
+.modal h3{margin:0 0 6px;font-size:18px}
+.modal p{margin:0 0 16px;color:var(--muted)}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+.btn.solid{background:var(--danger);color:var(--paper);border-color:transparent}
+@media (prefers-reduced-motion: no-preference){ .cell{transition:background-color .08s} }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <h1>Crossword <span>page 75</span></h1>
+    <span id="status" class="status" aria-live="polite"></span>
+  </header>
+
+  <div class="layout">
+    <div class="play" id="play">
+      <div class="board"><div id="grid" class="grid" role="grid" aria-label="Crossword grid, 15 by 15"></div></div>
+
+      <div class="cluebar">
+        <button class="nav" id="prevClue" type="button" aria-label="Previous clue">‹</button>
+        <div class="cb" aria-live="polite"><span class="cb-num" id="cbNum"></span><span class="cb-text" id="cbText"></span></div>
+        <button class="nav" id="nextClue" type="button" aria-label="Next clue">›</button>
+      </div>
+
+      <div class="kbd" id="kbd" aria-label="Letter keys"></div>
+
+      <div class="actions">
+        <button class="btn" id="checkBtn" type="button">Check</button>
+        <button class="btn" id="revealBtn" type="button">Reveal word</button>
+        <button class="btn danger" id="clearBtn" type="button">Clear all</button>
+      </div>
+      <p class="msg" id="msg" aria-live="polite"></p>
+    </div>
+
+    <section class="clues">
+      <div><h2>Across</h2><ol id="acrossList"></ol></div>
+      <div><h2>Down</h2><ol id="downList"></ol></div>
+    </section>
+  </div>
+</main>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h3 id="mTitle"></h3>
+    <p id="mBody"></p>
+    <div class="modal-actions">
+      <button class="btn" id="mCancel" type="button">Cancel</button>
+      <button class="btn solid" id="mOk" type="button">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const N = 15;
+  const KEY = 'crossword-page75-v1';
+  // '#' = black square
+  const SOL = [
+    "#Y#S#D#C#N#A#C#",
+    "DEMOLISH#UNTRUE",
+    "#M#U#R#I#A#T#R#",
+    "VELVET#CENTAURS",
+    "#N#E#I#A#C#C#A#",
+    "FIANCE#GHERKINS",
+    "###I#SHOE####T#",
+    "NARRATE#RUBBISH",
+    "#B####EVEN#O###",
+    "MANTILLA#IGLOOS",
+    "#T#A#O#R#C#S#U#",
+    "STUBBORN#OBTUSE",
+    "#O#O#F#I#R#E#T#",
+    "MIMOSA#SENTRIES",
+    "#R#S#H#H#S#S#D#"
+  ];
+  const CLUES = {
+    across:{
+      8:"Destroy completely (8)",
+      9:"Not in accordance with the facts (6)",
+      10:"Silky, densely piled fabric (6)",
+      11:"Mythical creatures, half-man, half-horse (8)",
+      12:"Groom-to-be (6)",
+      13:"Small cucumbers, usually pickled (8)",
+      15:"Foot covering (4)",
+      17:"Recount, tell (7)",
+      19:"Worthless material, for discarding (7)",
+      22:"Steady and smooth (4)",
+      24:"Woman’s lace scarf (8)",
+      27:"Houses of snow (6)",
+      29:"Obstinate, tenacious (8)",
+      30:"Slow on the uptake (6)",
+      31:"Tropical tree with yellow flowers (6)",
+      32:"Lookouts, guards (8)"
+    },
+    down:{
+      1:"Native of a country on the Arabian Peninsula (6)",
+      2:"Reminder of past events (8)",
+      3:"Filthiest (8)",
+      4:"The Windy City (7)",
+      5:"Subtle difference in meaning (6)",
+      6:"Assault, assail (6)",
+      7:"Black or red berries (8)",
+      14:"In this place (4)",
+      16:"Back of the foot (4)",
+      18:"Slaughterhouse (8)",
+      20:"Imaginary one-horned horses (8)",
+      21:"Supports and strengthens, props up (8)",
+      23:"Hard, transparent finish to a surface (7)",
+      25:"Prejudices that prohibit the mention of something (6)",
+      26:"Strange halo of the washing sponge (6)",
+      28:"Put out of power (6)"
+    }
+  };
+
+  const $ = id => document.getElementById(id);
+  const gridEl = $('grid'), cbNum = $('cbNum'), cbText = $('cbText'), msgEl = $('msg'), statusEl = $('status');
+  const isWhite = (r,c) => r>=0 && c>=0 && r<N && c<N && SOL[r][c] !== '#';
+
+  const cells = [];
+  const words = [];
+  const entries = new Array(N*N).fill('');
+  const wrong = new Set();
+  const revealed = new Set();
+  let cur = -1, dir = 'across';
+
+  // Build grid and words
+  let n = 0;
+  for (let r=0; r<N; r++){
+    for (let c=0; c<N; c++){
+      const i = r*N + c;
+      const el = document.createElement('div');
+      el.className = 'cell';
+      el.setAttribute('role','gridcell');
+      const cell = {i, r, c, el, block: !isWhite(r,c), sol: SOL[r][c], across: null, down: null, chEl: null};
+      if (cell.block){
+        el.classList.add('block');
+      } else {
+        const startA = !isWhite(r,c-1) && isWhite(r,c+1);
+        const startD = !isWhite(r-1,c) && isWhite(r+1,c);
+        if (startA || startD){
+          n++;
+          const s = document.createElement('span'); s.className='num'; s.textContent=n; el.appendChild(s);
+          if (startA){ const w=[]; for(let k=c; isWhite(r,k); k++) w.push(r*N+k); words.push({dir:'across', num:n, cells:w, clue:CLUES.across[n]||''}); }
+          if (startD){ const w=[]; for(let k=r; isWhite(k,c); k++) w.push(k*N+c); words.push({dir:'down', num:n, cells:w, clue:CLUES.down[n]||''}); }
+        }
+        const ch = document.createElement('span'); ch.className='ch'; el.appendChild(ch);
+        cell.chEl = ch;
+        el.addEventListener('click', () => onCellTap(i));
+      }
+      cells.push(cell);
+      gridEl.appendChild(el);
+    }
+  }
+  words.forEach((w,wi) => w.cells.forEach(i => { cells[i][w.dir] = wi; }));
+  const order = words.map((w,i)=>i).sort((a,b) => {
+    if (words[a].dir !== words[b].dir) return words[a].dir === 'across' ? -1 : 1;
+    return words[a].num - words[b].num;
+  });
+
+  // Clue lists
+  words.forEach((w,wi) => {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.type='button'; b.className='clue';
+    b.innerHTML = '<span class="cn"></span><span class="ct"></span>';
+    b.querySelector('.cn').textContent = w.num;
+    b.querySelector('.ct').textContent = w.clue;
+    b.addEventListener('click', () => {
+      selectWord(wi);
+      if (window.matchMedia('(max-width: 879px)').matches) $('play').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    li.appendChild(b);
+    w.li = li;
+  });
+  order.forEach(wi => (words[wi].dir === 'across' ? $('acrossList') : $('downList')).appendChild(words[wi].li));
+
+  // Keyboard (on-screen)
+  const rows = ['QWERTYUIOP','ASDFGHJKL','ZXCVBNM'];
+  rows.forEach((row, ri) => {
+    const div = document.createElement('div'); div.className='krow';
+    for (const L of row){
+      const k = document.createElement('button'); k.type='button'; k.className='key'; k.textContent=L;
+      k.addEventListener('click', () => typeLetter(L));
+      div.appendChild(k);
+    }
+    if (ri === 2){
+      const del = document.createElement('button'); del.type='button'; del.className='key wide'; del.textContent='⌫'; del.setAttribute('aria-label','Delete letter');
+      del.addEventListener('click', backspace);
+      div.appendChild(del);
+    }
+    $('kbd').appendChild(div);
+  });
+
+  // Selection helpers
+  const other = d => d === 'across' ? 'down' : 'across';
+  function curWord(){ return cur >= 0 ? words[cells[cur][dir]] : null; }
+  function curWordIndex(){ return cur >= 0 ? cells[cur][dir] : null; }
+
+  function onCellTap(i){
+    if (i === cur){
+      if (cells[cur][other(dir)] != null) dir = other(dir);
+    } else {
+      cur = i;
+      if (cells[cur][dir] == null) dir = other(dir);
+    }
+    msg('');
+    render();
+  }
+  function selectWord(wi){
+    const w = words[wi];
+    dir = w.dir;
+    const empty = w.cells.find(i => !entries[i]);
+    cur = empty != null ? empty : w.cells[0];
+    render();
+  }
+  function stepWord(delta){
+    const wi = curWordIndex();
+    let p = wi == null ? -1 : order.indexOf(wi);
+    p = (p + delta + order.length) % order.length;
+    selectWord(order[p]);
+  }
+
+  // Editing
+  function clearMarks(i){ wrong.delete(i); revealed.delete(i); }
+  function typeLetter(L){
+    if (cur < 0) selectWord(order[0]);
+    entries[cur] = L;
+    clearMarks(cur);
+    const w = curWord();
+    const k = w.cells.indexOf(cur);
+    if (k < w.cells.length - 1) cur = w.cells[k+1];
+    save(); render(); checkSolved();
+  }
+  function backspace(){
+    if (cur < 0) return;
+    if (entries[cur]){
+      entries[cur] = ''; clearMarks(cur);
+    } else {
+      const w = curWord();
+      const k = w.cells.indexOf(cur);
+      if (k > 0){ cur = w.cells[k-1]; entries[cur] = ''; clearMarks(cur); }
+    }
+    msg('');
+    save(); render();
+  }
+  function deleteHere(){
+    if (cur < 0) return;
+    entries[cur] = ''; clearMarks(cur);
+    save(); render();
+  }
+  function move(dr, dc){
+    if (cur < 0){ selectWord(order[0]); return; }
+    const want = dc !== 0 ? 'across' : 'down';
+    if (dir !== want && cells[cur][want] != null){ dir = want; render(); return; }
+    let r = cells[cur].r + dr, c = cells[cur].c + dc;
+    while (r>=0 && c>=0 && r<N && c<N){
+      if (isWhite(r,c)){
+        cur = r*N + c;
+        if (cells[cur][dir] == null) dir = other(dir);
+        break;
+      }
+      r += dr; c += dc;
+    }
+    render();
+  }
+
+  // Rendering
+  function render(){
+    const w = curWord();
+    const inWord = new Set(w ? w.cells : []);
+    const crossIdx = cur >= 0 ? cells[cur][other(dir)] : null;
+    for (const cell of cells){
+      if (cell.block) continue;
+      cell.chEl.textContent = entries[cell.i];
+      cell.el.classList.toggle('active', cell.i === cur);
+      cell.el.classList.toggle('inword', inWord.has(cell.i) && cell.i !== cur);
+      cell.el.classList.toggle('wrong', wrong.has(cell.i));
+      cell.el.classList.toggle('revealed', revealed.has(cell.i));
+    }
+    if (w){
+      cbNum.textContent = w.num + (w.dir === 'across' ? ' Across' : ' Down');
+      cbText.textContent = w.clue;
+    } else {
+      cbNum.textContent = '';
+      cbText.textContent = 'Tap a square or a clue to start.';
+    }
+    words.forEach((wd, wi) => {
+      wd.li.classList.toggle('current', wd === w);
+      wd.li.classList.toggle('cross', wi === crossIdx);
+      wd.li.classList.toggle('done', wd.cells.every(i => entries[i]));
+    });
+  }
+
+  // Messages & status
+  function msg(text, good){ msgEl.textContent = text; msgEl.classList.toggle('good', !!good); }
+  let statusTimer;
+  function setStatus(text){ statusEl.textContent = text; }
+
+  // Local saving
+  function save(){
+    try {
+      const e = entries.map(x => x || '.').join('');
+      localStorage.setItem(KEY, JSON.stringify({ e, r: [...revealed] }));
+      setStatus('Saved on this device');
+    } catch (err) {
+      setStatus('This browser isn’t saving progress');
+    }
+  }
+  function load(){
+    let restored = false;
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw){
+        const d = JSON.parse(raw);
+        if (d && typeof d.e === 'string' && d.e.length === N*N){
+          for (let i=0; i<N*N; i++){
+            const ch = d.e[i];
+            if (!cells[i].block && /^[A-Z]$/.test(ch)){ entries[i] = ch; restored = true; }
+          }
+        }
+        if (d && Array.isArray(d.r)) d.r.forEach(i => { if (Number.isInteger(i) && i>=0 && i<N*N && !cells[i].block) revealed.add(i); });
+      }
+    } catch (err) { /* storage unavailable or corrupt: start empty */ }
+    setStatus(restored ? 'Progress restored' : 'Saves automatically on this device');
+  }
+
+  // Check / reveal / clear
+  function checkSolved(){
+    const done = cells.every(c => c.block || entries[c.i] === c.sol);
+    if (done) msg('Solved. Every square is right.', true);
+  }
+  $('checkBtn').addEventListener('click', () => {
+    wrong.clear();
+    let filled = 0, bad = 0;
+    for (const c of cells){
+      if (c.block || !entries[c.i]) continue;
+      filled++;
+      if (entries[c.i] !== c.sol){ bad++; wrong.add(c.i); }
+    }
+    render();
+    if (!filled) msg('Nothing to check yet.');
+    else if (bad) msg(bad + (bad === 1 ? ' letter is' : ' letters are') + ' wrong, marked in red.');
+    else if (cells.every(c => c.block || entries[c.i])) checkSolved();
+    else msg('All ' + filled + ' letters so far are correct.', true);
+  });
+  $('revealBtn').addEventListener('click', () => {
+    const w = curWord();
+    if (!w){ msg('Select a clue first.'); return; }
+    const label = w.num + (w.dir === 'across' ? ' Across' : ' Down');
+    confirmBox('Reveal ' + label + '?', 'This fills in the answer to “' + w.clue + '”.', 'Reveal', () => {
+      w.cells.forEach(i => {
+        if (entries[i] !== cells[i].sol){ entries[i] = cells[i].sol; revealed.add(i); }
+        wrong.delete(i);
+      });
+      save(); render(); checkSolved();
+    });
+  });
+  $('clearBtn').addEventListener('click', () => {
+    confirmBox('Clear the whole grid?', 'This deletes every letter and the progress saved on this device.', 'Clear all', () => {
+      entries.fill(''); wrong.clear(); revealed.clear();
+      try { localStorage.removeItem(KEY); } catch (err) {}
+      setStatus('Cleared');
+      msg('');
+      if (order.length) selectWord(order[0]); else render();
+    });
+  });
+
+  $('prevClue').addEventListener('click', () => stepWord(-1));
+  $('nextClue').addEventListener('click', () => stepWord(1));
+
+  // Confirm dialog
+  const overlay = $('overlay');
+  let onOk = null, lastFocus = null;
+  function confirmBox(title, body, okLabel, cb){
+    $('mTitle').textContent = title; $('mBody').textContent = body; $('mOk').textContent = okLabel;
+    onOk = cb; lastFocus = document.activeElement;
+    overlay.hidden = false; $('mCancel').focus();
+  }
+  function closeBox(){ overlay.hidden = true; onOk = null; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  $('mCancel').addEventListener('click', closeBox);
+  $('mOk').addEventListener('click', () => { const cb = onOk; closeBox(); if (cb) cb(); });
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeBox(); });
+
+  // Physical keyboard
+  document.addEventListener('keydown', e => {
+    if (!overlay.hidden){ if (e.key === 'Escape') closeBox(); return; }
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const k = e.key;
+    const onButton = e.target && e.target.closest && e.target.closest('button');
+    if (onButton && (k === 'Enter' || k === ' ')) return;
+    if (/^[a-zA-Z]$/.test(k)){ e.preventDefault(); typeLetter(k.toUpperCase()); }
+    else if (k === 'Backspace'){ e.preventDefault(); backspace(); }
+    else if (k === 'Delete'){ e.preventDefault(); deleteHere(); }
+    else if (k === 'ArrowLeft'){ e.preventDefault(); move(0,-1); }
+    else if (k === 'ArrowRight'){ e.preventDefault(); move(0,1); }
+    else if (k === 'ArrowUp'){ e.preventDefault(); move(-1,0); }
+    else if (k === 'ArrowDown'){ e.preventDefault(); move(1,0); }
+    else if (k === 'Tab' || k === 'Enter'){ e.preventDefault(); stepWord(e.shiftKey ? -1 : 1); }
+    else if (k === ' '){ e.preventDefault(); if (cur >= 0 && cells[cur][other(dir)] != null){ dir = other(dir); render(); } }
+  });
+
+  load();
+  selectWord(order[0]);
+  checkSolved();
+})();
+</script>
+</body>
+</html>
