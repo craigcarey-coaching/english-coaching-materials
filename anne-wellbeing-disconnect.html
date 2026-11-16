@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anne · From resolving disputes to preventing them</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#f7f2e8;--paper:#fffdf8;--navy:#1e2a45;--rust:#b4532a;--teal:#2a7a76;--ink:#2b2b2b;--muted:#6b6658;--line:#e3dccb;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:17px/1.6 Lora,Georgia,serif}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-style:italic;color:var(--navy);font-weight:600;line-height:1.2}
+h1{font-size:2.1rem;margin:.2em 0}
+h2{font-size:1.5rem;margin:0 0 .3em}
+h3{font-size:1.15rem;margin:1.2em 0 .4em}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px 80px}
+header.top{padding:36px 0 8px}
+.kicker{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--rust)}
+.lead{color:var(--muted);margin-top:.2em}
+.bar{position:sticky;top:0;z-index:10;background:var(--navy);color:#fff}
+.bar .in{max-width:860px;margin:0 auto;padding:10px 20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;font-size:.95rem}
+.bar b{font-size:1.1rem}
+.bar label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.bar button{margin-left:auto;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5);border-radius:6px;padding:4px 10px;font:inherit;font-size:.88rem;cursor:pointer}
+section.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin:22px 0}
+.badge{display:inline-block;font-size:.78rem;background:var(--teal);color:#fff;border-radius:999px;padding:2px 11px;margin-bottom:8px}
+.task{border-left:3px solid var(--teal);padding-left:14px;margin:18px 0}
+.inst{font-weight:600;margin:.2em 0 .6em}
+.model{background:#f3ede0;border-radius:8px;padding:14px 18px}
+.hl{background:#fbe3d6;border-bottom:2px solid var(--rust);padding:0 2px;border-radius:3px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:9px 0}
+.row .q{flex:1 1 280px}
+.opts{display:flex;gap:6px;flex-wrap:wrap}
+.opt{font:inherit;font-size:.92rem;background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 11px;cursor:pointer;color:var(--ink)}
+.opt:hover{border-color:var(--teal)}
+.opt.ok{background:var(--teal);border-color:var(--teal);color:#fff}
+.opt.no{background:var(--rust);border-color:var(--rust);color:#fff}
+select{font:inherit;font-size:.92rem;padding:4px 6px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+select.ok{border-color:var(--teal);box-shadow:0 0 0 2px rgba(42,122,118,.25)}
+select.no{border-color:var(--rust);box-shadow:0 0 0 2px rgba(180,83,42,.25)}
+textarea,input[type=text]{width:100%;font:inherit;font-size:.98rem;border:1px solid var(--line);border-radius:8px;padding:9px 10px;background:#fff;color:var(--ink)}
+textarea{min-height:120px;resize:vertical}
+.count{font-size:.85rem;color:var(--muted);text-align:right}
+.checks label{display:block;margin:5px 0;cursor:pointer}
+.checks input{margin-right:8px}
+ul.prompts{margin:.3em 0;padding-left:1.2em}
+ul.prompts li{margin:3px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+.rolecard{background:#eef5f4;border:1px solid #cfe3e1;border-radius:10px;padding:14px 16px}
+.rolecard.rust{background:#fbefe8;border-color:#efd3c4}
+.rolecard h3{margin-top:0}
+.bank{columns:2;column-gap:26px;font-size:.95rem}
+.bank h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--rust);margin:.7em 0 .15em;break-after:avoid}
+.bank p{margin:.1em 0;break-inside:avoid}
+@media(max-width:640px){.bank{columns:1}}
+.policy{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px 22px;font-size:.96rem}
+.policy h3{margin-top:0}
+.policy h4{font-size:.95rem;margin:.8em 0 .1em;color:var(--navy)}
+.policy p{margin:.1em 0 .4em}
+.stretch{display:none}
+body.stretch-on .stretch{display:block}
+body.stretch-on .row.stretch{display:flex}
+.stag{font-size:.72rem;background:var(--rust);color:#fff;border-radius:4px;padding:1px 6px;margin-right:6px}
+table.up{width:100%;border-collapse:collapse}
+table.up th{text-align:left;font-size:.85rem;color:var(--muted);font-weight:600;padding:4px}
+table.up td{padding:4px;width:50%}
+.small{font-size:.88rem;color:var(--muted)}
+details.teacher{margin-top:30px;background:#fff;border:2px dashed var(--rust);border-radius:10px;padding:12px 18px}
+details.teacher summary{cursor:pointer;font-weight:600;color:var(--rust)}
+details.teacher li{margin:4px 0}
+.noshare{display:inline-block;background:var(--rust);color:#fff;font-size:.75rem;border-radius:4px;padding:1px 8px;margin-left:8px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:30px}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="in">
+  <span>Score <b id="score">0</b> / <span id="total">0</span></span>
+  <span>Contract <b id="contract">0</b> / 5</span>
+  <label><input type="checkbox" id="stretchToggle"> Stretch</label>
+  <button id="reset" type="button">Reset page</button>
+</div></div>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="kicker">Anne · 60-minute session</div>
+  <h1>From resolving disputes to preventing them</h1>
+  <p class="lead">Your career story, the language of workplace wellbeing, and a real HR conversation.</p>
+</header>
+
+<!-- 1 -->
+<section class="card" id="s1">
+  <span class="badge">1 · Settle · 5 min</span>
+  <h2>Warm-up</h2>
+  <ul class="prompts">
+    <li>What's one thing you remember from our last session?</li>
+    <li>Last week, did you check work emails or messages in the evening or at the weekend? Why?</li>
+    <li>In your experience, when do problems between employees and managers usually start?</li>
+  </ul>
+</section>
+
+<!-- 2 -->
+<section class="card" id="s2">
+  <span class="badge">2 · Refresh · 15 min</span>
+  <h2>Your career story</h2>
+
+  <div class="task">
+    <p class="inst">A. Read Marc's profile aloud.</p>
+    <div class="model">
+      <p>My name is Marc and I'm a nurse. I <span class="hl">work</span> in a large hospital in Lyon, where I <span class="hl">manage</span> a team of eight. I <span class="hl">have worked</span> in healthcare for twelve years. I <span class="hl">started</span> my career in 2013, in an emergency department. It <span class="hl">was</span> exciting, but the hours were very long. Last year, I <span class="hl">helped</span> two colleagues who were close to burnout, and I <span class="hl">realised</span> that I really enjoy supporting people. Since then, I <span class="hl">have taken</span> two courses in occupational health. Next year, I want to move into a training role, because I would like to help teams before problems start.</p>
+    </div>
+  </div>
+
+  <div class="task">
+    <p class="inst">B. Sort the highlighted verbs. When does each action happen?</p>
+    <div id="sort"></div>
+    <p class="small">Then: which words in the text tell you the time? Find four.</p>
+    <div class="stretch">
+      <p><span class="stag">Stretch</span>Marc still works in healthcare. Rewrite <em>"I have worked in healthcare for twelve years"</em> to show the action is still happening.</p>
+      <input type="text" data-key="stretchRewrite" placeholder="I have been…">
+    </div>
+  </div>
+
+  <div class="task">
+    <p class="inst">C. Tell your story. Say it first, out loud.</p>
+    <ul class="prompts">
+      <li>Who are you professionally today?</li>
+      <li>How long have you done this work?</li>
+      <li>How did your career start?</li>
+      <li>What has changed recently?</li>
+      <li>What do you want to do next, and why?</li>
+    </ul>
+  </div>
+
+  <div class="task">
+    <p class="inst">D. Now write it: 60–80 words. Tick each item when you use it.</p>
+    <textarea data-key="story" data-count="storyCount" placeholder="My name is Anne and I…"></textarea>
+    <div class="count" id="storyCount">0 words</div>
+    <div class="checks">
+      <label><input type="checkbox" data-key="c1" class="contract"> Present simple: what I do now</label>
+      <label><input type="checkbox" data-key="c2" class="contract"> Past simple + a time (in 2010, last year…)</label>
+      <label><input type="checkbox" data-key="c3" class="contract"> Present perfect + <em>for</em> or <em>since</em></label>
+      <label><input type="checkbox" data-key="c4" class="contract"> A future plan: <em>I want to… / I'm going to…</em></label>
+      <label><input type="checkbox" data-key="c5" class="contract"> A linker: <em>because / but / so</em></label>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="card" id="s3">
+  <span class="badge">3 · Vocabulary · 8 min</span>
+  <h2>From arbitration to wellbeing</h2>
+
+  <div class="task">
+    <p class="inst">A. Match each definition to a word.</p>
+    <div id="match"></div>
+  </div>
+
+  <div class="task">
+    <p class="inst">B. False friends: choose the natural English.</p>
+    <div id="faux"></div>
+  </div>
+
+  <div class="task">
+    <p class="inst">C. Your expertise</p>
+    <ul class="prompts">
+      <li>Which of these words do you use in your work as an arbitrator?</li>
+      <li>Describe a typical grievance, with no names. How does it usually start?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="card" id="s4">
+  <span class="badge">4 · Read · 12 min</span>
+  <h2>A right-to-disconnect policy</h2>
+
+  <div class="policy">
+    <h3>Lumen Group: Right to Disconnect Policy (extract)</h3>
+    <h4>1. Purpose</h4>
+    <p>At Lumen Group, we believe that rest is essential for health and for good work. This policy explains how we protect employees' time outside working hours.</p>
+    <h4>2. Normal working hours</h4>
+    <p>Normal working hours are 8:30 to 18:00, Monday to Friday.</p>
+    <h4>3. Rules for everyone</h4>
+    <p>Employees don't have to read or answer work emails, calls or messages outside normal working hours. Managers mustn't send messages after 19:00 or at weekends, except in an emergency. When possible, staff should use the "schedule send" function. Employees must not be criticised for not replying outside working hours.</p>
+    <h4>4. Exceptions</h4>
+    <p>Staff who are on call must answer urgent calls during their on-call period.</p>
+    <h4>5. Raising a concern</h4>
+    <p>If you feel pressure to work outside your hours, you should speak to your manager first. If the problem continues, you can contact the HR Wellbeing Team or a staff representative.</p>
+    <h4>6. Review</h4>
+    <p>HR must review this policy every year with staff representatives.</p>
+  </div>
+
+  <div class="task">
+    <p class="inst">A. True or false?</p>
+    <div id="tf"></div>
+  </div>
+
+  <div class="task">
+    <p class="inst">B. Find every word in sections 3–6 that talks about obligation. Which one means <em>it's forbidden</em>? Which means <em>it's not necessary</em>?</p>
+    <p class="small">Then choose the right form.</p>
+    <div id="modals"></div>
+  </div>
+
+  <div class="task">
+    <p class="inst">C. Your verdict as an arbitrator</p>
+    <p>An employee tells you: <em>"My manager broke this policy."</em> What does the policy <strong>not</strong> tell you?</p>
+    <ul class="prompts">
+      <li>What is an "emergency"? Who decides?</li>
+      <li>What happens if a manager breaks the rules?</li>
+      <li>What about personal phones and WhatsApp?</li>
+      <li>What would you add?</li>
+    </ul>
+    <textarea data-key="verdict" placeholder="Notes: what's missing?"></textarea>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="card" id="s5">
+  <span class="badge">5 · Speak · 14 min</span>
+  <h2>Role-play: a wellbeing meeting</h2>
+  <p>You are the <strong>HR Wellbeing Adviser</strong> at Lumen Group. Use the policy and the phrase bank.</p>
+
+  <div class="grid2">
+    <div class="rolecard">
+      <h3>Round 1 · Sam Martin, account manager</h3>
+      <p><em>"My team leader sends me WhatsApp messages at 10 p.m. I always reply, because I'm worried about what he'll think. I'm not sleeping well."</em></p>
+      <div class="checks">
+        <label><input type="checkbox" data-key="r1a"> I welcomed Sam and put him at ease</label>
+        <label><input type="checkbox" data-key="r1b"> I asked two open questions</label>
+        <label><input type="checkbox" data-key="r1c"> I showed empathy</label>
+        <label><input type="checkbox" data-key="r1d"> I explained the policy (must / mustn't / don't have to)</label>
+        <label><input type="checkbox" data-key="r1e"> We agreed a next step</label>
+      </div>
+    </div>
+    <div class="rolecard rust">
+      <h3>Round 2 · Alex Durand, team leader</h3>
+      <p><em>"Our biggest clients are in Singapore. If I wait until the morning, we lose business. Sam is an adult. He doesn't have to reply."</em></p>
+      <div class="checks">
+        <label><input type="checkbox" data-key="r2a"> I listened without interrupting</label>
+        <label><input type="checkbox" data-key="r2b"> I acknowledged the business pressure</label>
+        <label><input type="checkbox" data-key="r2c"> I explained the policy clearly</label>
+        <label><input type="checkbox" data-key="r2d"> I proposed a compromise</label>
+        <label><input type="checkbox" data-key="r2e"> We agreed what happens next</label>
+      </div>
+    </div>
+  </div>
+
+  <h3>Phrase bank</h3>
+  <div class="bank">
+    <h4>Opening</h4>
+    <p>Thanks for coming to see me.</p>
+    <p>Take your time.</p>
+    <p>This conversation is confidential.</p>
+    <h4>Open questions</h4>
+    <p>Can you tell me what happened?</p>
+    <p>How often does this happen?</p>
+    <p>How is this affecting you?</p>
+    <h4>Empathy</h4>
+    <p>That sounds really stressful.</p>
+    <p>I understand why you feel worried.</p>
+    <p>Thank you for telling me.</p>
+    <h4>The policy</h4>
+    <p>According to our policy, you don't have to…</p>
+    <p>Managers mustn't… except in an emergency.</p>
+    <p>You should…</p>
+    <h4>Next steps</h4>
+    <p>What I suggest is…</p>
+    <p>Would you be comfortable if I…?</p>
+    <p>Let's meet again in two weeks.</p>
+    <h4>Round 2: finding a compromise</h4>
+    <p>I hear what you're saying, but…</p>
+    <p>I understand the pressure. At the same time…</p>
+    <p>What if we…?</p>
+    <p>Could we agree that…?</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="card" id="s6">
+  <span class="badge">6 · Recap · 6 min</span>
+  <h2>What I'm taking away</h2>
+  <div class="grid2">
+    <div><p class="inst">One word I'll reuse</p><input type="text" data-key="takeWord"></div>
+    <div><p class="inst">One structure I'll reuse</p><input type="text" data-key="takeStructure"></div>
+  </div>
+  <p class="inst" style="margin-top:12px">One phrase I'll reuse</p>
+  <input type="text" data-key="takePhrase">
+
+  <h3>Upgrades</h3>
+  <table class="up">
+    <thead><tr><th>You said</th><th>Upgrade</th></tr></thead>
+    <tbody id="upRows"></tbody>
+  </table>
+
+  <h3>Homework</h3>
+  <p>Write an email to Sam that summarises your meeting: 80–100 words. Send it before our next session.</p>
+  <div class="checks">
+    <label><input type="checkbox" data-key="h1"> One <em>mustn't</em> or <em>don't have to</em></label>
+    <label><input type="checkbox" data-key="h2"> One present perfect</label>
+    <label><input type="checkbox" data-key="h3"> One next-step phrase</label>
+  </div>
+  <textarea data-key="homework" data-count="hwCount" placeholder="Dear Sam,&#10;&#10;Thank you for meeting me today…"></textarea>
+  <div class="count" id="hwCount">0 words</div>
+
+  <details class="teacher">
+    <summary>Teacher key <span class="noshare">Don't screen-share</span></summary>
+    <ul>
+      <li><strong>Verb sort:</strong> Now: work, manage · Finished past: started, was, helped, realised · Past → now: have worked, have taken</li>
+      <li><strong>Stretch rewrite:</strong> I have been working in healthcare for twelve years.</li>
+      <li><strong>Match:</strong> complaint → grievance · neutral person → mediation · amount → workload · exhaustion → burnout · healthy and happy → wellbeing · official rules → policy · elected → staff representative · ask opinions → to consult</li>
+      <li><strong>False friends:</strong> currently · trade union · attended · training course · Stretch: dismissed · check</li>
+      <li><strong>True/false:</strong> 1 F · 2 T · 3 T · 4 F · 5 T · Stretch 6 F</li>
+      <li><strong>Modals:</strong> 1 don't have to · 2 mustn't · 3 don't have to · 4 mustn't · Stretch: 5 should · 6 must</li>
+      <li><strong>What's missing:</strong> consequences for managers · a definition of "emergency" · personal phones/WhatsApp · a record of complaints</li>
+    </ul>
+  </details>
+</section>
+
+<footer>Prepared for Anne · November 2026</footer>
+</div>
+
+<script>
+(function(){
+  var KEY = "anne-disconnect-v1";
+  var S = {ans:{}, txt:{}, chk:{}, stretch:false};
+  try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && typeof p === "object") S = Object.assign(S, p); } } catch(e) {}
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+
+  var ITEMS = [];
+
+  var SORT_LABELS = ["Now", "Finished past", "Past → now"];
+  var SORT = [
+    {id:"v1", q:"I have worked", a:2},
+    {id:"v2", q:"I started", a:1},
+    {id:"v3", q:"I manage", a:0},
+    {id:"v4", q:"I helped", a:1},
+    {id:"v5", q:"I have taken", a:2},
+    {id:"v6", q:"I work", a:0},
+    {id:"v7", q:"it was", a:1},
+    {id:"v8", q:"I realised", a:1}
+  ];
+  SORT.forEach(function(it){ it.opts = SORT_LABELS; });
+
+  var FAUX = [
+    {id:"f1", q:"I'm ___ working on a difficult case.", opts:["actually","currently"], a:1},
+    {id:"f2", q:"She's a member of a ___.", opts:["syndicate","trade union"], a:1},
+    {id:"f3", q:"Yesterday I ___ a meeting with the staff representatives.", opts:["assisted","attended"], a:1},
+    {id:"f4", q:"The company offers a ___ on stress management.", opts:["formation","training course"], a:1},
+    {id:"f5", q:"He was ___ after twenty years with the company.", opts:["licensed","dismissed"], a:1, s:true},
+    {id:"f6", q:"Please ___ the policy before Friday.", opts:["control","check"], a:1, s:true}
+  ];
+
+  var TF = [
+    {id:"t1", q:"1. Employees must answer messages on Saturday.", opts:["True","False"], a:1},
+    {id:"t2", q:"2. A manager can send a message at 21:00 if there is an emergency.", opts:["True","False"], a:0},
+    {id:"t3", q:"3. On-call staff have to answer urgent calls during their on-call period.", opts:["True","False"], a:0},
+    {id:"t4", q:"4. Employees should contact HR before speaking to their manager.", opts:["True","False"], a:1},
+    {id:"t5", q:"5. Staff representatives help to review the policy.", opts:["True","False"], a:0},
+    {id:"t6", q:"6. The policy explains what happens to a manager who breaks the rules.", opts:["True","False"], a:1, s:true}
+  ];
+
+  var MODALS = [
+    {id:"m1", q:"1. You ___ reply to emails on holiday. It's your choice.", opts:["mustn't","don't have to"], a:1},
+    {id:"m2", q:"2. Managers ___ send messages at 23:00. It's against the policy.", opts:["mustn't","don't have to"], a:0},
+    {id:"m3", q:"3. Employees ___ come to the office on Fridays. They can work from home.", opts:["mustn't","don't have to"], a:1},
+    {id:"m4", q:"4. You ___ share an employee's medical information without permission.", opts:["mustn't","don't have to"], a:0},
+    {id:"m5", q:"5. Staff ___ use schedule send. It's recommended, not required.", opts:["should","must"], a:0, s:true},
+    {id:"m6", q:"6. HR ___ review the policy every year. It's required.", opts:["should","must"], a:1, s:true}
+  ];
+
+  var MATCH_TERMS = ["burnout","grievance","mediation","policy","staff representative","to consult","wellbeing","workload"];
+  var MATCH = [
+    {id:"x1", q:"a formal complaint from an employee", a:"grievance"},
+    {id:"x2", q:"a neutral person helps two sides agree", a:"mediation"},
+    {id:"x3", q:"the amount of work a person has to do", a:"workload"},
+    {id:"x4", q:"physical and mental exhaustion caused by work", a:"burnout"},
+    {id:"x5", q:"feeling healthy, comfortable and happy at work", a:"wellbeing"},
+    {id:"x6", q:"a set of official rules and principles in an organisation", a:"policy"},
+    {id:"x7", q:"an employee elected to speak for colleagues", a:"staff representative"},
+    {id:"x8", q:"to ask people for their opinion before deciding", a:"to consult"}
+  ];
+
+  function el(tag, cls, text){ var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function renderMCQ(containerId, items){
+    var box = document.getElementById(containerId);
+    items.forEach(function(it){
+      ITEMS.push({id:it.id, a:it.a, s:!!it.s});
+      var row = el("div", "row" + (it.s ? " stretch" : ""));
+      var q = el("div", "q");
+      if (it.s) q.appendChild(el("span", "stag", "Stretch"));
+      q.appendChild(document.createTextNode(it.q));
+      var opts = el("div", "opts");
+      it.opts.forEach(function(o, i){
+        var b = el("button", "opt", o); b.type = "button";
+        b.addEventListener("click", function(){ S.ans[it.id] = i; save(); paint(opts, it); update(); });
+        opts.appendChild(b);
+      });
+      row.appendChild(q); row.appendChild(opts); box.appendChild(row);
+      paint(opts, it);
+    });
+  }
+  function paint(opts, it){
+    var chosen = S.ans[it.id];
+    Array.prototype.forEach.call(opts.children, function(b, i){
+      b.classList.remove("ok", "no");
+      if (chosen === i) b.classList.add(i === it.a ? "ok" : "no");
+    });
+  }
+
+  function renderMatch(){
+    var box = document.getElementById("match");
+    MATCH.forEach(function(it){
+      ITEMS.push({id:it.id, a:it.a, s:false});
+      var row = el("div", "row");
+      row.appendChild(el("div", "q", it.q));
+      var sel = el("select");
+      var o0 = el("option", null, "choose…"); o0.value = ""; sel.appendChild(o0);
+      MATCH_TERMS.forEach(function(t){ var o = el("option", null, t); o.value = t; sel.appendChild(o); });
+      if (S.ans[it.id]) sel.value = S.ans[it.id];
+      function mark(){ sel.classList.remove("ok", "no"); if (sel.value) sel.classList.add(sel.value === it.a ? "ok" : "no"); }
+      sel.addEventListener("change", function(){ S.ans[it.id] = sel.value; save(); mark(); update(); });
+      mark();
+      row.appendChild(sel); box.appendChild(row);
+    });
+  }
+
+  function renderUpgrades(){
+    var tb = document.getElementById("upRows");
+    for (var i = 1; i <= 5; i++){
+      var tr = el("tr");
+      ["a","b"].forEach(function(side){
+        var td = el("td"); var inp = el("input"); inp.type = "text"; inp.setAttribute("data-key", "up" + i + side);
+        td.appendChild(inp); tr.appendChild(td);
+      });
+      tb.appendChild(tr);
+    }
+  }
+
+  function words(s){ var m = (s || "").trim().match(/\S+/g); return m ? m.length : 0; }
+
+  function bindFields(){
+    document.querySelectorAll("textarea[data-key], input[type=text][data-key]").forEach(function(f){
+      var k = f.getAttribute("data-key");
+      if (S.txt[k] != null) f.value = S.txt[k];
+      var cid = f.getAttribute("data-count");
+      function cnt(){ if (cid) document.getElementById(cid).textContent = words(f.value) + " words"; }
+      f.addEventListener("input", function(){ S.txt[k] = f.value; save(); cnt(); });
+      cnt();
+    });
+    document.querySelectorAll("input[type=checkbox][data-key]").forEach(function(c){
+      var k = c.getAttribute("data-key");
+      c.checked = !!S.chk[k];
+      c.addEventListener("change", function(){ S.chk[k] = c.checked; save(); update(); });
+    });
+  }
+
+  function update(){
+    var score = 0, total = 0;
+    ITEMS.forEach(function(it){
+      if (it.s && !S.stretch) return;
+      total++;
+      if (S.ans[it.id] === it.a) score++;
+    });
+    document.getElementById("score").textContent = score;
+    document.getElementById("total").textContent = total;
+    var c = 0; for (var i = 1; i <= 5; i++) if (S.chk["c" + i]) c++;
+    document.getElementById("contract").textContent = c;
+  }
+
+  var tog = document.getElementById("stretchToggle");
+  function applyStretch(){ document.body.classList.toggle("stretch-on", !!S.stretch); tog.checked = !!S.stretch; }
+  tog.addEventListener("change", function(){ S.stretch = tog.checked; save(); applyStretch(); update(); });
+
+  document.getElementById("reset").addEventListener("click", function(){
+    if (!window.confirm("Clear all answers and notes on this page?")) return;
+    try { localStorage.removeItem(KEY); } catch(e) {}
+    location.reload();
+  });
+
+  renderMCQ("sort", SORT);
+  renderMatch();
+  renderMCQ("faux", FAUX);
+  renderMCQ("tf", TF);
+  renderMCQ("modals", MODALS);
+  renderUpgrades();
+  bindFields();
+  applyStretch();
+  update();
+})();
+</script>
+</body>
+</html>
